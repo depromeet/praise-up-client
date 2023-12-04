@@ -1,4 +1,4 @@
-name: CI
+name: Git push to deploy to vercel
 on: 
   push:
     branches:
@@ -6,29 +6,25 @@ on:
 jobs:  
   build:
     runs-on: ubuntu-latest
+    container: pandoc/latex 
     steps:
       - name: Checkout source code
         uses: actions/checkout@main
-      
+            
       - name: Install dependencies
         run: pnpm install
-      
-      - name: Generate build 
-        run: pnpm run build
       
       - name: Create output
         run: sh ./build.sh
 
-      - name: Pushes to another repository
-        id: push_directory
+      - name: Push to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.FORKED_REPO_TOKEN}}
+          API_TOKEN_GITHUB: ${{ secrets.FORKED_REPO_TOKEN }}
 
         with:
           source-directory: 'output'
-          destination-github-username: ‘depromeet’
+          destination-github-username: ‘Chaemin-L’
           destination-repository-name: ‘P.P-client’
-          
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
