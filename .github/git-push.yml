@@ -1,4 +1,4 @@
-name: Git push to deploy to vercel
+name: Git push and Synchronize to deploy to vercel
 on: 
   push:
     branches:
@@ -9,7 +9,7 @@ jobs:
     container: pandoc/latex 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
             
       - name: Install dependencies
         run: pnpm install
@@ -17,14 +17,52 @@ jobs:
       - name: Create output
         run: sh ./build.sh
 
-      - name: Push to another repository
+      - name: Push to forked repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.FORKED_REPO_TOKEN }}
-
         with:
           source-directory: 'output'
-          destination-github-username: ‘Chaemin-L’
+          destination-github-username: ‘${{ secrets.GIT_USERNAME }}’
           destination-repository-name: ‘P.P-client’
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
+
+  sync:
+    needs: build
+    name: Sync fork with upstream/main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with: 
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Fetch and Merge forked-repo changes(job;build)
+        run: |
+          git remote add forked-repo https://github.com/${{ secrets.GIT_USERNAME }}/P.P-client
+          git fetch forked-repo 
+          git merge --ff-only forked-repo/main || exit 1 # Exit if merge fails
+
+      - name: Fetch upstream changes (depromeet/P.P-client)
+        run: |
+          git remote add upstream https://github.com/depromeet/P.P-client
+          git fetch upstream
+
+      - name: Push changes to main
+        run: git push
+
+      - name: Push changes to forked repository
+        run: |
+          git push forked-repo main
+        env:
+          GIT_ASKPASS: echo
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_PASSWORD: ${{ secrets.FORKED_REPO_TOKEN }}
+
+      - name: Clean up
+        run: |
+          git remote remove upstream
+          git remote remove forked-repo
