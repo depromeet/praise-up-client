@@ -1,0 +1,47 @@
+name: Synchronize to deploy to vercel
+on: 
+  push:
+    branches:
+      - main                        
+jobs:  
+  sync:
+    name: Sync fork with upstream/main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with: 
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Fetch upstream changes (depromeet/P.P-client)
+        run: |
+          git remote add upstream https://github.com/depromeet/P.P-client
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git checkout main
+          git merge --ff-only upstream/main || exit 1 # Exit if merge fails
+
+      - name: Push changes to main
+        run: git push
+
+      - name: Fetch forked-repo changes
+        run: |
+          git remote add forked-repo https://github.com/${{ secrets.GIT_USERNAME }}/P.P-client
+          git fetch forked-repo 
+
+      - name: Push changes to forked repository
+        run: |
+          git push forked-repo main
+        env:
+          GIT_ASKPASS: echo
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_PASSWORD: ${{ secrets.FORKED_REPO_TOKEN }}
+
+      - name: Clean up
+        run: |
+          git remote remove upstream
+          git remote remove forked-repo
