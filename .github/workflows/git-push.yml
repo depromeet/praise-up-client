@@ -11,32 +11,25 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v4
 
+      - name: Set remote-url and Merge forked-repo changes
+        run: |
+          git checkout main
+          git remote add forked-repo https://github.com/${{ secrets.FORKED_REPO_TOKEN }}/Chaemin-L/P.P-client
+          git config user.name Chaemin-L
+          git config user.email chaem12@kookmin.ac.kr
+          git pull --ff-only forked-repo
+
       - name: Fetch upstream changes (depromeet/P.P-client)
         run: |
           git remote add upstream https://github.com/depromeet/P.P-client
-          git fetch upstream
-
-      - name: Merge upstream changes
-        run: |
-          git checkout main
-          git merge --ff-only upstream/main || exit 1 # Exit if merge fails
-
-      - name: Push changes to main
-        run: git push
-
-      - name: Set remote-url and Fetch forked-repo changes
-        run: |
-          git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
-          git config user.name Chaemin-L
-          git config user.email chaem12@kookmin.ac.kr
-          git fetch forked-repo
-
+          git pull --ff-only upstream || exit 1 # Exit if merge fails
+ 
       - name: Push changes to forked repository
         run: |
+          git push upstream main
           git push forked-repo main
 
       - name: Clean up
         run: |
           git remote remove upstream
           git remote remove forked-repo
-
