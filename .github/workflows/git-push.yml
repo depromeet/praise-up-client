@@ -16,12 +16,12 @@ jobs:
           git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
           git config user.name Chaemin-L
           git config user.email chaem12@kookmin.ac.kr
-          git pull --ff-only forked-repo
+          git pull --ff-only forked-repo main || exit 1 # Exit if merge fails
 
       - name: Fetch upstream changes (depromeet/P.P-client)
         run: |
           git remote add upstream https://github.com/depromeet/P.P-client
-          git pull --ff-only upstream || exit 1 # Exit if merge fails
+          git pull --ff-only upstream main || exit 1 # Exit if merge fails
  
       - name: Push changes to forked repository
         run: |
