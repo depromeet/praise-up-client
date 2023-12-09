@@ -26,7 +26,7 @@ jobs:
 
       - name: Set remote-url and Fetch forked-repo changes
         run: |
-          git remote add forked-repo https://github.com/${{ secrets.FORKED_REPO_TOKEN }}/Chaemin-L/P.P-client
+          git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
           git config user.name Chaemin-L
           git config user.email chaem12@kookmin.ac.kr
           git fetch forked-repo
@@ -39,3 +39,4 @@ jobs:
         run: |
           git remote remove upstream
           git remote remove forked-repo
+
