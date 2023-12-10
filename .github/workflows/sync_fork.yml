@@ -5,29 +5,24 @@ on:
       - main
 jobs:
   sync:
-    name: Sync fork with upstream/main
+    name: Sync forked repo
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
 
-      - name: Fetch upstream changes (depromeet/P.P-client)
-        run: |
-          git remote add upstream https://github.com/depromeet/P.P-client
-          git fetch upstream
-          git merge --ff-only upstream main || exit 1 # Exit if merge fails
-
-      - name: Set remote-url and Merge forked-repo changes
+      - name: Add remote-url and Merge forked-repo changes
         run: |
           git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
+          git remote -v
           git config user.name Chaemin-L
           git config user.email chaem12@kookmin.ac.kr
-          git fetch forked-repo main || exit 1 # Exit if merge fails
-          git merge --allow-unrelated-histories forked-reppo/main
+          git fetch forked-repo main
+          git merge --allow-unrelated-histories forked-repo/main
 
       - name: Push changes to forked repository
         run: |
-          git push upstream main
+          git push
           git push forked-repo main
 
       - name: Clean up
