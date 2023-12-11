@@ -1,40 +1,22 @@
-
-
 name: Push Commit to Another Repository
 
 on: [push]
 
 jobs:
-  build:
+  push-another-repo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - name: push commit
-      - run: |
-          date > generated.txt
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "generated"
-          git push
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-# jobs:
-#   push-another-repo:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Checkout the repository
-#       uses: actions/checkout@v4
-#       with:
-#         fetch-depth: 0 # Fetch all history for all tags and branches
-
-#     - name: Push to Another Repository
-#       run: |
-#         git config --global user.name 'test'
-#         git config --global user.email 'test@test.com'
-#         git remote add another https://github.com/2-NOW/P.P-client.git
-#         git switch -c build/test
-#         git push another HEAD:build/test --force
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
+    - name: Push to Another Repository
+      run: |
+        git config --global user.name 'test'
+        git config --global user.email 'test@test.com'
+        git remote add another https://github.com/2-NOW/P.P-client.git
+        git switch -c build/test
+        git push another HEAD:build/test --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
