@@ -11,11 +11,17 @@ jobs:
       with:
         fetch-depth: 0 # Fetch all history for all tags and branches
 
+    - name: Check PAT Length
+      run: echo "Length of PAT: ${#TEST_DEPLOY_TOKEN2}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
+
     - name: Push to Another Repository
       run: |
         git config --global user.name 'test'
         git config --global user.email 'test@test.com'
-        git remote add another git@github.com:2-NOW/P.P-client.git
-        git push another HEAD:main --force
+        git remote add another https://github.com:2-NOW/P.P-client.git
+        git switch -c build/test
+        git push another HEAD:build/test --force
       env:
         GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
