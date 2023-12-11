@@ -1,31 +1,18 @@
-name: Push to another repository
-
+name: Push to target repository
 on:
-  push:
-    branches:
-      - main  # or any other branch you want to trigger the push
-
+ push:
+   branches:
+     - main
 jobs:
-  push-to-other-repo:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+ push:
+   runs-on: ubuntu-latest
+   steps:
+   - name: Checkout repository
+     uses: actions/checkout@v3
 
-      # Configure git
-      - name: Configure git
-        run: |
-          git config --global user.name 'test'
-          git config --global user.email 'test@example.com'
-
-      # Push to the target repository
-      - name: Push to target repository
-        run: |
-          git remote add target https://github.com/2-NOW/P.P-client.git
-          git push target HEAD:main --force
-        env:
-          GIT_USER: 2-NOW
-          GIT_EMAIL: kj109888@gmail.com
-          TARGET_REPO_PAT: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
+   - name: Push to target repository
+     run: |
+       git config --global user.name "Your Name"
+       git config --global user.email "your.email@example.com"
+       git remote add target https://x-access-token:${{ secrets.TEST_DEPLOY_TOKEN2 }}@github.com/2-NOW/P.P-client.git
+       git push target main
