@@ -18,9 +18,6 @@ jobs:
           git config user.email chaem12@kookmin.ac.kr
           git fetch forked-repo main
           git merge --allow-unrelated-histories -Xours forked-repo/main
-
-      - name: Push changes to forked repository
-        run: |
           git push forked-repo main
 
       - name: Clean up
