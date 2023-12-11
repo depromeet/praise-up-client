@@ -1,0 +1,32 @@
+name: Synchronize to forked repo
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    name: Sync forked repo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.FORKED_REPO_TOKEN }}
+          fetch-depth: 0
+          ref: main
+
+      - name: Add remote-url and Merge forked-repo changes
+        run: |
+          git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
+          git config user.name Chaemin-L
+          git config user.email chaem12@kookmin.ac.kr
+      
+      - name: Push changes to forked-repo 
+        run: |
+          git push -f forked-repo main
+      
+      - name: Clean up
+        run: |
+          git remote remove forked-repo
