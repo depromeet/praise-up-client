@@ -1,11 +1,9 @@
-name: Synchronize to deploy to vercel
-on:
-  push:
-    branches:
-      - main
+name: Push Commit to Another Repository
+
+on: [push]
+
 jobs:
-  sync:
-    name: Sync forked repo
+  push-another-repo:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +22,3 @@ jobs:
 
       - name: Push changes to forked-repo
           git push -f forked-repo main
-
-      - name: Clean up
-        run: |
-          git remote remove forked-repo
