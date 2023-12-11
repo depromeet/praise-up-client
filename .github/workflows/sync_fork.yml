@@ -1,22 +1,21 @@
-name: Synchronize to deploy to vercel
-on:
-  push:
-    branches:
-      - main
+name: Push Commit to Another Repository
+
+on: [push]
+
 jobs:
-  sync:
-    name: Sync forked repo
+  push-another-repo:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetch all history for all tags and branches
 
-      - name: Add remote-url and Merge forked-repo changes
-        run: |
-          git remote add forked-repo https://2-NOW:${{ secrets.TEST_DEPLOY_TOKEN }}@github.com/2-NOW/P.P-client
-          git config user.name test
-          git config user.email test
-          git fetch forked-repo main
-          git merge --allow-unrelated-histories -Xours forked-repo/main
-          git push forked-repo main
-          git remote remove forked-repo
+    - name: Push to Another Repository
+      run: |
+        git config --global user.name 'test'
+        git config --global user.email 'test@test.com'
+        git remote add another https://github.com/2-NOW/P.P-client.git
+        git push another HEAD:main --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN }}
