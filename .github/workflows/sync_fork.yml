@@ -18,4 +18,4 @@ jobs:
         git remote add another https://github.com/2-NOW/P.P-client.git
         git push another HEAD:main --force
       env:
-        GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
