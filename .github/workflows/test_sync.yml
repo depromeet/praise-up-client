@@ -1,18 +1,32 @@
 name: Push to target repository
 on:
- push:
-   branches:
-     - main
+  push:
+    branches:
+      - main
 jobs:
- push:
-   runs-on: ubuntu-latest
-   steps:
-   - name: Checkout repository
-     uses: actions/checkout@v3
+  push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-   - name: Push to target repository
-     run: |
-       git config --global user.name "Your Name"
-       git config --global user.email "your.email@example.com"
-       git remote add target https://x-access-token:${{ secrets.TEST_DEPLOY_TOKEN2 }}@github.com/2-NOW/P.P-client.git
-       git push target main
+    - name: Setup Git identity
+      run: |
+        git config --global user.name "Your Name"
+        git config --global user.email "your.email@example.com"
+
+    - name: Add target repository as a remote
+      run: |
+        git remote add target https://x-access-token:${{ secrets.TEST_DEPLOY_TOKEN2 }}@github.com/2-NOW/P.P-client.git
+
+    - name: Fetch the latest changes from the target repository
+      run: |
+        git fetch target main
+
+    - name: Merge changes from target repository if needed
+      run: |
+        git merge target/main --allow-unrelated-histories -m "Merge target repository changes"
+
+    - name: Push to target repository
+      run: |
+        git push target main
