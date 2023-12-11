@@ -14,18 +14,15 @@ jobs:
       - name: Add remote-url and Merge forked-repo changes
         run: |
           git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
-          git remote -v
           git config user.name Chaemin-L
           git config user.email chaem12@kookmin.ac.kr
           git fetch forked-repo main
-          git merge --allow-unrelated-histories forked-repo/main
+          git merge forked-repo/main
 
       - name: Push changes to forked repository
         run: |
-          git push
           git push forked-repo main
 
       - name: Clean up
         run: |
-          git remote remove upstream
           git remote remove forked-repo
