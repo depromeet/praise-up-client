@@ -15,7 +15,7 @@ jobs:
       run: |
         git config --global user.name 'test'
         git config --global user.email 'test@test.com'
-        git remote add another https://github.com/2-NOW/P.P-client.git
+        git remote add another git@github.com:2-NOW/P.P-client.git
         git push another HEAD:main --force
       env:
         GITHUB_TOKEN: ${{ secrets.TEST_DEPLOY_TOKEN2 }}
