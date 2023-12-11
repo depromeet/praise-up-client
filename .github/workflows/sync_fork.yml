@@ -13,14 +13,13 @@ jobs:
         uses: actions/checkout@v4
         with: 
           token: ${{ secrets.FORKED_REPO_TOKEN }}
+          fetch-depth: 0
 
       - name: Add remote-url and Merge forked-repo changes
         run: |
           git remote add forked-repo https://Chaemin-L:${{ secrets.FORKED_REPO_TOKEN }}@github.com/Chaemin-L/P.P-client
           git config user.name Chaemin-L
           git config user.email chaem12@kookmin.ac.kr
-          git fetch forked-repo main
-          git merge --allow-unrelated-histories -Xours forked-repo/main
 
       - name: Push changes to forked-repo 
         run: |
