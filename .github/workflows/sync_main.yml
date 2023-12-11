@@ -1,4 +1,4 @@
-name: Synchronize to deploy to vercel
+name: Synchronize to forked repo
 on:
   push:
     branches:
