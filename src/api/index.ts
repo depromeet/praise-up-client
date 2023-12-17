@@ -10,8 +10,11 @@ import axios, {
 const DEVELOPMENT_API_URL = "https://jsonplaceholder.typicode.com";
 const PRODUCTION_API_URL = "https://jsonplaceholder.typicode.com";
 
-export const api = axios.create({
-  baseURL: DEVELOPMENT_API_URL,
+const baseApi = axios.create({
+  baseURL:
+    import.meta.env.MODE === "development"
+      ? DEVELOPMENT_API_URL
+      : PRODUCTION_API_URL,
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
@@ -45,17 +48,14 @@ const onRequest = (
 
 /** request 요청 시, 발생하는 에러를 처리하는 함수 */
 const onErrorRequest = (error: AxiosError<AxiosRequestConfig>) => {
-  switch (true) {
-    case Boolean(error.config):
-      console.log("에러: 요청 실패", error);
-      break;
-    case Boolean(error.request):
-      console.log("에러: 응답 없음", error);
-      break;
-    default:
-      console.log("에러:", error);
-      break;
+  if (error.config) {
+    console.log("에러: 요청 실패", error);
+  } else if (error.request) {
+    console.log("에러: 응답 없음", error);
+  } else {
+    console.log("에러:", error);
   }
+
   return Promise.reject(error);
 };
 
@@ -122,4 +122,4 @@ const setInterceptors = (axiosInstance: AxiosInstance): AxiosInstance => {
   return axiosInstance;
 };
 
-setInterceptors(api);
+export const api = setInterceptors(baseApi);
