@@ -4,52 +4,82 @@
 
 @layer components {
   .text-h1 {
-    font-size: 32px;
-    line-height: 38px;
-  }
-  .text-h2 {
     font-size: 20px;
     line-height: 26px;
+    font-weight: 600;
   }
-  .text-h3 {
+  .text-h2 {
     font-size: 18px;
     line-height: 24px;
+    font-weight: 600;
+  }
+  .text-h3 {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
   }
   .text-b1-strong {
     font-size: 16px;
     line-height: 22px;
+    font-weight: 600;
   }
   .text-b1-compact {
     font-size: 16px;
     line-height: 22px;
+    font-weight: 400;
   }
   .text-b1-long {
     font-size: 16px;
     line-height: 24px;
+    font-weight: 400;
   }
   .text-b2-strong {
     font-size: 14px;
     line-height: 20px;
+    font-weight: 600;
   }
   .text-b2-compact {
     font-size: 14px;
     line-height: 20px;
+    font-weight: 400;
   }
   .text-b2-long {
     font-size: 14px;
     line-height: 22px;
+    font-weight: 400;
   }
   .text-cap-strong {
     font-size: 12px;
     line-height: 18px;
+    font-weight: 700;
   }
   .text-cap-compact {
     font-size: 12px;
-    line-height: 20px;
+    line-height: 18px;
+    font-weight: 400;
   }
   .text-cap-long {
     font-size: 12px;
     line-height: 20px;
+    font-weight: 400;
+  }
+  .text-num-header {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+    font-family: "Work Sans";
+  }
+  .text-num-body {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+    font-family: "Work Sans";
+  }
+  .text-num-caption {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+    font-family: "Work Sans";
   }
 
   /* Image */
@@ -77,5 +107,14 @@
     width: 320px;
     height: 320px;
     @apply rounded-lg;
+  }
+
+  /* Gradient Background */
+  .bg-gradient {
+    background: linear-gradient(
+      96deg,
+      theme("colors.secondary.blue") 0%,
+      theme("colors.secondary.yellow") 100%
+    );
   }
 }
