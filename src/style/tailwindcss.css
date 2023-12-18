@@ -2,107 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-style: normal;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Pretendard-SemiBold";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
-    format("woff");
-  font-style: normal;
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: "Pretendard-Bold";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
-    format("woff");
-  font-style: normal;
-  font-weight: 700;
-}
-
 @layer components {
-  .h1 {
-    font-family: Pretendartd-Bold;
+  .text-h1 {
     font-size: 32px;
     line-height: 38px;
   }
-  .h2 {
-    font-family: Pretendartd-SemiBold;
+  .text-h2 {
     font-size: 20px;
     line-height: 26px;
   }
-  .h3 {
-    font-family: Pretendartd-SemiBold;
+  .text-h3 {
     font-size: 18px;
     line-height: 24px;
   }
-  .b1-strong {
-    font-family: Pretendartd-SemiBold;
+  .text-b1-strong {
     font-size: 16px;
     line-height: 22px;
   }
-  .b1-compact {
-    font-family: Pretendartd-Regular;
+  .text-b1-compact {
     font-size: 16px;
     line-height: 22px;
   }
-  .b1-long {
-    font-family: Pretendartd-Regular;
+  .text-b1-long {
     font-size: 16px;
     line-height: 24px;
   }
-  .b2-strong {
-    font-family: Pretendartd-SemiBold;
+  .text-b2-strong {
     font-size: 14px;
     line-height: 20px;
   }
-  .b2-compact {
-    font-family: Pretendartd-Regular;
+  .text-b2-compact {
     font-size: 14px;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
   }
-  .b2-long {
-    font-family: Pretendartd-Regular;
+  .text-b2-long {
     font-size: 14px;
     line-height: 22px;
   }
-  .cap-strong {
-    font-family: Pretendartd-Bold;
+  .text-cap-strong {
     font-size: 12px;
     line-height: 18px;
   }
-  .cap-compact {
-    font-family: Pretendartd-Regular;
+  .text-cap-compact {
     font-size: 12px;
     line-height: 20px;
   }
-  .cap-long {
-    font-family: Pretendartd-Regular;
+  .text-cap-long {
     font-size: 12px;
     line-height: 20px;
   }
 
   /* Image */
-  .ixs {
+  .img-xs {
     width: 152px;
     height: 152px;
+    @apply rounded;
   }
-  .ism {
+  .image-sm {
     width: 200px;
     height: 200px;
+    @apply rounded-md;
   }
-  .imd {
+  .image-md {
     width: 240px;
-    height: 72px;
+    height: 240px;
+    @apply rounded-lg;
   }
-  .ilg {
+  .image-lg {
     width: 284px;
     height: 284px;
+    @apply rounded-lg;
+  }
+  .image-xl {
+    width: 320px;
+    height: 320px;
+    @apply rounded-lg;
   }
 }
