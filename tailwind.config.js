@@ -25,6 +25,10 @@ export default {
           blue: "#BBE5FF",
           yellow: "#FFF6D5",
         },
+        alert: {
+          DEFAULT: "#FF5569",
+          text: "#E1293F",
+        },
       },
       borderRadius: {
         DEFAULT: "8px",
