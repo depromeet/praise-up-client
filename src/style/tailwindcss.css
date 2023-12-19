@@ -67,23 +67,20 @@
     font-size: 20px;
     line-height: 26px;
     font-weight: 600;
-    font-family: "Work Sans";
   }
   .text-num-body {
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
-    font-family: "Work Sans";
   }
   .text-num-caption {
     font-size: 18px;
     line-height: 26px;
     font-weight: 400;
-    font-family: "Work Sans";
   }
 
   /* Image */
-  .img-xs {
+  .image-xs {
     width: 152px;
     height: 152px;
     @apply rounded;
