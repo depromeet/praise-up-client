@@ -6,6 +6,13 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+/**
+ * CHECKLIST
+ * [x] Axios instance 설정 및 interceptor 적용
+ * [] 엑세스 토큰 저장 방식을 in-memory 저장 방식으로 변경
+ * [] 리프레쉬 토큰 재발급 로직 추가 처리
+ */
+
 // API 서버 연결 설정 필요
 const DEVELOPMENT_API_URL = "https://jsonplaceholder.typicode.com";
 const PRODUCTION_API_URL = "https://jsonplaceholder.typicode.com";
@@ -41,6 +48,7 @@ const onRequest = (
   const token = localStorage.getItem("AT");
   const { method, url, headers = {} } = config;
 
+  // TODO: 토큰 저장 방식을 inmemory 저장 방식으로 변경
   headers.Authorization = token ? `Bearer ${token}` : "";
   logOnDev(`[API REQUEST] ${method?.toUpperCase()} ${url}`);
   return Promise.resolve({ ...config, headers } as InternalAxiosRequestConfig);
