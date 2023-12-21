@@ -1,3 +1,117 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .text-h1 {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+  }
+  .text-h2 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+  .text-h3 {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .text-b1-strong {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .text-b1-compact {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  .text-b1-long {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .text-b2-strong {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+  .text-b2-compact {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .text-b2-long {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  .text-cap-strong {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 700;
+  }
+  .text-cap-compact {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+  .text-cap-long {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .text-num-header {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 600;
+  }
+  .text-num-body {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .text-num-caption {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+  }
+
+  /* Image */
+  .image-xs {
+    width: 152px;
+    height: 152px;
+    @apply rounded;
+  }
+  .image-sm {
+    width: 200px;
+    height: 200px;
+    @apply rounded-md;
+  }
+  .image-md {
+    width: 240px;
+    height: 240px;
+    @apply rounded-lg;
+  }
+  .image-lg {
+    width: 284px;
+    height: 284px;
+    @apply rounded-lg;
+  }
+  .image-xl {
+    width: 320px;
+    height: 320px;
+    @apply rounded-lg;
+  }
+
+  /* Gradient Background */
+  .bg-gradient {
+    background: linear-gradient(
+      96deg,
+      theme("colors.secondary.blue") 0%,
+      theme("colors.secondary.yellow") 100%
+    );
+  }
+}
