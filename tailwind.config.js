@@ -8,7 +8,7 @@ export default {
         "3xl": "1920px",
       },
       colors: {
-        primary: {
+        gray: {
           DEFAULT: "#262C36",
           50: "#FFFFFF",
           100: "#F6F7F9",
