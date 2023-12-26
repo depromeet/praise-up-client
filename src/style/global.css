@@ -35,6 +35,15 @@
 
 @font-face {
   font-family: "Work Sans";
+  src: url(https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K3vXBi8Jpo3ZKyHaQQ.woff2)
+    format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  unicode-range: U+0030-0039;
+}
+
+@font-face {
+  font-family: "Work Sans";
   src: url(https://fonts.gstatic.com/s/worksans/v19/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBi8Jpo3ZKyHaQQ.woff2)
     format("woff2");
   font-weight: 400;

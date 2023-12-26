@@ -8,7 +8,7 @@ export default {
         "3xl": "1920px",
       },
       colors: {
-        primary: {
+        gray: {
           DEFAULT: "#262C36",
           50: "#FFFFFF",
           100: "#F6F7F9",
@@ -21,19 +21,21 @@ export default {
           800: "#333E4C",
           900: "#262C36",
         },
-        secondary: {
-          blue: "#BBE5FF",
-          yellow: "#FFF6D5",
+        red: {
+          300: "FFB0B9",
+          400: "#FD6A7E",
+          500: "#EE324B",
         },
-        alert: {
-          DEFAULT: "#FF5569",
-          text: "#E1293F",
+        blue: {
+          300: "#C7EAFF",
+          400: "#A5DDFF",
+          500: "#0094FF",
         },
-      },
-      borderRadius: {
-        DEFAULT: "8px",
-        md: "12px",
-        lg: "16px",
+        yellow: {
+          300: "#FFF3C8",
+          400: "#FFEAA0",
+          500: "#F5C547",
+        },
       },
     },
   },

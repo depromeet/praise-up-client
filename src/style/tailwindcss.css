@@ -4,46 +4,56 @@
 
 @layer components {
   .text-h1 {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 600;
+  }
+  .text-h2 {
     font-size: 20px;
     line-height: 26px;
     font-weight: 600;
   }
-  .text-h2 {
+  .text-h3 {
     font-size: 18px;
     line-height: 24px;
     font-weight: 600;
   }
-  .text-h3 {
+  .text-h4 {
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
   }
-  .text-b1-strong {
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 600;
-  }
-  .text-b1-compact {
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 400;
-  }
-  .text-b1-long {
-    font-size: 16px;
+  .text-b1 {
+    font-size: 18px;
     line-height: 24px;
     font-weight: 400;
   }
   .text-b2-strong {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .text-b2-compact {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  .text-b2-long {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .text-b3-strong {
     font-size: 14px;
     line-height: 20px;
     font-weight: 600;
   }
-  .text-b2-compact {
+  .text-b3-compact {
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
   }
-  .text-b2-long {
+  .text-b3-long {
     font-size: 14px;
     line-height: 22px;
     font-weight: 400;
@@ -67,15 +77,47 @@
     font-size: 20px;
     line-height: 26px;
     font-weight: 600;
+    letter-spacing: 2%;
   }
-  .text-num-body {
+  .text-num-b1-strong {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+    letter-spacing: 2%;
+  }
+  .text-num-b1-medium {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: 2%;
+  }
+  .text-num-b1-compact {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: 2%;
+  }
+  .text-num-b2-strong {
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
+    letter-spacing: 2%;
+  }
+  .text-num-b2-compact {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: 2%;
+  }
+  .text-num-b3 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    letter-spacing: 2%;
   }
   .text-num-caption {
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 400;
   }
 
@@ -107,11 +149,46 @@
   }
 
   /* Gradient Background */
-  .bg-gradient {
+  .bg-gradient-by {
     background: linear-gradient(
-      96deg,
-      theme("colors.secondary.blue") 0%,
-      theme("colors.secondary.yellow") 100%
+      180deg,
+      theme("colors.blue.400") 0%,
+      theme("colors.yellow.400") 100%
     );
+  }
+  .bg-gradient-b {
+    background: linear-gradient(180deg, theme("colors.blue.400") 0%, #fff 100%);
+  }
+  .bg-gradient-y {
+    background: linear-gradient(
+      180deg,
+      theme("colors.yellow.400") 0%,
+      #fff 100%
+    );
+  }
+
+  /* Border Radius */
+  .rounded-1 {
+    border-radius: 0px;
+    --smooth-corners: 0;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
+  .rounded-2 {
+    border-radius: 4px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
+  .rounded-3 {
+    border-radius: 8px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+  }
+  .rounded-4 {
+    border-radius: 12px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
   }
 }
