@@ -4,46 +4,56 @@
 
 @layer components {
   .text-h1 {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 600;
+  }
+  .text-h2 {
     font-size: 20px;
     line-height: 26px;
     font-weight: 600;
   }
-  .text-h2 {
+  .text-h3 {
     font-size: 18px;
     line-height: 24px;
     font-weight: 600;
   }
-  .text-h3 {
+  .text-h4 {
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
   }
-  .text-b1-strong {
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 600;
-  }
-  .text-b1-compact {
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 400;
-  }
-  .text-b1-long {
-    font-size: 16px;
+  .text-b1 {
+    font-size: 18px;
     line-height: 24px;
     font-weight: 400;
   }
   .text-b2-strong {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+  }
+  .text-b2-compact {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+  }
+  .text-b2-long {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .text-b3-strong {
     font-size: 14px;
     line-height: 20px;
     font-weight: 600;
   }
-  .text-b2-compact {
+  .text-b3-compact {
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
   }
-  .text-b2-long {
+  .text-b3-long {
     font-size: 14px;
     line-height: 22px;
     font-weight: 400;
@@ -67,15 +77,47 @@
     font-size: 20px;
     line-height: 26px;
     font-weight: 600;
+    letter-spacing: 2%;
   }
-  .text-num-body {
+  .text-num-body1-strong {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+    letter-spacing: 2%;
+  }
+  .text-num-body1-medium {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: 2%;
+  }
+  .text-num-body1-compact {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: 2%;
+  }
+  .text-num-body2-strong {
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
+    letter-spacing: 2%;
+  }
+  .text-num-body2-compact {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: 2%;
+  }
+  .text-num-body3 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    letter-spacing: 2%;
   }
   .text-num-caption {
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 400;
   }
 
