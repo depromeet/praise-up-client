@@ -20,6 +20,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.19.0
     version: 6.19.0(react-dom@18.2.0)(react@18.2.0)
+  smooth-corners:
+    specifier: ^1.0.8
+    version: 1.0.8
 
 devDependencies:
   '@storybook/addon-essentials':
@@ -8861,6 +8864,10 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
     dev: true
+
+  /smooth-corners@1.0.8:
+    resolution: {integrity: sha512-JcHYm/7l3RZAX+Ev7/91tRX2zau1h+8nVWqMkl3mvqMsHQkUCbEQjFNKRj58s49PyqDcpl9TcUeC2zHHyGu2sQ==}
+    dev: false
 
   /snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}

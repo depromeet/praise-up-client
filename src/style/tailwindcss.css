@@ -107,11 +107,46 @@
   }
 
   /* Gradient Background */
-  .bg-gradient {
+  .bg-gradient-by {
     background: linear-gradient(
-      96deg,
-      theme("colors.secondary.blue") 0%,
-      theme("colors.secondary.yellow") 100%
+      180deg,
+      theme("colors.blue.400") 0%,
+      theme("colors.yellow.400") 100%
     );
+  }
+  .bg-gradient-b {
+    background: linear-gradient(180deg, theme("colors.blue.400") 0%, #fff 100%);
+  }
+  .bg-gradient-y {
+    background: linear-gradient(
+      180deg,
+      theme("colors.yellow.400") 0%,
+      #fff 100%
+    );
+  }
+
+  /* Border Radius */
+  .rounded-1 {
+    border-radius: 0px;
+    --smooth-corners: 0;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
+  .rounded-2 {
+    border-radius: 4px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
+  .rounded-3 {
+    border-radius: 8px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+  }
+  .rounded-4 {
+    border-radius: 12px;
+    --smooth-corners: 5;
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
   }
 }
