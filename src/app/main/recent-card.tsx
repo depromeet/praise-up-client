@@ -17,8 +17,8 @@ type PostCardType = {
 const BACKGROUNDS = [...Object.values(BackgroundSVG).sort()];
 const DARK_BACKGROUNDS = [2, 4];
 
-export const PostCard = (props: PostCardType) => {
-  const [idx, setIdx] = useState(Math.round(Math.random() * 11));
+export const RecentCard = (props: PostCardType) => {
+  const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 11));
   const { hour, min, sec } = useTimer(props.openDatetime);
 
   return (
