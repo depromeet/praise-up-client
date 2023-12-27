@@ -1,25 +1,28 @@
 import { useState } from "react";
 
-import { Button } from "./button";
 import { CountBadge } from "./count-badge";
 
 import * as BackgroundSVG from "@/assets/card-background";
 import { ShareSVG } from "@/assets/share";
 import { useTimer } from "@/hooks/useTimer";
 
-type PostCardType = {
+interface RecentCardProps {
   keyword: string;
   count: number;
   openDatetime: Date;
-};
+}
 
-// 배경 이미지와 어두운 배경 이미지의 인덱스(키워드 색상이 상이)
+// 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
 const BACKGROUNDS = [...Object.values(BackgroundSVG).sort()];
 const DARK_BACKGROUNDS = [2, 4];
 
-export const RecentCard = (props: PostCardType) => {
+export const RecentCard = ({
+  keyword,
+  count,
+  openDatetime,
+}: RecentCardProps) => {
   const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 11));
-  const { hour, min, sec } = useTimer(props.openDatetime);
+  const { hour, min, sec } = useTimer(openDatetime);
 
   return (
     <div className="flex flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -35,9 +38,9 @@ export const RecentCard = (props: PostCardType) => {
               DARK_BACKGROUNDS.includes(idx) ? "text-white" : "text-gray-700"
             }`}
           >
-            {props.keyword}
+            {keyword}
           </h2>
-          <CountBadge count={props.count} />
+          <CountBadge count={count} />
         </div>
         <div className="flex items-center justify-center gap-0.5 rounded-3 bg-[#ffffffcc] px-6 py-4 text-gray-800 backdrop-blur-[10px] ">
           <span className="text-num-b2-strong">

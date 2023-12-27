@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Button } from "./button";
 import { RecentCard } from "./recent-card";
-import { ShareButton } from "./share-button";
 
 export const ToBeOpen = () => {
   /* 예제 시간 */
