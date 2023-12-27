@@ -49,6 +49,9 @@ devDependencies:
   '@storybook/testing-library':
     specifier: ^0.2.2
     version: 0.2.2
+  '@types/matter-js':
+    specifier: ^0.19.5
+    version: 0.19.5
   '@types/react':
     specifier: ^18.2.37
     version: 18.2.37
@@ -4054,6 +4057,10 @@ packages:
 
   /@types/lodash@4.14.201:
     resolution: {integrity: sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==}
+    dev: true
+
+  /@types/matter-js@0.19.5:
+    resolution: {integrity: sha512-pTVB5krRGb01hr8L6BJqWGoSriqUbbvJ9Fd0Qp0eAOE//w/lFvkaVHkVB8J3wXr9U3lZDzmAjJPPQn7x4wzbWg==}
     dev: true
 
   /@types/mdx@2.0.10:

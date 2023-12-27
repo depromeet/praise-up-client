@@ -20,6 +20,7 @@
     "react-router-dom": "^6.19.0"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.19.5",
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
     "@storybook/addon-links": "^7.5.3",
