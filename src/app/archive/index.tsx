@@ -1,3 +1,3 @@
 export const Archive = () => {
-  return <div className="bg-black">Archive Page</div>;
+  return <div className="h-screen bg-white text-black">Archive Page</div>;
 };
