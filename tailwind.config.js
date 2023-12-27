@@ -9,6 +9,8 @@ export default {
     ...rem2px(defaultTheme),
     extend: {
       width: addUnit(),
+      height: addUnit(),
+      padding: addUnit(100, 1),
       screens: {
         xs: "480px",
         "3xl": "1920px",
