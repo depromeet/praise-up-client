@@ -1,8 +1,11 @@
-function addUnit(to = 200, multiple = 4, unit = "px") {
-  return Array.from(Array(to)).reduce((acc, _, i) => {
-    const value = `${Number(i) * multiple}${unit}`;
-    return { ...acc, [value]: value };
-  }, {});
+function addUnit(to = 200, multiple = 2, unit = "px") {
+  return [...Array(Math.ceil(to / multiple) + 1).keys()].reduce(
+    (acc, index) => {
+      const key = `${index * multiple}${unit}`;
+      return { ...acc, [key]: key };
+    },
+    {},
+  );
 }
 
 module.exports = addUnit;
