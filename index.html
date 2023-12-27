@@ -10,6 +10,10 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if (CSS && "paintWorklet" in CSS)
+        CSS.paintWorklet.addModule("https://unpkg.com/smooth-corners");
+    </script>
     <script type="module" src="/src/app.tsx"></script>
   </body>
 </html>
