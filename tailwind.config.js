@@ -1,7 +1,11 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+const rem2px = require("./src/utils/tailwindcss/rem2px.cjs");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   theme: {
+    ...rem2px(defaultTheme),
     extend: {
       screens: {
         xs: "480px",
