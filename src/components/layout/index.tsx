@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export const GlobalLayout = () => {
   return (
-    <main>
+    <main className="w-40px">
       {/* main content */}
       <Outlet />
     </main>
