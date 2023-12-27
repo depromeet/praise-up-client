@@ -1,14 +1,20 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+const rem2px = require("./src/utils/tailwindcss/rem2px.cjs");
+const addUnit = require("./src/utils/tailwindcss/add-unit.cjs");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   theme: {
+    ...rem2px(defaultTheme),
     extend: {
+      width: addUnit(),
       screens: {
         xs: "480px",
         "3xl": "1920px",
       },
       colors: {
-        primary: {
+        gray: {
           DEFAULT: "#262C36",
           50: "#FFFFFF",
           100: "#F6F7F9",

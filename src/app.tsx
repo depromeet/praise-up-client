@@ -1,13 +1,13 @@
 import "@/style/tailwindcss.css";
 import "@/style/global.css";
 
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
 import { Routers } from "@/routes";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
     <Routers />
-  </React.StrictMode>,
+  </StrictMode>,
 );

@@ -20,7 +20,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ["postcss.config.cjs", "dist", ".eslintrc.cjs"],
+  ignorePatterns: ["postcss.config.cjs", "dist", ".eslintrc.cjs", "**/*.cjs"],
   plugins: ["react-refresh", "react", "import"],
   rules: {
     "@typescript-eslint/no-unused-vars": [
