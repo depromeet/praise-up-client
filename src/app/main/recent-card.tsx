@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { CountBadge } from "./count-badge";
-import { Timer } from "./timer-badge";
+import { TimerBadge } from "./timer-badge";
 
 import * as BackgroundSVG from "@/assets/card-background";
 import { ShareSVG } from "@/assets/share";
@@ -41,7 +41,7 @@ export const RecentCard = ({
           </h2>
           <CountBadge count={count} />
         </div>
-        <Timer openDatetime={openDatetime} />
+        <TimerBadge openDatetime={openDatetime} />
       </div>
       <div className="flex w-full items-start justify-center gap-2">
         <button className="aspect-square rounded-2 bg-gray-300 p-[15px]">

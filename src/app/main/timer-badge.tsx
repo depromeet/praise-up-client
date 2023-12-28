@@ -8,7 +8,7 @@ interface TimeLeftType {
   sec: number;
 }
 
-export const Timer = ({ openDatetime }: { openDatetime: string }) => {
+export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
   const [delay, setDelay] = useState<number | null>(1000);
   const [diff, setDiff] = useState(() =>
     Math.floor((+new Date(openDatetime) - +new Date()) / 1000),
