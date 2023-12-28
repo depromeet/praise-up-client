@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 
 import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
 import marbleTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
+import { MarbleModal } from "@/components/app/marbleModal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
 import tempData from "@/data/tempData.json";
 import Render from "@/lib/RenderExtension";
@@ -160,9 +161,9 @@ export const Marble = () => {
       }
       if (isMobile) return;
 
-      const clickedBody = e.source.body;
-      if (clickedBody && clickedBody.label === "marble") {
-        setSelectedMarble(clickedBody);
+      const selectedBody = e.source.body;
+      if (selectedBody && selectedBody.label === "marble") {
+        setSelectedMarble(selectedBody);
       }
     };
 
@@ -318,6 +319,16 @@ export const Marble = () => {
 
   return (
     <div>
+      {isOpen && selectedMarble && (
+        <MarbleModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          selectedMarble={selectedMarble}
+          marbleList={marbleList}
+          isViewedMarbleList={isViewedMarbleList}
+          setIsViewedMarbleList={setIsViewedMarbleList}
+        />
+      )}
       <Title />
       <canvas ref={canvasRef} className="absolute left-0" />
     </div>
