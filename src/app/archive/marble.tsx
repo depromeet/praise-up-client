@@ -51,10 +51,6 @@ export const Marble = () => {
   useEffect(() => {
     const createdEngine = Engine.create();
     setEngine(createdEngine);
-
-    return () => {
-      setEngine(undefined);
-    };
   }, []);
 
   useEffect(() => {
@@ -101,16 +97,11 @@ export const Marble = () => {
       },
     });
 
-    const floorWall = Bodies.rectangle(
-      width / 2,
-      height,
-      width,
-      ASSET_WIDTH.wall,
-      {
-        ...WALL_OPTIONS,
-      },
-    );
-    const rightWall = Bodies.rectangle(
+    // NOTE: walls object
+    const floor = Bodies.rectangle(width / 2, height, width, ASSET_WIDTH.wall, {
+      ...WALL_OPTIONS,
+    });
+    const right = Bodies.rectangle(
       width,
       height / 2,
       ASSET_WIDTH.wall,
@@ -119,12 +110,11 @@ export const Marble = () => {
         ...WALL_OPTIONS,
       },
     );
-    const leftWall = Bodies.rectangle(0, height / 2, ASSET_WIDTH.wall, height, {
+    const left = Bodies.rectangle(0, height / 2, ASSET_WIDTH.wall, height, {
       ...WALL_OPTIONS,
     });
 
-    World.add(world, [floorWall, rightWall, leftWall]);
-    const runner = Runner.run(engine);
+    World.add(world, [floor, right, left]);
 
     // add mouse control
     const mouseConstraint = MouseConstraint.create(engine, {
@@ -138,10 +128,6 @@ export const Marble = () => {
     });
 
     // NOTE: Remove default Event
-    mouseConstraint.mouse.element.removeEventListener(
-      "mousewheel",
-      mouseConstraint.mouse.mousewheel,
-    );
     mouseConstraint.mouse.element.removeEventListener(
       "DOMMouseScroll",
       mouseConstraint.mouse.mousewheel,
@@ -195,12 +181,12 @@ export const Marble = () => {
       }
     };
 
-    Events.on(mouseConstraint, "mousedown", onMouseDown);
     mouseConstraint.mouse.element.addEventListener("touchstart", onTouchStart, {
       passive: true,
     });
     mouseConstraint.mouse.element.addEventListener("touchmove", onTouchMove);
     mouseConstraint.mouse.element.addEventListener("touchend", onTouchEnd);
+    Events.on(mouseConstraint, "mousedown", onMouseDown);
 
     const compositeArr: Body[] = [];
 
@@ -223,10 +209,11 @@ export const Marble = () => {
       }
     };
 
+    const runner = Runner.run(engine);
     void renderEvent();
 
     return () => {
-      Events.off(mouseConstraint, "mousedown", onMouseDown);
+      // NOTE: Remove Event
       mouseConstraint.mouse.element.removeEventListener(
         "touchstart",
         onTouchStart,
@@ -236,10 +223,13 @@ export const Marble = () => {
         onTouchMove,
       );
       mouseConstraint.mouse.element.removeEventListener("touchend", onTouchEnd);
+      Events.off(mouseConstraint, "mousedown", onMouseDown);
 
+      // NOTE: End of Drawing Objects
       Runner.stop(runner);
       Render.stop(render);
-      World.clear(world, true);
+      World.clear(world, false);
+      Engine.clear(engine);
     };
   }, [ballList, engine, isMobile]);
 
