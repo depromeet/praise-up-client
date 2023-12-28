@@ -24,7 +24,6 @@ const DUMMY_DATE = [
 ];
 
 export const ToMyArchive = () => {
-  console.log(DUMMY_DATE.reverse());
   return (
     <section className="flex flex-col gap-5">
       <h2 className="text-h2">나의 칭찬 게시물</h2>

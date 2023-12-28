@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CountBadge } from "./count-badge";
+import { Timer } from "./timer-badge";
 
 import * as BackgroundSVG from "@/assets/card-background";
 import { ShareSVG } from "@/assets/share";
-import { useTimer } from "@/hooks/useTimer";
 
 interface RecentCardProps {
   keyword: string;
   count: number;
-  openDatetime: Date;
+  openDatetime: string;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -22,7 +22,6 @@ export const RecentCard = ({
   openDatetime,
 }: RecentCardProps) => {
   const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 11));
-  const { hour, min, sec } = useTimer(openDatetime);
 
   return (
     <div className="flex flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -42,12 +41,7 @@ export const RecentCard = ({
           </h2>
           <CountBadge count={count} />
         </div>
-        <div className="flex items-center justify-center gap-0.5 rounded-3 bg-[#ffffffcc] px-6 py-4 text-gray-800 backdrop-blur-[10px] ">
-          <span className="text-num-b2-strong">
-            {hour}:{min}:{sec}
-          </span>
-          <span className="text-b3-compact">이후 반응을 볼 수 있어요</span>
-        </div>
+        <Timer openDatetime={openDatetime} />
       </div>
       <div className="flex w-full items-start justify-center gap-2">
         <button className="aspect-square rounded-2 bg-gray-300 p-[15px]">
