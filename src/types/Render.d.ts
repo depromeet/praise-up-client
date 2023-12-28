@@ -1,6 +1,6 @@
-import 'matter-js';
+import "matter-js";
 
-declare module 'matter-js' {
+declare module "matter-js" {
   export interface Mouse {
     mousedown(e?: Event): void;
     mouseup(e?: Event): void;
@@ -9,5 +9,14 @@ declare module 'matter-js' {
   }
   export interface IBodyRenderOptions {
     text?: { content: string; color?: string; size?: number; family?: string };
+  }
+
+  export interface IEvent {
+    mouse: {
+      mouseupPosition: {
+        x: number;
+        y: number;
+      };
+    };
   }
 }

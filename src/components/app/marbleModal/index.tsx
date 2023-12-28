@@ -12,6 +12,7 @@ import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
+import { GlobalPortal } from "@/GlobalPortal";
 
 interface IMarbleModal {
   isOpen: boolean;
@@ -64,23 +65,22 @@ export const MarbleModal = ({
     console.log(isViewedMarbleList);
   }, [isViewedMarbleList]);
 
-  //   useEffect(() => {
-  //     if (isOpen) document.body.classList.add("overflow-hidden");
+  useEffect(() => {
+    if (isOpen) document.body.classList.add("overflow-hidden");
 
-  //     return () => {
-  //       document.body.classList.remove("overflow-hidden");
-  //     };
-  //   }, [isOpen]);
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
 
-  const handleClickDim: MouseEventHandler = (e) => {
-    e.stopPropagation();
+  const handleClickDim: MouseEventHandler = () => {
     setIsOpen(false);
   };
 
   if (!isOpen) return null;
 
   return (
-    <div>
+    <GlobalPortal.Consumer>
       <dialog className="scroll-none fixed left-1/2 top-0 z-40 block h-fit w-full -translate-x-1/2 translate-y-1/2">
         <div>
           {!!selectedMarble && !!swiperOptions && (
@@ -109,6 +109,6 @@ export const MarbleModal = ({
         onClick={handleClickDim}
         className="fixed left-0 top-0 z-20 h-full w-full bg-[#E0E2E6]/60 backdrop-blur-[20px]"
       />
-    </div>
+    </GlobalPortal.Consumer>
   );
 };

@@ -9,6 +9,7 @@ import {
   Runner,
   Body,
   IEvent,
+  Query,
 } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
@@ -136,7 +137,7 @@ export const Marble = () => {
       );
       mouseConstraint.mouse.element.addEventListener("touchmove", onTouchMove);
       mouseConstraint.mouse.element.addEventListener("touchend", onTouchEnd);
-      Events.on(mouseConstraint, "mousedown", onMouseDown);
+      Events.on(mouseConstraint, "mouseup", onMouseUp);
     };
 
     // NOTE: Remove custom Event
@@ -150,18 +151,15 @@ export const Marble = () => {
         onTouchMove,
       );
       mouseConstraint.mouse.element.removeEventListener("touchend", onTouchEnd);
-      Events.off(mouseConstraint, "mousedown", onMouseDown);
+      Events.off(mouseConstraint, "mouseup", onMouseUp);
     };
 
-    // Event handlers
-    const onMouseDown = (e: IEvent<MouseConstraint>) => {
-      if (isScrolling) {
-        isScrolling = false;
-        return;
-      }
-      if (isMobile) return;
+    // Event Handler
+    const onMouseUp = (e: IEvent<MouseConstraint>) => {
+      const { x, y } = e.mouse.mouseupPosition;
+      const bodiesUnderMouse = Query.point(engine.world.bodies, { x, y });
 
-      const selectedBody = e.source.body;
+      const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
         setSelectedMarble(selectedBody);
       }
