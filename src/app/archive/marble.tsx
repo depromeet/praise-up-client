@@ -93,8 +93,9 @@ export const Marble = () => {
         wireframes: false,
       },
     });
+    const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: Mouse.create(render.canvas),
+      mouse,
       constraint: {
         stiffness: 0,
         render: {
@@ -108,6 +109,11 @@ export const Marble = () => {
 
     // NOTE: Remove default Event
     const removeDefaultEvent = () => {
+      Mouse.clearSourceEvents(mouse);
+      mouseConstraint.mouse.element.removeEventListener(
+        "mousewheel",
+        mouseConstraint.mouse.mousewheel,
+      );
       mouseConstraint.mouse.element.removeEventListener(
         "DOMMouseScroll",
         mouseConstraint.mouse.mousewheel,
