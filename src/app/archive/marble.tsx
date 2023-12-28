@@ -12,8 +12,8 @@ import {
 } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
-import ballTexture from "@/assets/marble_01/marble_01_2x.webp";
-import ballTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
+import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
+import marbleTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
 import tempData from "@/data/tempData.json";
 import Render from "@/lib/RenderExtension";
@@ -36,9 +36,9 @@ const Title = () => {
 export const Marble = () => {
   const [engine, setEngine] = useState<Engine>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [ballList, setBallList] = useState<Body[]>([]);
-  const [selectedBall, setSelectedBall] = useState<Body>();
-  const [isViewedBallList, setIsViewedBallList] = useState<number[]>([]);
+  const [marbleList, setMarbleList] = useState<Body[]>([]);
+  const [selectedMarble, setSelectedMarble] = useState<Body>();
+  const [isViewedMarbleList, setIsViewedMarbleList] = useState<number[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasScrollRef = useRef<HTMLDivElement>(null);
@@ -57,19 +57,19 @@ export const Marble = () => {
     // TODO: server Data
     if (!tempData.data.length) return;
 
-    const balls = tempData.data.map((ballData) => {
-      return Bodies.circle(width / 2, -200, ASSET_WIDTH.ball, {
-        id: ballData.id,
-        label: "ball",
+    const marbles = tempData.data.map((marbleData) => {
+      return Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
+        id: marbleData.id,
+        label: "marble",
         restitution: 0,
         render: {
           sprite: {
-            texture: ballData.id % 2 === 0 ? ballTexture : ballTexture_2,
+            texture: marbleData.id % 2 === 0 ? marbleTexture : marbleTexture_2,
             xScale: 0.48,
             yScale: 0.48,
           },
           text: {
-            content: ballData.user,
+            content: marbleData.user,
             color: "#667080",
             size: 14,
           },
@@ -77,14 +77,11 @@ export const Marble = () => {
       });
     });
 
-    setBallList(balls);
+    setMarbleList(marbles);
   }, []);
 
   useEffect(() => {
-    if (!engine || !ballList.length) return;
-
-    let isScrolling = false;
-    const { world } = engine;
+    if (!engine || !marbleList.length) return;
 
     const render = Render.create({
       engine,
@@ -96,27 +93,6 @@ export const Marble = () => {
         wireframes: false,
       },
     });
-
-    // NOTE: walls object
-    const floor = Bodies.rectangle(width / 2, height, width, ASSET_WIDTH.wall, {
-      ...WALL_OPTIONS,
-    });
-    const right = Bodies.rectangle(
-      width,
-      height / 2,
-      ASSET_WIDTH.wall,
-      height,
-      {
-        ...WALL_OPTIONS,
-      },
-    );
-    const left = Bodies.rectangle(0, height / 2, ASSET_WIDTH.wall, height, {
-      ...WALL_OPTIONS,
-    });
-
-    World.add(world, [floor, right, left]);
-
-    // add mouse control
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: Mouse.create(render.canvas),
       constraint: {
@@ -126,26 +102,59 @@ export const Marble = () => {
         },
       },
     });
+    const { world } = engine;
+    const compositeArr: Body[] = [];
+    let isScrolling = false;
 
     // NOTE: Remove default Event
-    mouseConstraint.mouse.element.removeEventListener(
-      "DOMMouseScroll",
-      mouseConstraint.mouse.mousewheel,
-    );
-    mouseConstraint.mouse.element.removeEventListener(
-      "touchstart",
-      mouseConstraint.mouse.mousedown,
-    );
-    mouseConstraint.mouse.element.removeEventListener(
-      "touchmove",
-      mouseConstraint.mouse.mousemove,
-    );
-    mouseConstraint.mouse.element.removeEventListener(
-      "touchend",
-      mouseConstraint.mouse.mouseup,
-    );
+    const removeDefaultEvent = () => {
+      mouseConstraint.mouse.element.removeEventListener(
+        "DOMMouseScroll",
+        mouseConstraint.mouse.mousewheel,
+      );
+      mouseConstraint.mouse.element.removeEventListener(
+        "touchstart",
+        mouseConstraint.mouse.mousedown,
+      );
+      mouseConstraint.mouse.element.removeEventListener(
+        "touchmove",
+        mouseConstraint.mouse.mousemove,
+      );
+      mouseConstraint.mouse.element.removeEventListener(
+        "touchend",
+        mouseConstraint.mouse.mouseup,
+      );
+    };
 
     // NOTE: Add custom Event
+    const addCustomEvent = () => {
+      mouseConstraint.mouse.element.addEventListener(
+        "touchstart",
+        onTouchStart,
+        {
+          passive: true,
+        },
+      );
+      mouseConstraint.mouse.element.addEventListener("touchmove", onTouchMove);
+      mouseConstraint.mouse.element.addEventListener("touchend", onTouchEnd);
+      Events.on(mouseConstraint, "mousedown", onMouseDown);
+    };
+
+    // NOTE: Remove custom Event
+    const removeCustomEvent = () => {
+      mouseConstraint.mouse.element.removeEventListener(
+        "touchstart",
+        onTouchStart,
+      );
+      mouseConstraint.mouse.element.removeEventListener(
+        "touchmove",
+        onTouchMove,
+      );
+      mouseConstraint.mouse.element.removeEventListener("touchend", onTouchEnd);
+      Events.off(mouseConstraint, "mousedown", onMouseDown);
+    };
+
+    // Event handlers
     const onMouseDown = (e: IEvent<MouseConstraint>) => {
       if (isScrolling) {
         isScrolling = false;
@@ -154,8 +163,8 @@ export const Marble = () => {
       if (isMobile) return;
 
       const clickedBody = e.source.body;
-      if (clickedBody && clickedBody.label === "ball") {
-        setSelectedBall(clickedBody);
+      if (clickedBody && clickedBody.label === "marble") {
+        setSelectedMarble(clickedBody);
       }
     };
 
@@ -176,22 +185,48 @@ export const Marble = () => {
       }
 
       const selectedBody = mouseConstraint.body;
-      if (selectedBody && selectedBody.label === "ball") {
-        setSelectedBall(selectedBody);
+      if (selectedBody && selectedBody.label === "marble") {
+        setSelectedMarble(selectedBody);
       }
     };
 
-    mouseConstraint.mouse.element.addEventListener("touchstart", onTouchStart, {
-      passive: true,
-    });
-    mouseConstraint.mouse.element.addEventListener("touchmove", onTouchMove);
-    mouseConstraint.mouse.element.addEventListener("touchend", onTouchEnd);
-    Events.on(mouseConstraint, "mousedown", onMouseDown);
+    // NOTE: Setup functions
+    const setupWallsObject = () => {
+      const floor = Bodies.rectangle(
+        width / 2,
+        height,
+        width,
+        ASSET_WIDTH.wall,
+        {
+          ...WALL_OPTIONS,
+        },
+      );
+      const right = Bodies.rectangle(
+        width,
+        height / 2,
+        ASSET_WIDTH.wall,
+        height,
+        {
+          ...WALL_OPTIONS,
+        },
+      );
+      const left = Bodies.rectangle(0, height / 2, ASSET_WIDTH.wall, height, {
+        ...WALL_OPTIONS,
+      });
 
-    const compositeArr: Body[] = [];
+      World.add(world, [floor, right, left]);
+    };
 
-    const spreadBall = async (ball: Body) => {
-      compositeArr.push(ball);
+    const setupMouseConstraint = () => {
+      removeDefaultEvent();
+      addCustomEvent();
+
+      World.add(world, mouseConstraint);
+    };
+
+    // NOTE: Rendering functions
+    const renderMarbleObject = async (marble: Body) => {
+      compositeArr.push(marble);
       World.add(world, compositeArr);
 
       await setWaitTime(80);
@@ -201,84 +236,78 @@ export const Marble = () => {
     };
 
     const renderEvent = async () => {
-      World.add(world, mouseConstraint);
+      setupWallsObject();
+      setupMouseConstraint();
+
       Render.run(render);
 
-      for (const ball of ballList) {
-        await spreadBall(ball);
+      for (const marble of marbleList) {
+        await renderMarbleObject(marble);
       }
     };
 
     const runner = Runner.run(engine);
     void renderEvent();
 
+    // NOTE: Initialize of Canvas
     return () => {
-      // NOTE: Remove Event
-      mouseConstraint.mouse.element.removeEventListener(
-        "touchstart",
-        onTouchStart,
-      );
-      mouseConstraint.mouse.element.removeEventListener(
-        "touchmove",
-        onTouchMove,
-      );
-      mouseConstraint.mouse.element.removeEventListener("touchend", onTouchEnd);
-      Events.off(mouseConstraint, "mousedown", onMouseDown);
+      removeCustomEvent();
 
-      // NOTE: End of Drawing Objects
       Runner.stop(runner);
       Render.stop(render);
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [ballList, engine, isMobile]);
+  }, [marbleList, engine, isMobile]);
 
   useEffect(() => {
-    setIsOpen(!!selectedBall);
-  }, [selectedBall]);
+    setIsOpen(!!selectedMarble);
+  }, [selectedMarble]);
 
   useEffect(() => {
-    if (!selectedBall || !engine) return;
+    if (!selectedMarble || !engine) return;
+
     if (isOpen) {
-      selectedBall.render.opacity = 0;
-      Body.setStatic(selectedBall, true);
-      Body.setPosition(selectedBall, { x: width / 2, y: -200 });
+      selectedMarble.render.opacity = 0;
+      Body.setStatic(selectedMarble, true);
+      Body.setPosition(selectedMarble, { x: width / 2, y: -200 });
       return;
     }
 
     engine.world.bodies
-      .filter((body) => body.label === "ball")
+      .filter((body) => body.label === "marble")
       .forEach((body) => {
         const isViewed =
-          isViewedBallList.findIndex((ballId) => ballId === body.id) !== -1;
+          isViewedMarbleList.findIndex((marbleId) => marbleId === body.id) !==
+          -1;
 
         if (isViewed && body.render.sprite) {
-          body.render.sprite.texture = ballTexture;
+          body.render.sprite.texture = marbleTexture;
         }
       });
 
-    World.remove(engine.world, selectedBall);
+    World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
-      Bodies.circle(width / 2, -200, ASSET_WIDTH.ball, {
-        id: selectedBall.id,
-        label: "ball",
+      Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
+        id: selectedMarble.id,
+        label: "marble",
         restitution: 0,
         render: {
           sprite: {
-            texture: ballTexture,
+            texture: marbleTexture,
             xScale: 0.48,
             yScale: 0.48,
           },
           text: {
-            content: selectedBall.render.text?.content || "",
+            content: selectedMarble.render.text?.content || "",
             color: "#667080",
             size: 14,
           },
         },
       }),
     );
-    setSelectedBall(undefined);
+    setSelectedMarble(undefined);
   }, [isOpen]);
 
   return (

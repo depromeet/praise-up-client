@@ -1,6 +1,6 @@
 export const ASSET_WIDTH = {
   wall: 10,
-  ball: 50,
+  marble: 50,
 };
 
 export const WALL_OPTIONS = {
