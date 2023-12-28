@@ -1,17 +1,14 @@
-type ButtonProps = {
-  text: string;
-} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
+import { ButtonProps, FilledButton } from "./FilledButton";
 
-export const SingleButton = ({ text, ...props }: ButtonProps) => {
+type SingleButtonProps = {
+  mainButton: ButtonProps;
+};
+
+/** 싱글 버튼 컴포넌트, 메인 버튼(mainButton)을 필요로 합니다. */
+export const SingleButton = ({ mainButton }: SingleButtonProps) => {
   return (
     <div className="w-360px h-98px px-20px pb-32px pt-12px">
-      <button
-        type="button"
-        className="flex h-54px w-full items-center justify-center rounded-2 border bg-[#242B37] py-16px font-semibold text-white"
-        {...props}
-      >
-        {text}
-      </button>
+      <FilledButton {...mainButton} />
     </div>
   );
 };
