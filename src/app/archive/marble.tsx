@@ -20,6 +20,12 @@ import Render from "@/lib/RenderExtension";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
+interface IMarbleObject {
+  id: number;
+  texture: string;
+  textContent: string;
+}
+
 const Title = () => {
   return (
     <div className="relative z-10">
@@ -58,23 +64,9 @@ export const Marble = () => {
     if (!tempData.data.length) return;
 
     const marbles = tempData.data.map((marbleData) => {
-      return Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
-        id: marbleData.id,
-        label: "marble",
-        restitution: 0,
-        render: {
-          sprite: {
-            texture: marbleData.id % 2 === 0 ? marbleTexture : marbleTexture_2,
-            xScale: 0.48,
-            yScale: 0.48,
-          },
-          text: {
-            content: marbleData.user,
-            color: "#667080",
-            size: 14,
-          },
-        },
-      });
+      const { id, user: textContent } = marbleData;
+      const texture = marbleData.id % 2 === 0 ? marbleTexture : marbleTexture_2;
+      return createMarbleObject({ id, texture, textContent });
     });
 
     setMarbleList(marbles);
@@ -295,26 +287,34 @@ export const Marble = () => {
     World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
-      Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
+      createMarbleObject({
         id: selectedMarble.id,
-        label: "marble",
-        restitution: 0,
-        render: {
-          sprite: {
-            texture: marbleTexture,
-            xScale: 0.48,
-            yScale: 0.48,
-          },
-          text: {
-            content: selectedMarble.render.text?.content || "",
-            color: "#667080",
-            size: 14,
-          },
-        },
+        texture: marbleTexture,
+        textContent: selectedMarble.render.text?.content || "",
       }),
     );
     setSelectedMarble(undefined);
   }, [isOpen]);
+
+  const createMarbleObject = ({ id, texture, textContent }: IMarbleObject) => {
+    return Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
+      id,
+      label: "marble",
+      restitution: 0,
+      render: {
+        sprite: {
+          texture,
+          xScale: 0.48,
+          yScale: 0.48,
+        },
+        text: {
+          content: textContent,
+          color: "#667080",
+          size: 14,
+        },
+      },
+    });
+  };
 
   return (
     <div>
