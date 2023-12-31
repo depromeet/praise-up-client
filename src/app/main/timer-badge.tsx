@@ -1,38 +1,7 @@
-import { useEffect, useState } from "react";
-
-import { useInterval } from "@/hooks/useInterval";
-
-interface TimeLeftType {
-  hour: number;
-  min: number;
-  sec: number;
-}
+import { useTimer } from "@/hooks/useTimer";
 
 export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
-  const [delay, setDelay] = useState<number | null>(1000);
-  const [diff, setDiff] = useState(() =>
-    Math.floor((+new Date(openDatetime) - +new Date()) / 1000),
-  );
-  const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
-    hour: 0,
-    min: 0,
-    sec: 0,
-  });
-
-  useInterval(() => {
-    setDiff((diff) => diff - 1);
-    setTimeLeft((prev) => ({
-      hour: Math.floor((diff / (60 * 60)) % 24),
-      min: Math.floor((diff / 60) % 60),
-      sec: Math.floor(diff % 60),
-    }));
-  }, delay);
-
-  useEffect(() => {
-    if (diff <= 0) {
-      setDelay(null);
-    }
-  }, [diff]);
+  const { diff, timeLeft } = useTimer({ openDatetime });
 
   return (
     <div className="flex items-center justify-center gap-0.5 rounded-3 bg-[#ffffffcc] px-6 py-4 text-gray-800 backdrop-blur-[10px] ">
