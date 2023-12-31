@@ -1,37 +1,48 @@
+import clsx from "clsx";
+
 import { PastCard } from "./past-card";
 
-const DUMMY_DATE = [
-  {
-    imgUrl:
-      "https://cdn.pixabay.com/photo/2021/02/02/07/51/clover-5973019_640.jpg",
-    count: 10,
-    date: new Date("2023-02-11"),
-    keyword: "새로운",
-  },
-  {
-    imgUrl:
-      "https://i.pinimg.com/originals/3d/96/a2/3d96a2b1cd17b083515e651e3c49158c.jpg",
-    count: 23,
-    date: new Date("2023-05-13"),
-    keyword: "신나는",
-  },
-  {
-    imgUrl: "https://pbs.twimg.com/media/EA9UJBjU4AAdkCm.jpg",
-    count: 19,
-    date: new Date("2023-11-12"),
-    keyword: "굉장한",
-  },
-];
+import { EmptyArchiveSVG } from "@/assets/empty-archive";
 
-export const ToMyArchive = () => {
+interface ArchiveDataType {
+  imgUrl: string;
+  count: number;
+  date: Date;
+  keyword: string;
+}
+
+interface ToMyArchiveProps {
+  archive: ArchiveDataType[]; // temp data type
+}
+
+export const ToMyArchive = ({ archive }: ToMyArchiveProps) => {
   return (
     <section className="flex flex-col gap-5">
       <h2 className="text-h2">나의 칭찬 게시물</h2>
-      <div className="grid grid-cols-2 gap-2">
-        {[...DUMMY_DATE].reverse().map((d, i) => (
-          <PastCard key={i} {...d} />
-        ))}
-      </div>
+      {archive.length === 0 ? (
+        <div
+          className={clsx(
+            "flex w-full flex-col items-center justify-center gap-2.5 py-[76px]",
+          )}
+        >
+          <EmptyArchiveSVG />
+          <div className={clsx("flex flex-col items-center gap-1")}>
+            <span className={clsx("text-b2-strong")}>
+              {" "}
+              아직 공개된 칭찬게시물이 없어요
+            </span>
+            <span className={clsx("text-b3-compact")}>
+              공개 된 칭찬게시물은 이곳에 자동으로 나열돼요
+            </span>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-2">
+          {[...archive].reverse().map((d, i) => (
+            <PastCard key={i} {...d} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };
