@@ -35,7 +35,8 @@ export const Main = () => {
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
         <ToBeOpen />
-        <ToMyArchive archive={DUMMY_DATA} />
+        {<ToMyArchive archive={DUMMY_DATA} />}
+        {/*<ToMyArchive archive={[]} />*/}
       </div>
     </DefaultLayout>
   );
