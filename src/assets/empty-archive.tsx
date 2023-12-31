@@ -5,7 +5,7 @@ export const EmptyArchiveSVG = () => (
     viewBox="0 0 102 102"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
   >
     <rect x="0.5" width="101" height="102" fill="url(#pattern0)" />
     <defs>
