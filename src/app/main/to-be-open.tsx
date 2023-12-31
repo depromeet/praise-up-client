@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { RecentCard } from "./recent-card";
 
+import { Carousel } from "@/components/app/carousel";
+
 export const ToBeOpen = () => {
   /* 예제 시간 */
   const now = new Date();
@@ -11,7 +13,10 @@ export const ToBeOpen = () => {
   return (
     <div className="flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공계 예정 칭찬게시물</h2>
-      <RecentCard keyword={"센스있는"} count={48} openDatetime={testAfter} />
+      <Carousel>
+        <RecentCard keyword="신나는" count={48} openDatetime={testBefore} />
+        <RecentCard keyword="재미있는" count={12} openDatetime={testAfter} />
+      </Carousel>
     </div>
   );
 };
