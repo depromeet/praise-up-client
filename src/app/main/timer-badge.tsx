@@ -20,10 +20,8 @@ export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
   });
 
   useInterval(() => {
-    console.log(diff);
     setDiff((diff) => diff - 1);
     setTimeLeft((prev) => ({
-      ...prev,
       hour: Math.floor((diff / (60 * 60)) % 24),
       min: Math.floor((diff / 60) % 60),
       sec: Math.floor(diff % 60),
