@@ -6,7 +6,7 @@ import { ToMyArchive } from "./to-my-archive";
 
 import { DefaultLayout } from "@/components/layout/default";
 
-const DUMMY_DATE = [
+const DUMMY_DATA = [
   {
     imgUrl:
       "https://cdn.pixabay.com/photo/2021/02/02/07/51/clover-5973019_640.jpg",
@@ -35,7 +35,7 @@ export const Main = () => {
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
         <ToBeOpen />
-        <ToMyArchive archive={DUMMY_DATE} />
+        <ToMyArchive archive={DUMMY_DATA} />
       </div>
     </DefaultLayout>
   );
