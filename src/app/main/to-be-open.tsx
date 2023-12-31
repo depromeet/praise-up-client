@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { RecentCard } from "./recent-card";
 
-import { Carousel } from "@/components/app/carousel";
+import { Carousel } from "@/components/common/carousel";
 
 export const ToBeOpen = () => {
   /* 예제 시간 */

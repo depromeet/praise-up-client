@@ -14,14 +14,14 @@ interface RecentCardProps {
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
 const BACKGROUNDS = [...Object.values(BackgroundSVG).sort()];
-const DARK_BACKGROUNDS = [2, 4, 10, 11, 12, 14, 17, 18];
+const DARK_BACKGROUNDS = [2, 4, 10, 11];
 
 export const RecentCard = ({
   keyword,
   count,
   openDatetime,
 }: RecentCardProps) => {
-  const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 18));
+  const [idx, setIdx] = useState<number>(11);
 
   return (
     <div className="flex cursor-move flex-col items-center gap-4 rounded-4 bg-white p-4">
