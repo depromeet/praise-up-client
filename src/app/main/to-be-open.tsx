@@ -14,8 +14,8 @@ export const ToBeOpen = () => {
     <div className="flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공계 예정 칭찬게시물</h2>
       <Carousel>
-        <RecentCard keyword="신나는" count={48} openDatetime={testBefore} />
-        <RecentCard keyword="재미있는" count={12} openDatetime={testAfter} />
+        <RecentCard keyword="신나는" count={48} openDatetime={testAfter} />
+        <RecentCard keyword="재미있는" count={12} openDatetime={testBefore} />
       </Carousel>
     </div>
   );

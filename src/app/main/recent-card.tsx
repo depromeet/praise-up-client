@@ -21,7 +21,7 @@ export const RecentCard = ({
   count,
   openDatetime,
 }: RecentCardProps) => {
-  const [idx, setIdx] = useState<number>(11);
+  const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 11));
 
   return (
     <div className="flex cursor-move flex-col items-center gap-4 rounded-4 bg-white p-4">

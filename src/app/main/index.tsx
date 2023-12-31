@@ -31,7 +31,7 @@ const DUMMY_DATE = [
 
 export const Main = () => {
   return (
-    <DefaultLayout>
+    <DefaultLayout isMain>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
         <ToBeOpen />
