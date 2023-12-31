@@ -48,7 +48,7 @@ export default {
         secondary: "#333E4C",
         teritary: "#667080",
         disabled: "#A1A9B3",
-        on_color: "#FFFFFF",
+        oncolor: "#FFFFFF",
         negative: "#EE324B",
         active: "#338AFF",
       },
