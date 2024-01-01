@@ -17,6 +17,7 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { MarbleDetailCard } from "@/components/app/marbleDetailCard";
+import { Back } from "@/icons/back";
 
 interface IMarbleModal {
   isOpen: boolean;
@@ -36,7 +37,7 @@ export const MarbleModal = ({
   setIsViewedMarbleList,
 }: IMarbleModal) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
-  const [activeMarbleId, setActiveMarbleId] = useState<number>(-1);
+  const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
 
   useEffect(() => {
     if (!swiperOptions && selectedMarble && marbleList.length) {
@@ -50,8 +51,8 @@ export const MarbleModal = ({
         ),
         modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
-          const activeDataId = marbleList[swiper.realIndex].id;
-          setActiveMarbleId(activeDataId);
+          const activeMarbleIdx = swiper.realIndex;
+          setActiveMarbleIdx(activeMarbleIdx);
         },
         pagination: {
           type: "bullets",
@@ -62,13 +63,14 @@ export const MarbleModal = ({
   }, [swiperOptions, selectedMarble, marbleList]);
 
   useEffect(() => {
-    if (activeMarbleId === -1) return;
+    if (activeMarbleIdx === -1) return;
 
+    const activeMarbleId = marbleList[activeMarbleIdx].id;
     const updatedIsViewedMarbleList = [
       ...new Set([...isViewedMarbleList, activeMarbleId]),
     ];
     setIsViewedMarbleList(updatedIsViewedMarbleList);
-  }, [activeMarbleId]);
+  }, [activeMarbleIdx]);
 
   useEffect(() => {
     console.log(isViewedMarbleList);
@@ -90,8 +92,18 @@ export const MarbleModal = ({
 
   return (
     <>
-      <dialog className="scroll-none fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
-        <div className="h-16">Temp Header</div>
+      <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
+        <div className="relative box-border flex h-16 w-full items-center justify-center px-[16px]">
+          <button
+            onClick={handleClickDim}
+            className="absolute left-[16px] h-[44px] w-[44px] cursor-pointer"
+          >
+            <Back />
+          </button>
+          <p className="font-medium text-gray-800">{`${activeMarbleIdx + 1} / ${
+            marbleList.length
+          }`}</p>
+        </div>
         {!!selectedMarble && !!swiperOptions && (
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
