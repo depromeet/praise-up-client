@@ -8,7 +8,7 @@ declare module "matter-js" {
     mousewheel(e?: Event): void;
   }
   export interface IBodyRenderOptions {
-    text?: { content: string; color?: string; size?: number; family?: string };
+    text?: { content: string; color: string; size?: number; family?: string };
   }
 
   export interface IEvent {

@@ -14,7 +14,9 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
+import marbleIsViewedTexture from "@/assets/marble_01/marble_01_isViewed_2x.webp";
 import marbleTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
+import marbleIsViewedTexture_2 from "@/assets/marble_02/marble_02_isViewed_2x.webp";
 import { MarbleModal } from "@/components/app/marbleModal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
 import tempData from "@/data/tempData.json";
@@ -26,6 +28,7 @@ interface IMarbleObject {
   id: number;
   texture: string;
   textContent: string;
+  isViewed?: boolean;
 }
 
 const Title = () => {
@@ -278,8 +281,11 @@ export const Marble = () => {
           isViewedMarbleList.findIndex((marbleId) => marbleId === body.id) !==
           -1;
 
-        if (isViewed && body.render.sprite) {
-          body.render.sprite.texture = marbleTexture;
+        console.log(body);
+        if (isViewed && body.render.sprite && body.render.text) {
+          body.render.sprite.texture =
+            body.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
+          body.render.text.color = "#a1a9b2";
         }
       });
 
@@ -288,14 +294,23 @@ export const Marble = () => {
       engine.world,
       createMarbleObject({
         id: selectedMarble.id,
-        texture: marbleTexture,
+        texture:
+          selectedMarble.id % 2 === 0
+            ? marbleIsViewedTexture
+            : marbleIsViewedTexture_2,
         textContent: selectedMarble.render.text?.content || "",
+        isViewed: true,
       }),
     );
     setSelectedMarble(undefined);
   }, [isOpen]);
 
-  const createMarbleObject = ({ id, texture, textContent }: IMarbleObject) => {
+  const createMarbleObject = ({
+    id,
+    texture,
+    textContent,
+    isViewed = false,
+  }: IMarbleObject) => {
     return Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
       id,
       label: "marble",
@@ -308,7 +323,7 @@ export const Marble = () => {
         },
         text: {
           content: textContent,
-          color: "#667080",
+          color: isViewed ? "#a1a9b2" : "#667080",
           size: 14,
         },
       },
