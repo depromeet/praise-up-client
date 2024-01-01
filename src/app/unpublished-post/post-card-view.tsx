@@ -9,6 +9,7 @@ interface PostCardViewProps {
   keyword: string;
   imgUrl: string;
   content: string;
+  isReadyCard?: boolean;
   children: ReactNode;
 }
 
@@ -32,9 +33,20 @@ export const PostCardView = ({
   keyword,
   imgUrl,
   content,
+  isReadyCard = false,
   children,
 }: PostCardViewProps) => {
   const [showMenu, toggleShowMenu] = useReducer((prev) => !prev, false);
+  const [transStyle, toggleTransStyle] = useReducer(
+    (prev: string) =>
+      prev.includes("rotateY(180deg)") ? "none" : "rotateY(180deg)",
+    isReadyCard ? "none" : "rotateY(180deg)",
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => toggleTransStyle(), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <PostCardViewContext.Provider
@@ -48,7 +60,12 @@ export const PostCardView = ({
         toggleShowMenu,
       }}
     >
-      <div className="flex flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5">
+      <div
+        className=" rounded-4 absolute flex w-full flex-col items-start gap-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] "
+        style={{
+          transform: transStyle,
+        }}
+      >
         {children}
       </div>
     </PostCardViewContext.Provider>
@@ -56,7 +73,8 @@ export const PostCardView = ({
 };
 
 const Title = () => {
-  const { username, keyword, showMenu, toggleShowMenu } = usePostCardView();
+  const { username, keyword, showMenu, toggleShowMenu }: PostCardContextProps =
+    usePostCardView();
 
   return (
     <div className="flex w-full justify-between">
@@ -77,7 +95,7 @@ const Title = () => {
           onClick={(e) => {
             console.log("삭제하기 클릭");
           }}
-          className="fixed right-9 top-[240px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
+          className="rounded-3 fixed right-9 top-[240px] z-10 flex h-11 items-center bg-white px-4 py-3"
         >
           <span className="text-b3-compact">삭제하기</span>
         </div>
@@ -98,21 +116,36 @@ const Image = () => {
 
   return (
     <div
-      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
-        background: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
+        backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
         backgroundSize: "cover",
       }}
     >
-      <div className="">
-        <p ref={contentRef} className="text-b2-long text-gray-50">
-          {content}
-        </p>
-        <span className="text-num-b3 text-oncolor">23.12.16</span>
-      </div>
+      <p ref={contentRef} className="text-b2-long text-gray-50">
+        {content}
+      </p>
+      <span className="text-num-b3 text-oncolor">23.12.16</span>
     </div>
+  );
+};
+
+const Preview = () => {
+  // TODO: 메인 페이지 브랜치 병합 후 저장되어있는 일러스트 랜덤으로 받아오는 코드로 변경
+  const imgUrl =
+    "https://media.hellobot.co/fixedmenu/%E1%84%89%E1%85%B5%E1%84%85%E1%85%A9_%E1%84%8B%E1%85%A1%E1%84%86%E1%85%AE%20%E1%84%8B%E1%85%B5%E1%84%85%E1%85%B3%E1%86%B7%20%E1%84%8C%E1%85%B5%E1%86%BA%E1%84%80%E1%85%B5.png";
+
+  return (
+    <div
+      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      style={{
+        backgroundImage: `url(${imgUrl})`,
+        backgroundSize: "cover",
+      }}
+    />
   );
 };
 
 PostCardView.Title = Title;
 PostCardView.Image = Image;
+PostCardView.Preview = Preview;

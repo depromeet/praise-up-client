@@ -38,17 +38,25 @@ export const UnpublishedPostPage = () => {
         <div className="flex flex-col gap-3">
           {/* timer 값으로는 메인페이지 개발시 구현한 useTimer 훅 사용 예정*/}
           <TimerCardView timer={"20:13:27"} />
-          <PostCardView {...DUMMY_DATA}>
-            <PostCardView.Title />
-            <PostCardView.Image />
-          </PostCardView>
+          <div className="perspective-1000 bg-transparent">
+            <div className="[transform-style: preserve-3d] relative">
+              <PostCardView {...DUMMY_DATA} isReadyCard>
+                <PostCardView.Title />
+                <PostCardView.Preview />
+              </PostCardView>
+              <PostCardView {...DUMMY_DATA}>
+                <PostCardView.Title />
+                <PostCardView.Image />
+              </PostCardView>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="fixed bottom-8 flex w-full -translate-x-5 justify-center px-5 pb-8 pt-3">
         {/* TODO: 추후에 공통 버튼 컴포넌트로 변경 */}
         <button
-          className="text-b2-strong absolute rounded-2 bg-primary px-[52px] py-4 text-oncolor"
+          className="text-b2-strong rounded-2 bg-primary text-oncolor absolute px-[52px] py-4"
           onClick={() => console.log("링크가 복사됨")}
         >
           링크 공유하고 칭찬 받기
