@@ -6,7 +6,6 @@ export const GlobalLayout = () => {
       <main className="h-full w-full">
         <Outlet />
       </main>
-      <div id="portal" className="mx-auto h-full w-full max-w-[480px]" />
     </>
   );
 };

@@ -1,9 +1,10 @@
 import { MarbleCard } from "@/components/app/marbleCard";
+import { DefaultLayout } from "@/components/layout/default";
 import { Arrow } from "@/icons/arrow";
 
 export const Preview = () => {
   return (
-    <>
+    <DefaultLayout>
       <div className="flex flex-col gap-9">
         <p className="text-xl font-semibold text-gray-800">
           공개 예정 칭찬게시물
@@ -18,6 +19,6 @@ export const Preview = () => {
           <Arrow />
         </div>
       </div>
-    </>
+    </DefaultLayout>
   );
 };
