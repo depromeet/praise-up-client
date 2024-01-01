@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { MarbleGridItem } from "@/components/app/marbleGridItem";
-import { DefaultLayout } from "@/components/layout/default";
 import tempData from "@/data/tempData.json";
 
 interface IMarble {
