@@ -1,4 +1,8 @@
-import "@/style/initSwiper.css";
+import "swiper/css/pagination";
+import "@/style/swiper/initSwiper.css";
+
+// custom pagination style
+import "@/style/swiper/archiveSwiperPagination.css";
 
 import { Body } from "matter-js";
 import {
@@ -9,10 +13,10 @@ import {
   useState,
 } from "react";
 import SwiperCore from "swiper";
+import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
-import { GlobalPortal } from "@/GlobalPortal";
+import { MarbleDetailCard } from "@/components/app/marbleDetailCard";
 
 interface IMarbleModal {
   isOpen: boolean;
@@ -44,9 +48,14 @@ export const MarbleModal = ({
         initialSlide: marbleList.findIndex(
           (marble) => marble.id === selectedMarble.id,
         ),
+        modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
           const activeDataId = marbleList[swiper.realIndex].id;
           setActiveMarbleId(activeDataId);
+        },
+        pagination: {
+          type: "bullets",
+          dynamicBullets: true,
         },
       });
     }
@@ -80,35 +89,23 @@ export const MarbleModal = ({
   if (!isOpen) return null;
 
   return (
-    <GlobalPortal.Consumer>
-      <dialog className="scroll-none fixed left-1/2 top-0 z-40 block h-fit w-full -translate-x-1/2 translate-y-1/2">
-        <div>
-          {!!selectedMarble && !!swiperOptions && (
-            <Swiper {...swiperOptions}>
-              {marbleList.map((marble) => (
-                <SwiperSlide key={marble.id} className="cursor-pointer">
-                  <div className="h-full w-full">
-                    <img
-                      src={marbleTexture}
-                      alt="modal"
-                      className="h-[300px] w-[300px] rounded-sm bg-white"
-                    />
-                  </div>
-                  <div className="sticky left-0 top-1/2 w-full">
-                    <p className="mx-auto w-fit">
-                      {marble.render.text?.content}
-                    </p>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
-        </div>
+    <>
+      <dialog className="scroll-none fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
+        <div className="h-16">Temp Header</div>
+        {!!selectedMarble && !!swiperOptions && (
+          <Swiper {...swiperOptions}>
+            {marbleList.map((marble) => (
+              <SwiperSlide key={marble.id} className="cursor-pointer">
+                <MarbleDetailCard />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </dialog>
       <div
         onClick={handleClickDim}
-        className="fixed left-0 top-0 z-20 h-full w-full bg-[#E0E2E6]/60 backdrop-blur-[20px]"
+        className="fixed top-0 z-20 mx-auto h-full w-full max-w-[480px] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
       />
-    </GlobalPortal.Consumer>
+    </>
   );
 };
