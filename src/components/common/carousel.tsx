@@ -11,8 +11,7 @@ export const Carousel = ({ children }: CarouselProps) => {
   const [mouseDownClientX, setMouseDownClientX] = useState(0);
 
   // mobile
-  const [tochedX, setTochedX] = useState(0);
-  const [tochedY, setTochedY] = useState(0);
+  const [touchedXY, setTouchedXY] = useState({ x: 0, y: 0 });
 
   const moveStyle: { [key: number]: string } = {};
   for (let i = 0; i < Children.count(children); i++) {
@@ -45,13 +44,15 @@ export const Carousel = ({ children }: CarouselProps) => {
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
-    setTochedX(e.changedTouches[0].pageX);
-    setTochedY(e.changedTouches[0].pageY);
+    setTouchedXY({
+      x: e.changedTouches[0].pageX,
+      y: e.changedTouches[0].pageY,
+    });
   };
 
   const onTouchEnd = (e: React.TouchEvent) => {
-    const distanceX = tochedX - e.changedTouches[0].pageX;
-    const distanceY = tochedY - e.changedTouches[0].pageY;
+    const distanceX = touchedXY.x - e.changedTouches[0].pageX;
+    const distanceY = touchedXY.y - e.changedTouches[0].pageY;
     const vector = Math.abs(distanceX / distanceY);
 
     if (distanceX > 50 && vector > 2) {
