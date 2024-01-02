@@ -73,10 +73,6 @@ export const MarbleModal = ({
   }, [activeMarbleIdx]);
 
   useEffect(() => {
-    console.log(isViewedMarbleList);
-  }, [isViewedMarbleList]);
-
-  useEffect(() => {
     if (isOpen) document.body.classList.add("overflow-hidden");
 
     return () => {

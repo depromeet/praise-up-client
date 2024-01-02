@@ -285,7 +285,6 @@ export const MarbleCanvas = ({ marbleList }: TMarbleCanvas) => {
           isViewedMarbleList.findIndex((marbleId) => marbleId === body.id) !==
           -1;
 
-        console.log(body);
         if (isViewed && body.render.sprite && body.render.text) {
           body.render.sprite.texture =
             body.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
