@@ -15,7 +15,7 @@ export const LinkAndGoButton = ({ openDatetime }: LinkAndGoButtonProps) => {
   const { diff } = useTimer(openDatetime);
 
   useEffect(() => {
-    setIsReveal(diff > 0);
+    setIsReveal(diff >= 0);
   }, [diff]);
 
   return (

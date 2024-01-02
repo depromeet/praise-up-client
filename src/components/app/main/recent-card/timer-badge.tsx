@@ -5,7 +5,7 @@ export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
 
   return (
     <div className="flex items-center justify-center gap-0.5 rounded-3 bg-[#ffffffcc] px-6 py-4 text-gray-800 backdrop-blur-[10px] ">
-      {diff <= 0 ? (
+      {diff < 0 ? (
         <span>이제 칭찬 구슬을 볼 수 있어요!</span>
       ) : (
         <>

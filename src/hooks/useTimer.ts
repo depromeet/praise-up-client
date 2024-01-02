@@ -28,7 +28,7 @@ export function useTimer(openDatetime: string) {
         sec: Math.floor(diff % 60),
       }));
     },
-    diff > 0 ? delay : null,
+    diff >= 0 ? delay : null,
   );
 
   return { diff, timeLeft };
