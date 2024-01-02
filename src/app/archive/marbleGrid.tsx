@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { MarbleGridItem } from "@/components/app/marbleGridItem";
 import { Switch } from "@/components/common/Switch";
-import tempData from "@/data/tempData.json";
+import { TMarble } from "@/types/archive";
 
-interface IMarble {
-  id: number;
-  imageUrl: string;
-  user: string;
-  content: string;
-}
+type TMarbleGrid = {
+  marbleList: TMarble[];
+};
 
-export const MarbleGrid = () => {
-  const [marbleList, setMarbleList] = useState<IMarble[]>();
+export const MarbleGrid = ({ marbleList }: TMarbleGrid) => {
   const [isFilteredViewedMarble, setIsFilteredViewedMarble] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    // TODO: server Data
-    if (!tempData.data.length) return;
-
-    setMarbleList(tempData.data);
-  }, []);
-
+  if (!marbleList.length) return null;
   return (
     <div className="relative mx-auto box-border w-full max-w-[480px] px-[20px]">
       <div className="h-16">Temp Header</div>
