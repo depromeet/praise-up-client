@@ -6,7 +6,7 @@ interface TimerCardProps {
 
 export const TimerCardView = ({ timer }: TimerCardProps) => {
   return (
-    <div className="flex items-center gap-2 rounded-3 bg-blue-400 px-4 py-2">
+    <div className="flex items-center gap-2 rounded-3 bg-blue-400 px-4 py-2 text-secondary">
       <div className="flex items-center gap-0.5">
         <div className="flex items-center gap-1.5">
           <ClockSVG />
