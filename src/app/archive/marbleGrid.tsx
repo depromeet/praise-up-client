@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { MarbleGridItem } from "@/components/app/marbleGridItem";
+import { Switch } from "@/components/common/Switch";
 import tempData from "@/data/tempData.json";
 
 interface IMarble {
@@ -12,6 +13,8 @@ interface IMarble {
 
 export const MarbleGrid = () => {
   const [marbleList, setMarbleList] = useState<IMarble[]>();
+  const [isFilteredViewedMarble, setIsFilteredViewedMarble] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // TODO: server Data
@@ -31,7 +34,13 @@ export const MarbleGrid = () => {
           </p>
         </div>
         <div>
-          <div>toggle button area</div>
+          <div className="flex items-center justify-end gap-[6px]">
+            <p className="text-sm text-gray-500">안 읽은 구슬만 보기</p>
+            <button onClick={() => setIsFilteredViewedMarble((prev) => !prev)}>
+              <Switch isOn={isFilteredViewedMarble} />
+            </button>
+          </div>
+
           <div className="mt-[16px] grid grid-cols-2 gap-[8px]">
             {marbleList?.map((marble) => <MarbleGridItem key={marble.id} />)}
           </div>
