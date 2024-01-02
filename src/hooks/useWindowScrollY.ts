@@ -6,7 +6,10 @@ interface IUseWindowScrollYProps {
   scrollRef: RefObject<HTMLDivElement>;
 }
 
-const useWindowScrollY = ({ point = 0, scrollRef }: IUseWindowScrollYProps) => {
+export const useWindowScrollY = ({
+  point = 0,
+  scrollRef,
+}: IUseWindowScrollYProps) => {
   const [isDown, setIsDown] = useState(false);
   const [scrollY, setScrollY] = useState(window.scrollY);
   const [isOverflow, setIsOverflow] = useState(false);
@@ -34,5 +37,3 @@ const useWindowScrollY = ({ point = 0, scrollRef }: IUseWindowScrollYProps) => {
 
   return { isDown, isOverflow, scrollY };
 };
-
-export default useWindowScrollY;

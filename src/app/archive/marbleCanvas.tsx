@@ -13,11 +13,13 @@ import {
 } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
-import marbleTexture from "@/assets/marble_01/marble_01_2x.webp";
-import marbleIsViewedTexture from "@/assets/marble_01/marble_01_isViewed_2x.webp";
-import marbleTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
-import marbleIsViewedTexture_2 from "@/assets/marble_02/marble_02_isViewed_2x.webp";
-import { MarbleModal } from "@/components/app/marbleModal";
+import Bars from "@/assets/icons/bars.svg";
+import marbleTexture from "@/assets/images/marble_01/marble_01_2x.webp";
+import marbleIsViewedTexture from "@/assets/images/marble_01/marble_01_isViewed_2x.webp";
+import marbleTexture_2 from "@/assets/images/marble_02/marble_02_2x.webp";
+import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble_02_isViewed_2x.webp";
+import { FABButton } from "@/components/app/archive/fabButton";
+import { MarbleModal } from "@/components/app/archive/marbleModal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
 import { TMarble } from "@/types/archive";
@@ -333,20 +335,25 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-[480px]">
-      <div className="h-16">Temp Header</div>
-      {isOpen && selectedMarble && (
-        <MarbleModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          selectedMarble={selectedMarble}
-          marbleList={marbleBodyList}
-          isViewedMarbleList={isViewedMarbleList}
-          setIsViewedMarbleList={setIsViewedMarbleList}
-        />
-      )}
-      <Title />
-      <canvas ref={canvasRef} />
-    </div>
+    <>
+      <div className="relative mx-auto w-full max-w-[480px]">
+        <div className="h-16">Temp Header</div>
+        {isOpen && selectedMarble && (
+          <MarbleModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            selectedMarble={selectedMarble}
+            marbleList={marbleBodyList}
+            isViewedMarbleList={isViewedMarbleList}
+            setIsViewedMarbleList={setIsViewedMarbleList}
+          />
+        )}
+        <Title />
+        <div ref={canvasScrollRef}>
+          <canvas ref={canvasRef} />
+        </div>
+        <FABButton icon={Bars} text="리스트뷰" scrollRef={canvasScrollRef} />
+      </div>
+    </>
   );
 };

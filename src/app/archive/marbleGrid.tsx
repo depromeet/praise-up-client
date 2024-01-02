@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { MarbleGridItem } from "@/components/app/marbleGridItem";
+import { MarbleGridItem } from "@/components/app/archive/marbleGridItem";
 import { Switch } from "@/components/common/Switch";
 import { TMarble } from "@/types/archive";
 

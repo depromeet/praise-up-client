@@ -1,6 +1,6 @@
-import { MarbleCard } from "@/components/app/marbleCard";
+import Arrow from "@/assets/icons/arrow.svg";
+import { MarbleCard } from "@/components/app/archive/marbleCard";
 import { DefaultLayout } from "@/components/layout/default";
-import { Arrow } from "@/icons/arrow";
 
 export const Preview = () => {
   return (

@@ -1,4 +1,4 @@
-import { UserFilled } from "@/icons/user_filled";
+import UserFilled from "@/assets/icons/user_filled.svg";
 
 export const MarbleGridItem = () => {
   return (

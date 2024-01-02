@@ -16,8 +16,8 @@ import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { MarbleDetailCard } from "@/components/app/marbleDetailCard";
-import { Back } from "@/icons/back";
+import Back from "@/assets/icons/back.svg";
+import { MarbleDetailCard } from "@/components/app/archive/marbleDetailCard";
 
 interface Props {
   isOpen: boolean;
