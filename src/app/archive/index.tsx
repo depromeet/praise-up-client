@@ -21,8 +21,8 @@ export const Archive = () => {
   return (
     <>
       {/* <Preview /> */}
-      <MarbleCanvas marbleList={marbleList} />
-      {/* <MarbleGrid marbleList={marbleList} /> */}
+      {/* <MarbleCanvas marbleList={marbleList} /> */}
+      <MarbleGrid marbleList={marbleList} />
     </>
   );
 };

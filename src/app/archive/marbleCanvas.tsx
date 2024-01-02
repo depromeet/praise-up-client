@@ -44,11 +44,11 @@ const Title = () => {
   );
 };
 
-type TMarbleCanvas = {
+type Props = {
   marbleList: TMarble[];
 };
 
-export const MarbleCanvas = ({ marbleList }: TMarbleCanvas) => {
+export const MarbleCanvas = ({ marbleList }: Props) => {
   const [engine, setEngine] = useState<Engine>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
@@ -59,7 +59,7 @@ export const MarbleCanvas = ({ marbleList }: TMarbleCanvas) => {
   const canvasScrollRef = useRef<HTMLDivElement>(null);
   const isMobile = getIsMobile();
 
-  // TODO: height value calculate
+  // TODO: height value calculate (visualViewport)
   const width = window.innerWidth > 480 ? 480 : window.innerWidth;
   const height = window.innerHeight + window.innerHeight / 3;
 
@@ -69,7 +69,6 @@ export const MarbleCanvas = ({ marbleList }: TMarbleCanvas) => {
   }, []);
 
   useEffect(() => {
-    // TODO: server Data
     if (!marbleList.length) return;
 
     const marbles = marbleList.map((marbleData) => {

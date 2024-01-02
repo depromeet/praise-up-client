@@ -4,11 +4,11 @@ import { MarbleGridItem } from "@/components/app/marbleGridItem";
 import { Switch } from "@/components/common/Switch";
 import { TMarble } from "@/types/archive";
 
-type TMarbleGrid = {
+type Props = {
   marbleList: TMarble[];
 };
 
-export const MarbleGrid = ({ marbleList }: TMarbleGrid) => {
+export const MarbleGrid = ({ marbleList }: Props) => {
   const [isFilteredViewedMarble, setIsFilteredViewedMarble] =
     useState<boolean>(false);
 

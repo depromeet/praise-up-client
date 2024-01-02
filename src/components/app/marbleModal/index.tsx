@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MarbleDetailCard } from "@/components/app/marbleDetailCard";
 import { Back } from "@/icons/back";
 
-interface IMarbleModal {
+interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedMarble: Body;
@@ -35,7 +35,7 @@ export const MarbleModal = ({
   marbleList,
   isViewedMarbleList,
   setIsViewedMarbleList,
-}: IMarbleModal) => {
+}: Props) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
 
