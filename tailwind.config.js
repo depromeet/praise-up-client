@@ -58,6 +58,10 @@ export default {
         3: "12px",
         4: "16px",
       },
+      backgroundImage: {
+        "marble-detail": "url('@/assets/images/marble_detail_bg.jpg')",
+        "marble-preview": "url('@/assets/images/marble_bg.png')",
+      },
     },
   },
   plugins: [],

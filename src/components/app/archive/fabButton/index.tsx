@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes, RefObject } from "react";
+import { ButtonHTMLAttributes, RefObject, useEffect } from "react";
 
 import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 
@@ -17,7 +17,11 @@ export const FABButton = ({
   scrollRef,
   ...props
 }: Props) => {
-  const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
+  const { isOverflow } = useWindowScrollY({ point: 0.3, scrollRef });
+
+  useEffect(() => {
+    console.log(isOverflow);
+  }, [isOverflow]);
 
   return (
     <button

@@ -1,4 +1,4 @@
-import UserFilled from "@/assets/icons/user_filled.svg";
+import UserFilled from "@/assets/icons/user_filled.svg?react";
 
 export const MarbleGridItem = () => {
   return (
