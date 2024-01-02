@@ -1,7 +1,5 @@
-import React from "react";
-
 import { GoToWrite } from "./go-to-write";
-import { ToBeOpen } from "./to-be-open";
+import { ToBeOpened } from "./to-be-opened";
 import { ToMyArchive } from "./to-my-archive";
 
 import { DefaultLayout } from "@/components/layout/default";
@@ -34,8 +32,8 @@ export const Main = () => {
     <DefaultLayout isMain>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
-        <ToBeOpen />
-        {<ToMyArchive archive={DUMMY_DATA} />}
+        <ToBeOpened />
+        <ToMyArchive archive={DUMMY_DATA} />
         {/*<ToMyArchive archive={[]} />*/}
       </div>
     </DefaultLayout>

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-
 import { RecentCard } from "./recent-card";
 
 import { Carousel } from "@/components/common/carousel";
 
-export const ToBeOpen = () => {
+export const ToBeOpened = () => {
   /* 예제 시간 */
   const now = new Date();
   const testBefore = new Date(now.setDate(now.getDate() - 1)).toISOString();

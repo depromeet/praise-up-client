@@ -1,5 +1,3 @@
-import React from "react";
-
 import { MarbleSVG } from "@/assets/marble";
 
 interface CountBadgeProps {

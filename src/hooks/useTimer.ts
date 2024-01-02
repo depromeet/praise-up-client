@@ -8,11 +8,7 @@ interface TimeLeftType {
   sec: number;
 }
 
-interface useTimerProps {
-  openDatetime: string;
-}
-
-export function useTimer({ openDatetime }: useTimerProps) {
+export function useTimer(openDatetime: string) {
   const [delay, setDelay] = useState<number | null>(1000);
   const [diff, setDiff] = useState(() =>
     Math.floor((+new Date(openDatetime) - +new Date()) / 1000),
@@ -23,20 +19,17 @@ export function useTimer({ openDatetime }: useTimerProps) {
     sec: 0,
   });
 
-  useInterval(() => {
-    setDiff((diff) => diff - 1);
-    setTimeLeft((prev) => ({
-      hour: Math.floor((diff / (60 * 60)) % 24),
-      min: Math.floor((diff / 60) % 60),
-      sec: Math.floor(diff % 60),
-    }));
-  }, delay);
-
-  useEffect(() => {
-    if (diff <= 0) {
-      setDelay(null);
-    }
-  }, [diff]);
+  useInterval(
+    () => {
+      setDiff((diff) => diff - 1);
+      setTimeLeft(() => ({
+        hour: Math.floor((diff / (60 * 60)) % 24),
+        min: Math.floor((diff / 60) % 60),
+        sec: Math.floor(diff % 60),
+      }));
+    },
+    diff > 0 ? delay : null,
+  );
 
   return { diff, timeLeft };
 }

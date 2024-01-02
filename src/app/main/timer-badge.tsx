@@ -1,7 +1,7 @@
 import { useTimer } from "@/hooks/useTimer";
 
 export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
-  const { diff, timeLeft } = useTimer({ openDatetime });
+  const { diff, timeLeft } = useTimer(openDatetime);
 
   return (
     <div className="flex items-center justify-center gap-0.5 rounded-3 bg-[#ffffffcc] px-6 py-4 text-gray-800 backdrop-blur-[10px] ">

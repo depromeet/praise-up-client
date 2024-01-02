@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ChevronRightEdgeSVG } from "@/assets/chevron-right-edge";
 
 export const GoToWrite = () => {
