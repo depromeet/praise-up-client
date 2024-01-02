@@ -19,8 +19,8 @@ import marbleTexture_2 from "@/assets/marble_02/marble_02_2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/marble_02/marble_02_isViewed_2x.webp";
 import { MarbleModal } from "@/components/app/marbleModal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
-import tempData from "@/data/tempData.json";
 import Render from "@/lib/RenderExtension";
+import { TMarble } from "@/types/archive";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
@@ -44,10 +44,14 @@ const Title = () => {
   );
 };
 
-export const Marble = () => {
+type TMarbleCanvas = {
+  marbleList: TMarble[];
+};
+
+export const MarbleCanvas = ({ marbleList }: TMarbleCanvas) => {
   const [engine, setEngine] = useState<Engine>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [marbleList, setMarbleList] = useState<Body[]>([]);
+  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
   const [selectedMarble, setSelectedMarble] = useState<Body>();
   const [isViewedMarbleList, setIsViewedMarbleList] = useState<number[]>([]);
 
@@ -66,16 +70,16 @@ export const Marble = () => {
 
   useEffect(() => {
     // TODO: server Data
-    if (!tempData.data.length) return;
+    if (!marbleList.length) return;
 
-    const marbles = tempData.data.map((marbleData) => {
+    const marbles = marbleList.map((marbleData) => {
       const { id, user: textContent } = marbleData;
       const texture = marbleData.id % 2 === 0 ? marbleTexture : marbleTexture_2;
       return createMarbleObject({ id, texture, textContent });
     });
 
-    setMarbleList(marbles);
-  }, []);
+    setMarbleBodyList(marbles);
+  }, [marbleList]);
 
   useEffect(() => {
     if (!engine || !marbleList.length) return;
@@ -241,7 +245,7 @@ export const Marble = () => {
 
       Render.run(render);
 
-      for (const marble of marbleList) {
+      for (const marble of marbleBodyList) {
         await renderMarbleObject(marble);
       }
     };
@@ -338,7 +342,7 @@ export const Marble = () => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           selectedMarble={selectedMarble}
-          marbleList={marbleList}
+          marbleList={marbleBodyList}
           isViewedMarbleList={isViewedMarbleList}
           setIsViewedMarbleList={setIsViewedMarbleList}
         />

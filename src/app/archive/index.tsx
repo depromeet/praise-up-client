@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Marble } from "./marble";
+import { MarbleCanvas } from "./marbleCanvas";
 import { MarbleGrid } from "./marbleGrid";
 import { Preview } from "./preview";
 
@@ -21,8 +21,8 @@ export const Archive = () => {
   return (
     <>
       {/* <Preview /> */}
-      {/* <Marble /> */}
-      <MarbleGrid marbleList={marbleList} />
+      <MarbleCanvas marbleList={marbleList} />
+      {/* <MarbleGrid marbleList={marbleList} /> */}
     </>
   );
 };
