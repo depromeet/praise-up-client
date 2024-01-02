@@ -2,7 +2,7 @@ import { GoToWrite } from "./go-to-write";
 import { ToBeOpened } from "./to-be-opened";
 import { ToMyArchive } from "./to-my-archive";
 
-import { DefaultLayout } from "@/components/layout/default";
+import { MainLayout } from "@/components/layout/main-layout";
 
 const DUMMY_DATA = [
   {
@@ -29,13 +29,13 @@ const DUMMY_DATA = [
 
 export const Main = () => {
   return (
-    <DefaultLayout isMain>
+    <MainLayout>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
         <ToBeOpened />
         <ToMyArchive archive={DUMMY_DATA} />
         {/*<ToMyArchive archive={[]} />*/}
       </div>
-    </DefaultLayout>
+    </MainLayout>
   );
 };
