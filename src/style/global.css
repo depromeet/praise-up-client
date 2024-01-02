@@ -71,6 +71,8 @@
   color-scheme: light dark;
   color: rgba(0, 0, 0, 0.87);
   background-color: #ffffff;
+  touch-action: pan-y;
+  overscroll-behavior: none;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
