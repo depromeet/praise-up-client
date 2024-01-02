@@ -1,4 +1,4 @@
-import { MarbleSVG } from "@/assets/marble";
+import { MarbleSVG } from "@/assets/icons/marble";
 
 interface CountBadgeProps {
   count: number;

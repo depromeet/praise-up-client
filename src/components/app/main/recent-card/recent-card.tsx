@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { CountBadge } from "./count-badge";
+import { CountBadge } from "../count-badge";
+
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
-import * as BackgroundSVG from "@/assets/card-background";
+import * as BackgroundSVG from "@/assets/imgs/card-background";
 
 interface RecentCardProps {
   keyword: string;

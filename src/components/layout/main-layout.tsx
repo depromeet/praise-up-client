@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactNode } from "react";
 
-import { LogoSVG } from "@/assets/logo";
-import { UserSVG } from "@/assets/user";
+import { LogoSVG } from "@/assets/icons/logo";
+import { UserSVG } from "@/assets/icons/user";
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
   return (

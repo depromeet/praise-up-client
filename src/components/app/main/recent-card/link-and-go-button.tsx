@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { ShareSVG } from "@/assets/share";
+import { ShareSVG } from "@/assets/icons/share";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {

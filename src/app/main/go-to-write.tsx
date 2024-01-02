@@ -1,4 +1,4 @@
-import { ChevronRightEdgeSVG } from "@/assets/chevron-right-edge";
+import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
 
 export const GoToWrite = () => {
   return (

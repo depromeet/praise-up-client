@@ -1,4 +1,4 @@
-import { RecentCard } from "./recent-card";
+import { RecentCard } from "../../components/app/main/recent-card/recent-card";
 
 import { Carousel } from "@/components/common/carousel";
 
