@@ -61,7 +61,7 @@ export const PostCardView = ({
       }}
     >
       <div
-        className=" rounded-4 absolute flex w-full flex-col items-start gap-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] "
+        className=" absolute flex w-full flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] "
         style={{
           transform: transStyle,
         }}
@@ -95,7 +95,7 @@ const Title = () => {
           onClick={(e) => {
             console.log("삭제하기 클릭");
           }}
-          className="rounded-3 fixed right-9 top-[240px] z-10 flex h-11 items-center bg-white px-4 py-3"
+          className="fixed right-9 top-[240px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
         >
           <span className="text-b3-compact">삭제하기</span>
         </div>
@@ -108,21 +108,18 @@ const Image = () => {
   const { content, imgUrl } = usePostCardView();
   const contentRef = useRef<HTMLParagraphElement>(null);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.innerHTML = content;
-    }
-  }, [content]);
-
   return (
     <div
-      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
         backgroundSize: "cover",
       }}
     >
-      <p ref={contentRef} className="text-b2-long text-gray-50">
+      <p
+        ref={contentRef}
+        className="text-b2-long whitespace-pre-line text-gray-50"
+      >
         {content}
       </p>
       <span className="text-num-b3 text-oncolor">23.12.16</span>
@@ -137,7 +134,7 @@ const Preview = () => {
 
   return (
     <div
-      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: "cover",
