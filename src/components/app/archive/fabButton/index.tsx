@@ -17,28 +17,23 @@ export const FABButton = ({
   scrollRef,
   ...props
 }: Props) => {
-  const { isOverflow } = useWindowScrollY({ point: 0.3, scrollRef });
-
-  useEffect(() => {
-    console.log(isOverflow);
-  }, [isOverflow]);
+  const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
 
   return (
     <button
       {...props}
       className={clsx(
-        "fixed bottom-[36px] right-[20px] flex items-center justify-center gap-1 rounded-[100px] bg-white px-2.5 py-2 shadow",
+        "fixed bottom-[36px] right-[20px] flex w-fit items-center justify-center gap-1 overflow-hidden rounded-[100px] bg-white px-2.5 py-2 shadow",
         className,
       )}
     >
       <div className="h-[24px] w-[24px]">
         <img src={icon} />
       </div>
-
       <p
         className={clsx(
-          "visible text-sm font-semibold text-gray-800",
-          isOverflow && "invisible",
+          "text-sm font-semibold text-gray-800 transition-all",
+          isOverflow && "hidden",
         )}
       >
         {text}

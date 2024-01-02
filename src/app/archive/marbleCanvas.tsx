@@ -336,10 +336,7 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
 
   return (
     <>
-      <div
-        className="relative mx-auto w-full max-w-[480px]"
-        ref={canvasScrollRef}
-      >
+      <div className="relative mx-auto w-full max-w-[480px] ">
         <div className="h-16">Temp Header</div>
         {isOpen && selectedMarble && (
           <MarbleModal
@@ -351,8 +348,8 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
             setIsViewedMarbleList={setIsViewedMarbleList}
           />
         )}
-        <Title />
-        <div>
+        <div ref={canvasScrollRef} className="h-screen overflow-scroll">
+          <Title />
           <canvas ref={canvasRef} />
         </div>
         <FABButton icon={Bars} text="리스트뷰" scrollRef={canvasScrollRef} />
