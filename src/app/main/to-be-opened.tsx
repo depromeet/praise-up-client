@@ -4,9 +4,13 @@ import { Carousel } from "@/components/common/carousel";
 
 export const ToBeOpened = () => {
   /* 예제 시간 */
-  const now = new Date();
-  const testBefore = new Date(now.setDate(now.getDate() - 1)).toISOString();
-  const testAfter = new Date(now.setDate(now.getDate() + 2)).toISOString();
+  const date1 = new Date();
+  const date2 = new Date();
+
+  const testBefore = new Date(date1.setDate(date1.getDate() - 1)).toISOString();
+  const testAfter = new Date(
+    date2.setSeconds(date2.getSeconds() + 10),
+  ).toISOString();
 
   return (
     <div className="flex flex-col gap-5">

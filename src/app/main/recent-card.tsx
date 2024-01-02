@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 import { CountBadge } from "./count-badge";
+import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
 import * as BackgroundSVG from "@/assets/card-background";
-import { ShareSVG } from "@/assets/share";
 
 interface RecentCardProps {
   keyword: string;
@@ -43,28 +43,7 @@ export const RecentCard = ({
         </div>
         <TimerBadge openDatetime={openDatetime} />
       </div>
-      <div className="flex w-full items-start justify-center gap-2">
-        {new Date(openDatetime).getTime() - Date.now() > 0 ? (
-          <>
-            <button className="aspect-square rounded-2 bg-gray-300 p-[15px]">
-              <ShareSVG />
-            </button>
-            <button
-              className="grow-1 flex w-full items-center justify-center rounded-2 bg-[#242B37] px-[52px] py-4 text-white"
-              onClick={() => console.log("클릭됨")}
-            >
-              게시물 보기
-            </button>
-          </>
-        ) : (
-          <button
-            className="grow-1 flex w-full items-center justify-center rounded-2 bg-[#242B37] px-[52px] py-4 text-white"
-            onClick={() => console.log("클릭됨")}
-          >
-            칭찬구슬 보러가기
-          </button>
-        )}
-      </div>
+      <LinkAndGoButton openDatetime={openDatetime} />
     </div>
   );
 };
