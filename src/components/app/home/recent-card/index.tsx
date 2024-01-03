@@ -7,6 +7,7 @@ import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
 
 interface RecentCardProps {
+  id: string;
   keyword: string;
   count: number;
   openDatetime: string;
@@ -17,11 +18,12 @@ const BACKGROUNDS = [...Object.values(BackgroundSVG).sort()];
 const DARK_BACKGROUNDS = [2, 4, 10, 11];
 
 export const RecentCard = ({
+  id,
   keyword,
   count,
   openDatetime,
 }: RecentCardProps) => {
-  const [idx, setIdx] = useState<number>(Math.floor(Math.random() * 11));
+  const [idx] = useState<number>(Math.floor(Math.random() * 11));
 
   return (
     <div className="flex cursor-move flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -43,7 +45,11 @@ export const RecentCard = ({
         </div>
         <TimerBadge openDatetime={openDatetime} />
       </div>
-      <LinkAndGoButton openDatetime={openDatetime} />
+      <LinkAndGoButton
+        id={id}
+        openDatetime={openDatetime}
+        backgroundUrl={BACKGROUNDS[idx]}
+      />
     </div>
   );
 };
