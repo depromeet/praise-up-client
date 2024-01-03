@@ -19,7 +19,7 @@ const BaseModal = ({
   return (
     <dialog
       ref={(el) => {
-        if (!el || !el.open) return;
+        if (!el || el.open) return;
         el.showModal();
         el.addEventListener("close", () => onClose(el.returnValue), {
           once: true,
@@ -64,7 +64,7 @@ const Toast = ({
 } & PropsWithChildren) => (
   <dialog
     ref={(el) => {
-      if (!el || !el.open) return;
+      if (!el || el.open) return;
       el.showModal();
       setTimeout(() => el.close(), delay);
       onOpen();
