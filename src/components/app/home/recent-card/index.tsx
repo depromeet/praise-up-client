@@ -45,7 +45,11 @@ export const RecentCard = ({
         </div>
         <TimerBadge openDatetime={openDatetime} />
       </div>
-      <LinkAndGoButton id={id} openDatetime={openDatetime} />
+      <LinkAndGoButton
+        id={id}
+        openDatetime={openDatetime}
+        backgroundUrl={BACKGROUNDS[idx]}
+      />
     </div>
   );
 };

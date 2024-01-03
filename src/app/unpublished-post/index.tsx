@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { PostCardView } from "./post-card-view";
 import { TimerCardView } from "./timer-card-view";
@@ -31,6 +31,9 @@ const DUMMY_DATA: DataType = {
 export const UnpublishedPostPage = () => {
   // TODO: id를 이용해서 서버에서 데이터를 가져오기
   const { id } = useParams();
+  const {
+    state: { backgroundUrl },
+  }: { state: { backgroundUrl: string } } = useLocation();
 
   return (
     <DefaultLayout>
@@ -41,7 +44,10 @@ export const UnpublishedPostPage = () => {
           <TimerCardView openDate={DUMMY_DATA.openDate} />
           <div className="perspective-1000 bg-transparent">
             <div className="[transform-style: preserve-3d] relative">
-              <PostCardView {...DUMMY_DATA} isReadyCard>
+              <PostCardView
+                {...{ ...DUMMY_DATA, imgUrl: backgroundUrl }}
+                isReadyCard
+              >
                 <PostCardView.Title />
                 <PostCardView.Preview />
               </PostCardView>
