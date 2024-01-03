@@ -1,6 +1,7 @@
 import { Fragment, PropsWithChildren, ReactNode } from "react";
 
-import { ScrollToTop } from "@/hooks/useScrollToTop";
+import { UseExternalBrowser } from "@/hooks/useExternalBrowser";
+import { UseScrollToTop } from "@/hooks/useScrollToTop";
 
 type Props = {
   resetScroll?: boolean;
@@ -14,7 +15,8 @@ export const DefaultLayout = ({
 }: Props) => {
   return (
     <Fragment>
-      {resetScroll && <ScrollToTop />}
+      <UseExternalBrowser />
+      {resetScroll && <UseScrollToTop />}
       <div className="relative mx-auto flex h-screen w-screen max-w-[480px] flex-col border-x">
         {/* need app bar variants */}
         {appbar ?? <div className="h-64px" />}

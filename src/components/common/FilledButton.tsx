@@ -21,11 +21,13 @@ export const FilledButton = ({
       type="button"
       className={clsx(
         "flex h-54px w-full items-center justify-center rounded-2 py-16px disabled:bg-gray-400 disabled:text-gray-500",
-        colorSchema === "primary" && "text-b2-strong bg-[#242B37] text-white",
-        colorSchema === "white" &&
-          "text-b3-strong h-40px bg-white text-blue-500",
-        isFull && isFullStyle && "rounded-none",
-        className,
+        {
+          "text-b2-strong bg-[#242B37] text-white": colorSchema === "primary",
+          "text-b3-strong h-40px bg-white text-blue-500":
+            colorSchema === "white",
+          "rounded-none": isFull && isFullStyle,
+          className,
+        },
       )}
       {...props}
     >

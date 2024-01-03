@@ -33,9 +33,7 @@ export const Textarea = ({
           maxLength={LIMIT}
           onClick={handleClick}
           onChange={(event) => {
-            if (event.target.value.length > limit) {
-              return;
-            }
+            if (event.target.value.length > limit) return;
             onChange(event);
           }}
           {...props}

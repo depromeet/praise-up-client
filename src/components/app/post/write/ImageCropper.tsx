@@ -28,12 +28,9 @@ export const ImageCropper = ({ src, openCrop, scaleImage }: CropperProps) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const onCropComplete = useCallback(
-    (croppedArea: Area, croppedAreaPixels: Area) => {
-      setCroppedAreaPixels(croppedAreaPixels);
-    },
-    [],
-  );
+  const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
 
   const showCroppedImage = useCallback(async () => {
     try {

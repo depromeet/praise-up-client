@@ -22,13 +22,12 @@ export const PostHeader = ({
               <span className="text-h3">{emphasis}</span>
             </div>
           );
-        } else {
-          return (
-            <span className="block" key={item}>
-              {item}
-            </span>
-          );
         }
+        return (
+          <span className="block" key={item}>
+            {item}
+          </span>
+        );
       })}
     </div>
   );
