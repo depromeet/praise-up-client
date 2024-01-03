@@ -27,8 +27,9 @@ module.exports = {
       "warn",
       { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
     ],
+    "@typescript-eslint/no-misused-promises": "off",
     "react-refresh/only-export-components": [
-      "warn",
+      "off",
       { allowConstantExport: true },
     ],
     "react/react-in-jsx-scope": "off",
