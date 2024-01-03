@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 
-import { PostCardView } from "./post-card-view";
 import { TimerCardView } from "./timer-card-view";
 
+import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 
 interface DataType {

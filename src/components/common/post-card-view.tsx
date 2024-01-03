@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ReactNode, createContext, useEffect, useReducer, useRef } from "react";
 
 import { KebabSVG } from "@/assets/kebab";
@@ -10,6 +11,7 @@ interface PostCardViewProps {
   imgUrl: string;
   content: string;
   isReadyCard?: boolean;
+  isPublic?: boolean;
   children: ReactNode;
 }
 
@@ -33,19 +35,23 @@ export const PostCardView = ({
   keyword,
   imgUrl,
   content,
-  isReadyCard = false,
+  isReadyCard = false, // flip 전 일러스트(Preview)인지
+  isPublic = false, // 외부에 공개되는 게시글인지
   children,
 }: PostCardViewProps) => {
   const [showMenu, toggleShowMenu] = useReducer((prev) => !prev, false);
   const [transStyle, toggleTransStyle] = useReducer(
     (prev: string) =>
       prev.includes("rotateY(180deg)") ? "none" : "rotateY(180deg)",
-    isReadyCard ? "none" : "rotateY(180deg)",
+    isReadyCard || isPublic ? "none" : "rotateY(180deg)",
   );
 
   useEffect(() => {
-    const timer = setTimeout(() => toggleTransStyle(), 3000);
-    return () => clearTimeout(timer);
+    // 외부에 공개되는 게시물인 경우 flip 모션 방지
+    if (!isPublic) {
+      const timer = setTimeout(() => toggleTransStyle(), 3000);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -61,7 +67,10 @@ export const PostCardView = ({
       }}
     >
       <div
-        className=" absolute flex w-full flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] "
+        className={clsx(
+          { absolute: isReadyCard },
+          "  flex w-full flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] ",
+        )}
         style={{
           transform: transStyle,
         }}
@@ -78,7 +87,7 @@ const Title = () => {
 
   return (
     <div className="flex w-full justify-between">
-      <div className="gap -0.5 flex flex-col">
+      <div className="flex flex-col gap-0.5">
         <span className="text-b1">{username}님이 칭찬 받을</span>
         <div className="flex gap-1">
           <span className="text-h3">{keyword}</span>
