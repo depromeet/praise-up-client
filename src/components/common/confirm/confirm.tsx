@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const Confirm = ({ message, onClickConfirm, onClickCancel }: Props) => {
-  console.log("confirm");
   return (
     <div>
       <div className="fixed left-1/2 top-1/2 z-50 mx-auto flex h-fit w-80 max-w-[480px] translate-x-[-50%] translate-y-[-50%] flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-8">

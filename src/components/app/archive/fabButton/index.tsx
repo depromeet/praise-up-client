@@ -23,21 +23,18 @@ export const FABButton = ({
     <button
       {...props}
       className={clsx(
-        "fixed bottom-[36px] right-[20px] flex w-fit items-center justify-center gap-1 overflow-hidden rounded-[100px] bg-white px-2.5 py-2 shadow",
+        "fixed bottom-[36px] right-[20px] flex w-fit items-center justify-center overflow-hidden rounded-[100px] bg-white px-2.5 py-2 shadow",
         className,
       )}
     >
       <div className="h-[24px] w-[24px]">
         <img src={icon} />
       </div>
-      <p
-        className={clsx(
-          "text-sm font-semibold text-gray-800 transition-all",
-          isOverflow && "hidden",
-        )}
-      >
-        {text}
-      </p>
+      {!isOverflow && (
+        <p className="opacity-1 ml-[4px] w-auto text-sm font-semibold text-gray-800 transition-all">
+          {text}
+        </p>
+      )}
     </button>
   );
 };
