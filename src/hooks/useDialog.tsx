@@ -46,62 +46,31 @@ const Modal = ({
     <BaseModal
       onOpen={onOpen}
       onClose={onClose}
-      className="p-16px backdrop:bg-black/60"
+      className="bg-white p-16px backdrop:bg-black/60"
     >
       <form method="dialog">{children}</form>
     </BaseModal>
   );
 };
 
-// default toast wrapper
-const Toast = ({
-  delay,
-  onOpen,
-  children,
-}: {
-  delay: number;
-  onOpen: () => void;
-} & PropsWithChildren) => (
-  <dialog
-    ref={(el) => {
-      if (!el || el.open) return;
-      el.showModal();
-      setTimeout(() => el.close(), delay);
-      onOpen();
-    }}
-  >
-    {children}
-  </dialog>
-);
+export const useModal = () => {
+  const [dialog, setDialog] = useState<ReactNode | null>(null);
 
-export const useDialog = () => {
-  const [dialog, setContent] = useState<ReactNode | null>(null);
-
-  const modal = (content: ReactNode, onOpen?: () => void) => {
+  const modal = (content: ReactNode, callback?: () => void) => {
     return new Promise((resolve) => {
-      setContent(
-        <Modal onOpen={onOpen} onClose={(v) => resolve(v)}>
+      setDialog(
+        <Modal onOpen={callback} onClose={(v) => resolve(v)}>
           {content}
         </Modal>,
       );
     });
   };
 
-  const toast = (content: ReactNode, delay = 3000) => {
-    return new Promise((resolve) => {
-      setContent(
-        <Toast delay={delay} onOpen={() => resolve(null)}>
-          <div>{content}</div>
-        </Toast>,
-      );
-    });
-  };
-
   const render = () => {
     return dialog
-      ? createPortal(dialog, document.getElementById("dialog-root")!)
+      ? createPortal(dialog, document.getElementById("modal-root")!)
       : null;
   };
 
-  return [render, { modal, toast }] as const;
+  return [render, modal] as const;
 };
