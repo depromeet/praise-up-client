@@ -22,6 +22,7 @@ export interface PostCardContextProps {
   showMenu: boolean;
   imgUrl: string;
   content: string;
+  isPublic: boolean;
   toggleShowMenu: (showMenu?: boolean) => void;
 }
 
@@ -64,6 +65,7 @@ export const PostCardView = ({
         imgUrl,
         content,
         toggleShowMenu,
+        isPublic,
       }}
     >
       <div
@@ -82,8 +84,13 @@ export const PostCardView = ({
 };
 
 const Title = () => {
-  const { username, keyword, showMenu, toggleShowMenu }: PostCardContextProps =
-    usePostCardView();
+  const {
+    username,
+    keyword,
+    showMenu,
+    toggleShowMenu,
+    isPublic,
+  }: PostCardContextProps = usePostCardView();
 
   return (
     <div className="flex w-full justify-between">
@@ -95,9 +102,11 @@ const Title = () => {
         </div>
       </div>
 
-      <div className="h-fit cursor-pointer" onClick={() => toggleShowMenu()}>
-        <KebabSVG />
-      </div>
+      {!isPublic && (
+        <div className="h-fit cursor-pointer" onClick={() => toggleShowMenu()}>
+          <KebabSVG />
+        </div>
+      )}
 
       {showMenu && (
         <div
@@ -114,7 +123,8 @@ const Title = () => {
 };
 
 const Image = () => {
-  const { content, imgUrl } = usePostCardView();
+  const { content, imgUrl }: { content: string; imgUrl: string } =
+    usePostCardView();
   const contentRef = useRef<HTMLParagraphElement>(null);
 
   return (
