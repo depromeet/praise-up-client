@@ -7,13 +7,11 @@ export const ToBeOpened = () => {
   const date2 = new Date();
 
   const testBefore = new Date(date1.setDate(date1.getDate() - 1)).toISOString();
-  const testAfter = new Date(
-    date2.setSeconds(date2.getSeconds() + 10),
-  ).toISOString();
+  const testAfter = new Date(date2.setDate(date2.getDate() + 1)).toISOString();
 
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-h2 text-gray-900">공계 예정 칭찬게시물</h2>
+      <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>
       <Carousel>
         <RecentCard
           id="1"
