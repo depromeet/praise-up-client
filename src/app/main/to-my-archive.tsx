@@ -1,6 +1,5 @@
-import { PastCard } from "../../components/app/main/past-card";
-
 import { EmptyArchiveSVG } from "@/assets/imgs/empty-archive";
+import { PastCard } from "@/components/app/main/past-card";
 
 interface ArchiveDataType {
   imgUrl: string;

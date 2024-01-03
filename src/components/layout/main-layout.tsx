@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
 import { LogoSVG } from "@/assets/icons/logo";
 import { UserSVG } from "@/assets/icons/user";

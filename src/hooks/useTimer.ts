@@ -10,7 +10,7 @@ interface TimeLeftType {
 
 export function useTimer(openDatetime: string) {
   const [delay, setDelay] = useState<number | null>(1000);
-  const [diff, setDiff] = useState(() =>
+  const [diff, setDiff] = useState(
     Math.floor((+new Date(openDatetime) - +new Date()) / 1000),
   );
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
@@ -22,11 +22,11 @@ export function useTimer(openDatetime: string) {
   useInterval(
     () => {
       setDiff((diff) => diff - 1);
-      setTimeLeft(() => ({
+      setTimeLeft({
         hour: Math.floor((diff / (60 * 60)) % 24),
         min: Math.floor((diff / 60) % 60),
         sec: Math.floor(diff % 60),
-      }));
+      });
     },
     diff >= 0 ? delay : null,
   );
