@@ -92,7 +92,7 @@ const Title = () => {
 
       {showMenu && (
         <div
-          onClick={(e) => {
+          onClick={() => {
             console.log("삭제하기 클릭");
           }}
           className="fixed right-9 top-[240px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"

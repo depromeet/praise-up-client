@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { PostCardView } from "./post-card-view";
 import { TimerCardView } from "./timer-card-view";
@@ -30,7 +30,7 @@ const DUMMY_DATA: DataType = {
 
 export const UnpublishedPostPage = () => {
   // TODO: id를 이용해서 서버에서 데이터를 가져오기
-  const { id } = useParams();
+  // const { id } = useParams();
   const {
     state: { backgroundUrl },
   }: { state: { backgroundUrl: string } } = useLocation();
