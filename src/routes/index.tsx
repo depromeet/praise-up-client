@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Home } from "@/app/home";
+import { UnpublishedPostPage } from "@/app/unpublished-post";
 import { GlobalLayout } from "@/components/layout";
 
 const router = createBrowserRouter([
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+      },
+      {
+        path: "seal/:id",
+        element: <UnpublishedPostPage />,
       },
     ],
   },

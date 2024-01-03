@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ShareSVG } from "@/assets/icons/share";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
+  id: string;
   openDatetime: string;
 }
 
-export const LinkAndGoButton = ({ openDatetime }: LinkAndGoButtonProps) => {
+export const LinkAndGoButton = ({ id, openDatetime }: LinkAndGoButtonProps) => {
+  const navigate = useNavigate();
   const [isReveal, setIsReveal] = useState<boolean>(
     new Date(openDatetime).getTime() - Date.now() > 0,
   );
@@ -27,7 +30,7 @@ export const LinkAndGoButton = ({ openDatetime }: LinkAndGoButtonProps) => {
           </button>
           <button
             className="grow-1 flex w-full items-center justify-center rounded-2 bg-[#242B37] px-[52px] py-4 text-white"
-            onClick={() => console.log("클릭됨")}
+            onClick={() => navigate(`seal/${id}`)}
           >
             게시물 보기
           </button>
@@ -35,7 +38,7 @@ export const LinkAndGoButton = ({ openDatetime }: LinkAndGoButtonProps) => {
       ) : (
         <button
           className="grow-1 flex w-full items-center justify-center rounded-2 bg-[#242B37] px-[52px] py-4 text-white"
-          onClick={() => console.log("클릭됨")}
+          onClick={() => navigate(`seal/${123}`)}
         >
           칭찬구슬 보러가기
         </button>
