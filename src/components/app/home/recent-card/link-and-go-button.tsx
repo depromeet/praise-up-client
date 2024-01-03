@@ -30,7 +30,11 @@ export const LinkAndGoButton = ({
     <div className="flex w-full items-start justify-center gap-2">
       {isReveal ? (
         <>
-          <button className="aspect-square rounded-2 bg-gray-300 p-[15px]">
+          <button
+            className="aspect-square rounded-2 bg-gray-300 p-[15px]"
+            onMouseDown={(e) => e.stopPropagation()}
+            onMouseUp={(e) => e.stopPropagation()}
+          >
             <ShareSVG />
           </button>
           <button

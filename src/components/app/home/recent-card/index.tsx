@@ -26,7 +26,7 @@ export const RecentCard = ({
   const [idx] = useState<number>(Math.floor(Math.random() * 11));
 
   return (
-    <div className="flex cursor-move flex-col items-center gap-4 rounded-4 bg-white p-4">
+    <div className="flex flex-col items-center gap-4 rounded-4 bg-white p-4">
       <div
         className="flex aspect-square w-full flex-col justify-between rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
         style={{
