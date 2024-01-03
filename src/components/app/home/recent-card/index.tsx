@@ -4,7 +4,7 @@ import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
 import * as BackgroundSVG from "@/assets/imgs/card-background";
-import { CountBadge } from "@/components/app/main/count-badge";
+import { CountBadge } from "@/components/app/home/count-badge";
 
 interface RecentCardProps {
   keyword: string;

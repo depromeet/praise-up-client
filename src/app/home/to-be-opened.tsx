@@ -1,4 +1,4 @@
-import { RecentCard } from "@/components/app/main/recent-card";
+import { RecentCard } from "@/components/app/home/recent-card";
 import { Carousel } from "@/components/common/carousel";
 
 export const ToBeOpened = () => {
