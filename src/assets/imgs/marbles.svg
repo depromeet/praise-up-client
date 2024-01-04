@@ -1,4 +1,4 @@
-export const MarblesSVG = () => (
+
   <svg
     viewBox="0 0 360 187"
     fill="none"
@@ -240,4 +240,3 @@ export const MarblesSVG = () => (
       />
     </defs>
   </svg>
-);
