@@ -1,7 +1,7 @@
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
 import { PostHeader } from "@/components/app/post/common/PostHeader";
 import { DoneContainer } from "@/components/app/post/done/DoneContainer";
-import { ButtonProvider } from "@/components/common/ButtonProvider";
+import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
 
 export const Done = () => {

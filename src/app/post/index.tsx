@@ -7,7 +7,7 @@ import { ImageContainer } from "@/components/app/post/write/ImageContainer";
 import { ImageCropper } from "@/components/app/post/write/ImageCropper";
 import { PostImage } from "@/components/app/post/write/PostImage";
 import { Textarea } from "@/components/app/post/write/Textarea";
-import { ButtonProvider } from "@/components/common/ButtonProvider";
+import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
 
 type postProps = {
