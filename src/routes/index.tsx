@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { AddCommentPage } from "@/app/add-comment";
 import { Home } from "@/app/home";
 import { UnpublishedPostPage } from "@/app/unpublished-post";
 import { GlobalLayout } from "@/components/layout";
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "seal/:id",
         element: <UnpublishedPostPage />,
+      },
+      {
+        path: "clap",
+        element: <AddCommentPage />,
       },
     ],
   },
