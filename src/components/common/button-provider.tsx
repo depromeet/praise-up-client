@@ -9,7 +9,7 @@ import {
   useRef,
 } from "react";
 
-import { ButtonProps, FilledButton } from "./FilledButton";
+import { ButtonProps, FilledButton } from "./fiiled-button";
 
 const Primary = (props: ButtonProps) => {
   return <FilledButton {...props} colorSchema="primary" />;
