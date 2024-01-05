@@ -3,7 +3,7 @@ import { ImageProps } from "./PostImage";
 export const ImageContainer = ({ src, onChange }: ImageProps) => {
   return (
     <div
-      className="relative z-0  flex w-full cursor-pointer rounded-4 bg-slate-100 bg-contain pb-[100%]"
+      className="relative z-0 flex w-full cursor-pointer rounded-4 bg-slate-100 bg-cover pb-[100%]"
       style={{ backgroundImage: `url(${src})` }}
     >
       <label htmlFor="image">

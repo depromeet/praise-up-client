@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useState, useEffect } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 import "@/style/cropper.css";
 import clsx from "clsx";
@@ -22,11 +22,6 @@ export const ImageCropper = ({ src, openCrop, scaleImage }: CropperProps) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>();
-
-  /** 일부 스크롤이 내려진 상태로, 크로퍼를 호출하게 되면 비정상적인 UI가 보여지는 현상이 있어 호출 시에 스크롤을 탑으로 위치 */
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -55,7 +50,7 @@ export const ImageCropper = ({ src, openCrop, scaleImage }: CropperProps) => {
   };
 
   return (
-    <div className="crop-container">
+    <div className="flex h-full w-full flex-col items-center">
       <Cropper
         image={src}
         crop={crop}
