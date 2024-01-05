@@ -1,17 +1,12 @@
 /* 크로퍼 라이브러리 커스텀 CSS */
 
-.crop-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .reactEasyCrop_Container {
+  width: 100vw !important;
+  height: 100dvh !important;
   max-width: 480px;
   margin: 0 auto;
   height: 100%;
   width: 100%;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.8);
 }

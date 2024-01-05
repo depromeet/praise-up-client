@@ -9,6 +9,7 @@ import { PostImage } from "@/components/app/post/write/PostImage";
 import { Textarea } from "@/components/app/post/write/Textarea";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
+import useImageCompress from "@/hooks/useImageCompress";
 
 type postProps = {
   keyword?: string;
@@ -19,16 +20,24 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
   const [text, setText] = useState("");
   const [openCrop, setOpenCrop] = useState(false);
   const navigate = useNavigate();
+  const { compressImage } = useImageCompress();
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     if (event.target.files && event.target.files[0]) {
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = () => {
-        setImage(reader.result as string);
-        setOpenCrop(true);
-      };
+      const compressedImage = compressImage(event.target.files[0]);
+      compressedImage
+        .then((res) => {
+          reader.readAsDataURL(res as Blob);
+          reader.onload = () => {
+            setImage(reader.result as string);
+            setOpenCrop(true);
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -43,6 +52,7 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
     const file = new File([image], "image.jpeg", {
       type: "image/jpeg",
     });
+    console.log("최종 제출 파일 크기 :", file.size);
     navigate("/post/done");
   };
 
