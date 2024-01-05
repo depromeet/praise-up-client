@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
@@ -23,7 +21,7 @@ export const RecentCard = ({
   count,
   openDatetime,
 }: RecentCardProps) => {
-  const [idx] = useState<number>(Math.floor(Math.random() * 11));
+  const idx = Math.floor(Math.random() * 11);
 
   return (
     <div className="flex flex-col items-center gap-4 rounded-4 bg-white p-4">
