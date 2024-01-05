@@ -20,7 +20,8 @@
     "react-canvas-confetti": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.4",
-    "react-router-dom": "^6.19.0"
+    "react-router-dom": "^6.19.0",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.3",

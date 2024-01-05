@@ -44,6 +44,13 @@ export default {
           400: "#FFEAA0",
           500: "#F5C547",
         },
+        primary: "#262C36",
+        secondary: "#333E4C",
+        teritary: "#667080",
+        disabled: "#A1A9B3",
+        oncolor: "#FFFFFF",
+        negative: "#EE324B",
+        active: "#338AFF",
       },
       borderRadius: {
         1: "4px",
@@ -53,5 +60,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
