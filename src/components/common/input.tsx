@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 interface TextInputProps
-  extends Omit<React.HTMLAttributes<HTMLInputElement>, "type"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   limit: number;
   currentLength: number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
