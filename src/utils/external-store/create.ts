@@ -17,7 +17,7 @@ export function createExternalStore<T>(init: T): Store<T> {
 
   const get = () => state;
 
-  function set(update: Updater<T> | T) {
+  const set = (update: Updater<T> | T) => {
     state = isUpdater<T>(update) ? update(state) : update;
     listeners.forEach((l) => l());
   }
