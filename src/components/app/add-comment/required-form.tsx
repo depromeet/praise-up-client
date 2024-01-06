@@ -11,9 +11,14 @@ interface FormProps {
   changeImage: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Form = ({ text, setText, image, changeImage }: FormProps) => {
+export const RequiredForm = ({
+  text,
+  setText,
+  image,
+  changeImage,
+}: FormProps) => {
   return (
-    <div className="flex w-full flex-col gap-7 overflow-auto">
+    <>
       <div className="flex flex-col gap-4">
         <h4 className="text-h4 text-primary">닉네임 설정</h4>
         <Input
@@ -34,6 +39,6 @@ export const Form = ({ text, setText, image, changeImage }: FormProps) => {
           <ImageInput onChange={changeImage} />
         )}
       </div>
-    </div>
+    </>
   );
 };

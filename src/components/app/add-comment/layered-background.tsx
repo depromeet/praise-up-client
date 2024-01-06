@@ -10,11 +10,11 @@ import bg_circles from "@/assets/imgs/bg_circles.svg";
 
 export const LayeredBackground = ({ children }: PropsWithChildren) => {
   return (
-    <div className="w-full flex-1">
+    <div className="h-screen w-full">
       {/* circle 일러스트 img */}
-      <div className="absolute left-0 top-0 h-full w-full overflow-x-hidden">
+      <div className="absolute left-0  h-full w-full overflow-x-hidden">
         <div
-          className="left-0 top-0 h-full w-full blur-[50px]"
+          className="left-0 h-full w-full blur-[50px]"
           style={{
             backgroundImage: `url(${bg_circles})`,
             backgroundSize: "cover",
@@ -25,7 +25,7 @@ export const LayeredBackground = ({ children }: PropsWithChildren) => {
       </div>
       {/* 흰 배경 img (opacity: 75%) */}
       <div
-        className="absolute left-0 top-0 h-full w-full opacity-75"
+        className="absolute left-0 h-full w-full opacity-75"
         style={{
           background: `url(${bg_blur})`,
           backgroundSize: "contain",
