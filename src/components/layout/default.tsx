@@ -17,7 +17,7 @@ export const DefaultLayout = ({
     <Fragment>
       <UseExternalBrowser />
       {resetScroll && <UseScrollToTop />}
-      <div className="relative mx-auto flex h-screen w-screen max-w-[480px] flex-col border-x ">
+      <div className="relative mx-auto flex h-screen w-screen max-w-[480px] flex-col border-x">
         {/* need app bar variants */}
         {appbar ?? <div className="h-64px" />}
         <div className="flex flex-1 flex-col px-20px pt-16px">{children}</div>

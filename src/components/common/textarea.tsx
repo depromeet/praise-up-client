@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment } from "react";
 
 type textareaProps = {
   limit: number;
@@ -13,16 +13,6 @@ export const Textarea = ({
   ...props
 }: textareaProps) => {
   const LIMIT = limit;
-  const hiddenRef = useRef<HTMLInputElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLTextAreaElement>) => {
-    event.preventDefault();
-    if (hiddenRef.current) {
-      hiddenRef.current.focus();
-      // console.log(event.target);
-      // event.target.focus();
-    }
-  };
 
   return (
     <Fragment>
@@ -31,7 +21,6 @@ export const Textarea = ({
           className="text-b3-compact h-50px w-full resize-none bg-transparent caret-[#338AFF] focus:outline-none"
           title="텍스트 입력"
           maxLength={LIMIT}
-          onClick={handleClick}
           onChange={(event) => {
             if (event.target.value.length > limit) return;
             onChange(event);

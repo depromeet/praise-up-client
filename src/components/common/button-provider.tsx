@@ -75,7 +75,7 @@ export const ButtonProvider = ({
   return (
     <div
       className={clsx(
-        "w-360px sticky bottom-0 mt-auto flex h-auto flex-col gap-y-2 bg-transparent pb-32px pt-12px",
+        "w-360px sticky bottom-0 -mx-[20px] mt-auto flex h-auto flex-col gap-y-2 bg-white px-5 pb-32px pt-12px",
         isFullStyle && "-mx-[22px] !pb-0px",
       )}
     >
