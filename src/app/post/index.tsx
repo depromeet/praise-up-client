@@ -2,12 +2,12 @@ import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
-import { PostHeader } from "@/components/app/post/common/PostHeader";
-import { ImageContainer } from "@/components/app/post/write/ImageContainer";
-import { ImageCropper } from "@/components/app/post/write/ImageCropper";
-import { PostImage } from "@/components/app/post/write/PostImage";
-import { Textarea } from "@/components/app/post/write/Textarea";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { Header } from "@/components/common/header";
+import { ImageContainer } from "@/components/common/image-container";
+import { ImageCropper } from "@/components/common/image-cropper";
+import { ImageInput } from "@/components/common/image-input";
+import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 import useImageCompress from "@/hooks/useImageCompress";
 
@@ -67,14 +67,11 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
       ) : (
         <Fragment>
           <ArticleWrapper>
-            <PostHeader
-              text={`오늘 칭찬받을 ${keyword}\\n순간을 공유해주세요`}
-              emphasis={keyword}
-            />
+            <Header text={`오늘 칭찬받을 ${keyword}\\n순간을 공유해주세요`} />
             {image.length > 0 ? (
               <ImageContainer src={image} onChange={changeImage} />
             ) : (
-              <PostImage onChange={changeImage} />
+              <ImageInput onChange={changeImage} />
             )}
           </ArticleWrapper>
           {image.length > 0 && (
