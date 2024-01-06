@@ -1,4 +1,5 @@
 import Marbles from "@/assets/imgs/marbles.svg?react";
+import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 
@@ -23,17 +24,14 @@ export const AddCommentPage = () => {
         </PostCardView>
       </section>
 
-      {/* 아래는 추후에 공통 버튼 컴포넌트로 변경될 영역 */}
-      <section>
-        <div className="w-360px sticky bottom-0 mt-auto flex h-auto flex-col gap-y-2 bg-transparent pb-32px pt-12px ">
-          <button className="text-b2-strong flex h-54px w-full items-center justify-center rounded-2 bg-[#242B37] py-16px text-white disabled:bg-gray-400 disabled:text-gray-500">
-            칭찬 남기기
-          </button>
-          <button className="flex h-54px w-full items-center justify-center rounded-2 py-16px disabled:bg-gray-400 disabled:text-gray-500">
-            나도 칭찬 받기
-          </button>
-        </div>
-      </section>
+      <ButtonProvider>
+        <ButtonProvider.Primary className="">
+          칭찬 남기기
+        </ButtonProvider.Primary>
+        <ButtonProvider.White className="!bg-transparent">
+          나도 칭찬 받기
+        </ButtonProvider.White>
+      </ButtonProvider>
 
       {/* background 영역 */}
       <div className="absolute bottom-0 left-0 -z-10 m-0 h-auto w-full p-0">

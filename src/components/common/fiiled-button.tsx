@@ -26,8 +26,8 @@ export const FilledButton = ({
           "text-b3-strong h-40px bg-white text-blue-500":
             colorSchema === "white",
           "rounded-none": isFull && isFullStyle,
-          className,
         },
+        className,
       )}
       {...props}
     >
