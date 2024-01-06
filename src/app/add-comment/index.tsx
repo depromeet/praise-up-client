@@ -28,9 +28,7 @@ export const AddCommentPage = () => {
         <ButtonProvider.Primary className="">
           칭찬 남기기
         </ButtonProvider.Primary>
-        <ButtonProvider.White className="!bg-transparent">
-          나도 칭찬 받기
-        </ButtonProvider.White>
+        <ButtonProvider.White className="">나도 칭찬 받기</ButtonProvider.White>
       </ButtonProvider>
 
       {/* background 영역 */}

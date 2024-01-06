@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AddCommentPage } from "@/app/add-comment";
+import { WriteCommentPage } from "@/app/add-comment/write";
 import { Home } from "@/app/home";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "clap",
         element: <AddCommentPage />,
+      },
+      {
+        path: "clap/write",
+        element: <WriteCommentPage />,
       },
     ],
   },
