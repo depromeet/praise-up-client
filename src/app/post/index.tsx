@@ -67,7 +67,7 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
       ) : (
         <Fragment>
           <ArticleWrapper>
-            <Header text={`오늘 칭찬받을 ${keyword}\\n순간을 공유해주세요`} />
+            <Header text={`오늘 칭찬받을 {${keyword}}\\n순간을 공유해주세요`} />
             {image.length > 0 ? (
               <ImageContainer src={image} onChange={changeImage} />
             ) : (
