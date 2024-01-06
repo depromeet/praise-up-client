@@ -16,7 +16,7 @@ export const Textarea = ({
 
   return (
     <Fragment>
-      <div className="focus-within: flex h-102px w-full flex-col rounded-4 border bg-slate-100 px-18px py-16px transition-all duration-300 focus-within:border-blue-500">
+      <div className="flex h-102px w-full flex-col rounded-4 bg-slate-100 px-18px py-16px focus-within:border focus-within:border-blue-500">
         <textarea
           className="text-b3-compact h-50px w-full resize-none bg-transparent caret-[#338AFF] focus:outline-none"
           title="텍스트 입력"
