@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 type Props = {
   message: {
     title: string;
@@ -8,28 +10,31 @@ type Props = {
 };
 
 export const Confirm = ({ message, onClickConfirm, onClickCancel }: Props) => {
+  const btnDefaultStyle =
+    "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
+
   return (
     <div>
-      <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%] ">
+      <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%]">
         <div className="mx-5 flex flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-8">
           <div className="flex flex-col items-center gap-1">
-            <div className="text-lg font-semibold text-gray-800">
+            <div className="text-lg font-semibold text-primary">
               {message.title}
             </div>
-            <div className="text-sm text-gray-500">{message.description}</div>
+            <div className="text-sm text-teritary">{message.description}</div>
           </div>
           <div className="flex gap-2.5 self-stretch">
             <button
               onClick={onClickCancel}
-              className="flex h-54px grow items-center justify-center rounded-lg bg-zinc-200"
+              className={clsx(btnDefaultStyle, "bg-gray-300")}
             >
-              <p className="w-full font-semibold text-gray-800">취소</p>
+              <p className="w-full text-primary">취소</p>
             </button>
             <button
               onClick={onClickConfirm}
-              className="flex h-54px grow items-center justify-center rounded-lg bg-red-500"
+              className={clsx(btnDefaultStyle, "bg-red-500")}
             >
-              <p className="w-full font-semibold text-white">삭제</p>
+              <p className="w-full text-white">삭제</p>
             </button>
           </div>
         </div>
