@@ -13,6 +13,7 @@ export const MarbleDetailCard = () => {
     });
 
     // TODO: delete action
+    // TODO: Error handling
     console.log(result);
   };
 
