@@ -19,6 +19,7 @@ export const FABButton = ({
 }: Props) => {
   const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
 
+  if (!text.length) return;
   return (
     <button
       {...props}
@@ -27,18 +28,18 @@ export const FABButton = ({
         className,
       )}
     >
-      <p
+      <div
         className={clsx(
           "after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300",
-          text && `after:content-['${text}']`,
+          `after:content-['${text}']`,
           "relative inline-block overflow-hidden text-sm font-semibold text-gray-800 transition-all duration-300",
-          isOverflow && "pr-[52px] after:right-0 after:opacity-100",
+          isOverflow && "pr-[53px] after:right-0 after:opacity-100",
         )}
       >
         <div className="h-[24px] w-[24px]">
           <img src={icon} />
         </div>
-      </p>
+      </div>
     </button>
   );
 };

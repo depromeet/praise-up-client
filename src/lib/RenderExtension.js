@@ -133,7 +133,8 @@ RenderExtends.bodies = function (render, bodies, context) {
       c.textAlign = "center";
       c.fillStyle = color;
       c.font = fontsize + "px " + fontfamily;
-      c.fillText(content, part.position.x + 10, part.position.y + 25);
+      // TODO: text 길이에 따른 위치 조절
+      c.fillText(content, part.position.x + 10, part.position.y + 20);
     }
   }
 };

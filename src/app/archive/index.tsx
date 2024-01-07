@@ -21,8 +21,8 @@ export const Archive = () => {
   if (!marbleList) return null;
   return (
     <ConfirmDialog>
-      <Preview />
-      {/* <MarbleCanvas marbleList={marbleList} /> */}
+      {/* <Preview /> */}
+      <MarbleCanvas marbleList={marbleList} />
       {/* <MarbleGrid marbleList={marbleList} /> */}
     </ConfirmDialog>
   );
