@@ -43,5 +43,3 @@ export const FABButton = ({
     </button>
   );
 };
-
-// TODO: before, after css
