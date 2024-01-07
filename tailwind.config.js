@@ -59,8 +59,8 @@ export default {
         4: "16px",
       },
       backgroundImage: {
-        "marble-detail": "url('@/assets/images/marble_detail_bg.jpg')",
-        "marble-preview": "url('@/assets/images/marble_bg.png')",
+        "marble-detail": "url('@/assets/images/marble-detail-bg.jpg')",
+        "marble-preview": "url('@/assets/images/marble-bg.png')",
       },
     },
   },
