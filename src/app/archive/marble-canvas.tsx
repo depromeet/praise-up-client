@@ -14,10 +14,10 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
-import marbleTexture from "@/assets/images/marble_01/marble_01_2x.webp";
-import marbleIsViewedTexture from "@/assets/images/marble_01/marble_01_isViewed_2x.webp";
-import marbleTexture_2 from "@/assets/images/marble_02/marble_02_2x.webp";
-import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble_02_isViewed_2x.webp";
+import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
+import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
+import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
+import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleModal } from "@/components/app/archive/marble-modal";
