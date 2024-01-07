@@ -14,7 +14,7 @@ export const useWindowScrollY = ({
   const [scrollY, setScrollY] = useState(window.scrollY);
   const [isOverflow, setIsOverflow] = useState(false);
 
-  const handleScroll = useCallback(() => {
+  const onScroll = useCallback(() => {
     const currentScrollY = scrollRef.current?.scrollTop || 0;
 
     setScrollY((prevScrollY) => {
@@ -25,15 +25,15 @@ export const useWindowScrollY = ({
   }, [setScrollY, setIsDown, setIsOverflow, point, scrollRef]);
 
   useEffect(() => {
-    scrollRef.current?.addEventListener("scroll", _.debounce(handleScroll, 50));
+    scrollRef.current?.addEventListener("scroll", _.debounce(onScroll, 50));
 
     return () => {
       scrollRef.current?.removeEventListener(
         "scroll",
-        _.debounce(handleScroll, 50),
+        _.debounce(onScroll, 50),
       );
     };
-  }, [handleScroll, scrollRef]);
+  }, [onScroll, scrollRef]);
 
   return { isDown, isOverflow, scrollY };
 };

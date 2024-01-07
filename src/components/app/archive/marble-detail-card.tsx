@@ -6,7 +6,7 @@ import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 export const MarbleDetailCard = () => {
   const { confirm } = useContext(ConfirmContext);
 
-  const handleClickMenu = async () => {
+  const onClickMenu = async () => {
     const result = await confirm(
       {
         title: "칭찬반응을 삭제할까요?",
@@ -31,7 +31,7 @@ export const MarbleDetailCard = () => {
       <div className="relative box-border w-full rounded-xl bg-black after:block after:pb-[calc(100%)]">
         <button
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={handleClickMenu}
+          onClick={onClickMenu}
           className="absolute right-[16px] top-[14px] h-[24px] w-[24px]"
         >
           <Overflow />

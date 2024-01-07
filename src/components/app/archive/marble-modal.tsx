@@ -81,7 +81,7 @@ export const MarbleModal = ({
     };
   }, [isOpen]);
 
-  const handleClickDim: MouseEventHandler = () => {
+  const onClickClose: MouseEventHandler = () => {
     setIsOpen(false);
   };
 
@@ -92,7 +92,7 @@ export const MarbleModal = ({
       <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
         <div className="relative box-border flex h-16 w-full items-center justify-center px-[16px]">
           <button
-            onClick={handleClickDim}
+            onClick={onClickClose}
             className="absolute left-4 h-44px w-44px cursor-pointer"
           >
             <Back />
@@ -112,7 +112,7 @@ export const MarbleModal = ({
         )}
       </dialog>
       <div
-        onClick={handleClickDim}
+        onClick={onClickClose}
         className="fixed top-0 z-20 mx-auto h-full w-full max-w-[480px] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
       />
     </>
