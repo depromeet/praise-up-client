@@ -17,7 +17,7 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Back from "@/assets/icons/back.svg?react";
-import { MarbleDetailCard } from "@/components/app/archive/marbleDetailCard";
+import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
 
 interface Props {
   isOpen: boolean;
@@ -28,6 +28,7 @@ interface Props {
   setIsViewedMarbleList: Dispatch<SetStateAction<number[]>>;
 }
 
+// TODO: marble Grid view를 고려하여 상태 및 props update 예정
 export const MarbleModal = ({
   isOpen,
   setIsOpen,

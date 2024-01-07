@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 
 import Marble from "@/assets/icons/marble.svg";
-import { ArchiveTitle } from "@/components/app/archive/archiveTitle";
-import { FABButton } from "@/components/app/archive/fabButton";
-import { MarbleGridItem } from "@/components/app/archive/marbleGridItem";
+import { ArchiveTitle } from "@/components/app/archive/archive-title";
+import { FABButton } from "@/components/app/archive/fab-button";
+import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
 import { TMarble } from "@/types/archive";
