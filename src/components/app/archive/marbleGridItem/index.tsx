@@ -7,7 +7,7 @@ export const MarbleGridItem = () => {
         <div className="w-4">
           <UserFilled />
         </div>
-        <div className="text-sm font-normal text-gray-700">훈섭체고</div>
+        <div className="text-sm font-normal text-secondary">훈섭체고</div>
       </div>
     </div>
   );

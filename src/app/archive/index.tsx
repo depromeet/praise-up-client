@@ -22,8 +22,8 @@ export const Archive = () => {
   return (
     <ConfirmDialog>
       {/* <Preview /> */}
-      <MarbleCanvas marbleList={marbleList} />
-      {/* <MarbleGrid marbleList={marbleList} /> */}
+      {/* <MarbleCanvas marbleList={marbleList} /> */}
+      <MarbleGrid marbleList={marbleList} />
     </ConfirmDialog>
   );
 };
