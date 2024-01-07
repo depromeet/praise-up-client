@@ -21,6 +21,7 @@ const White = (props: ButtonProps) => {
 
 export const ButtonProvider = ({
   children,
+  className,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
   const [isFullStyle, setisFullStyle] = useState(false);
@@ -76,6 +77,7 @@ export const ButtonProvider = ({
     <div
       className={clsx(
         "w-360px sticky bottom-0 -mx-[20px] mt-auto flex h-auto flex-col gap-y-2 bg-white px-5 pb-32px pt-12px",
+        className,
         isFullStyle && "-mx-[22px] !pb-0px",
       )}
     >
