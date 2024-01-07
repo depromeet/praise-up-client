@@ -1,5 +1,5 @@
 import Arrow from "@/assets/icons/arrow.svg?react";
-import { MarbleCard } from "@/components/app/archive/marbleCard";
+import { MarbleCard } from "@/components/app/archive/marble-card";
 import { DefaultLayout } from "@/components/layout/default";
 
 export const Preview = () => {

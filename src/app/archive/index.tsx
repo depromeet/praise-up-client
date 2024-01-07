@@ -4,7 +4,7 @@ import { MarbleCanvas } from "./marbleCanvas";
 import { MarbleGrid } from "./marbleGrid";
 import { Preview } from "./preview";
 
-import { ConfirmDialog } from "@/components/common/confirm/confirmDialog";
+import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import tempData from "@/data/tempData.json";
 import { TMarble } from "@/types/archive";
 

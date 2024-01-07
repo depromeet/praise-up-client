@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
-import { ConfirmContext } from "@/components/common/confirm/confirmContext";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 
 export const MarbleDetailCard = () => {
   const { confirm } = useContext(ConfirmContext);

@@ -6,6 +6,7 @@ export type MessageType = {
 
 export type ButtonType = {
   text: string;
+  onClick?: () => void;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 export type ConfirmType = {
@@ -14,4 +15,10 @@ export type ConfirmType = {
     confirm: ButtonType,
     cancel: ButtonType,
   ) => Promise<boolean>;
+};
+
+export type ConfirmDialogType = {
+  message: MessageType;
+  confirm: ButtonType;
+  cancel: ButtonType;
 };

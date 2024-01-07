@@ -1,15 +1,9 @@
 import { ReactNode, useState } from "react";
 
 import { Confirm } from "./confirm";
-import { ConfirmContext } from "./confirmContext";
+import { ConfirmContext } from "./confirm-context";
 
-import { MessageType, ButtonType } from "@/types/common";
-
-type ConfirmDialogType = {
-  message: MessageType;
-  confirm: ButtonType;
-  cancel: ButtonType;
-};
+import { MessageType, ButtonType, ConfirmDialogType } from "@/types/common";
 
 export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<ConfirmDialogType>();

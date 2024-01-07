@@ -1,14 +1,8 @@
 import clsx from "clsx";
 
-import { MessageType, ButtonType } from "@/types/common";
+import { ConfirmDialogType } from "@/types/common";
 
-type Props = {
-  message: MessageType;
-  confirm: ButtonType;
-  cancel: ButtonType;
-};
-
-export const Confirm = ({ message, confirm, cancel }: Props) => {
+export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
   const btnDefaultStyle =
     "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
 
