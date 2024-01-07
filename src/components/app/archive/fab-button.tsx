@@ -1,5 +1,11 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes, RefObject } from "react";
+import {
+  ButtonHTMLAttributes,
+  RefObject,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from "react";
 
 import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 
@@ -18,6 +24,12 @@ export const FABButton = ({
   ...props
 }: Props) => {
   const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
+  const addAfterStyle = useMemo(
+    () =>
+      text.length &&
+      `after:content-['${text}'] after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300`,
+    [text],
+  );
 
   if (!text.length) return;
   return (
@@ -30,8 +42,7 @@ export const FABButton = ({
     >
       <div
         className={clsx(
-          "after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300",
-          `after:content-['${text}']`,
+          addAfterStyle,
           "relative inline-block overflow-hidden text-sm font-semibold text-gray-800 transition-all duration-300",
           isOverflow && "pr-[53px] after:right-0 after:opacity-100",
         )}
