@@ -11,7 +11,7 @@ export const Preview = () => {
         </p>
         <MarbleCard />
       </div>
-      <div className="absolute bottom-0 left-0 h-[184px] w-full bg-marble-preview bg-cover">
+      <div className="absolute bottom-0 left-0 h-184px w-full bg-marble-preview bg-cover">
         <div className="flex h-full w-full flex-col items-center justify-center gap-3">
           <div className="w-fit text-center text-sm font-semibold text-slate-500">
             스크롤해서 칭찬 확인하기

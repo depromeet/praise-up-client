@@ -92,7 +92,7 @@ export const MarbleModal = ({
         <div className="relative box-border flex h-16 w-full items-center justify-center px-[16px]">
           <button
             onClick={handleClickDim}
-            className="absolute left-[16px] h-[44px] w-[44px] cursor-pointer"
+            className="absolute left-[16px] h-44px w-44px cursor-pointer"
           >
             <Back />
           </button>

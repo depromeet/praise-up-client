@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 export const MarbleCard = () => {
   return (
     <div className="flex w-full flex-col gap-4 rounded-2xl bg-gray-100 p-4 pt-5">
@@ -9,8 +11,13 @@ export const MarbleCard = () => {
         </div>
       </div>
       {/* background black은 임시 */}
-      <div className="relative box-border w-full rounded-xl bg-black after:block after:pb-[calc(100%)]">
-        <div className="absolute flex h-full w-full flex-col justify-end gap-2 p-[18px]">
+      <div
+        className={clsx(
+          "after:block after:pb-[calc(100%)]",
+          "relative box-border w-full rounded-xl bg-black",
+        )}
+      >
+        <div className="absolute flex h-full w-full flex-col justify-end gap-2 p-18px">
           <div className="text-white ">
             한시간만에 뚝딱 완성한 나의 첫 요리 😆
             <br />

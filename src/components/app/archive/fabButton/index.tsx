@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes, RefObject, useEffect } from "react";
+import { ButtonHTMLAttributes, RefObject } from "react";
 
 import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 
