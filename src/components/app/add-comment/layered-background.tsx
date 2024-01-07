@@ -10,7 +10,7 @@ import bg_circles from "@/assets/imgs/bg_circles.svg";
 
 export const LayeredBackground = ({ children }: PropsWithChildren) => {
   return (
-    <div className="h-screen w-full">
+    <div className="h-full w-full">
       {/* circle 일러스트 img */}
       <div className="absolute left-0  h-full w-full overflow-x-hidden">
         <div
