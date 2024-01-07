@@ -18,6 +18,7 @@ import marbleTexture from "@/assets/images/marble_01/marble_01_2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble_01_isViewed_2x.webp";
 import marbleTexture_2 from "@/assets/images/marble_02/marble_02_2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble_02_isViewed_2x.webp";
+import { ArchiveTitle } from "@/components/app/archive/archiveTitle";
 import { FABButton } from "@/components/app/archive/fabButton";
 import { MarbleModal } from "@/components/app/archive/marbleModal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
@@ -32,19 +33,6 @@ interface IMarbleObject {
   textContent: string;
   isViewed?: boolean;
 }
-
-const Title = () => {
-  return (
-    <div className="relative z-10">
-      <div className="absolute ml-[20px] flex flex-col gap-0.5 text-lg text-primary">
-        <p>해당 게시물에 대해</p>
-        <p>
-          <span className="font-semibold">999개</span>의 칭찬구슬이 모였어요!
-        </p>
-      </div>
-    </div>
-  );
-};
 
 type Props = {
   marbleList: TMarble[];
@@ -348,7 +336,7 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
         />
       )}
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
-        <Title />
+        <ArchiveTitle archiveMarbleNum={marbleList.length} isLayout={true} />
         <canvas ref={canvasRef} />
       </div>
       <FABButton icon={Bars} text="리스트뷰" scrollRef={canvasScrollRef} />
