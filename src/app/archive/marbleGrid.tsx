@@ -4,6 +4,7 @@ import Marble from "@/assets/icons/marble.svg";
 import { FABButton } from "@/components/app/archive/fabButton";
 import { MarbleGridItem } from "@/components/app/archive/marbleGridItem";
 import { Switch } from "@/components/common/Switch";
+import { DefaultLayout } from "@/components/layout/default";
 import { TMarble } from "@/types/archive";
 
 type Props = {
@@ -18,9 +19,8 @@ export const MarbleGrid = ({ marbleList }: Props) => {
 
   if (!marbleList.length) return null;
   return (
-    <div className="relative mx-auto box-border w-full max-w-[480px] px-5">
-      <div className="h-16">Temp Header</div>
-      <div className="mb-[60px] mt-4 flex flex-col gap-9">
+    <DefaultLayout appbar={<div>appBar</div>}>
+      <div className="mb-[60px] flex flex-col gap-9">
         <div className="flex flex-col gap-0.5 text-lg text-primary">
           <p>해당 게시물에 대해</p>
           <p>
@@ -35,12 +35,12 @@ export const MarbleGrid = ({ marbleList }: Props) => {
             </button>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-2 overflow-y-auto">
+          <div className="mt-4 grid grid-cols-2 gap-2">
             {marbleList?.map((marble) => <MarbleGridItem key={marble.id} />)}
           </div>
         </div>
       </div>
       <FABButton icon={Marble} text="구슬뷰" scrollRef={scrollRef} />
-    </div>
+    </DefaultLayout>
   );
 };
