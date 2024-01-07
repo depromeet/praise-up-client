@@ -1,15 +1,14 @@
 import clsx from "clsx";
 
+import { MessageType, ButtonType } from "@/types/common";
+
 type Props = {
-  message: {
-    title: string;
-    description: string;
-  };
-  onClickConfirm: () => void;
-  onClickCancel: () => void;
+  message: MessageType;
+  confirm: ButtonType;
+  cancel: ButtonType;
 };
 
-export const Confirm = ({ message, onClickConfirm, onClickCancel }: Props) => {
+export const Confirm = ({ message, confirm, cancel }: Props) => {
   const btnDefaultStyle =
     "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
 
@@ -25,22 +24,24 @@ export const Confirm = ({ message, onClickConfirm, onClickCancel }: Props) => {
           </div>
           <div className="flex gap-2.5 self-stretch">
             <button
-              onClick={onClickCancel}
+              {...cancel}
+              onClick={cancel.onClick}
               className={clsx(btnDefaultStyle, "bg-gray-300")}
             >
-              <p className="w-full text-primary">취소</p>
+              <p className="w-full text-primary">{cancel.text}</p>
             </button>
             <button
-              onClick={onClickConfirm}
+              {...confirm}
+              onClick={confirm.onClick}
               className={clsx(btnDefaultStyle, "bg-red-500")}
             >
-              <p className="w-full text-white">삭제</p>
+              <p className="w-full text-white">{confirm.text}</p>
             </button>
           </div>
         </div>
       </div>
       <div
-        onClick={onClickCancel}
+        onClick={cancel.onClick}
         className="fixed top-0 z-40 h-full w-full bg-black/60"
       />
     </div>

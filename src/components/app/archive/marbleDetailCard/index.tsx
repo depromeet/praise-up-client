@@ -7,10 +7,18 @@ export const MarbleDetailCard = () => {
   const { confirm } = useContext(ConfirmContext);
 
   const handleClickMenu = async () => {
-    const result = await confirm({
-      title: "칭찬반응을 삭제할까요?",
-      description: "삭제된 칭찬반응은 복구할 수 없어요.",
-    });
+    const result = await confirm(
+      {
+        title: "칭찬반응을 삭제할까요?",
+        description: "삭제된 칭찬반응은 복구할 수 없어요.",
+      },
+      {
+        text: "삭제",
+      },
+      {
+        text: "취소",
+      },
+    );
 
     // TODO: delete action
     // TODO: Error handling

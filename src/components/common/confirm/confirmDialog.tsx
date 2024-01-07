@@ -1,28 +1,40 @@
 import { ReactNode, useState } from "react";
 
 import { Confirm } from "./confirm";
-import { ConfirmContext, MessageType } from "./confirmContext";
+import { ConfirmContext } from "./confirmContext";
+
+import { MessageType, ButtonType } from "@/types/common";
 
 type ConfirmDialogType = {
   message: MessageType;
-  onClickConfirm: () => void;
-  onClickCancel: () => void;
+  confirm: ButtonType;
+  cancel: ButtonType;
 };
 
 export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<ConfirmDialogType>();
 
-  const confirm = (message: MessageType): Promise<boolean> => {
+  const confirm = (
+    message: MessageType,
+    confirm: ButtonType,
+    cancel: ButtonType,
+  ): Promise<boolean> => {
     return new Promise((resolve) => {
       setState({
         message,
-        onClickConfirm: () => {
-          setState(undefined);
-          resolve(true);
+        confirm: {
+          ...confirm,
+          onClick: () => {
+            setState(undefined);
+            resolve(true);
+          },
         },
-        onClickCancel: () => {
-          setState(undefined);
-          resolve(false);
+        cancel: {
+          ...cancel,
+          onClick: () => {
+            setState(undefined);
+            resolve(false);
+          },
         },
       });
     });
@@ -34,8 +46,8 @@ export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
       {state && (
         <Confirm
           message={state.message}
-          onClickConfirm={state.onClickConfirm}
-          onClickCancel={state.onClickCancel}
+          confirm={state.confirm}
+          cancel={state.cancel}
         />
       )}
     </ConfirmContext.Provider>
