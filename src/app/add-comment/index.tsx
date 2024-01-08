@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import Marbles from "@/assets/imgs/marbles.svg?react";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
@@ -13,6 +15,8 @@ const DUMMY_DATA = {
 };
 
 export const CommentMainPage = () => {
+  const navigate = useNavigate();
+
   return (
     <DefaultLayout>
       {/* post area */}
@@ -25,7 +29,10 @@ export const CommentMainPage = () => {
       </section>
 
       <ButtonProvider>
-        <ButtonProvider.Primary className="">
+        <ButtonProvider.Primary
+          className=""
+          onClick={() => navigate("/clap/write")}
+        >
           칭찬 남기기
         </ButtonProvider.Primary>
         <ButtonProvider.White className="">나도 칭찬 받기</ButtonProvider.White>

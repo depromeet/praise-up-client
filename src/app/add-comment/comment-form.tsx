@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { MessageForm } from "@/components/app/add-comment/message-form";
@@ -16,11 +17,18 @@ const DUMMY_DATA = {
 };
 
 export const CommentFormPage = () => {
+  const navigate = useNavigate();
+
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const { compressImage } = useImageCompress();
+  const [required, setRequired] = useState(false);
+
+  useEffect(() => {
+    setRequired(text.length > 0 && image.length > 0);
+  }, [text, image]);
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,14 +71,19 @@ export const CommentFormPage = () => {
                 image={image}
                 changeImage={changeImage}
               />
-              {image.length > 0 && (
+              {required && (
                 <MessageForm message={message} setMessage={setMessage} />
               )}
             </div>
           </LayeredBackground>
 
           <ButtonProvider isFull={true}>
-            <ButtonProvider.Primary>칭찬 보내기</ButtonProvider.Primary>
+            <ButtonProvider.Primary
+              disabled={!required}
+              onClick={() => navigate("/clap/up")}
+            >
+              칭찬 보내기
+            </ButtonProvider.Primary>
           </ButtonProvider>
         </>
       )}
