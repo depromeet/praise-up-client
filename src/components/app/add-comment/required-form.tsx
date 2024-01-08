@@ -28,7 +28,6 @@ export const RequiredForm = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setText(e.target.value)
           }
-          currentLength={text.length}
         />
       </div>
       <div className="flex flex-col gap-4">
