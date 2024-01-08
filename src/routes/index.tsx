@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { CommentMainPage } from "@/app/add-comment";
+import { CommentDonePage } from "@/app/add-comment/comment-done";
 import { CommentFormPage } from "@/app/add-comment/comment-form";
 import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Home } from "@/app/home";
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "clap/up",
         element: <CommentUpPage />,
+      },
+      {
+        path: "clap/done",
+        element: <CommentDonePage />,
       },
     ],
   },
