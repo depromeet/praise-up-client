@@ -44,7 +44,7 @@ export const CommentFormPage = () => {
           };
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error); // eslint rule
         });
     }
   };

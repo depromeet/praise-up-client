@@ -83,8 +83,8 @@ export const DraggableMarble = ({
         transition: "ease-in-out",
         ...(isReached ? FADEOUT_STYLE : {}),
       }}
-      onMouseDown={onMouseDown} //desktop
-      onTouchStart={onTouchStart} //mobile
+      onMouseDown={onMouseDown} // desktop
+      onTouchStart={onTouchStart} // mobile
     >
       <MarbleLargeSVG className="h-[180px] w-[180px]" />
       <h4 className="text-h4 absolute bottom-[42px] right-[44px] text-teritary">

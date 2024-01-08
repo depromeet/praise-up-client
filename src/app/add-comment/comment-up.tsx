@@ -15,7 +15,7 @@ export const CommentUpPage = () => {
 
   const navigate = useNavigate();
 
-  // navigation after animation duration
+  // navigate after animation (duration: FLY_DURATION)
   useEffect(() => {
     if (isReached) {
       void handleMove();
