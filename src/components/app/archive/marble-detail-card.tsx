@@ -27,7 +27,7 @@ export const MarbleDetailCard = () => {
 
   // TODO: Add image save button
   return (
-    <div className="mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-marble-detail bg-cover px-4 pb-5 pt-4 text-primary">
+    <div className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary">
       <div className="relative box-border w-full rounded-xl bg-black after:block after:pb-[calc(100%)]">
         <button
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
