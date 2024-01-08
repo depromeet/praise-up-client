@@ -2,10 +2,10 @@ import clsx from "clsx";
 
 import { ConfirmDialogType } from "@/types/common";
 
-export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
-  const btnDefaultStyle =
-    "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
+const btnDefaultStyle =
+  "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
 
+export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
   return (
     <div>
       <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%]">
