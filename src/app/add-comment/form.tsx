@@ -15,7 +15,7 @@ const DUMMY_DATA = {
   username: "지영",
 };
 
-export const WriteCommentPage = () => {
+export const CommentFormPage = () => {
   const [text, setText] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -42,7 +42,7 @@ export const WriteCommentPage = () => {
   };
 
   return (
-    <DefaultLayout appbar={<div className="h-[64px] shrink-0"></div>}>
+    <DefaultLayout>
       {openCrop ? (
         <ImageCropper
           src={image}
