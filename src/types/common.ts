@@ -1,3 +1,5 @@
+import { ButtonHTMLAttributes } from "react";
+
 // Common/Confirm
 export type MessageType = {
   title: string;
