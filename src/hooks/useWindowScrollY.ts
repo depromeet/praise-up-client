@@ -17,9 +17,9 @@ export const useWindowScrollY = ({
   const onScroll = useCallback(() => {
     const currentScrollY = scrollRef.current?.scrollTop || 0;
 
+    setIsOverflow(() => point < currentScrollY);
     setScrollY((prevScrollY) => {
       setIsDown(() => prevScrollY <= currentScrollY);
-      setIsOverflow(() => point < currentScrollY);
       return currentScrollY;
     });
   }, [setScrollY, setIsDown, setIsOverflow, point, scrollRef]);
