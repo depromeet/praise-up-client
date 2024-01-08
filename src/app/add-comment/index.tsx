@@ -12,7 +12,7 @@ const DUMMY_DATA = {
   content: `한시간만에 뚝딱 완성한 나의 첫 요리😆 \n 간단한 요리지만 너무 뿌듯하다!`,
 };
 
-export const AddCommentPage = () => {
+export const CommentMainPage = () => {
   return (
     <DefaultLayout>
       {/* post area */}

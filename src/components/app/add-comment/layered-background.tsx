@@ -16,7 +16,9 @@ export const LayeredBackground = ({ children }: PropsWithChildren) => {
         }}
       ></div>
 
-      <div className="flex w-full flex-col gap-9 pb-[60px] ">{children}</div>
+      <div className="flex h-full w-full flex-col gap-9 pb-[60px]">
+        {children}
+      </div>
     </>
   );
 };
