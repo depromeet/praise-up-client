@@ -28,11 +28,8 @@ export const CommentMainPage = () => {
         </PostCardView>
       </section>
 
-      <ButtonProvider>
-        <ButtonProvider.Primary
-          className=""
-          onClick={() => navigate("/clap/write")}
-        >
+      <ButtonProvider className="!bg-transparent">
+        <ButtonProvider.Primary onClick={() => navigate("/clap/write")}>
           칭찬 남기기
         </ButtonProvider.Primary>
         <ButtonProvider.White className="">나도 칭찬 받기</ButtonProvider.White>
