@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes, RefObject, useMemo } from "react";
+import { ButtonHTMLAttributes, RefObject } from "react";
 
 import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 
@@ -18,12 +18,6 @@ export const FABButton = ({
   ...props
 }: Props) => {
   const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
-  const addAfterStyle = useMemo(
-    () =>
-      text.length &&
-      `after:content-['${text}'] after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300`,
-    [text],
-  );
 
   if (!text.length) return;
   return (
@@ -36,7 +30,10 @@ export const FABButton = ({
     >
       <div
         className={clsx(
-          addAfterStyle,
+          text === "리스트뷰"
+            ? 'after:content-["리스트뷰"]'
+            : 'after:content-["구슬뷰"]',
+          "after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300",
           "relative inline-block overflow-hidden text-sm font-semibold text-gray-800 transition-all duration-300",
           isOverflow && "pr-[53px] after:right-0 after:opacity-100",
         )}
