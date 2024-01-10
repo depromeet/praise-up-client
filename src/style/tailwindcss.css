@@ -166,4 +166,12 @@
       #fff 100%
     );
   }
+
+  .bg-archive-preview {
+    background-image: url("@/assets/images/marble-bg.png");
+  }
+
+  .bg-archive-marble-detail {
+    background-image: url("@/assets/images/marble-detail-bg.jpg");
+  }
 }

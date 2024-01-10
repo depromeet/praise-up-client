@@ -4,3 +4,7 @@
 
 *.config.js
 *.config.ts
+
+
+# lib/RenderExtension file
+src/**/*.js

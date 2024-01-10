@@ -4,6 +4,7 @@ import { CommentMainPage } from "@/app/add-comment";
 import { CommentDonePage } from "@/app/add-comment/comment-done";
 import { CommentFormPage } from "@/app/add-comment/comment-form";
 import { CommentUpPage } from "@/app/add-comment/comment-up";
+import { Archive } from "@/app/archive";
 import { Home } from "@/app/home";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "clap/done",
         element: <CommentDonePage />,
+      },
+      {
+        path: "/archive",
+        element: <Archive />,
       },
     ],
   },
