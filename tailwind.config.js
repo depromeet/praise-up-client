@@ -58,6 +58,14 @@ export default {
         3: "12px",
         4: "16px",
       },
+      keyframes: {
+        arrowBlink: {
+          "0%": { visibility: "visible", zIndex: 10 },
+          "33%": { visibility: "hidden" },
+          "66%": { visibility: "hidden" },
+          "100%": { visibility: "hidden" },
+        },
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

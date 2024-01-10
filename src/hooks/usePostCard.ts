@@ -3,7 +3,7 @@ import { useContext } from "react";
 import {
   PostCardViewContext,
   PostCardContextProps,
-} from "@/app/unpublished-post/post-card-view";
+} from "@/components/common/post-card-view";
 
 export const usePostCardView = () => {
   const context = useContext<PostCardContextProps | undefined>(

@@ -66,7 +66,7 @@ export const Carousel = ({ children }: CarouselProps) => {
     <div className="flex w-full flex-col items-center gap-4">
       <div className="flex h-fit w-full overflow-hidden">
         <div
-          className={`flex w-full items-center transition-all duration-300 ease-in-out [&>*]:w-full [&>*]:shrink-0`}
+          className={`flex w-full cursor-grab items-center transition-all duration-300 ease-in-out active:cursor-grabbing [&>*]:w-full [&>*]:shrink-0`}
           style={{ transform: `translateX(${moveStyle[current]})` }}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
