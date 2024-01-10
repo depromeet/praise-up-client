@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export const GlobalLayout = () => {
   return (
-    <main className="h-full w-full">
+    <main className="w-full h-full">
       <Outlet />
     </main>
   );

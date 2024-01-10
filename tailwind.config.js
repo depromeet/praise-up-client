@@ -44,7 +44,7 @@ export default {
           400: "#FFEAA0",
           500: "#F5C547",
         },
-        primary: "#262C36",
+        primary: "#242B37",
         secondary: "#333E4C",
         teritary: "#667080",
         disabled: "#A1A9B3",

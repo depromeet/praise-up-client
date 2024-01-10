@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { Archive } from "@/app/archive";
 import { Home } from "@/app/home";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "seal/:id",
         element: <UnpublishedPostPage />,
+      },
+      {
+        path: "/archive",
+        element: <Archive />,
       },
     ],
   },
