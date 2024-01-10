@@ -12,6 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.9",
     "axios": "^1.6.2",
     "body-scroll-lock": "4.0.0-beta.0",
     "browser-image-compression": "^2.0.2",
@@ -23,8 +24,8 @@
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.4",
     "react-router-dom": "^6.19.0",
-    "tailwind-scrollbar-hide": "^1.1.7",
-    "swiper": "^11.0.5"
+    "swiper": "^11.0.5",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.3",
