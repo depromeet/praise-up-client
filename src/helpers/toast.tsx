@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { PropsWithChildren, ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -10,17 +11,22 @@ import { useExternalStore } from "@/utils/external-store/hook";
 type ToastObject = {
   content: ReactNode;
   type: "check" | "alert" | "warning";
+  scroll: boolean;
 };
 const [store, setState] = createStore(new Map<string, ToastObject>());
 
 const ToastRenderer = () => {
-  // TODO: need to style this
   const [stack] = useExternalStore(store);
   const isOpen = stack.size > 0;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const isScrollLayout = stack.values().next().value?.scroll as boolean;
 
   return (
     <dialog
-      className="relative h-screen  bg-transparent text-black"
+      className={clsx(
+        { "h-screen": isScrollLayout },
+        "relative bg-transparent text-black",
+      )}
       open={isOpen}
       ref={(el) => {
         if (el && !el.open) el.show();
@@ -68,17 +74,19 @@ const Toast = ({
 
 type ToastOptions = {
   type?: ToastType;
+  scroll?: boolean;
   delay?: number;
 };
 const defaultOptions = {
   type: "check",
+  scroll: false,
   delay: 3000,
 } as const;
 
 export const toast = (content: ReactNode, options?: ToastOptions) => {
   const id = Math.random().toString(36).slice(2);
-  const { type, delay } = { ...defaultOptions, ...(options ?? {}) };
-  setState((prev) => new Map([...prev, [id, { content, type }]]));
+  const { type, scroll, delay } = { ...defaultOptions, ...(options ?? {}) };
+  setState((prev) => new Map([...prev, [id, { content, scroll, type }]]));
 
   // remove toast after delay
   setTimeout(() => {
