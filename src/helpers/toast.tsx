@@ -1,12 +1,15 @@
 import { PropsWithChildren, ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { AlertSVG } from "@/assets/icons/snackbar/alert";
+import { CheckSVG } from "@/assets/icons/snackbar/check";
+import { WarningSVG } from "@/assets/icons/snackbar/warning";
 import { createStore } from "@/utils/external-store/create";
 import { useExternalStore } from "@/utils/external-store/hook";
 
 type ToastObject = {
   content: ReactNode;
-  type: "success" | "error" | "warning" | "info";
+  type: "check" | "alert" | "warning";
 };
 const [store, setState] = createStore(new Map<string, ToastObject>());
 
@@ -17,13 +20,13 @@ const ToastRenderer = () => {
 
   return (
     <dialog
-      className="bg-transparent text-black"
+      className="relative h-screen  bg-transparent text-black"
       open={isOpen}
       ref={(el) => {
         if (el && !el.open) el.show();
       }}
     >
-      <div className="flex flex-col">
+      <div className="absolute bottom-0 left-1/2 mb-[52px] flex -translate-x-1/2 flex-col gap-1">
         {Array.from(stack.entries()).map(([id, { content, type }]) => (
           <Toast type={type} key={id}>
             {content}
@@ -35,15 +38,32 @@ const ToastRenderer = () => {
 };
 
 // default toast
-type ToastType = "success" | "error" | "warning" | "info";
+type ToastType = "check" | "alert" | "warning";
 const Toast = ({
   type: _,
   children,
 }: {
   type: ToastType;
 } & PropsWithChildren) => {
-  // TODO: need to style
-  return <div className="bg-black">{children}</div>;
+  const ICON_STYLE = "h-[24px] w-[24px]";
+  return (
+    <div className="text-b3-strong flex items-center gap-2 whitespace-nowrap rounded-[100px] bg-gray-800 py-4 pl-4 pr-5 text-oncolor">
+      {_ === "check" ? (
+        <div className={ICON_STYLE}>
+          <CheckSVG />
+        </div>
+      ) : _ === "alert" ? (
+        <div className={ICON_STYLE}>
+          <AlertSVG />
+        </div>
+      ) : (
+        <div className={ICON_STYLE}>
+          <WarningSVG />
+        </div>
+      )}
+      {children}
+    </div>
+  );
 };
 
 type ToastOptions = {
@@ -51,7 +71,7 @@ type ToastOptions = {
   delay?: number;
 };
 const defaultOptions = {
-  type: "info",
+  type: "check",
   delay: 3000,
 } as const;
 
