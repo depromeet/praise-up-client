@@ -30,7 +30,7 @@ export const LinkAndGoButton = ({
 
   const handleShare = () => {
     // TODO: 클립보드에 링크 복사하기
-    toast("링크가 복사되었어요", { absolute: true });
+    toast("링크가 복사되었어요");
   };
 
   return (

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { PropsWithChildren, ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -11,28 +10,22 @@ import { useExternalStore } from "@/utils/external-store/hook";
 type ToastObject = {
   content: ReactNode;
   type: "check" | "alert" | "warning";
-  absolute: boolean;
 };
 const [store, setState] = createStore(new Map<string, ToastObject>());
 
 const ToastRenderer = () => {
   const [stack] = useExternalStore(store);
   const isOpen = stack.size > 0;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  const isAbsoluteLayout = stack.values().next().value?.absolute as boolean;
 
   return (
     <dialog
-      className={clsx(
-        { "h-screen": isAbsoluteLayout },
-        "relative bg-transparent text-black",
-      )}
+      className="relative bg-transparent text-black"
       open={isOpen}
       ref={(el) => {
         if (el && !el.open) el.show();
       }}
     >
-      <div className="absolute bottom-0 left-1/2 mb-[52px] flex -translate-x-1/2 flex-col gap-1">
+      <div className=" fixed bottom-0 left-1/2 mb-[52px] flex -translate-x-1/2 flex-col gap-1">
         {Array.from(stack.entries()).map(([id, { content, type }]) => (
           <Toast type={type} key={id}>
             {content}
@@ -74,19 +67,17 @@ const Toast = ({
 
 type ToastOptions = {
   type?: ToastType;
-  absolute?: boolean;
   delay?: number;
 };
 const defaultOptions = {
   type: "check",
-  absolute: false,
   delay: 3000,
 } as const;
 
 export const toast = (content: ReactNode, options?: ToastOptions) => {
   const id = Math.random().toString(36).slice(2);
-  const { type, absolute, delay } = { ...defaultOptions, ...(options ?? {}) };
-  setState((prev) => new Map([...prev, [id, { content, absolute, type }]]));
+  const { type, delay } = { ...defaultOptions, ...(options ?? {}) };
+  setState((prev) => new Map([...prev, [id, { content, type }]]));
 
   // remove toast after delay
   setTimeout(() => {
