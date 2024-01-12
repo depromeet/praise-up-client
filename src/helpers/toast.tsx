@@ -11,7 +11,7 @@ import { useExternalStore } from "@/utils/external-store/hook";
 type ToastObject = {
   content: ReactNode;
   type: "check" | "alert" | "warning";
-  scroll: boolean;
+  absolute: boolean;
 };
 const [store, setState] = createStore(new Map<string, ToastObject>());
 
@@ -19,12 +19,12 @@ const ToastRenderer = () => {
   const [stack] = useExternalStore(store);
   const isOpen = stack.size > 0;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  const isScrollLayout = stack.values().next().value?.scroll as boolean;
+  const isAbsoluteLayout = stack.values().next().value?.absolute as boolean;
 
   return (
     <dialog
       className={clsx(
-        { "h-screen": isScrollLayout },
+        { "h-screen": isAbsoluteLayout },
         "relative bg-transparent text-black",
       )}
       open={isOpen}
@@ -74,19 +74,19 @@ const Toast = ({
 
 type ToastOptions = {
   type?: ToastType;
-  scroll?: boolean;
+  absolute?: boolean;
   delay?: number;
 };
 const defaultOptions = {
   type: "check",
-  scroll: false,
+  absolute: false,
   delay: 3000,
 } as const;
 
 export const toast = (content: ReactNode, options?: ToastOptions) => {
   const id = Math.random().toString(36).slice(2);
-  const { type, scroll, delay } = { ...defaultOptions, ...(options ?? {}) };
-  setState((prev) => new Map([...prev, [id, { content, scroll, type }]]));
+  const { type, absolute, delay } = { ...defaultOptions, ...(options ?? {}) };
+  setState((prev) => new Map([...prev, [id, { content, absolute, type }]]));
 
   // remove toast after delay
   setTimeout(() => {
