@@ -19,7 +19,7 @@ import Marble from "@/assets/images/swiper-marble.svg?react";
 import "swiper/scss";
 import "swiper/scss/pagination";
 import { Arrow } from "@/components/common/arrow";
-import "@/style/keyword-swiper.scss";
+import "@/style/swiper/keyword.scss";
 
 type contentProps = {
   text: string;
