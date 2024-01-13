@@ -5,7 +5,11 @@ export type TMarbleObject = {
   isViewed?: boolean;
 };
 
-export type TArchiveView = "preview" | "canvas" | "grid";
+export type TArchiveView =
+  | "preview-card"
+  | "preview-summary"
+  | "marble-canvas"
+  | "marble-grid";
 
 // API
 export type TMarbleListRes = {

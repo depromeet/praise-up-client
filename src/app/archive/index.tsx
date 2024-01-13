@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { MarbleCanvas } from "./marble-canvas";
 import { MarbleGrid } from "./marble-grid";
-import { Preview } from "./preview";
+import { PreviewCard } from "./preview-card";
+import { PreviewSummary } from "./preview-summary";
 
 import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
@@ -19,7 +20,7 @@ export const Archive = () => {
   const [selectedMarbleId, setSelectedMarbleId] = useState<number>(-1);
 
   // NOTE: Canvas, Grid View value
-  const [view, setView] = useState<TArchiveView>("preview");
+  const [view, setView] = useState<TArchiveView>("preview-card");
 
   // NOTE: Marble detail Open state
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -69,8 +70,14 @@ export const Archive = () => {
         />
       )}
 
-      {view === "preview" && <Preview onChangeView={onChangeView} />}
-      {view === "canvas" && (
+      {view === "preview-card" && <PreviewCard onChangeView={onChangeView} />}
+      {view === "preview-summary" && (
+        <PreviewSummary
+          marbleNum={marbleList.length}
+          onChangeView={onChangeView}
+        />
+      )}
+      {view === "marble-canvas" && (
         <MarbleCanvas
           marbleList={marbleList}
           selectedMarbleId={selectedMarbleId}
@@ -80,7 +87,7 @@ export const Archive = () => {
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
-      {view === "grid" && (
+      {view === "marble-grid" && (
         <MarbleGrid
           marbleList={marbleList}
           isViewedIdList={isViewedIdList}

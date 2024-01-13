@@ -7,7 +7,7 @@ type Props = {
   onChangeView: (view: TArchiveView) => void;
 };
 
-export const Preview = ({ onChangeView }: Props) => {
+export const PreviewCard = ({ onChangeView }: Props) => {
   return (
     <DefaultLayout appbar={<div>appBar</div>}>
       <div className="flex flex-col gap-9">
@@ -19,7 +19,7 @@ export const Preview = ({ onChangeView }: Props) => {
           <div className="w-fit text-sm font-semibold text-slate-600">
             스크롤해서 칭찬 확인하기
           </div>
-          <button onClick={() => onChangeView("canvas")}>
+          <button onClick={() => onChangeView("preview-summary")}>
             <Arrow className="rotate-180" />
           </button>
         </div>
