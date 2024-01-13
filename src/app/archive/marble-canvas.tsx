@@ -20,6 +20,7 @@ import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
+import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView, TMarble } from "@/types/archive";
@@ -330,17 +331,20 @@ export const MarbleCanvas = ({
       <div className="h-16">Temp Header</div>
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
-        <ArchiveTitle
-          archiveMarbleNum={marbleBodyList.length}
-          isLayout={true}
-        />
+        <div className="relative z-10">
+          <Header
+            text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}
+            className="absolute left-5 top-4 !w-fit"
+          />
+        </div>
+
         <canvas ref={canvasRef} />
       </div>
 
       <FABButton
         icon={Bars}
         text="리스트뷰"
-        onClick={() => onChangeView("grid")}
+        onClick={() => onChangeView("marble-grid")}
         scrollRef={canvasScrollRef}
       />
     </div>

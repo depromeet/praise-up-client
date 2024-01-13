@@ -4,6 +4,7 @@ import Marble from "@/assets/icons/marble.svg";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
+import { Header } from "@/components/common/header";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
 import { TArchiveView, TMarble } from "@/types/archive";
@@ -44,7 +45,9 @@ export const MarbleGrid = ({
   return (
     <DefaultLayout appbar={<div>appBar</div>}>
       <div className="mb-[60px] flex flex-col gap-9">
-        <ArchiveTitle archiveMarbleNum={marbleList.length} />
+        <Header
+          text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}
+        />
 
         <div>
           <div className="flex items-center justify-end gap-[6px]">
