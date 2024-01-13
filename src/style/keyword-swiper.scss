@@ -1,0 +1,31 @@
+.keyword-swiper {
+  .swiper-slide {
+    transition: 1s all;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    color: #a1a9b2;
+  }
+
+  .swiper-slide-prev {
+    justify-content: left;
+  }
+
+  .swiper-slide-next {
+    justify-content: right;
+  }
+
+  .swiper-pagination-bullet {
+    margin-top: 30px;
+    background-color: rgba(211, 214, 218, 1);
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: rgba(131, 139, 152, 1);
+  }
+}
