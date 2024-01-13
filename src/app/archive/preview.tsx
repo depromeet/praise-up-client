@@ -1,8 +1,13 @@
 import Arrow from "@/assets/icons/arrow.svg?react";
 import { MarbleCard } from "@/components/app/archive/marble-card";
 import { DefaultLayout } from "@/components/layout/default";
+import { TArchiveView } from "@/types/archive";
 
-export const Preview = () => {
+type Props = {
+  onChangeView: (view: TArchiveView) => void;
+};
+
+export const Preview = ({ onChangeView }: Props) => {
   return (
     <DefaultLayout appbar={<div>appBar</div>}>
       <div className="flex flex-col gap-9">

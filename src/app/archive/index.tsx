@@ -6,10 +6,15 @@ import { Preview } from "./preview";
 
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import tempData from "@/data/archive-temp-data.json";
-import { TMarble } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
 
 export const Archive = () => {
+  // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>();
+  const [isViewedIdxList, setIsViewedIdxList] = useState<number[]>([]);
+
+  // NOTE: Canvas, Grid View value
+  const [view, setView] = useState<TArchiveView>("preview");
 
   useEffect(() => {
     // TODO: server Data
@@ -21,9 +26,23 @@ export const Archive = () => {
   if (!marbleList) return null;
   return (
     <ConfirmDialog>
-      {/* <Preview /> */}
-      <MarbleCanvas marbleList={marbleList} />
-      {/* <MarbleGrid marbleList={marbleList} /> */}
+      {view === "preview" && (
+        <Preview onChangeView={(view: TArchiveView) => setView(view)} />
+      )}
+      {view === "canvas" && (
+        <MarbleCanvas
+          marbleList={marbleList}
+          isViewedIdxList={isViewedIdxList}
+          onChangeView={(view: TArchiveView) => setView(view)}
+        />
+      )}
+      {view === "grid" && (
+        <MarbleGrid
+          marbleList={marbleList}
+          isViewedIdxList={isViewedIdxList}
+          onChangeView={(view: TArchiveView) => setView(view)}
+        />
+      )}
     </ConfirmDialog>
   );
 };

@@ -6,13 +6,19 @@ import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
-import { TMarble } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
 
 type Props = {
   marbleList: TMarble[];
+  isViewedIdxList: number[];
+  onChangeView: (view: TArchiveView) => void;
 };
 
-export const MarbleGrid = ({ marbleList }: Props) => {
+export const MarbleGrid = ({
+  marbleList,
+  isViewedIdxList,
+  onChangeView,
+}: Props) => {
   // TODO: Add body Scroll
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isFilteredViewed, setIsFilteredViewed] = useState<boolean>(false);

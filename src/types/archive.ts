@@ -4,3 +4,5 @@ export type TMarble = {
   user: string;
   content: string;
 };
+
+export type TArchiveView = "preview" | "canvas" | "grid";

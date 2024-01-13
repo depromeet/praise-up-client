@@ -23,7 +23,7 @@ import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TMarble } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
@@ -36,9 +36,15 @@ interface IMarbleObject {
 
 type Props = {
   marbleList: TMarble[];
+  isViewedIdxList: number[];
+  onChangeView: (view: TArchiveView) => void;
 };
 
-export const MarbleCanvas = ({ marbleList }: Props) => {
+export const MarbleCanvas = ({
+  marbleList,
+  isViewedIdxList,
+  onChangeView,
+}: Props) => {
   const [engine, setEngine] = useState<Engine>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
