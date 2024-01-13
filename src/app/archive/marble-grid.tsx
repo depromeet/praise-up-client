@@ -45,7 +45,12 @@ export const MarbleGrid = ({
         </div>
       </div>
 
-      <FABButton icon={Marble} text="구슬뷰" scrollRef={scrollRef} />
+      <FABButton
+        icon={Marble}
+        text="구슬뷰"
+        onClick={() => onChangeView("canvas")}
+        scrollRef={scrollRef}
+      />
     </DefaultLayout>
   );
 };
