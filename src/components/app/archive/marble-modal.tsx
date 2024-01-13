@@ -1,8 +1,6 @@
-import "swiper/css/pagination";
-import "@/style/swiper/initSwiper.css";
-
 // custom pagination style
-import "@/style/swiper/archiveSwiperPagination.css";
+import "@/style/swiper/archive-init-swiper.css";
+import "@/style/swiper/archive-swiper-pagination.css";
 
 import { MouseEventHandler, useEffect, useState } from "react";
 import SwiperCore from "swiper";
@@ -21,7 +19,6 @@ interface Props {
   onUpdateViewIdxList: (activeIdx: number) => void;
 }
 
-// TODO: marble Grid view를 고려하여 상태 및 props update 예정
 export const MarbleModal = ({
   isOpen,
   onChangeOpenState,

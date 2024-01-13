@@ -1,5 +1,5 @@
-import Arrow from "@/assets/icons/arrow.svg?react";
 import { MarbleCard } from "@/components/app/archive/marble-card";
+import { Arrow } from "@/components/common/arrow";
 import { DefaultLayout } from "@/components/layout/default";
 import { TArchiveView } from "@/types/archive";
 
@@ -19,8 +19,9 @@ export const Preview = ({ onChangeView }: Props) => {
           <div className="w-fit text-sm font-semibold text-slate-600">
             스크롤해서 칭찬 확인하기
           </div>
-          <Arrow />
-          <button onClick={() => onChangeView("canvas")}>Test</button>
+          <button onClick={() => onChangeView("canvas")}>
+            <Arrow className="rotate-180" />
+          </button>
         </div>
       </div>
     </DefaultLayout>
