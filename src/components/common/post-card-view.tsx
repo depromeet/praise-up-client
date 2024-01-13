@@ -23,6 +23,7 @@ export interface PostCardContextProps {
   imgUrl: string;
   content: string;
   isPublic: boolean;
+  isReadyCard: boolean;
   toggleShowMenu: (showMenu?: boolean) => void;
 }
 
@@ -66,12 +67,13 @@ export const PostCardView = ({
         content,
         toggleShowMenu,
         isPublic,
+        isReadyCard,
       }}
     >
       <div
         className={clsx(
           { absolute: isReadyCard },
-          "  flex w-full flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] ",
+          "  rounded-4 flex w-full flex-col items-start gap-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] ",
         )}
         style={{
           transform: transStyle,
@@ -90,6 +92,7 @@ const Title = () => {
     showMenu,
     toggleShowMenu,
     isPublic,
+    isReadyCard,
   }: PostCardContextProps = usePostCardView();
 
   return (
@@ -102,7 +105,7 @@ const Title = () => {
         </div>
       </div>
 
-      {!isPublic && (
+      {!isPublic && !isReadyCard && (
         <div className="h-fit cursor-pointer" onClick={() => toggleShowMenu()}>
           <KebabSVG />
         </div>
@@ -113,7 +116,7 @@ const Title = () => {
           onClick={() => {
             console.log("삭제하기 클릭");
           }}
-          className="fixed right-9 top-[240px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
+          className="rounded-3 absolute right-4 top-[50px] z-10 flex h-11 items-center bg-white px-4 py-3"
         >
           <span className="text-b3-compact">삭제하기</span>
         </div>
@@ -129,7 +132,7 @@ const Image = () => {
 
   return (
     <div
-      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
         backgroundSize: "cover",
@@ -151,7 +154,7 @@ const Preview = () => {
 
   return (
     <div
-      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: "cover",
