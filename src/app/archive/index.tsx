@@ -7,6 +7,7 @@ import { Preview } from "./preview";
 
 import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
+import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import tempData from "@/data/archive-temp-data.json";
 import { TArchiveView, TMarble } from "@/types/archive";
@@ -70,6 +71,16 @@ export const Archive = () => {
   if (!marbleList.length) return null;
   return (
     <ConfirmDialog>
+      {isModalOpen && selectedMarble && (
+        <MarbleModal
+          isOpen={isModalOpen}
+          selectedMarble={selectedMarble}
+          marbleList={marbleBodyList}
+          onChangeOpenState={onChangeModalState}
+          onUpdateViewIdxList={onUpdateViewIdxList}
+        />
+      )}
+
       {view === "preview" && <Preview onChangeView={onChangeView} />}
       {view === "canvas" && (
         <MarbleCanvas

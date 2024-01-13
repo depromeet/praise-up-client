@@ -289,15 +289,6 @@ export const MarbleCanvas = ({
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
       <div className="h-16">Temp Header</div>
-      {isModalOpen && selectedMarble && (
-        <MarbleModal
-          isOpen={isModalOpen}
-          selectedMarble={selectedMarble}
-          marbleList={marbleBodyList}
-          onChangeOpenState={onChangeModalState}
-          onUpdateViewIdxList={onUpdateViewIdxList}
-        />
-      )}
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <ArchiveTitle archiveMarbleNum={marbleList.length} isLayout={true} />

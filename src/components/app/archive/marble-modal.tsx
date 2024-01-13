@@ -5,13 +5,7 @@ import "@/style/swiper/initSwiper.css";
 import "@/style/swiper/archiveSwiperPagination.css";
 
 import { Body } from "matter-js";
-import {
-  Dispatch,
-  MouseEventHandler,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -105,7 +99,7 @@ export const MarbleModal = ({
       </dialog>
       <div
         onClick={onClickClose}
-        className="fixed top-0 z-20 mx-auto h-full w-full max-w-[480px] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
+        className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
       />
     </>
   );
