@@ -28,7 +28,7 @@ export const DefaultLayout = ({
       >
         {/* need app bar variants */}
         {appbar ?? <div className="h-64px" />}
-        <div className="flex flex-1 flex-col px-20px pt-16px">{children}</div>
+        <div className="px-20px pt-16px flex flex-1 flex-col">{children}</div>
       </div>
     </Fragment>
   );

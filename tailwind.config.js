@@ -44,7 +44,7 @@ export default {
           400: "#FFEAA0",
           500: "#F5C547",
         },
-        primary: "#262C36",
+        primary: "#242B37",
         secondary: "#333E4C",
         teritary: "#667080",
         disabled: "#A1A9B3",
@@ -57,6 +57,14 @@ export default {
         2: "8px",
         3: "12px",
         4: "16px",
+      },
+      keyframes: {
+        arrowBlink: {
+          "0%": { visibility: "visible", zIndex: 10 },
+          "33%": { visibility: "hidden" },
+          "66%": { visibility: "hidden" },
+          "100%": { visibility: "hidden" },
+        },
       },
     },
   },

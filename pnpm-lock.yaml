@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@tanstack/react-query':
+    specifier: ^5.17.9
+    version: 5.17.9(react@18.2.0)
   axios:
     specifier: ^1.6.2
     version: 1.6.2
@@ -20,6 +23,12 @@ dependencies:
   framer-motion:
     specifier: ^10.17.9
     version: 10.17.9(react-dom@18.2.0)(react@18.2.0)
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
+  matter-js:
+    specifier: ^0.19.0
+    version: 0.19.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -73,6 +82,12 @@ devDependencies:
   '@types/body-scroll-lock':
     specifier: ^3.1.2
     version: 3.1.2
+  '@types/lodash':
+    specifier: ^4.14.202
+    version: 4.14.202
+  '@types/matter-js':
+    specifier: ^0.19.5
+    version: 0.19.5
   '@types/react':
     specifier: ^18.2.37
     version: 18.2.37
@@ -3222,7 +3237,7 @@ packages:
       '@storybook/preview-api': 7.5.3
       '@storybook/theming': 7.5.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.5.3
-      '@types/lodash': 4.14.201
+      '@types/lodash': 4.14.202
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
@@ -3909,6 +3924,19 @@ packages:
       - supports-color
     dev: true
 
+  /@tanstack/query-core@5.17.9:
+    resolution: {integrity: sha512-8xcvpWIPaRMDNLMvG9ugcUJMgFK316ZsqkPPbsI+TMZsb10N9jk0B6XgPk4/kgWC2ziHyWR7n7wUhxmD0pChQw==}
+    dev: false
+
+  /@tanstack/react-query@5.17.9(react@18.2.0):
+    resolution: {integrity: sha512-M5E9gwUq1Stby/pdlYjBlL24euIVuGbWKIFCbtnQxSdXI4PgzjTSdXdV3QE6fc+itF+TUvX/JPTKIwq8yuBXcg==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.17.9
+      react: 18.2.0
+    dev: false
+
   /@testing-library/dom@9.3.3:
     resolution: {integrity: sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==}
     engines: {node: '>=14'}
@@ -4097,8 +4125,12 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
-  /@types/lodash@4.14.201:
-    resolution: {integrity: sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==}
+  /@types/lodash@4.14.202:
+    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+    dev: true
+
+  /@types/matter-js@0.19.5:
+    resolution: {integrity: sha512-pTVB5krRGb01hr8L6BJqWGoSriqUbbvJ9Fd0Qp0eAOE//w/lFvkaVHkVB8J3wXr9U3lZDzmAjJPPQn7x4wzbWg==}
     dev: true
 
   /@types/mdx@2.0.10:
@@ -7401,7 +7433,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -7501,6 +7532,10 @@ packages:
     dependencies:
       react: 18.2.0
     dev: true
+
+  /matter-js@0.19.0:
+    resolution: {integrity: sha512-v2huwvQGOHTGOkMqtHd2hercCG3f6QAObTisPPHg8TZqq2lz7eIY/5i/5YUV8Ibf3mEioFEmwibcPUF2/fnKKQ==}
+    dev: false
 
   /mdast-util-definitions@4.0.0:
     resolution: {integrity: sha512-k8AJ6aNnUkB7IE+5azR9h81O5EQ/cTDXtWdMq9Kk5KcEW/8ritU5CeLg/9HhOC++nALHBlaogJ5jz0Ybk3kPMQ==}

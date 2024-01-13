@@ -8,14 +8,17 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { NotFound } from "./app/error/404";
 
+import { QueryProvider } from "@/lib/query-provider";
 import { Routers } from "@/routes";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ErrorBoundary fallback={<NotFound />}>
-      <AnimatePresence>
-        <Routers />
-      </AnimatePresence>
-    </ErrorBoundary>
+    <QueryProvider>
+      <ErrorBoundary fallback={<NotFound />}>
+        <AnimatePresence>
+          <Routers />
+        </AnimatePresence>
+      </ErrorBoundary>
+   </QueryProvider>
   </StrictMode>,
 );
