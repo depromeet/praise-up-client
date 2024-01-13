@@ -11,7 +11,17 @@ type Props = {
 
 export const PreviewCard = ({ onChangeView }: Props) => {
   return (
-    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => window.history.back()}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
       <div className="flex flex-col gap-9">
         <p className="text-xl font-semibold text-primary">나의 칭찬게시물</p>
         <MarbleCard />

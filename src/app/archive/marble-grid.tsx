@@ -44,7 +44,17 @@ export const MarbleGrid = ({
 
   if (!marbleList.length) return null;
   return (
-    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => onChangeView("preview-card")}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
       <div className="mb-[60px] flex flex-col gap-9">
         <Header
           text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}

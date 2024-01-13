@@ -12,7 +12,17 @@ type Props = {
 
 export const PreviewSummary = ({ marbleNum, onChangeView }: Props) => {
   return (
-    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => onChangeView("preview-card")}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
       <Header
         text={`해당 게시물에 대해\\n{${marbleNum}개}의 칭찬구슬이 모였어요!`}
       />

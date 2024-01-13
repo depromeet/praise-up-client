@@ -329,7 +329,13 @@ export const MarbleCanvas = ({
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
-      <Appbar left={<ChevronLeftEdgeSVG />} />
+      <Appbar
+        left={
+          <button onClick={() => onChangeView("preview-card")}>
+            <ChevronLeftEdgeSVG />
+          </button>
+        }
+      />
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <div className="relative z-10">
