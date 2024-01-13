@@ -20,7 +20,7 @@ export const ToBeOpened = () => {
   const [data, setData] = useState<Array<DataType>>([]);
   const date1 = new Date();
   const date2 = new Date();
-  const [isEmpty, setIsEmpty] = useState(true);
+  const isEmpty = data.length === 0;
 
   // test data: before & after date
   const testDate = [
@@ -29,7 +29,6 @@ export const ToBeOpened = () => {
   ];
 
   useEffect(() => {
-    if (!isEmpty) return;
     console.log(tempData.data);
     setData(
       tempData.data.map((data: InputDataType, i: number) => {
@@ -37,10 +36,6 @@ export const ToBeOpened = () => {
       }) as Array<DataType>,
     );
   }, []);
-
-  useEffect(() => {
-    setIsEmpty(data.length === 0);
-  }, [data]);
 
   return (
     <div className="mb-4 flex flex-col gap-5">
