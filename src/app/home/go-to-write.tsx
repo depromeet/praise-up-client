@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
 
 export const GoToWrite = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex items-center justify-between gap-1 rounded-4 bg-white p-5 hover:cursor-pointer">
+    <div
+      className="flex items-center justify-between gap-1 rounded-4 bg-white p-5 hover:cursor-pointer"
+      onClick={() => navigate("/post/keyword")}
+    >
       <div>
         <span className="text-b3-compact text-gray-700">
           게시물은 하루에 한개만 작성할 수 있어요
