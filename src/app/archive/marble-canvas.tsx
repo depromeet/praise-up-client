@@ -18,7 +18,6 @@ import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
 import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
-import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";

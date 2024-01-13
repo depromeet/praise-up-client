@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
 import Marble from "@/assets/icons/marble.svg";
-import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
 import { Header } from "@/components/common/header";
