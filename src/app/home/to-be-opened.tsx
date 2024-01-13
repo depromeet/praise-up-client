@@ -1,31 +1,47 @@
+import { useEffect, useState } from "react";
+
+import { CardSwiper } from "@/components/app/home/card-swiper";
 import { RecentCard } from "@/components/app/home/recent-card";
-import { Carousel } from "@/components/common/carousel";
+import tempData from "@/data/main-temp-data.json";
+
+interface InputDataType {
+  id: string;
+  keyword: string;
+  count: string;
+}
+
+interface DataType extends InputDataType {
+  openDatetime: string;
+}
 
 export const ToBeOpened = () => {
   /* 예제 시간 */
+  const [data, setData] = useState<Array<DataType>>([]);
   const date1 = new Date();
   const date2 = new Date();
 
-  const testBefore = new Date(date1.setDate(date1.getDate() - 1)).toISOString();
-  const testAfter = new Date(date2.setDate(date2.getDate() + 1)).toISOString();
+  // test data: before & after date
+  const testDate = [
+    new Date(date1.setDate(date2.getDate() + 1)).toISOString(),
+    new Date(date2.setDate(date1.getDate() - 1)).toISOString(),
+  ];
+
+  useEffect(() => {
+    if (!tempData.data.length) return;
+    setData(
+      tempData.data.map((data: InputDataType, i: number) => {
+        return { ...data, openDatetime: testDate[i] };
+      }) as Array<DataType>,
+    );
+  }, []);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="mb-4 flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>
-      <Carousel>
-        <RecentCard
-          id="1"
-          keyword="신나는"
-          count={48}
-          openDatetime={testAfter}
-        />
-        <RecentCard
-          id="2"
-          keyword="재미있는"
-          count={12}
-          openDatetime={testBefore}
-        />
-      </Carousel>
+
+      <CardSwiper>
+        {data?.map((data, i) => <RecentCard key={i} {...data} />)}
+      </CardSwiper>
     </div>
   );
 };
