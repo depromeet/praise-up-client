@@ -4,7 +4,6 @@ import "@/style/swiper/initSwiper.css";
 // custom pagination style
 import "@/style/swiper/archiveSwiperPagination.css";
 
-import { Body } from "matter-js";
 import { MouseEventHandler, useEffect, useState } from "react";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
@@ -41,7 +40,7 @@ export const MarbleModal = ({
         centeredSlides: true,
         loop: true,
         initialSlide: marbleList.findIndex(
-          (marble) => marble.id === selectedMarbleId,
+          (marble) => marble.commendId === selectedMarbleId,
         ),
         modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
@@ -91,7 +90,7 @@ export const MarbleModal = ({
         {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
-              <SwiperSlide key={marble.id} className="cursor-pointer">
+              <SwiperSlide key={marble.commendId} className="cursor-pointer">
                 <MarbleDetailCard marble={marble} />
               </SwiperSlide>
             ))}

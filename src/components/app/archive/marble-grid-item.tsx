@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const MarbleGridItem = ({ marble, onClick }: Props) => {
-  const { user } = marble;
+  const { nickname } = marble;
   return (
     <div
       className="relative box-border w-full rounded-lg bg-black after:block after:pb-[calc(100%)]"
@@ -17,7 +17,7 @@ export const MarbleGridItem = ({ marble, onClick }: Props) => {
         <div className="w-4">
           <UserFilled />
         </div>
-        <div className="text-sm font-normal text-secondary">{user}</div>
+        <div className="text-sm font-normal text-secondary">{nickname}</div>
       </div>
     </div>
   );

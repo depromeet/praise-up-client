@@ -34,7 +34,8 @@ export const MarbleGrid = ({
     }
 
     const isViewedList = marbleList.filter(
-      (marble) => isViewedIdList.findIndex((id) => id === marble.id) === -1,
+      (marble) =>
+        isViewedIdList.findIndex((id) => id === marble.commendId) === -1,
     );
     setIsNotViewedMarbleList(isViewedList);
   }, [marbleList, isViewedIdList]);
@@ -59,8 +60,8 @@ export const MarbleGrid = ({
                 {isNotViewedMarbleList?.map((marble) => (
                   <MarbleGridItem
                     marble={marble}
-                    onClick={() => onChangeSelectedMarbleId(marble.id)}
-                    key={marble.id}
+                    onClick={() => onChangeSelectedMarbleId(marble.commendId)}
+                    key={marble.commendId}
                   />
                 ))}
               </>
@@ -69,8 +70,8 @@ export const MarbleGrid = ({
                 {marbleList?.map((marble) => (
                   <MarbleGridItem
                     marble={marble}
-                    onClick={() => onChangeSelectedMarbleId(marble.id)}
-                    key={marble.id}
+                    onClick={() => onChangeSelectedMarbleId(marble.commendId)}
+                    key={marble.commendId}
                   />
                 ))}
               </>

@@ -20,13 +20,12 @@ import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TArchiveView, TMarble } from "@/types/archive";
+import { TArchiveView } from "@/types/archive";
 import { createMarbleObject } from "@/utils/createMarbleObject";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
-  marbleList: TMarble[];
   marbleBodyList: Body[];
   selectedMarbleId: number;
   isViewedIdList: number[];
@@ -36,7 +35,6 @@ type Props = {
 };
 
 export const MarbleCanvas = ({
-  marbleList,
   marbleBodyList,
   selectedMarbleId,
   isViewedIdList,
@@ -56,7 +54,7 @@ export const MarbleCanvas = ({
   }, []);
 
   useEffect(() => {
-    if (!engine || !marbleList.length) return;
+    if (!engine || !marbleBodyList.length) return;
 
     const render = Render.create({
       engine,
@@ -237,7 +235,7 @@ export const MarbleCanvas = ({
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleList, engine, isMobile]);
+  }, [marbleBodyList, engine, isMobile]);
 
   useEffect(() => {
     if (!engine || selectedMarbleId === -1) return;
@@ -293,7 +291,10 @@ export const MarbleCanvas = ({
       <div className="h-16">Temp Header</div>
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
-        <ArchiveTitle archiveMarbleNum={marbleList.length} isLayout={true} />
+        <ArchiveTitle
+          archiveMarbleNum={marbleBodyList.length}
+          isLayout={true}
+        />
         <canvas ref={canvasRef} />
       </div>
 

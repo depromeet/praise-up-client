@@ -1,10 +1,3 @@
-export type TMarble = {
-  id: number;
-  imageUrl: string;
-  user: string;
-  content: string;
-};
-
 export type TMarbleObject = {
   id: number;
   texture: string;
@@ -13,3 +6,25 @@ export type TMarbleObject = {
 };
 
 export type TArchiveView = "preview" | "canvas" | "grid";
+
+// API
+export type TMarbleListRes = {
+  totalPages: number;
+  totalElements: number;
+  pageable: {
+    pageNumber: number;
+  };
+  content: TMarble[];
+};
+
+export type TMarbleListPayload = {
+  page: number;
+  size: number;
+};
+
+export type TMarble = {
+  commendId: number;
+  nickname: string;
+  content: string;
+  imageUrl: string;
+};
