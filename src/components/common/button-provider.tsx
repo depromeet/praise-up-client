@@ -11,6 +11,8 @@ import {
 
 import { ButtonProps, FilledButton } from "./fiiled-button";
 
+import { handleKakaoLogin } from "@/components/app/login/kakao/kakao-login";
+
 const Primary = (props: ButtonProps) => {
   return <FilledButton {...props} colorSchema="primary" />;
 };
@@ -22,6 +24,7 @@ const White = (props: ButtonProps) => {
 export const ButtonProvider = ({
   children,
   className,
+  isOnBoarding = false,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
   const [isFullStyle, setisFullStyle] = useState(false);
@@ -86,6 +89,17 @@ export const ButtonProvider = ({
           return cloneElement(child, { isFullStyle, ...props });
         }
       })}
+      {isOnBoarding && (
+        <div className="text-b3-strong mt-[18px] flex w-full justify-center gap-x-3">
+          <div className="text-teritary">이미 가입했다면?</div>
+          <div
+            className="cursor-pointer text-active"
+            onClick={handleKakaoLogin}
+          >
+            로그인하기
+          </div>
+        </div>
+      )}
     </div>
   );
 };

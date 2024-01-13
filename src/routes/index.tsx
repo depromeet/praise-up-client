@@ -1,15 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { NotFound } from "@/app/error/404";
+
 import { CommentMainPage } from "@/app/add-comment";
 import { CommentDonePage } from "@/app/add-comment/comment-done";
 import { CommentFormPage } from "@/app/add-comment/comment-form";
 import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Archive } from "@/app/archive";
+import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
+import { OnBoarding } from "@/app/on-boarding";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
 import { KeyWord } from "@/app/post/keyword";
 import { UnpublishedPostPage } from "@/app/unpublished-post";
+import { KakaoAuth } from "@/components/app/login/kakao/kakao-auth";
 import { GlobalLayout } from "@/components/layout";
 
 const router = createBrowserRouter([
@@ -23,8 +26,16 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
       {
-        path: "",
+        path: "/",
+        element: <OnBoarding />,
+      },
+      {
+        path: "/main",
         element: <Home />,
+      },
+      {
+        path: "/auth",
+        element: <KakaoAuth />,
       },
       {
         path: "/post/write",
