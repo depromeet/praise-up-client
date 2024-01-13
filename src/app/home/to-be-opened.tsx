@@ -32,7 +32,7 @@ export const ToBeOpened = () => {
     console.log(tempData.data);
     setData(
       tempData.data.map((data: InputDataType, i: number) => {
-        return { ...data, openDatetime: testDate[i] };
+        return { ...data, openDatetime: testDate[i] }; // 날짜만 테스트용으로 생성하여 따로 삽입
       }) as Array<DataType>,
     );
   }, []);
