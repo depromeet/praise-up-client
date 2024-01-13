@@ -58,7 +58,7 @@ export const Archive = () => {
     setIsModalOpen(isOpen);
   };
 
-  const onChangeSelectedMarbleIdx = (id: number) => {
+  const onChangeSelectedMarbleId = (id: number) => {
     setSelectedMarbleId(id);
   };
 
@@ -94,7 +94,7 @@ export const Archive = () => {
           isViewedIdxList={isViewedIdxList}
           isModalOpen={isModalOpen}
           onChangeView={onChangeView}
-          onChangeSelectedMarbleIdx={onChangeSelectedMarbleIdx}
+          onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
       {view === "grid" && (
@@ -102,7 +102,7 @@ export const Archive = () => {
           marbleList={marbleList}
           isViewedIdxList={isViewedIdxList}
           onChangeView={onChangeView}
-          onChangeSelectedMarbleIdx={onChangeSelectedMarbleIdx}
+          onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
     </ConfirmDialog>

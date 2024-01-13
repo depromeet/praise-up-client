@@ -12,14 +12,14 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarbleIdx: (id: number) => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleGrid = ({
   marbleList,
   isViewedIdxList,
   onChangeView,
-  onChangeSelectedMarbleIdx,
+  onChangeSelectedMarbleId,
 }: Props) => {
   // TODO: Add body Scroll
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -57,13 +57,21 @@ export const MarbleGrid = ({
             {isFilteredViewed ? (
               <>
                 {isNotViewedMarbleList?.map((marble) => (
-                  <MarbleGridItem marble={marble} key={marble.id} />
+                  <MarbleGridItem
+                    marble={marble}
+                    onClick={() => onChangeSelectedMarbleId(marble.id)}
+                    key={marble.id}
+                  />
                 ))}
               </>
             ) : (
               <>
                 {marbleList?.map((marble) => (
-                  <MarbleGridItem marble={marble} key={marble.id} />
+                  <MarbleGridItem
+                    marble={marble}
+                    onClick={() => onChangeSelectedMarbleId(marble.id)}
+                    key={marble.id}
+                  />
                 ))}
               </>
             )}

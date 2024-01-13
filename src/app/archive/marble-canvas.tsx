@@ -32,7 +32,7 @@ type Props = {
   isViewedIdxList: number[];
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarbleIdx: (id: number) => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
@@ -42,7 +42,7 @@ export const MarbleCanvas = ({
   isViewedIdxList,
   isModalOpen,
   onChangeView,
-  onChangeSelectedMarbleIdx,
+  onChangeSelectedMarbleId,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
 
@@ -142,7 +142,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleIdx(selectedBody.id);
+        onChangeSelectedMarbleId(selectedBody.id);
       }
     };
 
@@ -164,7 +164,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = mouseConstraint.body;
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleIdx(selectedBody.id);
+        onChangeSelectedMarbleId(selectedBody.id);
       }
     };
 
@@ -280,7 +280,7 @@ export const MarbleCanvas = ({
       }),
     );
 
-    onChangeSelectedMarbleIdx(-1);
+    onChangeSelectedMarbleId(-1);
   }, [isModalOpen]);
 
   return (
