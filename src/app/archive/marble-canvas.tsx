@@ -38,12 +38,14 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
+  onUpdateViewIdxList: (activeIdx: number) => void;
 };
 
 export const MarbleCanvas = ({
   marbleList,
   isViewedIdxList,
   onChangeView,
+  onUpdateViewIdxList,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
   const [isOpen, setIsOpen] = useState<boolean>(false);

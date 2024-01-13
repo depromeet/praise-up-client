@@ -10,7 +10,7 @@ import { TArchiveView, TMarble } from "@/types/archive";
 
 export const Archive = () => {
   // NOTE: Marble List state
-  const [marbleList, setMarbleList] = useState<TMarble[]>();
+  const [marbleList, setMarbleList] = useState<TMarble[]>([]);
   const [isViewedIdxList, setIsViewedIdxList] = useState<number[]>([]);
 
   // NOTE: Canvas, Grid View value
@@ -23,24 +23,38 @@ export const Archive = () => {
     setMarbleList(tempData.data);
   }, []);
 
-  if (!marbleList) return null;
+  const onChangeView = (view: TArchiveView) => {
+    setView(view);
+  };
+
+  const onUpdateViewIdxList = (activeIdx: number) => {
+    if (activeIdx === -1 || !marbleList.length) return;
+
+    const activeMarbleId = marbleList[activeIdx].id;
+    const updatedIsViewedIdxList = [
+      ...new Set([...isViewedIdxList, activeMarbleId]),
+    ];
+    setIsViewedIdxList(updatedIsViewedIdxList);
+  };
+
+  if (!marbleList.length) return null;
   return (
     <ConfirmDialog>
-      {view === "preview" && (
-        <Preview onChangeView={(view: TArchiveView) => setView(view)} />
-      )}
+      {view === "preview" && <Preview onChangeView={onChangeView} />}
       {view === "canvas" && (
         <MarbleCanvas
           marbleList={marbleList}
           isViewedIdxList={isViewedIdxList}
-          onChangeView={(view: TArchiveView) => setView(view)}
+          onChangeView={onChangeView}
+          onUpdateViewIdxList={onUpdateViewIdxList}
         />
       )}
       {view === "grid" && (
         <MarbleGrid
           marbleList={marbleList}
           isViewedIdxList={isViewedIdxList}
-          onChangeView={(view: TArchiveView) => setView(view)}
+          onChangeView={onChangeView}
+          onUpdateViewIdxList={onUpdateViewIdxList}
         />
       )}
     </ConfirmDialog>

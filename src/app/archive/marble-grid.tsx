@@ -12,12 +12,14 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
+  onUpdateViewIdxList: (activeIdx: number) => void;
 };
 
 export const MarbleGrid = ({
   marbleList,
   isViewedIdxList,
   onChangeView,
+  onUpdateViewIdxList,
 }: Props) => {
   // TODO: Add body Scroll
   const scrollRef = useRef<HTMLDivElement>(null);
