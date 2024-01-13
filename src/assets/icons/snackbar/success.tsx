@@ -1,4 +1,4 @@
-export const CheckSVG = () => (
+export const SuccessSVG = () => (
   <svg
     width="24"
     height="24"

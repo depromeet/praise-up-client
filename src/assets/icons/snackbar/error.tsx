@@ -1,4 +1,4 @@
-export const AlertSVG = () => (
+export const ErrorSVG = () => (
   <svg
     width="24"
     height="24"

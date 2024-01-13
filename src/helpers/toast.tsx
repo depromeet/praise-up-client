@@ -1,15 +1,15 @@
 import { PropsWithChildren, ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { AlertSVG } from "@/assets/icons/snackbar/alert";
-import { CheckSVG } from "@/assets/icons/snackbar/check";
+import { ErrorSVG } from "@/assets/icons/snackbar/error";
+import { SuccessSVG } from "@/assets/icons/snackbar/success";
 import { WarningSVG } from "@/assets/icons/snackbar/warning";
 import { createStore } from "@/utils/external-store/create";
 import { useExternalStore } from "@/utils/external-store/hook";
 
 type ToastObject = {
   content: ReactNode;
-  type: "check" | "alert" | "warning";
+  type: "success" | "error" | "warning";
 };
 const [store, setState] = createStore(new Map<string, ToastObject>());
 
@@ -37,9 +37,9 @@ const ToastRenderer = () => {
 };
 
 // default toast
-type ToastType = "check" | "alert" | "warning";
+type ToastType = "success" | "error" | "warning";
 const Toast = ({
-  type: _,
+  type,
   children,
 }: {
   type: ToastType;
@@ -47,19 +47,15 @@ const Toast = ({
   const ICON_STYLE = "h-[24px] w-[24px]";
   return (
     <div className="text-b3-strong flex items-center gap-2 whitespace-nowrap rounded-[100px] bg-gray-800 py-4 pl-4 pr-5 text-oncolor">
-      {_ === "check" ? (
-        <div className={ICON_STYLE}>
-          <CheckSVG />
-        </div>
-      ) : _ === "alert" ? (
-        <div className={ICON_STYLE}>
-          <AlertSVG />
-        </div>
-      ) : (
-        <div className={ICON_STYLE}>
-          <WarningSVG />
-        </div>
-      )}
+      <div className={ICON_STYLE}>
+        {
+          {
+            success: <SuccessSVG />,
+            error: <ErrorSVG />,
+            warning: <WarningSVG />,
+          }[type]
+        }
+      </div>
       {children}
     </div>
   );
@@ -70,7 +66,7 @@ type ToastOptions = {
   delay?: number;
 };
 const defaultOptions = {
-  type: "check",
+  type: "success",
   delay: 3000,
 } as const;
 
