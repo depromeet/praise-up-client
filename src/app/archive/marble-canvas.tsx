@@ -18,7 +18,6 @@ import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
-import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView, TMarble } from "@/types/archive";
@@ -33,8 +32,6 @@ type Props = {
   isViewedIdxList: number[];
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
-  onUpdateViewIdxList: (activeIdx: number) => void;
-  onChangeModalState: (isOpen: boolean) => void;
   onChangeSelectedMarble: (selectedBody?: Body) => void;
 };
 
@@ -45,8 +42,6 @@ export const MarbleCanvas = ({
   isViewedIdxList,
   isModalOpen,
   onChangeView,
-  onUpdateViewIdxList,
-  onChangeModalState,
   onChangeSelectedMarble,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
@@ -242,10 +237,6 @@ export const MarbleCanvas = ({
       Engine.clear(engine);
     };
   }, [marbleList, engine, isMobile]);
-
-  useEffect(() => {
-    onChangeModalState(!!selectedMarble);
-  }, [selectedMarble]);
 
   useEffect(() => {
     if (!selectedMarble || !engine) return;

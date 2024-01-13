@@ -46,6 +46,10 @@ export const Archive = () => {
     setMarbleBodyList(marbles);
   }, [marbleList]);
 
+  useEffect(() => {
+    onChangeModalState(!!selectedMarble);
+  }, [selectedMarble]);
+
   const onChangeView = (view: TArchiveView) => {
     setView(view);
   };
@@ -90,8 +94,6 @@ export const Archive = () => {
           isViewedIdxList={isViewedIdxList}
           isModalOpen={isModalOpen}
           onChangeView={onChangeView}
-          onUpdateViewIdxList={onUpdateViewIdxList}
-          onChangeModalState={onChangeModalState}
           onChangeSelectedMarble={onChangeSelectedMarble}
         />
       )}
@@ -100,8 +102,7 @@ export const Archive = () => {
           marbleList={marbleList}
           isViewedIdxList={isViewedIdxList}
           onChangeView={onChangeView}
-          onUpdateViewIdxList={onUpdateViewIdxList}
-          onChangeModalState={onChangeModalState}
+          onChangeSelectedMarble={onChangeSelectedMarble}
         />
       )}
     </ConfirmDialog>

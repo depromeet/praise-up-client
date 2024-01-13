@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Marble from "@/assets/icons/marble.svg";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
@@ -12,20 +12,32 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
-  onUpdateViewIdxList: (activeIdx: number) => void;
-  onChangeModalState: (isOpen: boolean) => void;
+  onChangeSelectedMarble: (selectedBody?: Body) => void;
 };
 
 export const MarbleGrid = ({
   marbleList,
   isViewedIdxList,
   onChangeView,
-  onUpdateViewIdxList,
-  onChangeModalState,
+  onChangeSelectedMarble,
 }: Props) => {
   // TODO: Add body Scroll
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isFilteredViewed, setIsFilteredViewed] = useState<boolean>(false);
+  const [isNotViewedMarbleList, setIsNotViewedMarbleList] =
+    useState<TMarble[]>();
+
+  useEffect(() => {
+    if (!isViewedIdxList.length) {
+      setIsNotViewedMarbleList(marbleList);
+      return;
+    }
+
+    const isViewedList = marbleList.filter(
+      (marble) => isViewedIdxList.findIndex((id) => id === marble.id) === -1,
+    );
+    setIsNotViewedMarbleList(isViewedList);
+  }, [marbleList, isViewedIdxList]);
 
   if (!marbleList.length) return null;
   return (
@@ -42,7 +54,19 @@ export const MarbleGrid = ({
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
-            {marbleList?.map((marble) => <MarbleGridItem key={marble.id} />)}
+            {isFilteredViewed ? (
+              <>
+                {isNotViewedMarbleList?.map((marble) => (
+                  <MarbleGridItem marble={marble} key={marble.id} />
+                ))}
+              </>
+            ) : (
+              <>
+                {marbleList?.map((marble) => (
+                  <MarbleGridItem marble={marble} key={marble.id} />
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
