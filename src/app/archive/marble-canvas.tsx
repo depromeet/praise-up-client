@@ -340,7 +340,7 @@ export const MarbleCanvas = ({
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <div className="relative z-10">
           <Header
-            text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}
+            text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
             className="absolute left-5 top-4 !w-fit"
           />
         </div>

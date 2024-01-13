@@ -56,9 +56,7 @@ export const MarbleGrid = ({
       }
     >
       <div className="mb-[60px] flex flex-col gap-9">
-        <Header
-          text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}
-        />
+        <Header text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!" />
 
         <div>
           <div className="flex items-center justify-end gap-[6px]">
