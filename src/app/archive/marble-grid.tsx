@@ -1,3 +1,4 @@
+import { Body } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Marble from "@/assets/icons/marble.svg";
@@ -12,7 +13,7 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarble: (selectedBody?: Body) => void;
+  onChangeSelectedMarble: (selectedMarble?: Body) => void;
 };
 
 export const MarbleGrid = ({
