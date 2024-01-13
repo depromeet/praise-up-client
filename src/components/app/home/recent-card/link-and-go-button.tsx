@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ShareSVG } from "@/assets/icons/share";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { toast } from "@/helpers/toast";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
@@ -27,6 +28,11 @@ export const LinkAndGoButton = ({
     setIsReveal(diff >= 0);
   }, [diff]);
 
+  const handleShare = () => {
+    // TODO: 클립보드에 링크 복사하기
+    toast("링크가 복사되었어요");
+  };
+
   return (
     <div className="flex w-full items-start justify-center gap-2">
       {isReveal ? (
@@ -35,6 +41,7 @@ export const LinkAndGoButton = ({
             className="aspect-square rounded-2 bg-gray-300 p-[15px]"
             onMouseDown={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
+            onClick={() => handleShare()}
           >
             <ShareSVG />
           </button>

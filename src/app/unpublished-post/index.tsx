@@ -5,6 +5,7 @@ import { TimerCardView } from "./timer-card-view";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
+import { toast } from "@/helpers/toast";
 
 interface DataType {
   id: string;
@@ -36,6 +37,11 @@ export const UnpublishedPostPage = () => {
     state: { backgroundUrl },
   }: { state: { backgroundUrl: string } } = useLocation();
 
+  const handleShare = () => {
+    // TODO: 클립보드에 링크 복사하기
+    toast("링크가 복사되었어요");
+  };
+
   return (
     <DefaultLayout>
       <div className="flex flex-col gap-9">
@@ -61,7 +67,7 @@ export const UnpublishedPostPage = () => {
         </div>
       </div>
       <ButtonProvider>
-        <ButtonProvider.Primary onClick={() => console.log("링크가 복사됨")}>
+        <ButtonProvider.Primary onClick={() => handleShare()}>
           링크 공유하고 칭찬 받기
         </ButtonProvider.Primary>
       </ButtonProvider>
