@@ -14,37 +14,38 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
+import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
+import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TArchiveView } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
 import { createMarbleObject } from "@/utils/createMarbleObject";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
-  marbleBodyList: Body[];
+  marbleList: TMarble[];
   selectedMarbleId: number;
   isViewedIdList: number[];
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
   onChangeSelectedMarbleId: (id: number) => void;
-  onUpdateMarbleBodyList: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
-  marbleBodyList,
+  marbleList,
   selectedMarbleId,
   isViewedIdList,
   isModalOpen,
   onChangeView,
   onChangeSelectedMarbleId,
-  onUpdateMarbleBodyList,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
+  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasScrollRef = useRef<HTMLDivElement>(null);
@@ -56,7 +57,23 @@ export const MarbleCanvas = ({
   }, []);
 
   useEffect(() => {
-    if (!engine || !marbleBodyList.length) return;
+    if (!marbleList.length) return;
+
+    const marbles = marbleList.map((marbleData) => {
+      const { commentId, nickname } = marbleData;
+      const texture = commentId % 2 === 0 ? marbleTexture : marbleTexture_2;
+      return createMarbleObject({
+        id: commentId,
+        texture,
+        textContent: nickname,
+      });
+    });
+
+    setMarbleBodyList(marbles);
+  }, [marbleList]);
+
+  useEffect(() => {
+    if (!engine || !marbleList.length) return;
 
     const render = Render.create({
       engine,
@@ -237,7 +254,7 @@ export const MarbleCanvas = ({
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleBodyList, engine, isMobile]);
+  }, [marbleList, engine, isMobile]);
 
   useEffect(() => {
     if (!engine || selectedMarbleId === -1) return;
@@ -273,7 +290,7 @@ export const MarbleCanvas = ({
       }),
     );
 
-    onUpdateMarbleBodyList(selectedMarble.id);
+    updateMarbleBodyList(selectedMarble.id);
     onChangeSelectedMarbleId(-1);
   }, [isModalOpen]);
 
@@ -288,6 +305,24 @@ export const MarbleCanvas = ({
         marble.render.text.color = "#a1a9b2";
       }
     });
+  };
+
+  const updateMarbleBodyList = (id: number) => {
+    const marbleItem = marbleBodyList.find((marble) => marble.id === id);
+    if (!marbleItem) return;
+
+    const filteredMarbleList = marbleBodyList.filter(
+      (body) => body.id !== marbleItem.id,
+    );
+    setMarbleBodyList([
+      ...filteredMarbleList,
+      createMarbleObject({
+        id,
+        texture: id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2,
+        textContent: marbleItem.render.text?.content || "",
+        isViewed: true,
+      }),
+    ]);
   };
 
   return (
