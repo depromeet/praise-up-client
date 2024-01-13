@@ -46,7 +46,7 @@ const Modal = ({
     <BaseModal
       onOpen={onOpen}
       onClose={onClose}
-      className="bg-white p-16px backdrop:bg-black/60"
+      className="p-16px bg-transparent backdrop:bg-black/60"
     >
       <form method="dialog">{children}</form>
     </BaseModal>

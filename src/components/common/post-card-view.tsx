@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { ReactNode, createContext, useEffect, useReducer, useRef } from "react";
 
 import { KebabSVG } from "@/assets/kebab";
+import { DeleteConfirmModal } from "@/components/app/unpublished-post/delete-confirm-modal";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
@@ -112,14 +113,7 @@ const Title = () => {
       )}
 
       {showMenu && (
-        <div
-          onClick={() => {
-            console.log("삭제하기 클릭");
-          }}
-          className="rounded-3 absolute right-4 top-[50px] z-10 flex h-11 items-center bg-white px-4 py-3"
-        >
-          <span className="text-b3-compact">삭제하기</span>
-        </div>
+        <DeleteConfirmModal toggleShowMenu={() => toggleShowMenu()} />
       )}
     </div>
   );
