@@ -5,4 +5,11 @@ export type TMarble = {
   content: string;
 };
 
+export type TMarbleObject = {
+  id: number;
+  texture: string;
+  textContent: string;
+  isViewed?: boolean;
+};
+
 export type TArchiveView = "preview" | "canvas" | "grid";

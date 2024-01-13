@@ -21,7 +21,7 @@ import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
 
 interface Props {
   isOpen: boolean;
-  onChangeOpenState: () => void;
+  onChangeOpenState: (isOpen: boolean) => void;
   selectedMarble: Body;
   marbleList: Body[];
   onUpdateViewIdxList: (activeIdx: number) => void;
@@ -74,7 +74,7 @@ export const MarbleModal = ({
   }, [isOpen]);
 
   const onClickClose: MouseEventHandler = () => {
-    onChangeOpenState();
+    onChangeOpenState(false);
   };
 
   if (!isOpen) return null;
