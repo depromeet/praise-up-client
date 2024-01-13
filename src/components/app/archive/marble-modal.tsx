@@ -1,6 +1,8 @@
+import "swiper/scss/pagination";
+import "@/style/swiper/archive-init.scss";
+
 // custom pagination style
-import "@/style/swiper/archive-init-swiper.css";
-import "@/style/swiper/archive-swiper-pagination.css";
+import "@/style/swiper/archive-pagination.scss";
 
 import { MouseEventHandler, useEffect, useState } from "react";
 import SwiperCore from "swiper";
@@ -32,7 +34,7 @@ export const MarbleModal = ({
   useEffect(() => {
     if (!swiperOptions && selectedMarbleId !== -1 && marbleList.length) {
       setSwiperOptions({
-        className: "swiper-container",
+        className: "init-swiper archive-swiper",
         slidesPerView: 1,
         centeredSlides: true,
         loop: true,
