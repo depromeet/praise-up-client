@@ -32,6 +32,7 @@ type Props = {
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
   onChangeSelectedMarbleId: (id: number) => void;
+  onUpdateMarbleBodyList: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
@@ -41,6 +42,7 @@ export const MarbleCanvas = ({
   isModalOpen,
   onChangeView,
   onChangeSelectedMarbleId,
+  onUpdateMarbleBodyList,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
 
@@ -256,6 +258,7 @@ export const MarbleCanvas = ({
       engine.world.bodies.filter(({ label }) => label === "marble"),
     );
 
+    selectedMarble.render.opacity = 1;
     World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
@@ -270,6 +273,7 @@ export const MarbleCanvas = ({
       }),
     );
 
+    onUpdateMarbleBodyList(selectedMarble.id);
     onChangeSelectedMarbleId(-1);
   }, [isModalOpen]);
 

@@ -6,7 +6,9 @@ import { MarbleGrid } from "./marble-grid";
 import { Preview } from "./preview";
 
 import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
+import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
 import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
+import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
@@ -35,18 +37,13 @@ export const Archive = () => {
   }, [data]);
 
   useEffect(() => {
-    console.log(data?.pages.flatMap((page) => page.content));
-  }, [data]);
-
-  useEffect(() => {
     if (!marbleList.length) return;
 
     const marbles = marbleList.map((marbleData) => {
-      const { commendId, nickname } = marbleData;
-      const texture =
-        marbleData.commendId % 2 === 0 ? marbleTexture : marbleTexture_2;
+      const { commentId, nickname } = marbleData;
+      const texture = commentId % 2 === 0 ? marbleTexture : marbleTexture_2;
       return createMarbleObject({
-        id: commendId,
+        id: commentId,
         texture,
         textContent: nickname,
       });
@@ -71,10 +68,28 @@ export const Archive = () => {
     setSelectedMarbleId(id);
   };
 
+  const onUpdateMarbleBodyList = (id: number) => {
+    const marbleItem = marbleBodyList.find((marble) => marble.id === id);
+    if (!marbleItem) return;
+
+    const filteredMarbleList = marbleBodyList.filter(
+      (body) => body.id !== marbleItem.id,
+    );
+    setMarbleBodyList([
+      ...filteredMarbleList,
+      createMarbleObject({
+        id,
+        texture: id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2,
+        textContent: marbleItem.render.text?.content || "",
+        isViewed: true,
+      }),
+    ]);
+  };
+
   const onUpdateViewIdxList = (activeIdx: number) => {
     if (activeIdx === -1 || !marbleList.length) return;
 
-    const activeMarbleId = marbleList[activeIdx].commendId;
+    const activeMarbleId = marbleList[activeIdx].commentId;
     const updatedIsViewedIdxList = [
       ...new Set([...isViewedIdList, activeMarbleId]),
     ];
@@ -103,6 +118,7 @@ export const Archive = () => {
           isModalOpen={isModalOpen}
           onChangeView={onChangeView}
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
+          onUpdateMarbleBodyList={onUpdateMarbleBodyList}
         />
       )}
       {view === "grid" && (

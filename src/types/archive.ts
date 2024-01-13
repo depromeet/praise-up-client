@@ -23,7 +23,7 @@ export type TMarbleListPayload = {
 };
 
 export type TMarble = {
-  commendId: number;
+  commentId: number;
   nickname: string;
   content: string;
   imageUrl: string;

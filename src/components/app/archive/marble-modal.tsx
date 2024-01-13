@@ -40,7 +40,7 @@ export const MarbleModal = ({
         centeredSlides: true,
         loop: true,
         initialSlide: marbleList.findIndex(
-          (marble) => marble.commendId === selectedMarbleId,
+          (marble) => marble.commentId === selectedMarbleId,
         ),
         modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
@@ -90,7 +90,7 @@ export const MarbleModal = ({
         {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
-              <SwiperSlide key={marble.commendId} className="cursor-pointer">
+              <SwiperSlide key={marble.commentId} className="cursor-pointer">
                 <MarbleDetailCard marble={marble} />
               </SwiperSlide>
             ))}
