@@ -10,14 +10,14 @@ import { TArchiveView, TMarble } from "@/types/archive";
 
 type Props = {
   marbleList: TMarble[];
-  isViewedIdxList: number[];
+  isViewedIdList: number[];
   onChangeView: (view: TArchiveView) => void;
   onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleGrid = ({
   marbleList,
-  isViewedIdxList,
+  isViewedIdList,
   onChangeView,
   onChangeSelectedMarbleId,
 }: Props) => {
@@ -28,16 +28,16 @@ export const MarbleGrid = ({
     useState<TMarble[]>();
 
   useEffect(() => {
-    if (!isViewedIdxList.length) {
+    if (!isViewedIdList.length) {
       setIsNotViewedMarbleList(marbleList);
       return;
     }
 
     const isViewedList = marbleList.filter(
-      (marble) => isViewedIdxList.findIndex((id) => id === marble.id) === -1,
+      (marble) => isViewedIdList.findIndex((id) => id === marble.id) === -1,
     );
     setIsNotViewedMarbleList(isViewedList);
-  }, [marbleList, isViewedIdxList]);
+  }, [marbleList, isViewedIdList]);
 
   if (!marbleList.length) return null;
   return (

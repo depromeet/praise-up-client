@@ -19,7 +19,7 @@ export const Archive = () => {
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
   const [selectedMarbleId, setSelectedMarbleId] = useState<number>(-1);
 
-  const [isViewedIdxList, setIsViewedIdxList] = useState<number[]>([]);
+  const [isViewedIdList, setIsViewedIdList] = useState<number[]>([]);
 
   // NOTE: Canvas, Grid View value
   const [view, setView] = useState<TArchiveView>("preview");
@@ -67,9 +67,9 @@ export const Archive = () => {
 
     const activeMarbleId = marbleList[activeIdx].id;
     const updatedIsViewedIdxList = [
-      ...new Set([...isViewedIdxList, activeMarbleId]),
+      ...new Set([...isViewedIdList, activeMarbleId]),
     ];
-    setIsViewedIdxList(updatedIsViewedIdxList);
+    setIsViewedIdList(updatedIsViewedIdxList);
   };
 
   if (!marbleList.length) return null;
@@ -91,7 +91,7 @@ export const Archive = () => {
           marbleList={marbleList}
           marbleBodyList={marbleBodyList}
           selectedMarbleId={selectedMarbleId}
-          isViewedIdxList={isViewedIdxList}
+          isViewedIdList={isViewedIdList}
           isModalOpen={isModalOpen}
           onChangeView={onChangeView}
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
@@ -100,7 +100,7 @@ export const Archive = () => {
       {view === "grid" && (
         <MarbleGrid
           marbleList={marbleList}
-          isViewedIdxList={isViewedIdxList}
+          isViewedIdList={isViewedIdList}
           onChangeView={onChangeView}
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />

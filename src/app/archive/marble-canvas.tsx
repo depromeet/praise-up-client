@@ -29,7 +29,7 @@ type Props = {
   marbleList: TMarble[];
   marbleBodyList: Body[];
   selectedMarbleId: number;
-  isViewedIdxList: number[];
+  isViewedIdList: number[];
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
   onChangeSelectedMarbleId: (id: number) => void;
@@ -39,7 +39,7 @@ export const MarbleCanvas = ({
   marbleList,
   marbleBodyList,
   selectedMarbleId,
-  isViewedIdxList,
+  isViewedIdList,
   isModalOpen,
   onChangeView,
   onChangeSelectedMarbleId,
@@ -218,6 +218,7 @@ export const MarbleCanvas = ({
       setupMouseConstraint();
 
       Render.run(render);
+      changeMarbleViewState(marbleBodyList);
 
       for (const marble of marbleBodyList) {
         await renderMarbleObject(marble);
@@ -253,18 +254,9 @@ export const MarbleCanvas = ({
       return;
     }
 
-    engine.world.bodies
-      .filter((body) => body.label === "marble")
-      .forEach((body) => {
-        const isViewed =
-          isViewedIdxList.findIndex((marbleId) => marbleId === body.id) !== -1;
-
-        if (isViewed && body.render.sprite && body.render.text) {
-          body.render.sprite.texture =
-            body.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
-          body.render.text.color = "#a1a9b2";
-        }
-      });
+    changeMarbleViewState(
+      engine.world.bodies.filter(({ label }) => label === "marble"),
+    );
 
     World.remove(engine.world, selectedMarble);
     World.add(
@@ -282,6 +274,19 @@ export const MarbleCanvas = ({
 
     onChangeSelectedMarbleId(-1);
   }, [isModalOpen]);
+
+  const changeMarbleViewState = (bodies: Body[]) => {
+    bodies.forEach((marble) => {
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === marble.id) !== -1;
+
+      if (isViewed && marble.render.sprite && marble.render.text) {
+        marble.render.sprite.texture =
+          marble.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
+        marble.render.text.color = "#a1a9b2";
+      }
+    });
+  };
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
