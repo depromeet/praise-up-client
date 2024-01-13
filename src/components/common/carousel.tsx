@@ -7,9 +7,6 @@ interface CarouselProps {
 export const Carousel = ({ children }: CarouselProps) => {
   const [current, setCurrent] = useState<number>(0);
 
-  // desktop
-  const [mouseDownClientX, setMouseDownClientX] = useState(0);
-
   // mobile
   const [touchedXY, setTouchedXY] = useState({ x: 0, y: 0 });
 
@@ -28,19 +25,23 @@ export const Carousel = ({ children }: CarouselProps) => {
     setCurrent((current) => current - 1);
   };
 
-  const onMouseDown = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    setMouseDownClientX(e.clientX);
-    setMouseDownClientX(e.clientY);
-  };
+  const onMouseDown = ({
+    clientX: mouseDownClientX,
+  }: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const onMouseUp = ({
+      clientX: mouseUpClientX,
+    }: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      const distanceX = mouseDownClientX - mouseUpClientX;
 
-  const onMouseUp = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    const distanceX = mouseDownClientX - e.clientX;
+      if (distanceX > 50) {
+        next();
+      } else if (distanceX < -50) {
+        prev();
+      }
+      window.removeEventListener("mouseup", onMouseUp);
+    };
 
-    if (distanceX > 50) {
-      next();
-    } else if (distanceX < -50) {
-      prev();
-    }
+    window.addEventListener("mouseup", onMouseUp);
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -69,7 +70,7 @@ export const Carousel = ({ children }: CarouselProps) => {
           className={`flex w-full cursor-grab items-center transition-all duration-300 ease-in-out active:cursor-grabbing [&>*]:w-full [&>*]:shrink-0`}
           style={{ transform: `translateX(${moveStyle[current]})` }}
           onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
+          //onMouseUp={onMouseUp}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
