@@ -12,13 +12,11 @@ import { QueryProvider } from "@/lib/query-provider";
 import { Routers } from "@/routes";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <QueryProvider>
-      <ErrorBoundary fallback={<NotFound />}>
-        <AnimatePresence>
-          <Routers />
-        </AnimatePresence>
-      </ErrorBoundary>
-   </QueryProvider>
-  </StrictMode>,
+  <QueryProvider>
+    <ErrorBoundary fallback={<NotFound />}>
+      <AnimatePresence>
+        <Routers />
+      </AnimatePresence>
+    </ErrorBoundary>
+  </QueryProvider>,
 );
