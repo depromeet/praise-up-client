@@ -2,9 +2,15 @@ import { useContext } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
+import { TMarble } from "@/types/archive";
 
-export const MarbleDetailCard = () => {
+type Props = {
+  marble: TMarble;
+};
+
+export const MarbleDetailCard = ({ marble }: Props) => {
   const { confirm } = useContext(ConfirmContext);
+  const { user } = marble;
 
   const onClickMenu = async () => {
     const result = await confirm(
@@ -44,7 +50,7 @@ export const MarbleDetailCard = () => {
       </p>
       <p className="flex items-center justify-start gap-1 font-semibold">
         <span className="text-teritary">from.</span>
-        <span>태롱이</span>
+        <span>{user}</span>
       </p>
     </div>
   );

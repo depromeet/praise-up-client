@@ -12,12 +12,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import Back from "@/assets/icons/back.svg?react";
 import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
+import { TMarble } from "@/types/archive";
 
 interface Props {
   isOpen: boolean;
   onChangeOpenState: (isOpen: boolean) => void;
   selectedMarbleId: number;
-  marbleList: Body[];
+  marbleList: TMarble[];
   onUpdateViewIdxList: (activeIdx: number) => void;
 }
 
@@ -91,7 +92,7 @@ export const MarbleModal = ({
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
               <SwiperSlide key={marble.id} className="cursor-pointer">
-                <MarbleDetailCard />
+                <MarbleDetailCard marble={marble} />
               </SwiperSlide>
             ))}
           </Swiper>
