@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import Marble from "@/assets/icons/marble.svg";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
+import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
@@ -42,7 +44,7 @@ export const MarbleGrid = ({
 
   if (!marbleList.length) return null;
   return (
-    <DefaultLayout appbar={<div>appBar</div>}>
+    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
       <div className="mb-[60px] flex flex-col gap-9">
         <Header
           text={`해당 게시물에 대해\\n{${marbleList.length}개}의 칭찬구슬이 모였어요!`}

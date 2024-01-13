@@ -1,3 +1,5 @@
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
+import { Appbar } from "@/components/common/appbar";
 import { Arrow } from "@/components/common/arrow";
 import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
@@ -10,7 +12,7 @@ type Props = {
 
 export const PreviewSummary = ({ marbleNum, onChangeView }: Props) => {
   return (
-    <DefaultLayout>
+    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
       <Header
         text={`해당 게시물에 대해\\n{${marbleNum}개}의 칭찬구슬이 모였어요!`}
       />

@@ -1,4 +1,6 @@
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { MarbleCard } from "@/components/app/archive/marble-card";
+import { Appbar } from "@/components/common/appbar";
 import { Arrow } from "@/components/common/arrow";
 import { DefaultLayout } from "@/components/layout/default";
 import { TArchiveView } from "@/types/archive";
@@ -9,7 +11,7 @@ type Props = {
 
 export const PreviewCard = ({ onChangeView }: Props) => {
   return (
-    <DefaultLayout appbar={<div>appBar</div>}>
+    <DefaultLayout appbar={<Appbar left={<ChevronLeftEdgeSVG />} />}>
       <div className="flex flex-col gap-9">
         <p className="text-xl font-semibold text-primary">나의 칭찬게시물</p>
         <MarbleCard />

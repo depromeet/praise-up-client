@@ -14,11 +14,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left.tsx";
 import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
 import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { FABButton } from "@/components/app/archive/fab-button";
+import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
@@ -327,7 +329,7 @@ export const MarbleCanvas = ({
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
-      <div className="h-16">Temp Header</div>
+      <Appbar left={<ChevronLeftEdgeSVG />} />
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <div className="relative z-10">
