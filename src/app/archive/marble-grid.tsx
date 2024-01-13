@@ -1,4 +1,3 @@
-import { Body } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Marble from "@/assets/icons/marble.svg";
@@ -13,14 +12,14 @@ type Props = {
   marbleList: TMarble[];
   isViewedIdxList: number[];
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarble: (selectedMarble?: Body) => void;
+  onChangeSelectedMarbleIdx: (id: number) => void;
 };
 
 export const MarbleGrid = ({
   marbleList,
   isViewedIdxList,
   onChangeView,
-  onChangeSelectedMarble,
+  onChangeSelectedMarbleIdx,
 }: Props) => {
   // TODO: Add body Scroll
   const scrollRef = useRef<HTMLDivElement>(null);

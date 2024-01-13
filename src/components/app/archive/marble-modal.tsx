@@ -16,7 +16,7 @@ import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
 interface Props {
   isOpen: boolean;
   onChangeOpenState: (isOpen: boolean) => void;
-  selectedMarble: Body;
+  selectedMarbleId: number;
   marbleList: Body[];
   onUpdateViewIdxList: (activeIdx: number) => void;
 }
@@ -25,7 +25,7 @@ interface Props {
 export const MarbleModal = ({
   isOpen,
   onChangeOpenState,
-  selectedMarble,
+  selectedMarbleId,
   marbleList,
   onUpdateViewIdxList,
 }: Props) => {
@@ -33,14 +33,14 @@ export const MarbleModal = ({
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
 
   useEffect(() => {
-    if (!swiperOptions && selectedMarble && marbleList.length) {
+    if (!swiperOptions && selectedMarbleId !== -1 && marbleList.length) {
       setSwiperOptions({
         className: "swiper-container",
         slidesPerView: 1,
         centeredSlides: true,
         loop: true,
         initialSlide: marbleList.findIndex(
-          (marble) => marble.id === selectedMarble.id,
+          (marble) => marble.id === selectedMarbleId,
         ),
         modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
@@ -53,7 +53,7 @@ export const MarbleModal = ({
         },
       });
     }
-  }, [swiperOptions, selectedMarble, marbleList]);
+  }, [swiperOptions, selectedMarbleId, marbleList]);
 
   useEffect(() => {
     onUpdateViewIdxList(activeMarbleIdx);
@@ -87,7 +87,7 @@ export const MarbleModal = ({
             marbleList.length
           }`}</p>
         </div>
-        {!!selectedMarble && !!swiperOptions && (
+        {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
               <SwiperSlide key={marble.id} className="cursor-pointer">

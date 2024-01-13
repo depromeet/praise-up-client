@@ -28,21 +28,21 @@ import { setWaitTime } from "@/utils/setWaitTime";
 type Props = {
   marbleList: TMarble[];
   marbleBodyList: Body[];
-  selectedMarble?: Body;
+  selectedMarbleId: number;
   isViewedIdxList: number[];
   isModalOpen: boolean;
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarble: (selectedBody?: Body) => void;
+  onChangeSelectedMarbleIdx: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
   marbleList,
   marbleBodyList,
-  selectedMarble,
+  selectedMarbleId,
   isViewedIdxList,
   isModalOpen,
   onChangeView,
-  onChangeSelectedMarble,
+  onChangeSelectedMarbleIdx,
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
 
@@ -142,7 +142,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarble(selectedBody);
+        onChangeSelectedMarbleIdx(selectedBody.id);
       }
     };
 
@@ -164,7 +164,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = mouseConstraint.body;
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarble(selectedBody);
+        onChangeSelectedMarbleIdx(selectedBody.id);
       }
     };
 
@@ -239,7 +239,12 @@ export const MarbleCanvas = ({
   }, [marbleList, engine, isMobile]);
 
   useEffect(() => {
-    if (!selectedMarble || !engine) return;
+    if (!engine || selectedMarbleId === -1) return;
+
+    const selectedMarble = marbleBodyList.find(
+      ({ id }) => id === selectedMarbleId,
+    );
+    if (!selectedMarble) return;
 
     if (isModalOpen) {
       selectedMarble.render.opacity = 0;
@@ -274,7 +279,8 @@ export const MarbleCanvas = ({
         isViewed: true,
       }),
     );
-    onChangeSelectedMarble(undefined);
+
+    onChangeSelectedMarbleIdx(-1);
   }, [isModalOpen]);
 
   return (

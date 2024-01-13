@@ -17,7 +17,7 @@ export const Archive = () => {
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
-  const [selectedMarble, setSelectedMarble] = useState<Body>();
+  const [selectedMarbleId, setSelectedMarbleId] = useState<number>(-1);
 
   const [isViewedIdxList, setIsViewedIdxList] = useState<number[]>([]);
 
@@ -47,8 +47,8 @@ export const Archive = () => {
   }, [marbleList]);
 
   useEffect(() => {
-    onChangeModalState(!!selectedMarble);
-  }, [selectedMarble]);
+    onChangeModalState(selectedMarbleId !== -1);
+  }, [selectedMarbleId]);
 
   const onChangeView = (view: TArchiveView) => {
     setView(view);
@@ -58,8 +58,8 @@ export const Archive = () => {
     setIsModalOpen(isOpen);
   };
 
-  const onChangeSelectedMarble = (selectedMarble?: Body) => {
-    setSelectedMarble(selectedMarble);
+  const onChangeSelectedMarbleIdx = (id: number) => {
+    setSelectedMarbleId(id);
   };
 
   const onUpdateViewIdxList = (activeIdx: number) => {
@@ -75,10 +75,10 @@ export const Archive = () => {
   if (!marbleList.length) return null;
   return (
     <ConfirmDialog>
-      {isModalOpen && selectedMarble && (
+      {isModalOpen && Boolean(selectedMarbleId !== -1) && (
         <MarbleModal
           isOpen={isModalOpen}
-          selectedMarble={selectedMarble}
+          selectedMarbleId={selectedMarbleId}
           marbleList={marbleBodyList}
           onChangeOpenState={onChangeModalState}
           onUpdateViewIdxList={onUpdateViewIdxList}
@@ -90,11 +90,11 @@ export const Archive = () => {
         <MarbleCanvas
           marbleList={marbleList}
           marbleBodyList={marbleBodyList}
-          selectedMarble={selectedMarble}
+          selectedMarbleId={selectedMarbleId}
           isViewedIdxList={isViewedIdxList}
           isModalOpen={isModalOpen}
           onChangeView={onChangeView}
-          onChangeSelectedMarble={onChangeSelectedMarble}
+          onChangeSelectedMarbleIdx={onChangeSelectedMarbleIdx}
         />
       )}
       {view === "grid" && (
@@ -102,7 +102,7 @@ export const Archive = () => {
           marbleList={marbleList}
           isViewedIdxList={isViewedIdxList}
           onChangeView={onChangeView}
-          onChangeSelectedMarble={onChangeSelectedMarble}
+          onChangeSelectedMarbleIdx={onChangeSelectedMarbleIdx}
         />
       )}
     </ConfirmDialog>
