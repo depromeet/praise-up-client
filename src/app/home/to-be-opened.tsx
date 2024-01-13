@@ -20,7 +20,7 @@ export const ToBeOpened = () => {
           openDatetime={testAfter}
         />
         <RecentCard
-          id="2"
+          id="5"
           keyword="재미있는"
           count={12}
           openDatetime={testBefore}

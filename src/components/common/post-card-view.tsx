@@ -5,10 +5,10 @@ import { KebabSVG } from "@/assets/kebab";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
-  id: string;
-  username: string;
+  id?: string;
+  username?: string;
   keyword: string;
-  imgUrl: string;
+  imageUrl: string;
   content: string;
   isReadyCard?: boolean;
   isPublic?: boolean;
@@ -16,11 +16,11 @@ interface PostCardViewProps {
 }
 
 export interface PostCardContextProps {
-  id: string;
-  username: string;
+  id?: string;
+  username?: string;
   keyword: string;
   showMenu: boolean;
-  imgUrl: string;
+  imageUrl: string;
   content: string;
   isPublic: boolean;
   toggleShowMenu: (showMenu?: boolean) => void;
@@ -32,9 +32,9 @@ export const PostCardViewContext = createContext<
 
 export const PostCardView = ({
   id,
-  username,
+  username = "임시(from front)",
   keyword,
-  imgUrl,
+  imageUrl,
   content,
   isReadyCard = false, // flip 전 일러스트(Preview)인지
   isPublic = false, // 외부에 공개되는 게시글인지
@@ -62,7 +62,7 @@ export const PostCardView = ({
         username,
         keyword,
         showMenu,
-        imgUrl,
+        imageUrl,
         content,
         toggleShowMenu,
         isPublic,
@@ -123,7 +123,7 @@ const Title = () => {
 };
 
 const Image = () => {
-  const { content, imgUrl }: { content: string; imgUrl: string } =
+  const { content, imageUrl }: { content: string; imageUrl: string } =
     usePostCardView();
   const contentRef = useRef<HTMLParagraphElement>(null);
 
@@ -131,7 +131,7 @@ const Image = () => {
     <div
       className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
-        backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
+        backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imageUrl})`,
         backgroundSize: "cover",
       }}
     >
@@ -146,14 +146,12 @@ const Image = () => {
   );
 };
 
-const Preview = () => {
-  const { imgUrl } = usePostCardView();
-
+const Preview = ({ imageUrl }: { imageUrl: string }) => {
   return (
     <div
       className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
-        backgroundImage: `url(${imgUrl})`,
+        backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
       }}
     />
