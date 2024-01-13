@@ -4,10 +4,13 @@ import "@/style/global.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { QueryProvider } from "@/lib/query-provider";
 import { Routers } from "@/routes";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Routers />
+    <QueryProvider>
+      <Routers />
+    </QueryProvider>
   </StrictMode>,
 );

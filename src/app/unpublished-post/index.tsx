@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom";
 
-import { PostCardView } from "./post-card-view";
 import { TimerCardView } from "./timer-card-view";
 
+import { ButtonProvider } from "@/components/common/button-provider";
+import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 
 interface DataType {
@@ -59,16 +60,11 @@ export const UnpublishedPostPage = () => {
           </div>
         </div>
       </div>
-
-      <div className="fixed bottom-0 left-0 flex w-full justify-center px-5 pb-8 pt-3">
-        {/* TODO: 추후에 공통 버튼 컴포넌트로 변경 */}
-        <button
-          className="text-b2-strong rounded-2 bg-primary px-[52px] py-4 text-oncolor"
-          onClick={() => console.log("링크가 복사됨")}
-        >
+      <ButtonProvider>
+        <ButtonProvider.Primary onClick={() => console.log("링크가 복사됨")}>
           링크 공유하고 칭찬 받기
-        </button>
-      </div>
+        </ButtonProvider.Primary>
+      </ButtonProvider>
     </DefaultLayout>
   );
 };

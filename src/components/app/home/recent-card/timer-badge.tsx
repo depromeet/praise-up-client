@@ -9,7 +9,7 @@ export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
         <span>이제 칭찬 구슬을 볼 수 있어요!</span>
       ) : (
         <>
-          <span className="text-num-b2-strong">
+          <span className="text-num-b2-strong tabular-nums">
             {timeLeft.hour.toString().padStart(2, "0")}:
             {timeLeft.min.toString().padStart(2, "0")}:
             {timeLeft.sec.toString().padStart(2, "0")}
