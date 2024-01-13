@@ -16,7 +16,8 @@ interface DraggableMarbleProps {
 }
 
 // 구슬이 원위치로 돌아가지 않는 최소 이동거리
-const MIN_DISTANCE = 200;
+const MIN_DISTANCE_DESKTOP = 200;
+const MIN_DISTANCE_MOBILE = 150;
 
 export const DraggableMarble = ({
   isReached,
@@ -40,7 +41,8 @@ export const DraggableMarble = ({
     };
 
     const mouseUpHandler = (moveEvent: MouseEvent<HTMLElement>) => {
-      if (mouseDownEvent.pageY - moveEvent.pageY < MIN_DISTANCE) setPosY(0);
+      if (mouseDownEvent.pageY - moveEvent.pageY < MIN_DISTANCE_DESKTOP)
+        setPosY(0);
       else setIsReached(true);
 
       document.removeEventListener("mousemove", mouseMoveHandler);
@@ -63,7 +65,7 @@ export const DraggableMarble = ({
       if (
         touchStartEvent.changedTouches[0].pageY -
           moveEvent.changedTouches[0].pageY <
-        MIN_DISTANCE
+        MIN_DISTANCE_MOBILE
       )
         setTouchedY(0);
       else setIsReached(true);

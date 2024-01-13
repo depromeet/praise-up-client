@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment, useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
 import { ButtonProvider } from "@/components/common/button-provider";
@@ -15,12 +15,35 @@ type postProps = {
   keyword?: string;
 };
 
-export const Post = ({ keyword = "센스있는" }: postProps) => {
+export const Post = () => {
+  const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
   const [text, setText] = useState("");
   const [openCrop, setOpenCrop] = useState(false);
+  const keyword = useRef("");
   const navigate = useNavigate();
-  const { compressImage } = useImageCompress();
+  const location = useLocation();
+  const state = location.state as postProps;
+
+  if (state.keyword) {
+    keyword.current = state.keyword;
+  } else {
+    navigate("/error");
+  }
+
+  async function getBlobFromUrl(blobUrl: string) {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return blob;
+  }
+
+  // TODO: 추후 게시글 작성 API 연동 시에 사용 예정
+  // function formatFileSize(bytes) {
+  //   const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  //   if (bytes == 0) return "0 Byte";
+  //   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  //   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+  // }
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +72,17 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
   /** 게시글 작성 이벤트 */
   // TODO: 백엔드 API 싱크 맞춘 후, 진행
   const createPost = () => {
-    const file = new File([image], "image.jpeg", {
-      type: "image/jpeg",
-    });
-    console.log("최종 제출 파일 크기 :", file.size);
+    const blob = getBlobFromUrl(image);
+    blob
+      .then((res) => {
+        const file = new File([res], "image.jpeg", {
+          type: "image/jpeg",
+        });
+        console.log(file);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     navigate("/post/done");
   };
 
@@ -67,7 +97,9 @@ export const Post = ({ keyword = "센스있는" }: postProps) => {
       ) : (
         <Fragment>
           <ArticleWrapper>
-            <Header text={`오늘 칭찬받을 {${keyword}}\\n순간을 공유해주세요`} />
+            <Header
+              text={`오늘 칭찬받을 {${keyword.current}}\\n 순간을 공유해주세요`}
+            />
             {image.length > 0 ? (
               <ImageContainer src={image} onChange={changeImage} />
             ) : (
