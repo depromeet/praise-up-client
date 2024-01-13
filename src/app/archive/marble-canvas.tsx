@@ -51,7 +51,6 @@ export const MarbleCanvas = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
   const [selectedMarble, setSelectedMarble] = useState<Body>();
-  const [isViewedMarbleList, setIsViewedMarbleList] = useState<number[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasScrollRef = useRef<HTMLDivElement>(null);
@@ -279,8 +278,7 @@ export const MarbleCanvas = ({
       .filter((body) => body.label === "marble")
       .forEach((body) => {
         const isViewed =
-          isViewedMarbleList.findIndex((marbleId) => marbleId === body.id) !==
-          -1;
+          isViewedIdxList.findIndex((marbleId) => marbleId === body.id) !== -1;
 
         if (isViewed && body.render.sprite && body.render.text) {
           body.render.sprite.texture =
@@ -336,18 +334,22 @@ export const MarbleCanvas = ({
       {isOpen && selectedMarble && (
         <MarbleModal
           isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          onChangeOpenState={() => setIsOpen((prev) => !prev)}
           selectedMarble={selectedMarble}
           marbleList={marbleBodyList}
-          isViewedMarbleList={isViewedMarbleList}
-          setIsViewedMarbleList={setIsViewedMarbleList}
+          onUpdateViewIdxList={onUpdateViewIdxList}
         />
       )}
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <ArchiveTitle archiveMarbleNum={marbleList.length} isLayout={true} />
         <canvas ref={canvasRef} />
       </div>
-      <FABButton icon={Bars} text="리스트뷰" scrollRef={canvasScrollRef} />
+      <FABButton
+        icon={Bars}
+        text="리스트뷰"
+        onClick={() => onChangeView("grid")}
+        scrollRef={canvasScrollRef}
+      />
     </div>
   );
 };

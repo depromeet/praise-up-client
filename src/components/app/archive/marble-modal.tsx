@@ -21,21 +21,19 @@ import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
 
 interface Props {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  onChangeOpenState: () => void;
   selectedMarble: Body;
   marbleList: Body[];
-  isViewedMarbleList: number[];
-  setIsViewedMarbleList: Dispatch<SetStateAction<number[]>>;
+  onUpdateViewIdxList: (activeIdx: number) => void;
 }
 
 // TODO: marble Grid view를 고려하여 상태 및 props update 예정
 export const MarbleModal = ({
   isOpen,
-  setIsOpen,
+  onChangeOpenState,
   selectedMarble,
   marbleList,
-  isViewedMarbleList,
-  setIsViewedMarbleList,
+  onUpdateViewIdxList,
 }: Props) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
@@ -64,13 +62,7 @@ export const MarbleModal = ({
   }, [swiperOptions, selectedMarble, marbleList]);
 
   useEffect(() => {
-    if (activeMarbleIdx === -1) return;
-
-    const activeMarbleId = marbleList[activeMarbleIdx].id;
-    const updatedIsViewedMarbleList = [
-      ...new Set([...isViewedMarbleList, activeMarbleId]),
-    ];
-    setIsViewedMarbleList(updatedIsViewedMarbleList);
+    onUpdateViewIdxList(activeMarbleIdx);
   }, [activeMarbleIdx]);
 
   useEffect(() => {
@@ -82,7 +74,7 @@ export const MarbleModal = ({
   }, [isOpen]);
 
   const onClickClose: MouseEventHandler = () => {
-    setIsOpen(false);
+    onChangeOpenState();
   };
 
   if (!isOpen) return null;

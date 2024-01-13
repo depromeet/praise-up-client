@@ -20,6 +20,7 @@ export const Preview = ({ onChangeView }: Props) => {
             스크롤해서 칭찬 확인하기
           </div>
           <Arrow />
+          <button onClick={() => onChangeView("canvas")}>Test</button>
         </div>
       </div>
     </DefaultLayout>
