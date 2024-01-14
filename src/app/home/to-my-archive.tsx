@@ -1,15 +1,13 @@
 import { EmptyArchiveSVG } from "@/assets/imgs/empty-archive";
 import { PastCard } from "@/components/app/home/past-card";
+import { ContentDataType } from "@/hooks/apis/main/useGetArchivePost";
 
-interface ArchiveDataType {
-  imgUrl: string;
-  count: number;
-  date: Date;
-  keyword: string;
+interface ArchiveDataType extends ContentDataType {
+  imgUrl?: string; // 추후 연동 예정
 }
 
 interface ToMyArchiveProps {
-  archive: ArchiveDataType[]; // temp data type
+  archive: ArchiveDataType[];
 }
 
 export const ToMyArchive = ({ archive }: ToMyArchiveProps) => {
@@ -30,8 +28,8 @@ export const ToMyArchive = ({ archive }: ToMyArchiveProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          {[...archive].reverse().map((d, i) => (
-            <PastCard key={i} {...d} />
+          {archive.map((post, idx) => (
+            <PastCard key={idx} {...post} />
           ))}
         </div>
       )}
