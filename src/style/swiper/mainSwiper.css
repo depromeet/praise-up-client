@@ -8,13 +8,8 @@
   cursor: grabbing;
 }
 
-.swiper-wrapper {
-  margin-left: -8px;
-  gap: 8px;
-}
-
-.swiper-horizontal > .swiper-pagination-bullets,
-.swiper-pagination-bullets.swiper-pagination-horizontal {
+#card-swiper .swiper-horizontal > #card-swiper .swiper-pagination-bullets,
+#card-swiper .swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: -16px;
   position: relative;
 }

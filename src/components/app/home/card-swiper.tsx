@@ -20,6 +20,7 @@ export const CardSwiper = ({ children }: SliderProps) => {
         }}
         modules={[Pagination]}
         className=" h-full w-full"
+        id="card-swiper"
       >
         {Children.map(children, (child, i) => (
           <SwiperSlide key={i}>{child}</SwiperSlide>
