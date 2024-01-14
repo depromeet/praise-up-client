@@ -6,12 +6,16 @@ import { UseScrollToTop } from "@/hooks/useScrollToTop";
 
 type Props = {
   resetScroll?: boolean;
+  noXPadding?: boolean;
+  noYPadding?: boolean;
   appbar?: ReactNode;
   className?: string;
 } & PropsWithChildren;
 
 export const DefaultLayout = ({
   resetScroll = true,
+  noXPadding = false,
+  noYPadding = false,
   appbar,
   children,
   className,
@@ -28,7 +32,15 @@ export const DefaultLayout = ({
       >
         {/* need app bar variants */}
         {appbar ?? <div className="h-64px" />}
-        <div className="px-20px pt-16px flex flex-1 flex-col">{children}</div>
+        <div
+          className={clsx(
+            "flex flex-1 flex-col",
+            !noXPadding && "px-20px",
+            !noYPadding && "pt-16px",
+          )}
+        >
+          {children}
+        </div>
       </div>
     </Fragment>
   );
