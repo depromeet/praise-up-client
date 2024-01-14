@@ -66,7 +66,7 @@ export const MarbleModal = ({
     };
   }, [isOpen]);
 
-  const onClickClose: MouseEventHandler = () => {
+  const onClickClose = () => {
     onChangeOpenState(false);
   };
 
