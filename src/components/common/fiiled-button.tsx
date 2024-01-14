@@ -21,7 +21,7 @@ export const FilledButton = ({
     <button
       type="button"
       className={clsx(
-        "flex h-54px w-full items-center justify-center rounded-2 py-16px disabled:bg-gray-400 disabled:text-gray-500",
+        "flex h-54px w-full items-center justify-center rounded-2 py-16px transition-all duration-300 disabled:bg-gray-400 disabled:text-gray-500",
         className,
         {
           "text-b2-strong bg-[#242B37] text-white": colorSchema === "primary",
