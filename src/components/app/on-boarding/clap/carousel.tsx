@@ -7,6 +7,8 @@ import TwiceImg from "@/assets/images/on-boarding/clap/twice.svg";
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
 import { Header } from "@/components/common/header";
 
+import "@/style/swiper/on-boarding.scss";
+
 type carouselProps = {
   setAngle: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -68,7 +70,7 @@ export const Carousel = ({ setAngle }: carouselProps) => {
             backgroundRepeat: "no-repeat",
             backgroundOrigin: "content-box",
           }}
-          className="z-0 mx-[46px] h-full w-full"
+          className="z-0 px-[46px] h-full w-full"
         >
           <Header
             text="이미지로 칭찬 메세지를 남기고\n칭찬 구슬을 보내보세요!"

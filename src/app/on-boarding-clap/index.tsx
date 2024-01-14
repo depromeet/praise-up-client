@@ -3,7 +3,6 @@ import { Background } from "@/components/app/post/keyword/background";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
 
-import "@/style/swiper/onboarding-swiper.css";
 import { useState } from "react";
 
 export const OnBoardingClap = () => {
