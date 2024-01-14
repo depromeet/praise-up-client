@@ -2,15 +2,21 @@ import { useContext } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
+import { useApiMarbleComments } from "@/hooks/api/archive/useApiMarbleComments";
+import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
 import { TMarble } from "@/types/archive";
 
 type Props = {
   marble: TMarble;
+  onClickClose: () => void;
 };
 
-export const MarbleDetailCard = ({ marble }: Props) => {
+export const MarbleDetailCard = ({ marble, onClickClose }: Props) => {
+  const { mutate: deleteComment } = useApiMarbleComments();
+  const { refetch } = useApiMarbleList(1, { page: 0, size: 24 });
+
   const { confirm } = useContext(ConfirmContext);
-  const { nickname, content, imageUrl } = marble;
+  const { nickname, content, imageUrl, commentId } = marble;
 
   const onClickMenu = async () => {
     const result = await confirm(
@@ -26,9 +32,21 @@ export const MarbleDetailCard = ({ marble }: Props) => {
       },
     );
 
-    // TODO: delete action
     // TODO: Error handling
-    console.log(result);
+    if (!result) return;
+    onDeleteComment();
+  };
+
+  const onDeleteComment = () => {
+    deleteComment(commentId, {
+      onSuccess: () => {
+        void refetch();
+        onClickClose();
+      },
+      onError: () => {
+        alert("에러가 발생했습니다.");
+      },
+    });
   };
 
   // TODO: Add image save button

@@ -90,7 +90,7 @@ export const MarbleModal = ({
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
               <SwiperSlide key={marble.commentId} className="cursor-pointer">
-                <MarbleDetailCard marble={marble} />
+                <MarbleDetailCard marble={marble} onClickClose={onClickClose} />
               </SwiperSlide>
             ))}
           </Swiper>
