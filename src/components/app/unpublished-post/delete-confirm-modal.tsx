@@ -1,12 +1,34 @@
+import { useEffect, useRef } from "react";
+
 import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
 import { useModal } from "@/hooks/modal/useModal";
 
 interface DeleteConfirmModal {
+  showMenu: boolean;
   toggleShowMenu: () => void;
 }
 
-export const DeleteConfirmModal = ({ toggleShowMenu }: DeleteConfirmModal) => {
+export const DeleteConfirmModal = ({
+  showMenu,
+  toggleShowMenu,
+}: DeleteConfirmModal) => {
   const [render, modal] = useModal();
+
+  const deleteMenuRef = useRef<HTMLButtonElement>(null);
+
+  // 메뉴 외부 영역 클릭시 메뉴 닫기
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+
+    if (deleteMenuRef.current && !deleteMenuRef.current.contains(target))
+      toggleShowMenu();
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
 
   const handleModal = async () => {
     await modal(
@@ -36,8 +58,9 @@ export const DeleteConfirmModal = ({ toggleShowMenu }: DeleteConfirmModal) => {
       <button
         className="absolute right-4 top-[50px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
         onClick={handleModal}
+        ref={deleteMenuRef}
       >
-        <span className="text-b3-compact">삭제하기</span>
+        <span className="text-b3-compact select-none">삭제하기</span>
       </button>
       {render()}
     </>

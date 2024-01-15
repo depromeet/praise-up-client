@@ -74,7 +74,7 @@ export const PostCardView = ({
       <div
         className={clsx(
           { absolute: isReadyCard },
-          "  rounded-4 flex w-full flex-col items-start gap-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] ",
+          "  flex w-full flex-col items-start gap-4 rounded-4 bg-gray-200 px-4 pb-4 pt-5 transition-transform duration-1000 [backface-visibility:hidden] ",
         )}
         style={{
           transform: transStyle,
@@ -113,7 +113,10 @@ const Title = () => {
       )}
 
       {showMenu && (
-        <DeleteConfirmModal toggleShowMenu={() => toggleShowMenu()} />
+        <DeleteConfirmModal
+          showMenu={showMenu}
+          toggleShowMenu={() => toggleShowMenu()}
+        />
       )}
     </div>
   );
@@ -126,7 +129,7 @@ const Image = () => {
 
   return (
     <div
-      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imgUrl})`,
         backgroundSize: "cover",
@@ -148,7 +151,7 @@ const Preview = () => {
 
   return (
     <div
-      className=" rounded-3 flex aspect-square w-full flex-col justify-end bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: "cover",
