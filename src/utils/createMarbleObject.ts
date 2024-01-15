@@ -12,9 +12,11 @@ export const createMarbleObject = ({
   textContent,
   isViewed = false,
 }: TMarbleObject) => {
-  const isNotViewedtexture = id % 2 === 0 ? marbleTexture : marbleTexture_2;
-  const isViewedTexture =
-    id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
+  const isFirstType = id % 2 === 0;
+  const isNotViewedTexture = isFirstType ? marbleTexture : marbleTexture_2;
+  const isViewedTexture = isFirstType
+    ? marbleIsViewedTexture
+    : marbleIsViewedTexture_2;
 
   return Bodies.circle(WIDTH / 2, -200, ASSET_WIDTH.marble, {
     id,
@@ -23,7 +25,7 @@ export const createMarbleObject = ({
     friction: 1,
     render: {
       sprite: {
-        texture: isViewed ? isViewedTexture : isNotViewedtexture,
+        texture: isViewed ? isViewedTexture : isNotViewedTexture,
         xScale: 0.48,
         yScale: 0.48,
       },

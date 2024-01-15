@@ -15,9 +15,7 @@ import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left.tsx";
-import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
-import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { Appbar } from "@/components/common/appbar";
