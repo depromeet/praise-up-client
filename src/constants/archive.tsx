@@ -6,10 +6,10 @@ export const ASSET_WIDTH = {
 export const WALL_OPTIONS = {
   isStatic: true,
   render: {
-    fillStyle: "white",
+    fillStyle: "black",
   },
 };
 
 // TODO: height value calculate (visualViewport)
 export const WIDTH = window.innerWidth > 480 ? 480 : window.innerWidth;
-export const HEIGHT = window.innerHeight + window.innerHeight / 3;
+export const HEIGHT = window.innerHeight + window.innerHeight / 3 - 64;

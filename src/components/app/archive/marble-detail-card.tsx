@@ -9,9 +9,14 @@ import { TMarble } from "@/types/archive";
 type Props = {
   marble: TMarble;
   onClickClose: () => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 };
 
-export const MarbleDetailCard = ({ marble, onClickClose }: Props) => {
+export const MarbleDetailCard = ({
+  marble,
+  onClickClose,
+  onChangeSelectedMarbleId,
+}: Props) => {
   const { mutate: deleteComment } = useApiMarbleComments();
   const { refetch } = useApiMarbleList(1, { page: 0, size: 24 });
 
@@ -40,6 +45,7 @@ export const MarbleDetailCard = ({ marble, onClickClose }: Props) => {
   const onDeleteComment = () => {
     deleteComment(commentId, {
       onSuccess: () => {
+        onChangeSelectedMarbleId(-1);
         void refetch();
         onClickClose();
       },

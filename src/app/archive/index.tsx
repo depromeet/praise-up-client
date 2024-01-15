@@ -67,6 +67,7 @@ export const Archive = () => {
           marbleList={marbleList}
           onChangeOpenState={onChangeModalState}
           onUpdateViewIdxList={onUpdateViewIdxList}
+          onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
 

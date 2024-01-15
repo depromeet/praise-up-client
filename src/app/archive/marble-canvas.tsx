@@ -201,7 +201,7 @@ export const MarbleCanvas = ({
       );
       const right = Bodies.rectangle(
         WIDTH,
-        HEIGHT / 2,
+        HEIGHT / 2 - 300,
         ASSET_WIDTH.wall,
         HEIGHT + 600,
         {
@@ -210,7 +210,7 @@ export const MarbleCanvas = ({
       );
       const left = Bodies.rectangle(
         0,
-        HEIGHT / 2,
+        HEIGHT / 2 - 300,
         ASSET_WIDTH.wall,
         HEIGHT + 600,
         {
@@ -238,11 +238,6 @@ export const MarbleCanvas = ({
     const renderEvent = async () => {
       setupWallsObject();
       setupMouseConstraint();
-
-      Render.lookAt(render, {
-        min: { x: 0, y: 0 },
-        max: { x: WIDTH, y: HEIGHT },
-      });
 
       Render.run(render);
       changeMarbleViewState(marbleBodyList);
@@ -277,7 +272,7 @@ export const MarbleCanvas = ({
     if (isModalOpen) {
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 500 });
+      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 200 });
       return;
     }
 
@@ -350,21 +345,14 @@ export const MarbleCanvas = ({
         </div>
       </div>
 
-      <div
-        style={{
-          height: HEIGHT - 64,
-        }}
-        className="overflow-scroll"
-      >
-        <div className="relative z-10">
-          <Header
-            text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
-            className="absolute left-5 top-20 !w-fit"
-          />
-        </div>
-
-        <canvas className="absolute top-[-64px]" ref={canvasRef} />
+      <div className="relative z-10">
+        <Header
+          text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
+          className="absolute left-5 top-20 !w-fit"
+        />
       </div>
+
+      <canvas className="absolute top-[-64px]" ref={canvasRef} />
 
       <FABButton
         icon={Bars}
