@@ -1,6 +1,10 @@
 import clsx from "clsx";
 
 export const MarbleCard = () => {
+  // Temp content
+  const content =
+    "한시간만에 뚝딱 완성한 나의 첫 요리 🥘\\n간단한 요리지만 너무 뿌듯하다!";
+
   return (
     <div className="flex w-full flex-col gap-4 rounded-2xl bg-gray-100 p-4 pt-5">
       <div className="flex flex-col gap-0.5 text-lg text-gray-700">
@@ -18,11 +22,11 @@ export const MarbleCard = () => {
         )}
       >
         <div className="absolute flex h-full w-full flex-col justify-end gap-2 p-18px text-white">
-          <p>
-            한시간만에 뚝딱 완성한 나의 첫 요리 😆
-            <br />
-            간단한 요리지만 너무 뿌듯하다!
-          </p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: content.replace(/\\n/g, "<br/>"),
+            }}
+          />
           <p className="text-sm">23.12.09</p>
         </div>
       </div>

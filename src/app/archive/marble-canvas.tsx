@@ -294,7 +294,7 @@ export const MarbleCanvas = ({
 
     updateMarbleBodyList(selectedMarble.id);
     onChangeSelectedMarbleId(-1);
-  }, [isModalOpen]);
+  }, [isModalOpen, marbleBodyList]);
 
   const changeMarbleViewState = (bodies: Body[]) => {
     bodies.forEach((marble) => {

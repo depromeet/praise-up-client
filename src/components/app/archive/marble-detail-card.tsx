@@ -68,7 +68,12 @@ export const MarbleDetailCard = ({ marble, onClickClose }: Props) => {
           <Overflow />
         </button>
       </div>
-      <p className="whitespace-pre-wrap">{content}</p>
+      <p
+        className="whitespace-pre-wrap"
+        dangerouslySetInnerHTML={{
+          __html: content.replace(/\\n/g, "<br/>"),
+        }}
+      />
       <p className="flex items-center justify-start gap-1 font-semibold">
         <span className="text-teritary">from.</span>
         <span>{nickname}</span>
