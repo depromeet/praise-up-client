@@ -274,7 +274,7 @@ export const MarbleCanvas = ({
     if (isModalOpen) {
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 200 });
+      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: -200 });
       return;
     }
 
@@ -282,7 +282,6 @@ export const MarbleCanvas = ({
       engine.world.bodies.filter(({ label }) => label === "marble"),
     );
 
-    selectedMarble.render.opacity = 1;
     World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
