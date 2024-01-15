@@ -339,23 +339,27 @@ export const MarbleCanvas = ({
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
-      <Appbar
-        left={
-          <button onClick={() => onChangeView("preview-card")}>
-            <ChevronLeftEdgeSVG />
-          </button>
-        }
-      />
+      <div className="relative z-20">
+        <div className="fixed top-0 w-full">
+          <Appbar
+            left={
+              <button onClick={() => onChangeView("preview-card")}>
+                <ChevronLeftEdgeSVG />
+              </button>
+            }
+          />
+        </div>
+      </div>
 
       <div ref={canvasScrollRef} className="h-screen overflow-scroll">
         <div className="relative z-10">
           <Header
             text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
-            className="absolute left-5 top-4 !w-fit"
+            className="absolute left-5 top-20 !w-fit"
           />
         </div>
 
-        <canvas ref={canvasRef} />
+        <canvas className="absolute top-[-64px]" ref={canvasRef} />
       </div>
 
       <FABButton
