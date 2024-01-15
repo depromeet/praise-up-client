@@ -340,7 +340,8 @@ export const MarbleCanvas = ({
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
       <div className="relative z-20">
-        <div className="fixed top-0 w-full">
+        {/* 스크롤 시 bg-transparent 변경 */}
+        <div className="fixed top-0 w-full bg-white">
           <Appbar
             left={
               <button onClick={() => onChangeView("preview-card")}>
