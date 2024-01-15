@@ -13,6 +13,7 @@ export const createMarbleObject = ({
     id,
     label: "marble",
     restitution: 0,
+    friction: 1,
     render: {
       sprite: {
         texture,

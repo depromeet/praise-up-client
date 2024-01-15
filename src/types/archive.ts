@@ -23,7 +23,7 @@ export type TMarbleListRes = {
 
 export type TMarbleListPayload = {
   page: number;
-  size: number;
+  size?: number;
 };
 
 export type TMarble = {

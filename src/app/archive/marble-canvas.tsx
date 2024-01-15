@@ -250,6 +250,8 @@ export const MarbleCanvas = ({
     const runner = Runner.run(engine);
     void renderEvent();
 
+    console.log(world.bodies);
+
     // NOTE: Initialize of Canvas
     return () => {
       removeCustomEvent();
@@ -259,7 +261,7 @@ export const MarbleCanvas = ({
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleList, engine, isMobile]);
+  }, [marbleList, engine]);
 
   useEffect(() => {
     if (!engine || selectedMarbleId === -1) return;

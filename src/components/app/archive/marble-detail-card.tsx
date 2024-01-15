@@ -3,22 +3,22 @@ import { useContext } from "react";
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { useApiMarbleComments } from "@/hooks/api/archive/useApiMarbleComments";
-import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
 import { TMarble } from "@/types/archive";
 
 type Props = {
   marble: TMarble;
   onClickClose: () => void;
+  onUpdateMarbleList: () => void;
   onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleDetailCard = ({
   marble,
   onClickClose,
+  onUpdateMarbleList,
   onChangeSelectedMarbleId,
 }: Props) => {
   const { mutate: deleteComment } = useApiMarbleComments();
-  const { refetch } = useApiMarbleList(1, { page: 0, size: 24 });
 
   const { confirm } = useContext(ConfirmContext);
   const { nickname, content, imageUrl, commentId } = marble;
@@ -46,7 +46,7 @@ export const MarbleDetailCard = ({
     deleteComment(commentId, {
       onSuccess: () => {
         onChangeSelectedMarbleId(-1);
-        void refetch();
+        onUpdateMarbleList();
         onClickClose();
       },
       onError: () => {

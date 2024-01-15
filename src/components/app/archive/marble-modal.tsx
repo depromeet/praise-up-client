@@ -4,7 +4,7 @@ import "@/style/swiper/archive-init.scss";
 // custom pagination style
 import "@/style/swiper/archive-pagination.scss";
 
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,6 +18,7 @@ interface Props {
   onChangeOpenState: (isOpen: boolean) => void;
   selectedMarbleId: number;
   marbleList: TMarble[];
+  onUpdateMarbleList: () => void;
   onUpdateViewIdxList: (activeIdx: number) => void;
   onChangeSelectedMarbleId: (id: number) => void;
 }
@@ -27,6 +28,7 @@ export const MarbleModal = ({
   onChangeOpenState,
   selectedMarbleId,
   marbleList,
+  onUpdateMarbleList,
   onUpdateViewIdxList,
   onChangeSelectedMarbleId,
 }: Props) => {
@@ -95,6 +97,7 @@ export const MarbleModal = ({
                 <MarbleDetailCard
                   marble={marble}
                   onClickClose={onClickClose}
+                  onUpdateMarbleList={onUpdateMarbleList}
                   onChangeSelectedMarbleId={onChangeSelectedMarbleId}
                 />
               </SwiperSlide>

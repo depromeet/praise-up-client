@@ -4,6 +4,7 @@ export const ASSET_WIDTH = {
 };
 
 export const WALL_OPTIONS = {
+  id: -1,
   isStatic: true,
   render: {
     fillStyle: "black",

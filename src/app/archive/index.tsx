@@ -12,7 +12,7 @@ import { TArchiveView, TMarble } from "@/types/archive";
 
 export const Archive = () => {
   // NOTE: Server Data
-  const { data } = useApiMarbleList(1, { page: 0, size: 24 });
+  const { data, refetch } = useApiMarbleList(1, { page: 0, size: 24 });
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
@@ -47,6 +47,10 @@ export const Archive = () => {
     setSelectedMarbleId(id);
   };
 
+  const onUpdateMarbleList = async () => {
+    await refetch();
+  };
+
   const onUpdateViewIdxList = (activeIdx: number) => {
     if (activeIdx === -1 || !marbleList.length) return;
 
@@ -65,6 +69,7 @@ export const Archive = () => {
           isOpen={isModalOpen}
           selectedMarbleId={selectedMarbleId}
           marbleList={marbleList}
+          onUpdateMarbleList={onUpdateMarbleList}
           onChangeOpenState={onChangeModalState}
           onUpdateViewIdxList={onUpdateViewIdxList}
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}

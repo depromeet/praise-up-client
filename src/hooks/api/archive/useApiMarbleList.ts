@@ -3,10 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import { TMarbleListPayload, TMarbleListRes } from "@/types/archive";
 
-// type TMarbleData = {
-//   pageParams: TMarbleListPayload;
-//   pages: TMarbleListRes[];
-// };
+const CACHE_KEY = "marble_list";
 
 export const useApiMarbleList = (
   postId: number,
@@ -26,7 +23,7 @@ export const useApiMarbleList = (
   };
 
   return useInfiniteQuery<TMarbleListRes>({
-    queryKey: ["marble_list", postId],
+    queryKey: [CACHE_KEY, postId, marblePayload.page],
     queryFn: ({ pageParam = marblePayload }) =>
       fetchMarbleList(pageParam as TMarbleListPayload),
     initialPageParam: { page: 0, size: 24 },
