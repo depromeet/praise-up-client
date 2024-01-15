@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
 
@@ -13,8 +13,14 @@ const getOnePost = (postId?: string) =>
   api.get(`/posts/${postId}`).then((res) => res.data as GetOnePostType);
 
 export const useGetOnePost = (postId?: string) => {
-  return useSuspenseQuery<GetOnePostType>({
+  return useQuery<GetOnePostType>({
     queryKey: ["post"],
     queryFn: () => getOnePost(postId),
+    initialData: {
+      content: "",
+      imageUrl: "",
+      keyword: "",
+      visible: false,
+    },
   });
 };
