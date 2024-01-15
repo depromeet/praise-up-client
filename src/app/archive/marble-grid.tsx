@@ -96,7 +96,6 @@ export const MarbleGrid = ({
         icon={Marble}
         text="구슬뷰"
         onClick={() => onChangeView("marble-canvas")}
-        scrollRef={scrollRef}
       />
     </DefaultLayout>
   );
