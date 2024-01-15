@@ -98,7 +98,6 @@ export const MarbleCanvas = ({
       },
     });
     const { world } = engine;
-    const compositeArr: Body[] = [];
     let isScrolling = false;
 
     // NOTE: Remove default Event
@@ -189,6 +188,9 @@ export const MarbleCanvas = ({
 
     // NOTE: Setup functions
     const setupWallsObject = () => {
+      const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
+        ...WALL_OPTIONS,
+      });
       const floor = Bodies.rectangle(
         WIDTH / 2,
         HEIGHT,
@@ -202,16 +204,22 @@ export const MarbleCanvas = ({
         WIDTH,
         HEIGHT / 2,
         ASSET_WIDTH.wall,
-        HEIGHT,
+        HEIGHT + 600,
         {
           ...WALL_OPTIONS,
         },
       );
-      const left = Bodies.rectangle(0, HEIGHT / 2, ASSET_WIDTH.wall, HEIGHT, {
-        ...WALL_OPTIONS,
-      });
+      const left = Bodies.rectangle(
+        0,
+        HEIGHT / 2,
+        ASSET_WIDTH.wall,
+        HEIGHT + 600,
+        {
+          ...WALL_OPTIONS,
+        },
+      );
 
-      World.add(world, [floor, right, left]);
+      World.add(world, [top, floor, right, left]);
     };
 
     const setupMouseConstraint = () => {
@@ -223,23 +231,25 @@ export const MarbleCanvas = ({
 
     // NOTE: Rendering functions
     const renderMarbleObject = async (marble: Body) => {
-      compositeArr.push(marble);
-      World.add(world, compositeArr);
+      World.add(world, marble);
 
-      await setWaitTime(80);
-
-      compositeArr.pop();
-      World.remove(world, compositeArr);
+      await setWaitTime(100);
     };
 
     const renderEvent = async () => {
       setupWallsObject();
       setupMouseConstraint();
 
+      Render.lookAt(render, {
+        min: { x: 0, y: 0 },
+        max: { x: WIDTH, y: HEIGHT },
+      });
+
       Render.run(render);
       changeMarbleViewState(marbleBodyList);
 
       for (const marble of marbleBodyList) {
+        console.log(marbleBodyList);
         await renderMarbleObject(marble);
       }
     };
@@ -269,7 +279,7 @@ export const MarbleCanvas = ({
     if (isModalOpen) {
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: -200 });
+      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 500 });
       return;
     }
 
