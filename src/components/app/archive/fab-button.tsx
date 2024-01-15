@@ -22,13 +22,20 @@ export const FABButton = ({ icon, text, className, ...props }: Props) => {
       )}
     >
       <div
+        style={
+          isOverflow
+            ? {
+                paddingRight: text === "리스트뷰" ? 53 : 41,
+              }
+            : {}
+        }
         className={clsx(
           text === "리스트뷰"
             ? 'after:content-["리스트뷰"]'
             : 'after:content-["구슬뷰"]',
           "after:absolute after:-right-3 after:top-[2px] after:h-fit after:opacity-0 after:duration-300",
           "relative inline-block overflow-hidden text-sm font-semibold text-gray-800 transition-all duration-300",
-          isOverflow && "pr-[53px] after:right-0 after:opacity-100",
+          isOverflow && "after:right-0 after:opacity-100",
         )}
       >
         <div className="h-[24px] w-[24px]">

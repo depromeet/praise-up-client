@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import Marble from "@/assets/icons/marble.svg";
@@ -24,7 +24,6 @@ export const MarbleGrid = ({
   onChangeSelectedMarbleId,
 }: Props) => {
   // TODO: Add body Scroll
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [isFilteredViewed, setIsFilteredViewed] = useState<boolean>(false);
   const [isNotViewedMarbleList, setIsNotViewedMarbleList] =
     useState<TMarble[]>();
