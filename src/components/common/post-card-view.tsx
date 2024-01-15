@@ -155,6 +155,7 @@ const Preview = () => {
       style={{
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     />
   );

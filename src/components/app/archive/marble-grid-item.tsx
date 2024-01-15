@@ -13,6 +13,7 @@ export const MarbleGridItem = ({ marble, onClick }: Props) => {
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
       onClick={onClick}
       className="relative box-border w-full rounded-lg after:block after:pb-[calc(100%)]"

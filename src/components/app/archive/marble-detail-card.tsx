@@ -56,6 +56,7 @@ export const MarbleDetailCard = ({ marble, onClickClose }: Props) => {
         style={{
           backgroundImage: `url(${imageUrl})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
         className="relative box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
       >
