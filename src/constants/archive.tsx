@@ -1,10 +1,10 @@
 export const ASSET_WIDTH = {
-  wall: 10,
+  wall: 20,
   marble: 50,
 };
 
 export const WALL_OPTIONS = {
-  id: -1,
+  id: 0,
   isStatic: true,
   render: {
     fillStyle: "black",

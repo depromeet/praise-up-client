@@ -50,6 +50,44 @@ export const MarbleCanvas = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isMobile = getIsMobile();
 
+  // 에러 발생으로 임시 수정
+  const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
+    isStatic: true,
+    render: {
+      fillStyle: "white",
+    },
+  });
+  const floor = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, ASSET_WIDTH.wall, {
+    isStatic: true,
+    render: {
+      fillStyle: "white",
+    },
+  });
+  const right = Bodies.rectangle(
+    WIDTH,
+    HEIGHT / 2 - 300,
+    ASSET_WIDTH.wall,
+    HEIGHT + 600,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: "white",
+      },
+    },
+  );
+  const left = Bodies.rectangle(
+    0,
+    HEIGHT / 2 - 300,
+    ASSET_WIDTH.wall,
+    HEIGHT + 600,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: "white",
+      },
+    },
+  );
+
   useEffect(() => {
     const createdEngine = Engine.create();
     setEngine(createdEngine);
@@ -189,37 +227,6 @@ export const MarbleCanvas = ({
 
     // NOTE: Setup functions
     const setupWallsObject = () => {
-      const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
-        ...WALL_OPTIONS,
-      });
-      const floor = Bodies.rectangle(
-        WIDTH / 2,
-        HEIGHT,
-        WIDTH,
-        ASSET_WIDTH.wall,
-        {
-          ...WALL_OPTIONS,
-        },
-      );
-      const right = Bodies.rectangle(
-        WIDTH,
-        HEIGHT / 2 - 300,
-        ASSET_WIDTH.wall,
-        HEIGHT + 600,
-        {
-          ...WALL_OPTIONS,
-        },
-      );
-      const left = Bodies.rectangle(
-        0,
-        HEIGHT / 2 - 300,
-        ASSET_WIDTH.wall,
-        HEIGHT + 600,
-        {
-          ...WALL_OPTIONS,
-        },
-      );
-
       World.add(world, [top, floor, right, left]);
     };
 
