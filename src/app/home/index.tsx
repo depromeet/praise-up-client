@@ -8,13 +8,13 @@ import { ToMyArchive } from "./to-my-archive";
 import { HomeLayout } from "@/components/layout/home-layout";
 import {
   ContentDataType,
-  GetArchivePostType,
-  useGetArchivePost,
-} from "@/hooks/apis/main/useGetArchivePost";
+  GetPostType,
+  useGetPost,
+} from "@/hooks/apis/main/useGetPost";
 
 export const Home = () => {
   const scrollAreaRef = useRef(null);
-  const { data, hasNextPage, fetchNextPage } = useGetArchivePost();
+  const { data, hasNextPage, fetchNextPage } = useGetPost({});
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -37,8 +37,8 @@ export const Home = () => {
         <ToMyArchive
           archive={
             (data?.pages.reduce(
-              (pages: ContentDataType[], currPage: GetArchivePostType) => [
-                ...pages,
+              (contents: ContentDataType[], currPage: GetPostType) => [
+                ...contents,
                 ...currPage.content,
               ],
               [],

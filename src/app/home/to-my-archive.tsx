@@ -1,6 +1,6 @@
 import { EmptyArchiveSVG } from "@/assets/imgs/empty-archive";
 import { PastCard } from "@/components/app/home/past-card";
-import { ContentDataType } from "@/hooks/apis/main/useGetArchivePost";
+import { ContentDataType } from "@/hooks/apis/main/useGetPost";
 
 interface ArchiveDataType extends ContentDataType {
   imgUrl?: string; // 추후 연동 예정

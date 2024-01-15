@@ -32,8 +32,8 @@ export const PostCardViewContext = createContext<
 
 export const PostCardView = ({
   id,
-  username = "임시(from front)",
-  keyword,
+  username = "대장",
+  keyword = "",
   imageUrl,
   content,
   isReadyCard = false, // flip 전 일러스트(Preview)인지

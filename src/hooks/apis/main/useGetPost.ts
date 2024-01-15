@@ -8,7 +8,7 @@ export interface ContentDataType {
   commentCount: number;
 }
 
-export interface GetArchivePostType {
+export interface GetPostType {
   totalPages: number;
   totalElements: number;
   size: number;
@@ -38,19 +38,37 @@ export interface GetArchivePostType {
 }
 const PAGE_SIZE = 4; // temp page size
 
-export const getArchivePost = ({ pageParam }: { pageParam: number }) =>
+// unread post
+const getUnreadPost = ({ pageParam }: { pageParam: number }) =>
   api
-    .get(`/posts?page=${pageParam}&size=${PAGE_SIZE}`)
-    .then((res) => res.data as GetArchivePostType);
+    .get(`posts?page=${pageParam}&size=2`) // unread post
+    .then((res) => res.data as GetPostType);
 
-export const useGetArchivePost = () => {
-  return useInfiniteQuery({
-    queryKey: ["archive-post"],
-    queryFn: ({ pageParam }) => getArchivePost({ pageParam }),
+// archive post
+const getArchivePost = ({ pageParam }: { pageParam: number }) =>
+  api
+    .get(`/posts?page=${pageParam}&size=${PAGE_SIZE}`) // read post (archive)
+    .then((res) => res.data as GetPostType);
+
+export const useGetPost = ({ unread = false }: { unread?: boolean }) => {
+  const unreadQuery = useInfiniteQuery({
+    queryKey: ["unread-post"],
+    queryFn: ({ pageParam }) => getUnreadPost({ pageParam }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage: GetArchivePostType) => {
+    getNextPageParam: (lastPage: GetPostType) => {
       if (lastPage.last) return undefined;
       return lastPage.number + 1;
     },
   });
+
+  const archiveQuery = useInfiniteQuery({
+    queryKey: ["archive-post"],
+    queryFn: ({ pageParam }) => getArchivePost({ pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: GetPostType) => {
+      if (lastPage.last) return undefined;
+      return lastPage.number + 1;
+    },
+  });
+  return unread ? unreadQuery : archiveQuery;
 };

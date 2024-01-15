@@ -5,10 +5,10 @@ import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
 
 interface RecentCardProps {
-  id: string;
+  id?: string;
   keyword: string;
-  count: number;
-  openDatetime: string;
+  commentCount: number;
+  openDatetime?: string;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -18,7 +18,7 @@ const DARK_BACKGROUNDS = [2, 4, 10, 11];
 export const RecentCard = ({
   id,
   keyword,
-  count,
+  commentCount,
   openDatetime,
 }: RecentCardProps) => {
   const idx = Math.floor(Math.random() * 11);
@@ -39,7 +39,7 @@ export const RecentCard = ({
           >
             {keyword}
           </h2>
-          <CountBadge count={count} />
+          <CountBadge count={commentCount} />
         </div>
         <TimerBadge openDatetime={openDatetime} />
       </div>
