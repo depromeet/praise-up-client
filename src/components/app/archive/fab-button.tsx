@@ -7,17 +7,10 @@ type Props = {
   icon: string;
   text: string;
   className?: string;
-  scrollRef: RefObject<HTMLDivElement>;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
-export const FABButton = ({
-  icon,
-  text,
-  className,
-  scrollRef,
-  ...props
-}: Props) => {
-  const { isOverflow } = useWindowScrollY({ point: 1, scrollRef });
+export const FABButton = ({ icon, text, className, ...props }: Props) => {
+  const { isOverflow } = useWindowScrollY({ point: 1 });
 
   if (!text.length) return;
   return (

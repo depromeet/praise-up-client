@@ -50,7 +50,6 @@ export const MarbleCanvas = ({
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasScrollRef = useRef<HTMLDivElement>(null);
   const isMobile = getIsMobile();
 
   useEffect(() => {
@@ -249,7 +248,6 @@ export const MarbleCanvas = ({
       changeMarbleViewState(marbleBodyList);
 
       for (const marble of marbleBodyList) {
-        console.log(marbleBodyList);
         await renderMarbleObject(marble);
       }
     };
@@ -352,7 +350,12 @@ export const MarbleCanvas = ({
         </div>
       </div>
 
-      <div ref={canvasScrollRef} className="h-screen overflow-scroll">
+      <div
+        style={{
+          height: HEIGHT - 64,
+        }}
+        className="overflow-scroll"
+      >
         <div className="relative z-10">
           <Header
             text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
@@ -367,7 +370,6 @@ export const MarbleCanvas = ({
         icon={Bars}
         text="리스트뷰"
         onClick={() => onChangeView("marble-grid")}
-        scrollRef={canvasScrollRef}
       />
     </div>
   );
