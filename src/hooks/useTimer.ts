@@ -8,12 +8,10 @@ interface TimeLeftType {
   sec: number;
 }
 
-export function useTimer(openDatetime?: string) {
+export function useTimer(openDatetime?: Date) {
   const [delay] = useState<number | null>(1000);
   const [diff, setDiff] = useState(
-    openDatetime
-      ? Math.floor((+new Date(openDatetime) - +new Date()) / 1000)
-      : -1,
+    openDatetime ? Math.floor((+openDatetime - +new Date()) / 1000) : -1,
   );
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
     hour: 0,

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
@@ -8,6 +10,7 @@ interface RecentCardProps {
   id?: string;
   keyword: string;
   commentCount: number;
+  date: string;
   openDatetime?: string;
 }
 
@@ -19,9 +22,17 @@ export const RecentCard = ({
   id,
   keyword,
   commentCount,
-  openDatetime,
+  date,
 }: RecentCardProps) => {
   const idx = Math.floor(Math.random() * 11);
+  const [openDatetime, setOpenDatetime] = useState<Date>();
+
+  useEffect(() => {
+    const [year, month, day] = date.split(".");
+    const openDatetime = new Date(2000 + +year, +month - 1, +day + 1, 24);
+
+    setOpenDatetime(openDatetime);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -44,7 +55,7 @@ export const RecentCard = ({
         <TimerBadge openDatetime={openDatetime} />
       </div>
       <LinkAndGoButton
-        id={id}
+        id={id ?? "5"}
         openDatetime={openDatetime}
         backgroundUrl={BACKGROUNDS[idx]}
       />

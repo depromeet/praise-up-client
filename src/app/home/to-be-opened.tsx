@@ -16,8 +16,6 @@ export const ToBeOpened = () => {
 
   const { data } = useGetPost({ unread: true });
 
-  console.log(data);
-
   return (
     <div className="flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>

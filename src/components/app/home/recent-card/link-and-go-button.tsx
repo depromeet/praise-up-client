@@ -8,7 +8,7 @@ import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
   id: string;
-  openDatetime: string;
+  openDatetime: Date;
   backgroundUrl: string;
 }
 
@@ -19,7 +19,7 @@ export const LinkAndGoButton = ({
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
   const [isReveal, setIsReveal] = useState<boolean>(
-    new Date(openDatetime).getTime() - Date.now() > 0,
+    openDatetime?.getTime() - Date.now() > 0,
   );
 
   const { diff } = useTimer(openDatetime);
