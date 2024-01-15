@@ -57,22 +57,26 @@ export const MarbleCanvas = ({
     setEngine(createdEngine);
   }, []);
 
+  // NOTE ===== Create Marble Body Object
   useEffect(() => {
     if (!marbleList.length) return;
 
     const marbles = marbleList.map((marbleData) => {
       const { commentId, nickname } = marbleData;
-      const texture = commentId % 2 === 0 ? marbleTexture : marbleTexture_2;
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
+
       return createMarbleObject({
         id: commentId,
-        texture,
         textContent: nickname,
+        isViewed,
       });
     });
 
     setMarbleBodyList(marbles);
   }, [marbleList]);
 
+  // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
     if (!engine || !marbleList.length) return;
 
@@ -240,7 +244,6 @@ export const MarbleCanvas = ({
       setupMouseConstraint();
 
       Render.run(render);
-      changeMarbleViewState(marbleBodyList);
 
       for (const marble of marbleBodyList) {
         await renderMarbleObject(marble);
@@ -263,45 +266,44 @@ export const MarbleCanvas = ({
     };
   }, [marbleList, engine]);
 
+  // NOTE ===== Modal openState에 따라 selectedMarble hide / render
   useEffect(() => {
     if (!engine || selectedMarbleId === -1) return;
 
-    const selectedMarble = marbleBodyList.find(
+    const selectedMarble = engine.world.bodies.find(
       ({ id }) => id === selectedMarbleId,
     );
     if (!selectedMarble) return;
 
     if (isModalOpen) {
+      console.log(selectedMarble, "isModalOpen");
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: -200 });
+      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 50 });
       return;
     }
-
-    changeMarbleViewState(
-      engine.world.bodies.filter(({ label }) => label === "marble"),
-    );
 
     World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
       createMarbleObject({
         id: selectedMarble.id,
-        texture:
-          selectedMarble.id % 2 === 0
-            ? marbleIsViewedTexture
-            : marbleIsViewedTexture_2,
         textContent: selectedMarble.render.text?.content || "",
         isViewed: true,
       }),
     );
 
-    updateMarbleBodyList(selectedMarble.id);
     onChangeSelectedMarbleId(-1);
-  }, [isModalOpen, marbleBodyList]);
+  }, [engine, isModalOpen, marbleBodyList]);
 
-  const changeMarbleViewState = (bodies: Body[]) => {
-    bodies.forEach((marble) => {
+  // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
+  useEffect(() => {
+    if (!engine) return;
+
+    const worldMarbleList = engine.world.bodies.filter(
+      ({ label }) => label === "marble",
+    );
+    worldMarbleList.forEach((marble) => {
       const isViewed =
         isViewedIdList.findIndex((marbleId) => marbleId === marble.id) !== -1;
 
@@ -311,25 +313,7 @@ export const MarbleCanvas = ({
         marble.render.text.color = "#a1a9b2";
       }
     });
-  };
-
-  const updateMarbleBodyList = (id: number) => {
-    const marbleItem = marbleBodyList.find((marble) => marble.id === id);
-    if (!marbleItem) return;
-
-    const filteredMarbleList = marbleBodyList.filter(
-      (body) => body.id !== marbleItem.id,
-    );
-    setMarbleBodyList([
-      ...filteredMarbleList,
-      createMarbleObject({
-        id,
-        texture: id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2,
-        textContent: marbleItem.render.text?.content || "",
-        isViewed: true,
-      }),
-    ]);
-  };
+  }, [engine, isViewedIdList]);
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
