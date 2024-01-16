@@ -48,7 +48,9 @@ const Modal = ({
       onClose={onClose}
       className="bg-transparent p-16px backdrop:bg-black/60"
     >
-      <form method="dialog">{children}</form>
+      <form method="dialog" className="flex justify-center">
+        {children}
+      </form>
     </BaseModal>
   );
 };

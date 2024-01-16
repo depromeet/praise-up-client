@@ -1,8 +1,15 @@
 import clsx from "clsx";
-import { ReactNode, createContext, useEffect, useReducer, useRef } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
-import { KebabSVG } from "@/assets/kebab";
-import { DeleteConfirmModal } from "@/components/app/unpublished-post/delete-confirm-modal";
+import { Menu } from "@/components/app/unpublished-post/menu";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
@@ -25,7 +32,7 @@ export interface PostCardContextProps {
   content: string;
   isPublic: boolean;
   isReadyCard: boolean;
-  toggleShowMenu: (showMenu?: boolean) => void;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostCardViewContext = createContext<
@@ -42,7 +49,7 @@ export const PostCardView = ({
   isPublic = false, // 외부에 공개되는 게시글인지
   children,
 }: PostCardViewProps) => {
-  const [showMenu, toggleShowMenu] = useReducer((prev) => !prev, false);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [transStyle, toggleTransStyle] = useReducer(
     (prev: string) =>
       prev.includes("rotateY(180deg)") ? "none" : "rotateY(180deg)",
@@ -66,7 +73,7 @@ export const PostCardView = ({
         showMenu,
         imgUrl,
         content,
-        toggleShowMenu,
+        setShowMenu,
         isPublic,
         isReadyCard,
       }}
@@ -91,7 +98,7 @@ const Title = () => {
     username,
     keyword,
     showMenu,
-    toggleShowMenu,
+    setShowMenu,
     isPublic,
     isReadyCard,
   }: PostCardContextProps = usePostCardView();
@@ -106,18 +113,12 @@ const Title = () => {
         </div>
       </div>
 
-      {!isPublic && !isReadyCard && (
-        <div className="h-fit cursor-pointer" onClick={() => toggleShowMenu()}>
-          <KebabSVG />
-        </div>
-      )}
-
-      {showMenu && (
-        <DeleteConfirmModal
-          showMenu={showMenu}
-          toggleShowMenu={() => toggleShowMenu()}
-        />
-      )}
+      <Menu
+        isPublic={isPublic}
+        isReadyCard={isReadyCard}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+      />
     </div>
   );
 };
