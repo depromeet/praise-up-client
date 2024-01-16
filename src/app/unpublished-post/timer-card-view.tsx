@@ -13,13 +13,13 @@ export const TimerCardView = ({ openDate }: TimerCardProps) => {
       <div className="flex items-center gap-0.5">
         <div className="flex items-center gap-1.5">
           <ClockSVG />
-          <span className="text-num-b1-medium tabular-nums">
+          <span className="text-num-b1-medium select-none tabular-nums ">
             {timeLeft.hour.toString().padStart(2, "0")}:
             {timeLeft.min.toString().padStart(2, "0")}:
             {timeLeft.sec.toString().padStart(2, "0")}
           </span>
         </div>
-        <span className="text-b3-compact">후에 구슬 오픈</span>
+        <span className="text-b3-compact select-none">후에 구슬 오픈</span>
       </div>
     </div>
   );

@@ -16,10 +16,10 @@ import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
 
 import Marble from "@/assets/images/swiper-marble.svg?react";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "@/style/keyword-swiper.css";
+import "swiper/scss";
+import "swiper/scss/pagination";
 import { Arrow } from "@/components/common/arrow";
+import "@/style/swiper/keyword.scss";
 
 type contentProps = {
   text: string;
@@ -121,6 +121,7 @@ export const Selector = ({
             <Content text={currentText} className="absolute" />
           </div>
         </motion.div>
+
         <Swiper
           slidesPerView={3}
           centeredSlides={true} // 슬라이드가 중앙에 위치하도록 함
@@ -135,7 +136,7 @@ export const Selector = ({
             }
           }}
           modules={[Pagination]}
-          className="!absolute z-0 h-[360px] w-full text-center"
+          className="keyword-swiper !absolute z-0 h-[360px] w-full text-center"
           ref={swiperRef}
           style={{ opacity: snap ? "0%" : "100%" }}
         >

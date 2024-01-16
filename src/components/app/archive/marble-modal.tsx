@@ -1,8 +1,8 @@
-import "swiper/css/pagination";
-import "@/style/swiper/initSwiper.css";
+import "swiper/scss/pagination";
+import "@/style/swiper/archive-init.scss";
 
-// custom pagination style
-import "@/style/swiper/archiveSwiperPagination.css";
+// // custom pagination style
+import "@/style/swiper/archive-pagination.scss";
 
 import { Body } from "matter-js";
 import {
@@ -43,7 +43,7 @@ export const MarbleModal = ({
   useEffect(() => {
     if (!swiperOptions && selectedMarble && marbleList.length) {
       setSwiperOptions({
-        className: "swiper-container",
+        className: "init-swiper archive-swiper",
         slidesPerView: 1,
         centeredSlides: true,
         loop: true,

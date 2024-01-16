@@ -6,6 +6,7 @@ export type ButtonProps = {
   colorSchema?: string;
   isFull?: boolean;
   isFullStyle?: boolean;
+  isOnBoarding?: boolean;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 export const FilledButton = ({
