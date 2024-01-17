@@ -31,10 +31,6 @@ export const PreviewCard = ({ onChangeView }: Props) => {
     setIsScrolled(true);
   }, [isOverflow]);
 
-  const onClickNext = () => {
-    setIsScrolled(true);
-  };
-
   const onChangeViewWithDelay = async () => {
     await new Promise(() =>
       setTimeout(() => {
@@ -90,9 +86,7 @@ export const PreviewCard = ({ onChangeView }: Props) => {
           >
             스크롤해서 칭찬 확인하기
           </div>
-          <button onClick={onClickNext}>
-            <Arrow className="rotate-180" />
-          </button>
+          <Arrow className="rotate-180" />
         </div>
 
         {/* background area */}
