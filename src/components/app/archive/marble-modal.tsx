@@ -9,7 +9,7 @@ import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import Back from "@/assets/icons/back.svg?react";
+import Close from "@/assets/icons/close.svg?react";
 import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
 import { TMarble } from "@/types/archive";
 
@@ -78,13 +78,13 @@ export const MarbleModal = ({
 
   return (
     <>
-      <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
-        <div className="relative box-border flex h-16 w-full items-center justify-center px-[16px]">
+      <dialog className="fixed left-0 top-0 z-40 block h-full w-full max-w-[480px] bg-transparent text-black ">
+        <div className="relative box-border flex h-16 w-full items-center justify-center bg-[#EFF1F4]/[55%] px-[16px]">
           <button
             onClick={onClickClose}
-            className="absolute left-4 h-44px w-44px cursor-pointer"
+            className="absolute left-4 h-44px w-44px cursor-pointer bg-[#F6F7F9]"
           >
-            <Back />
+            <Close />
           </button>
           <p className="font-medium text-gray-800">{`${activeMarbleIdx + 1} / ${
             marbleList.length
