@@ -5,7 +5,7 @@ import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { MarbleCard } from "@/components/app/archive/marble-card";
 import { Appbar } from "@/components/common/appbar";
 import { Arrow } from "@/components/common/arrow";
-import { DefaultLayout } from "@/components/layout/default";
+import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 import { TArchiveView } from "@/types/archive";
 
 type Props = {
@@ -14,12 +14,19 @@ type Props = {
 
 export const PreviewCard = ({ onChangeView }: Props) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const { isOverflow } = useWindowScrollY({ point: 10 });
 
   useEffect(() => {
     if (!isScrolled) return;
 
     void onChangeViewWithDelay();
   }, [isScrolled]);
+
+  useEffect(() => {
+    if (!isOverflow) return;
+
+    setIsScrolled(true);
+  }, [isOverflow]);
 
   const onClickNext = () => {
     setIsScrolled(true);
@@ -34,8 +41,13 @@ export const PreviewCard = ({ onChangeView }: Props) => {
   };
 
   return (
-    <DefaultLayout
-      appbar={
+    <div className="relative mx-auto w-full max-w-[480px] overflow-scroll">
+      <div
+        style={{
+          height: "calc(100vh + 40px)",
+        }}
+      />
+      <div className="fixed top-0 w-[480px]">
         <Appbar
           left={
             <button onClick={() => window.history.back()}>
@@ -43,17 +55,26 @@ export const PreviewCard = ({ onChangeView }: Props) => {
             </button>
           }
         />
-      }
-    >
-      <div
-        className={clsx("flex flex-col gap-9", isScrolled && "animate-fadeOut")}
-      >
-        <p className="text-xl font-semibold text-primary">나의 칭찬게시물</p>
-        <div className={clsx(isScrolled && "animate-fadeOutUp")}>
-          <MarbleCard />
-        </div>
       </div>
-      <div className="absolute bottom-0 left-0 h-184px w-full">
+      <p
+        className={clsx(
+          "fixed top-20 mb-9 ml-5 text-xl font-semibold text-primary",
+          isScrolled && "animate-fadeOut",
+        )}
+      >
+        나의 칭찬게시물
+      </p>
+
+      <div
+        className={clsx(
+          "fixed top-[138px] w-full max-w-[480px] px-5",
+          isScrolled && "animate-fadeOutUp",
+        )}
+      >
+        <MarbleCard />
+      </div>
+
+      <div className="fixed bottom-0 h-184px w-full max-w-[480px]">
         <div className="absolute bottom-0 z-10 flex h-full w-full flex-col items-center justify-center gap-3">
           <div
             className={clsx(
@@ -76,6 +97,6 @@ export const PreviewCard = ({ onChangeView }: Props) => {
           )}
         />
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
