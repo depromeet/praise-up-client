@@ -1,9 +1,11 @@
+import clsx from "clsx";
 import {
   useState,
   MouseEvent,
   TouchEvent,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 import MarbleLargeSVG from "@/assets/imgs/marble_lg.svg?react";
@@ -16,8 +18,8 @@ interface DraggableMarbleProps {
 }
 
 // 구슬이 원위치로 돌아가지 않는 최소 이동거리
-const MIN_DISTANCE_DESKTOP = 200;
-const MIN_DISTANCE_MOBILE = 150;
+const MIN_DISTANCE_DESKTOP = 150;
+const MIN_DISTANCE_MOBILE = 100;
 
 export const DraggableMarble = ({
   isReached,
@@ -30,7 +32,8 @@ export const DraggableMarble = ({
 
   const FADEOUT_STYLE = {
     transition: `all ${flyDuration}s cubic-bezier(0.4, 0, 1, 1) `,
-    transform: "translateY(-800px)",
+    transform: "translateY(-50vh)",
+    opacity: 0,
   };
 
   const onMouseDown = (mouseDownEvent: MouseEvent<HTMLElement>) => {
@@ -79,6 +82,7 @@ export const DraggableMarble = ({
 
   return (
     <div
+      id="draggable-marble"
       className="relative z-20 cursor-grab"
       style={{
         transform: `translateY(${posY | touchedY}px)`,
@@ -88,8 +92,8 @@ export const DraggableMarble = ({
       onMouseDown={onMouseDown} // desktop
       onTouchStart={onTouchStart} // mobile
     >
-      <MarbleLargeSVG className="h-[180px] w-[180px]" />
-      <h4 className="text-h4 absolute bottom-[42px] right-[44px] text-teritary">
+      <MarbleLargeSVG className="peer h-[180px] w-[180px] transition-all duration-200 hover:scale-110" />
+      <h4 className="text-h4 absolute bottom-[42px] right-[44px] select-none text-teritary transition-all duration-200 peer-hover:text-[110%]">
         {nickname}
       </h4>
     </div>
