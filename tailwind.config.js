@@ -75,9 +75,20 @@ export default {
             transform: "translateY(0)",
           },
         },
+        fadeOutUp: {
+          "0%": {
+            opacity: 1,
+            transform: "translateY(0)",
+          },
+          "100%": {
+            opacity: 0,
+            transform: "translateY(-2rem)",
+          },
+        },
       },
       animation: {
         fadeInUp: "fadeInUp 1s ease-in-out",
+        fadeOutUp: "fadeOutUp 1s ease-in-out",
       },
     },
   },
