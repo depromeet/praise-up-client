@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState, TouchEvent } from "react";
+import { MouseEvent, useEffect, useState, TouchEvent, useRef } from "react";
 
 import { CommentDoneView } from "./comment-done";
 
@@ -20,6 +20,12 @@ export const CommentUpPage = () => {
   const [isReached, setIsReached] = useState<boolean>(false);
   const [arrowShow, setArrowShow] = useState<boolean>(true);
   const [move, setMove] = useState<boolean>(false);
+  const ARROW_POS_Y = useRef<number>(0);
+
+  useEffect(() => {
+    const arrow = document.getElementById("arrow-div");
+    ARROW_POS_Y.current = arrow?.getBoundingClientRect().top as number;
+  }, []);
 
   useEffect(() => {
     if (isReached) {
@@ -29,65 +35,47 @@ export const CommentUpPage = () => {
     }
   }, [isReached]);
 
-  useEffect(() => {
-    const arrow = document.getElementById("arrow-div");
-    const marble = document.getElementById("draggable-marble");
-    const ARROW_POS_Y = arrow?.getBoundingClientRect().top as number;
+  // desktop mouse event
+  const onMouseDown = (e: MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
 
-    // desktop mouse event
-    const handleMouseDown = (e: MouseEvent<HTMLElement>) => {
-      const target = e.target as HTMLElement;
-      if (!marble?.contains(target) || !arrow) return;
-
-      const handleMouseMove = () => {
-        if (ARROW_POS_Y >= target.getBoundingClientRect().top)
-          setArrowShow(false);
-      };
-
-      const handleMouseUp = () => {
-        if (ARROW_POS_Y > target.getBoundingClientRect().top || isReached)
-          setArrowShow(false);
-        else setArrowShow(true);
-
-        window.removeEventListener("mousemove", handleMouseMove);
-      };
-
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp, { once: true });
+    const onMouseMove = () => {
+      if (ARROW_POS_Y.current >= target.getBoundingClientRect().top)
+        setArrowShow(false);
     };
 
-    // mobile touch event
-    const handleTouchStart = (t: TouchEvent<HTMLElement>) => {
-      console.log("touchStart");
-      const target = t.target as HTMLElement;
-      if (!marble?.contains(target) || !arrow) return;
+    const onMouseUp = () => {
+      if (ARROW_POS_Y.current > target.getBoundingClientRect().top || isReached)
+        setArrowShow(false);
+      else setArrowShow(true);
 
-      const handleTouchMove = () => {
-        console.log("touchMove");
-        if (ARROW_POS_Y >= target.getBoundingClientRect().top)
-          setArrowShow(false);
-      };
-
-      const handleTouchEnd = () => {
-        console.log("touchEnd");
-        if (ARROW_POS_Y > target.getBoundingClientRect().top || isReached)
-          setArrowShow(false);
-        else setArrowShow(true);
-
-        window.removeEventListener("touchmove", handleTouchMove);
-      };
-
-      window.addEventListener("touchmove", handleTouchMove);
-      window.addEventListener("touchend", handleTouchEnd, { once: true });
+      window.removeEventListener("mousemove", onMouseMove);
     };
 
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("touchstart", handleTouchStart);
-    return () => {
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("touchstart", handleTouchStart);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp, { once: true });
+  };
+
+  // mobile touch event
+  const onTouchStart = (_: TouchEvent) => {
+    const onTouchMove = (t: TouchEvent) => {
+      const target = t.changedTouches[0];
+      if (ARROW_POS_Y.current >= target.clientY - 80) setArrowShow(false);
     };
-  }, []);
+
+    const onTouchEnd = (t: TouchEvent) => {
+      const target = t.changedTouches[0];
+
+      if (isReached || ARROW_POS_Y.current > target.clientY - 80)
+        setArrowShow(false);
+      else setArrowShow(true);
+
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onTouchEnd, { once: true });
+  };
 
   const done = async () => {
     await new Promise(() =>
@@ -110,7 +98,11 @@ export const CommentUpPage = () => {
           </div>
 
           <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
-            <div className="relative flex h-full flex-col items-center justify-end gap-[50px]">
+            <div
+              className="relative mx-auto flex h-full w-fit flex-col items-center justify-end gap-[50px]"
+              onMouseDown={onMouseDown}
+              onTouchStart={onTouchStart}
+            >
               {arrowShow && (
                 <div id="arrow-div">
                   <Arrow />

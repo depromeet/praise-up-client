@@ -1,11 +1,9 @@
-import clsx from "clsx";
 import {
   useState,
   MouseEvent,
   TouchEvent,
   Dispatch,
   SetStateAction,
-  useEffect,
 } from "react";
 
 import MarbleLargeSVG from "@/assets/imgs/marble_lg.svg?react";
