@@ -47,7 +47,9 @@ export const LinkAndGoButton = ({
           </button>
           <ButtonProvider.Primary
             className="flex items-center justify-center "
-            onClick={() => navigate(`seal/${id}`, { state: { backgroundUrl } })}
+            onClick={() =>
+              navigate(`/seal/${id}`, { state: { backgroundUrl } })
+            }
           >
             게시물 보기
           </ButtonProvider.Primary>
@@ -55,7 +57,7 @@ export const LinkAndGoButton = ({
       ) : (
         <ButtonProvider.Primary
           className="flex items-center justify-center"
-          onClick={() => navigate(`seal/${123}`, { state: { backgroundUrl } })}
+          onClick={() => navigate(`/seal/${123}`, { state: { backgroundUrl } })}
         >
           칭찬구슬 보러가기
         </ButtonProvider.Primary>

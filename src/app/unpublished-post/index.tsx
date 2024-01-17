@@ -47,7 +47,6 @@ export const UnpublishedPostPage = () => {
       <div className="flex flex-col gap-9">
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
         <div className="flex flex-col gap-3">
-          {/* timer 값으로는 메인페이지 개발시 구현한 useTimer 훅 사용 예정*/}
           <TimerCardView openDate={DUMMY_DATA.openDate} />
           <div className="perspective-1000 bg-transparent">
             <div className="[transform-style: preserve-3d] relative">
