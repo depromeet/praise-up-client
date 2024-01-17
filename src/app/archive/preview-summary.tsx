@@ -32,10 +32,6 @@ export const PreviewSummary = ({ marbleNum, onChangeView }: Props) => {
     setIsScrolled(true);
   }, [isOverflow]);
 
-  const onClickNext = () => {
-    setIsScrolled(true);
-  };
-
   const onChangeViewWithDelay = async () => {
     await new Promise(() =>
       setTimeout(() => {
@@ -81,9 +77,7 @@ export const PreviewSummary = ({ marbleNum, onChangeView }: Props) => {
           >
             <div className="flex h-full w-full flex-col items-center justify-center gap-3">
               <div className="h-5" />
-              <button onClick={onClickNext}>
-                <Arrow className="rotate-180" />
-              </button>
+              <Arrow className="rotate-180" />
             </div>
           </div>
         </div>
