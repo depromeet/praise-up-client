@@ -4,6 +4,7 @@ import { CSSProperties } from "react";
 import CommentDonePNG from "@/assets/imgs/comment_done.png";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
+import Confetti from "@/hooks/useConfetti";
 
 export const CommentDoneView = ({
   transition,
@@ -15,6 +16,7 @@ export const CommentDoneView = ({
       className="absolute left-[100%] top-0 flex min-h-[100dvh] w-screen max-w-[480px] flex-1 flex-col justify-center bg-white px-4 pt-4 shadow"
       style={transition ?? {}}
     >
+      {transition && <Confetti />}
       <div className="flex flex-1 flex-col justify-center gap-[99px]">
         <Header
           className="text-center"
