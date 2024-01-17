@@ -61,6 +61,7 @@ export const Archive = () => {
     setIsViewedIdList(updatedIsViewedIdxList);
   };
 
+  // TODO: Marble 스와이프 후 삭제 시, 삭제된 구슬이 삭제되지 않는 이슈 (모달 진입한 구슬이 삭제)
   if (!marbleList.length) return null;
   return (
     <ConfirmDialog>
