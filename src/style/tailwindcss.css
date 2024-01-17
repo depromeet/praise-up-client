@@ -167,11 +167,34 @@
     );
   }
 
+  /* Archive Page Style */
   .bg-archive-preview {
     background-image: url("@/assets/images/marble-bg.png");
   }
 
   .bg-archive-marble-detail {
     background-image: url("@/assets/images/marble-detail-bg.jpg");
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+
+  @keyframes fadeOutUp {
+    0% {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+    to {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
   }
 }

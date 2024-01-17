@@ -338,7 +338,7 @@ export const MarbleCanvas = ({
       <div className="relative z-10">
         <Header
           text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
-          className="absolute left-5 top-20 !w-fit"
+          className="absolute left-5 top-20 !w-fit animate-fadeInUp"
         />
       </div>
 
