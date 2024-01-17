@@ -1,8 +1,8 @@
-import { MouseEvent, useEffect, useRef, useState, TouchEvent } from "react";
+import { MouseEvent, useEffect, useState, TouchEvent } from "react";
 
 import { CommentDoneView } from "./comment-done";
 
-import BgCirclesSVG from "@/assets/imgs/marbles.svg?react";
+import Marbles from "@/assets/imgs/marbles.svg?react";
 import { DraggableMarble } from "@/components/app/add-comment/draggable-marble";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { Arrow } from "@/components/common/arrow";
@@ -101,12 +101,17 @@ export const CommentUpPage = () => {
     <>
       <DefaultLayout className="overflow-hidden">
         <LayeredBackground>
-          {/* TODO: background 하얀 배경 추가, done 페이지가 슬라이딩 페이드인! */}
-          <BgCirclesSVG className="absolute left-0 top-0 rotate-180 -scale-x-100" />
-          <div className="absolute bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
+          {/* backgroun area */}
+          <div className="absolute left-0 top-0 w-full ">
+            <Marbles className=" -z-10 w-full rotate-180" />
+            <div
+              className={`absolute left-0 top-0 z-10 h-full w-full bg-[linear-gradient(180deg,_#ffffff60_15.62%,_#ffffff00_81.25%)] `}
+            ></div>
+          </div>
+
+          <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
             <div className="relative flex h-full flex-col items-center justify-end gap-[50px]">
               {arrowShow && (
-                // <div ref={arrowRef}>
                 <div id="arrow-div">
                   <Arrow />
                 </div>
@@ -119,10 +124,10 @@ export const CommentUpPage = () => {
               />
             </div>
             <Header
-              className="text-center"
+              className="select-none text-center"
               text={`{구슬을 위로 밀어서}\\n{칭찬 구슬을 전달하세요!}`}
             />
-          </div>
+          </section>
         </LayeredBackground>
 
         <CommentDoneView transition={move ? DONE_ANIMATION : null} />

@@ -83,7 +83,7 @@ export const DraggableMarble = ({
   return (
     <div
       id="draggable-marble"
-      className="relative z-20 cursor-grab"
+      className="group relative z-20 cursor-grab"
       style={{
         transform: `translateY(${posY | touchedY}px)`,
         transition: "ease-in-out",
@@ -92,8 +92,8 @@ export const DraggableMarble = ({
       onMouseDown={onMouseDown} // desktop
       onTouchStart={onTouchStart} // mobile
     >
-      <MarbleLargeSVG className="peer h-[180px] w-[180px] transition-all duration-200 hover:scale-110" />
-      <h4 className="text-h4 absolute bottom-[42px] right-[44px] select-none text-teritary transition-all duration-200 peer-hover:text-[110%]">
+      <MarbleLargeSVG className=" h-[180px] w-[180px] transition-[scale_1s] duration-500 ease-in group-hover:scale-110" />
+      <h4 className="text-h4 absolute bottom-[42px] right-[44px] select-none text-teritary transition-[scale_1s] duration-500 ease-in group-hover:text-[110%]">
         {nickname}
       </h4>
     </div>
