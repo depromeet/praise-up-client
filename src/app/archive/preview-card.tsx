@@ -18,14 +18,14 @@ export const PreviewCard = ({ onChangeView }: Props) => {
   useEffect(() => {
     if (!isScrolled) return;
 
-    void addFadeOutAnimation();
+    void onChangeViewWithDelay();
   }, [isScrolled]);
 
   const onClickNext = () => {
     setIsScrolled(true);
   };
 
-  const addFadeOutAnimation = async () => {
+  const onChangeViewWithDelay = async () => {
     await new Promise(() =>
       setTimeout(() => {
         onChangeView("preview-summary");
