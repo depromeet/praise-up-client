@@ -258,8 +258,6 @@ export const MarbleCanvas = ({
     const runner = Runner.run(engine);
     void renderEvent();
 
-    console.log(world.bodies);
-
     // NOTE: Initialize of Canvas
     return () => {
       removeCustomEvent();
@@ -281,7 +279,6 @@ export const MarbleCanvas = ({
     if (!selectedMarble) return;
 
     if (isModalOpen) {
-      console.log(selectedMarble, "isModalOpen");
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
       Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 50 });
