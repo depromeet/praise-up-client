@@ -65,6 +65,14 @@ export default {
           "66%": { visibility: "hidden" },
           "100%": { visibility: "hidden" },
         },
+        fadeOut: {
+          "0%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0,
+          },
+        },
         fadeInUp: {
           "0%": {
             opacity: 0,
@@ -89,6 +97,7 @@ export default {
       animation: {
         fadeInUp: "fadeInUp 1s ease-in-out",
         fadeOutUp: "fadeOutUp 1s ease-in-out",
+        fadeOut: "fadeOut 1s ease-in-out",
       },
     },
   },
