@@ -14,62 +14,105 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
-import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left.tsx";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
-import marbleTexture_2 from "@/assets/images/marble_02/marble-02-2x.webp";
 import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewed-2x.webp";
-import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
-import { MarbleModal } from "@/components/app/archive/marble-modal";
-import { ASSET_WIDTH, WALL_OPTIONS } from "@/constants/archive";
+import { Appbar } from "@/components/common/appbar";
+import { Header } from "@/components/common/header";
+import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TMarble } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
+import { createMarbleObject } from "@/utils/createMarbleObject";
 import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
-interface IMarbleObject {
-  id: number;
-  texture: string;
-  textContent: string;
-  isViewed?: boolean;
-}
-
 type Props = {
   marbleList: TMarble[];
+  selectedMarbleId: number;
+  isViewedIdList: number[];
+  isModalOpen: boolean;
+  onChangeView: (view: TArchiveView) => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 };
 
-export const MarbleCanvas = ({ marbleList }: Props) => {
+export const MarbleCanvas = ({
+  marbleList,
+  selectedMarbleId,
+  isViewedIdList,
+  isModalOpen,
+  onChangeView,
+  onChangeSelectedMarbleId,
+}: Props) => {
   const [engine, setEngine] = useState<Engine>();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
-  const [selectedMarble, setSelectedMarble] = useState<Body>();
-  const [isViewedMarbleList, setIsViewedMarbleList] = useState<number[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasScrollRef = useRef<HTMLDivElement>(null);
   const isMobile = getIsMobile();
 
-  // TODO: height value calculate (visualViewport)
-  const width = window.innerWidth > 480 ? 480 : window.innerWidth;
-  const height = window.innerHeight + window.innerHeight / 3;
+  // 에러 발생으로 임시 수정
+  const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
+    isStatic: true,
+    render: {
+      fillStyle: "white",
+    },
+  });
+  const floor = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, ASSET_WIDTH.wall, {
+    isStatic: true,
+    render: {
+      fillStyle: "white",
+    },
+  });
+  const right = Bodies.rectangle(
+    WIDTH,
+    HEIGHT / 2 - 300,
+    ASSET_WIDTH.wall,
+    HEIGHT + 600,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: "white",
+      },
+    },
+  );
+  const left = Bodies.rectangle(
+    0,
+    HEIGHT / 2 - 300,
+    ASSET_WIDTH.wall,
+    HEIGHT + 600,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: "white",
+      },
+    },
+  );
 
   useEffect(() => {
     const createdEngine = Engine.create();
     setEngine(createdEngine);
   }, []);
 
+  // NOTE ===== Create Marble Body Object
   useEffect(() => {
     if (!marbleList.length) return;
 
     const marbles = marbleList.map((marbleData) => {
-      const { id, user: textContent } = marbleData;
-      const texture = marbleData.id % 2 === 0 ? marbleTexture : marbleTexture_2;
-      return createMarbleObject({ id, texture, textContent });
+      const { commentId, nickname } = marbleData;
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
+
+      return createMarbleObject({
+        id: commentId,
+        textContent: nickname,
+        isViewed,
+      });
     });
 
     setMarbleBodyList(marbles);
   }, [marbleList]);
 
+  // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
     if (!engine || !marbleList.length) return;
 
@@ -77,8 +120,8 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
       engine,
       canvas: canvasRef.current!,
       options: {
-        width: width,
-        height: height,
+        width: WIDTH,
+        height: HEIGHT,
         background: "white",
         wireframes: false,
       },
@@ -94,7 +137,6 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
       },
     });
     const { world } = engine;
-    const compositeArr: Body[] = [];
     let isScrolling = false;
 
     // NOTE: Remove default Event
@@ -157,7 +199,7 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
 
       const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
-        setSelectedMarble(selectedBody);
+        onChangeSelectedMarbleId(selectedBody.id);
       }
     };
 
@@ -179,35 +221,13 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
 
       const selectedBody = mouseConstraint.body;
       if (selectedBody && selectedBody.label === "marble") {
-        setSelectedMarble(selectedBody);
+        onChangeSelectedMarbleId(selectedBody.id);
       }
     };
 
     // NOTE: Setup functions
     const setupWallsObject = () => {
-      const floor = Bodies.rectangle(
-        width / 2,
-        height,
-        width,
-        ASSET_WIDTH.wall,
-        {
-          ...WALL_OPTIONS,
-        },
-      );
-      const right = Bodies.rectangle(
-        width,
-        height / 2,
-        ASSET_WIDTH.wall,
-        height,
-        {
-          ...WALL_OPTIONS,
-        },
-      );
-      const left = Bodies.rectangle(0, height / 2, ASSET_WIDTH.wall, height, {
-        ...WALL_OPTIONS,
-      });
-
-      World.add(world, [floor, right, left]);
+      World.add(world, [top, floor, right, left]);
     };
 
     const setupMouseConstraint = () => {
@@ -219,13 +239,9 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
 
     // NOTE: Rendering functions
     const renderMarbleObject = async (marble: Body) => {
-      compositeArr.push(marble);
-      World.add(world, compositeArr);
+      World.add(world, marble);
 
-      await setWaitTime(80);
-
-      compositeArr.pop();
-      World.remove(world, compositeArr);
+      await setWaitTime(100);
     };
 
     const renderEvent = async () => {
@@ -251,95 +267,85 @@ export const MarbleCanvas = ({ marbleList }: Props) => {
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleList, engine, isMobile]);
+  }, [marbleList, engine]);
 
+  // NOTE ===== Modal openState에 따라 selectedMarble hide / render
   useEffect(() => {
-    setIsOpen(!!selectedMarble);
-  }, [selectedMarble]);
+    if (!engine || selectedMarbleId === -1) return;
 
-  useEffect(() => {
-    if (!selectedMarble || !engine) return;
+    const selectedMarble = engine.world.bodies.find(
+      ({ id }) => id === selectedMarbleId,
+    );
+    if (!selectedMarble) return;
 
-    if (isOpen) {
+    if (isModalOpen) {
       selectedMarble.render.opacity = 0;
       Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: width / 2, y: -200 });
+      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 50 });
       return;
     }
-
-    engine.world.bodies
-      .filter((body) => body.label === "marble")
-      .forEach((body) => {
-        const isViewed =
-          isViewedMarbleList.findIndex((marbleId) => marbleId === body.id) !==
-          -1;
-
-        if (isViewed && body.render.sprite && body.render.text) {
-          body.render.sprite.texture =
-            body.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
-          body.render.text.color = "#a1a9b2";
-        }
-      });
 
     World.remove(engine.world, selectedMarble);
     World.add(
       engine.world,
       createMarbleObject({
         id: selectedMarble.id,
-        texture:
-          selectedMarble.id % 2 === 0
-            ? marbleIsViewedTexture
-            : marbleIsViewedTexture_2,
         textContent: selectedMarble.render.text?.content || "",
         isViewed: true,
       }),
     );
-    setSelectedMarble(undefined);
-  }, [isOpen]);
 
-  const createMarbleObject = ({
-    id,
-    texture,
-    textContent,
-    isViewed = false,
-  }: IMarbleObject) => {
-    return Bodies.circle(width / 2, -200, ASSET_WIDTH.marble, {
-      id,
-      label: "marble",
-      restitution: 0,
-      render: {
-        sprite: {
-          texture,
-          xScale: 0.48,
-          yScale: 0.48,
-        },
-        text: {
-          content: textContent,
-          color: isViewed ? "#a1a9b2" : "#667080",
-          size: 14,
-        },
-      },
+    onChangeSelectedMarbleId(-1);
+  }, [engine, isModalOpen, marbleBodyList]);
+
+  // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
+  useEffect(() => {
+    if (!engine) return;
+
+    const worldMarbleList = engine.world.bodies.filter(
+      ({ label }) => label === "marble",
+    );
+    worldMarbleList.forEach((marble) => {
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === marble.id) !== -1;
+
+      if (isViewed && marble.render.sprite && marble.render.text) {
+        marble.render.sprite.texture =
+          marble.id % 2 === 0 ? marbleIsViewedTexture : marbleIsViewedTexture_2;
+        marble.render.text.color = "#a1a9b2";
+      }
     });
-  };
+  }, [engine, isViewedIdList]);
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
-      <div className="h-16">Temp Header</div>
-      {isOpen && selectedMarble && (
-        <MarbleModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          selectedMarble={selectedMarble}
-          marbleList={marbleBodyList}
-          isViewedMarbleList={isViewedMarbleList}
-          setIsViewedMarbleList={setIsViewedMarbleList}
-        />
-      )}
-      <div ref={canvasScrollRef} className="h-screen overflow-scroll">
-        <ArchiveTitle archiveMarbleNum={marbleList.length} isLayout={true} />
-        <canvas ref={canvasRef} />
+      <div className="relative z-20">
+        {/* 스크롤 시 bg-transparent 변경 */}
+        <div className="fixed top-0 w-full bg-white">
+          <Appbar
+            left={
+              <button onClick={() => onChangeView("preview-card")}>
+                <ChevronLeftEdgeSVG />
+              </button>
+            }
+          />
+        </div>
       </div>
-      <FABButton icon={Bars} text="리스트뷰" scrollRef={canvasScrollRef} />
+
+      <div className="relative z-10">
+        <Header
+          text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!"
+          className="absolute left-5 top-20 !w-fit animate-fadeInUp"
+        />
+      </div>
+
+      <canvas className="absolute top-[-64px]" ref={canvasRef} />
+
+      <FABButton
+        icon={Bars}
+        text="리스트뷰"
+        onClick={() => onChangeView("marble-grid")}
+      />
     </div>
   );
 };

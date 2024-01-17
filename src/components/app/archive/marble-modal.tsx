@@ -1,54 +1,49 @@
 import "swiper/scss/pagination";
 import "@/style/swiper/archive-init.scss";
 
-// // custom pagination style
+// custom pagination style
 import "@/style/swiper/archive-pagination.scss";
 
-import { Body } from "matter-js";
-import {
-  Dispatch,
-  MouseEventHandler,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import Back from "@/assets/icons/back.svg?react";
+import Close from "@/assets/icons/close.svg?react";
 import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
+import { TMarble } from "@/types/archive";
 
 interface Props {
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-  selectedMarble: Body;
-  marbleList: Body[];
-  isViewedMarbleList: number[];
-  setIsViewedMarbleList: Dispatch<SetStateAction<number[]>>;
+  onChangeOpenState: (isOpen: boolean) => void;
+  selectedMarbleId: number;
+  marbleList: TMarble[];
+  onUpdateMarbleList: () => void;
+  onUpdateViewIdxList: (activeIdx: number) => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 }
 
-// TODO: marble Grid view를 고려하여 상태 및 props update 예정
 export const MarbleModal = ({
   isOpen,
-  setIsOpen,
-  selectedMarble,
+  onChangeOpenState,
+  selectedMarbleId,
   marbleList,
-  isViewedMarbleList,
-  setIsViewedMarbleList,
+  onUpdateMarbleList,
+  onUpdateViewIdxList,
+  onChangeSelectedMarbleId,
 }: Props) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
 
   useEffect(() => {
-    if (!swiperOptions && selectedMarble && marbleList.length) {
+    if (!swiperOptions && selectedMarbleId !== -1 && marbleList.length) {
       setSwiperOptions({
         className: "init-swiper archive-swiper",
         slidesPerView: 1,
         centeredSlides: true,
         loop: true,
         initialSlide: marbleList.findIndex(
-          (marble) => marble.id === selectedMarble.id,
+          (marble) => marble.commentId === selectedMarbleId,
         ),
         modules: [Pagination],
         onSlideChange: (swiper: SwiperCore) => {
@@ -61,16 +56,10 @@ export const MarbleModal = ({
         },
       });
     }
-  }, [swiperOptions, selectedMarble, marbleList]);
+  }, [swiperOptions, selectedMarbleId, marbleList]);
 
   useEffect(() => {
-    if (activeMarbleIdx === -1) return;
-
-    const activeMarbleId = marbleList[activeMarbleIdx].id;
-    const updatedIsViewedMarbleList = [
-      ...new Set([...isViewedMarbleList, activeMarbleId]),
-    ];
-    setIsViewedMarbleList(updatedIsViewedMarbleList);
+    onUpdateViewIdxList(activeMarbleIdx);
   }, [activeMarbleIdx]);
 
   useEffect(() => {
@@ -81,31 +70,36 @@ export const MarbleModal = ({
     };
   }, [isOpen]);
 
-  const onClickClose: MouseEventHandler = () => {
-    setIsOpen(false);
+  const onClickClose = () => {
+    onChangeOpenState(false);
   };
 
   if (!isOpen) return null;
 
   return (
     <>
-      <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
-        <div className="relative box-border flex h-16 w-full items-center justify-center px-[16px]">
+      <dialog className="fixed left-0 top-0 z-40 block h-full w-full max-w-[480px] bg-transparent text-black ">
+        <div className="relative box-border flex h-16 w-full items-center justify-center bg-[#EFF1F4]/[55%] px-[16px]">
           <button
             onClick={onClickClose}
-            className="absolute left-4 h-44px w-44px cursor-pointer"
+            className="absolute left-4 h-44px w-44px cursor-pointer bg-[#F6F7F9]"
           >
-            <Back />
+            <Close />
           </button>
           <p className="font-medium text-gray-800">{`${activeMarbleIdx + 1} / ${
             marbleList.length
           }`}</p>
         </div>
-        {!!selectedMarble && !!swiperOptions && (
+        {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
           <Swiper {...swiperOptions}>
             {marbleList.map((marble) => (
-              <SwiperSlide key={marble.id} className="cursor-pointer">
-                <MarbleDetailCard />
+              <SwiperSlide key={marble.commentId} className="cursor-pointer">
+                <MarbleDetailCard
+                  marble={marble}
+                  onClickClose={onClickClose}
+                  onUpdateMarbleList={onUpdateMarbleList}
+                  onChangeSelectedMarbleId={onChangeSelectedMarbleId}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -113,7 +107,7 @@ export const MarbleModal = ({
       </dialog>
       <div
         onClick={onClickClose}
-        className="fixed top-0 z-20 mx-auto h-full w-full max-w-[480px] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
+        className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
       />
     </>
   );

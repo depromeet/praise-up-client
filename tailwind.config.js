@@ -65,6 +65,39 @@ export default {
           "66%": { visibility: "hidden" },
           "100%": { visibility: "hidden" },
         },
+        fadeOut: {
+          "0%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0,
+          },
+        },
+        fadeInUp: {
+          "0%": {
+            opacity: 0,
+            transform: "translateY(2rem)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateY(0)",
+          },
+        },
+        fadeOutUp: {
+          "0%": {
+            opacity: 1,
+            transform: "translateY(0)",
+          },
+          "100%": {
+            opacity: 0,
+            transform: "translateY(-2rem)",
+          },
+        },
+      },
+      animation: {
+        fadeInUp: "fadeInUp 1s ease-in-out",
+        fadeOutUp: "fadeOutUp 1s ease-in-out",
+        fadeOut: "fadeOut 1s ease-in-out",
       },
     },
   },
