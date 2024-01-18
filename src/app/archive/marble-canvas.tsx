@@ -328,14 +328,15 @@ export const MarbleCanvas = ({
   const getCanvasHeight = (marbleNum: number, width: number) => {
     if (!window.visualViewport) return 0;
 
+    // margin = text top + textHeight + 최소 구슬 마진
+    const margin = 80 + 48 + 112;
     const curHeight = window.visualViewport.height;
-    console.log(curHeight);
     const minHeight =
       Math.ceil(marbleNum / (((width - 40) / ASSET_WIDTH.marble) * 2)) *
       ASSET_WIDTH.marble *
       2;
 
-    return minHeight > curHeight ? minHeight : curHeight;
+    return minHeight > curHeight - margin ? margin + minHeight : curHeight;
   };
 
   return (
