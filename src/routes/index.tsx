@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { CommentMainPage } from "@/app/add-comment";
-import { CommentDonePage } from "@/app/add-comment/comment-done";
 import { CommentFormPage } from "@/app/add-comment/comment-form";
 import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Archive } from "@/app/archive";
@@ -74,10 +73,6 @@ const router = createBrowserRouter([
       {
         path: "clap/onboarding",
         element: <OnBoardingClap />,
-      },
-      {
-        path: "clap/done",
-        element: <CommentDonePage />,
       },
       {
         path: "/archive",
