@@ -65,29 +65,40 @@ export const MarbleGrid = ({
             </button>
           </div>
 
-          <div className="mt-4 grid grid-cols-2 gap-2">
-            {isFilteredViewed ? (
-              <>
-                {isNotViewedMarbleList?.map((marble) => (
-                  <MarbleGridItem
-                    marble={marble}
-                    onClick={() => onChangeSelectedMarbleId(marble.commentId)}
-                    key={marble.commentId}
-                  />
-                ))}
-              </>
-            ) : (
-              <>
-                {marbleList?.map((marble) => (
-                  <MarbleGridItem
-                    marble={marble}
-                    onClick={() => onChangeSelectedMarbleId(marble.commentId)}
-                    key={marble.commentId}
-                  />
-                ))}
-              </>
-            )}
-          </div>
+          {/* NOTE: Empty Case */}
+          {isFilteredViewed && !isNotViewedMarbleList?.length ? (
+            <div className="mt-[114px] flex w-full flex-col items-center gap-[10px]">
+              <div className="bg-archive-marble-empty-case h-120px w-120px" />
+              <p className="font-semibold text-teritary">
+                모든 구슬을 확인했어요!
+              </p>
+            </div>
+          ) : (
+            // NOTE: Marble List Grid Layout
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {isFilteredViewed ? (
+                <>
+                  {isNotViewedMarbleList?.map((marble) => (
+                    <MarbleGridItem
+                      marble={marble}
+                      onClick={() => onChangeSelectedMarbleId(marble.commentId)}
+                      key={marble.commentId}
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  {marbleList?.map((marble) => (
+                    <MarbleGridItem
+                      marble={marble}
+                      onClick={() => onChangeSelectedMarbleId(marble.commentId)}
+                      key={marble.commentId}
+                    />
+                  ))}
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
