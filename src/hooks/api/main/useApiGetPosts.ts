@@ -60,7 +60,7 @@ const getArchivePost = ({ pageParam }: { pageParam: number }) => {
     .then((res) => res.data as GetPostType);
 };
 
-export const useGetPost = ({ visible = false }: { visible?: boolean }) => {
+export const useApiGetPosts = ({ visible = false }: { visible?: boolean }) => {
   const unreadQuery = useInfiniteQuery({
     queryKey: ["unread-post"],
     queryFn: ({ pageParam }) => getUnreadPost({ pageParam }),

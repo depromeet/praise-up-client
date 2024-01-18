@@ -1,6 +1,8 @@
 import { CSSProperties } from "react";
 
 // import CommentDoneSVG from "@/assets/imgs/comment_done.svg?react";
+import { useNavigate } from "react-router-dom";
+
 import CommentDonePNG from "@/assets/imgs/comment_done.png";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
@@ -11,6 +13,7 @@ export const CommentDoneView = ({
 }: {
   transition: CSSProperties | null;
 }) => {
+  const navigate = useNavigate();
   return (
     <div
       className="absolute left-[100%] top-0 flex min-h-[100dvh] w-screen max-w-[480px] flex-1 flex-col justify-center bg-white px-4 pt-4 shadow"
@@ -30,7 +33,7 @@ export const CommentDoneView = ({
         </div>
       </div>
       <ButtonProvider>
-        <ButtonProvider.Primary>
+        <ButtonProvider.Primary onClick={() => navigate("/")}>
           나의 칭찬 게시물 작성하기
         </ButtonProvider.Primary>
       </ButtonProvider>

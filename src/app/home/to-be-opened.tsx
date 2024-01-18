@@ -4,11 +4,11 @@ import { RecentCard } from "@/components/app/home/recent-card";
 import {
   ContentDataType,
   GetPostType,
-  useGetPost,
-} from "@/hooks/apis/main/useGetPost";
+  useApiGetPosts,
+} from "@/hooks/api/main/useApiGetPosts";
 
 export const ToBeOpened = () => {
-  const { data } = useGetPost({ visible: false });
+  const { data } = useApiGetPosts({ visible: false });
 
   return (
     <div className="mb-4 flex flex-col gap-5">

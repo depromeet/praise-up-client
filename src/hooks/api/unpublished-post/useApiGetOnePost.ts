@@ -12,7 +12,7 @@ export interface GetOnePostType {
 const getOnePost = (postId?: string) =>
   api.get(`/posts/${postId}`).then((res) => res.data as GetOnePostType);
 
-export const useGetOnePost = (postId?: string) => {
+export const useApiGetOnePost = (postId?: string) => {
   return useQuery<GetOnePostType>({
     queryKey: ["post"],
     queryFn: () => getOnePost(postId),

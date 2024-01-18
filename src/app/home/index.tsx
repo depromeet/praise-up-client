@@ -9,12 +9,14 @@ import { HomeLayout } from "@/components/layout/home-layout";
 import {
   ContentDataType,
   GetPostType,
-  useGetPost,
-} from "@/hooks/apis/main/useGetPost";
+  useApiGetPosts,
+} from "@/hooks/api/main/useApiGetPosts";
 
 export const Home = () => {
   const scrollAreaRef = useRef(null);
-  const { data, hasNextPage, fetchNextPage } = useGetPost({ visible: true });
+  const { data, hasNextPage, fetchNextPage } = useApiGetPosts({
+    visible: true,
+  });
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {

@@ -23,7 +23,7 @@ export const KakaoAuth = () => {
       .then((res) => {
         // TODO: 성공 페이지로 이동
         Cookies.set("k-u-id", `${(res.data as responseDataProps).userId}`, {
-          expires: 1 / 24 / 60,
+          expires: 0.5,
         });
         setIsLogin(true);
         navigate("/signup");

@@ -8,8 +8,8 @@ import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
 import {
   GetOnePostType,
-  useGetOnePost,
-} from "@/hooks/apis/unpublished-post/useGetOnePost";
+  useApiGetOnePost,
+} from "@/hooks/api/unpublished-post/useApiGetOnePost";
 
 interface DataType extends GetOnePostType {
   id: string;
@@ -34,7 +34,7 @@ const DUMMY_DATA: DataType = {
 
 export const UnpublishedPostPage = () => {
   const { id } = useParams();
-  const { data } = useGetOnePost(id);
+  const { data } = useApiGetOnePost(id);
   const {
     state: { backgroundUrl },
   } = useLocation() as { state: { backgroundUrl: string } };

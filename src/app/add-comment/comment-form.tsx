@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { MessageForm } from "@/components/app/add-comment/message-form";
@@ -8,6 +7,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiPostComment } from "@/hooks/api/comment/useApiPostComment";
 import useImageCompress from "@/hooks/useImageCompress";
 
 const DUMMY_DATA = {
@@ -17,18 +17,18 @@ const DUMMY_DATA = {
 };
 
 export const CommentFormPage = () => {
-  const navigate = useNavigate();
-
-  const [text, setText] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
 
+  const { mutate } = useApiPostComment();
+
   useEffect(() => {
-    setRequired(text.length > 0 && image.length > 0);
-  }, [text, image]);
+    setRequired(nickname.length > 0 && image.length > 0);
+  }, [nickname, image]);
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,31 @@ export const CommentFormPage = () => {
     }
   };
 
+  async function getBlobFromUrl(blobUrl: string) {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return blob;
+  }
+
+  const createPost = () => {
+    const blob = getBlobFromUrl(image);
+    try {
+      void blob.then((res) => {
+        const file = new File([res], "image.jpeg", {
+          type: "image/jpeg",
+        });
+
+        const formData = new FormData();
+        formData.append("nickname", nickname);
+        formData.append("image", file);
+        formData.append("message", `${message}`);
+        mutate(formData);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <DefaultLayout>
       {openCrop ? (
@@ -66,8 +91,8 @@ export const CommentFormPage = () => {
 
             <div className="flex w-full flex-col gap-7">
               <RequiredForm
-                text={text}
-                setText={setText}
+                nickname={nickname}
+                setNickname={setNickname}
                 image={image}
                 changeImage={changeImage}
               />
@@ -80,7 +105,7 @@ export const CommentFormPage = () => {
           <ButtonProvider isFull={true}>
             <ButtonProvider.Primary
               disabled={!required}
-              onClick={() => navigate("/clap/up")}
+              onClick={() => createPost()}
             >
               칭찬 보내기
             </ButtonProvider.Primary>
