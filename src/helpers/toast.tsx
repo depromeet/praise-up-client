@@ -46,7 +46,7 @@ const Toast = ({
 } & PropsWithChildren) => {
   const ICON_STYLE = "h-[24px] w-[24px]";
   return (
-    <div className="text-b3-strong flex items-center gap-2 whitespace-nowrap rounded-[100px] bg-gray-800 py-4 pl-4 pr-5 text-oncolor">
+    <div className="text-b3-strong flex animate-fadeInUp items-center gap-2 whitespace-nowrap rounded-[100px] bg-gray-800 py-4 pl-4 pr-5 text-oncolor">
       <div className={ICON_STYLE}>
         {
           {

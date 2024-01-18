@@ -15,16 +15,20 @@ export const KeyWord = () => {
   const [snap, setSnap] = useState(false);
 
   return (
-    <DefaultLayout className="overflow-x-hidden" appbar={false}>
-      <Appbar
-        left={
-          <Close
-            className="cursor-pointer transition-all duration-300"
-            onClick={() => navigate("/main")}
-            style={{ opacity: snap ? "0%" : "100" }}
-          />
-        }
-      />
+    <DefaultLayout
+      className="overflow-x-hidden"
+      appbar={
+        <Appbar
+          left={
+            <Close
+              className="cursor-pointer transition-all duration-300"
+              onClick={() => navigate("/main")}
+              style={{ opacity: snap ? "0%" : "100" }}
+            />
+          }
+        />
+      }
+    >
       <Background angle={angle} />
       <ArticleWrapper className="gap-y-[72px]">
         <Header
