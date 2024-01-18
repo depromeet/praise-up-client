@@ -57,7 +57,12 @@ export const MarbleDetailCard = ({
 
   // TODO: Add image save button
   return (
-    <div className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary">
+    <div
+      className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+      style={{
+        boxShadow: "0px 0px 20px 0px rgba(36, 43, 55, 0.10)",
+      }}
+    >
       <div
         style={{
           backgroundImage: `url(${imageUrl})`,
