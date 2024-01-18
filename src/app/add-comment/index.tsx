@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Marbles from "@/assets/imgs/marbles.svg?react";
@@ -9,8 +10,12 @@ import { useApiGetOnePost } from "@/hooks/api/unpublished-post/useApiGetOnePost"
 export const CommentMainPage = () => {
   const navigate = useNavigate();
   // TODO: 실제 postId를 받아오기
-  const postId = "5";
+  const postId = "6";
   const { data } = useApiGetOnePost(postId);
+
+  useEffect(() => {
+    sessionStorage.setItem("comment_id", postId);
+  }, []);
 
   return (
     <DefaultLayout>

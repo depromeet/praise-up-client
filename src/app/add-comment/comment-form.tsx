@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { NotFound } from "@/app/error/404";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { MessageForm } from "@/components/app/add-comment/message-form";
 import { RequiredForm } from "@/components/app/add-comment/required-form";
@@ -7,7 +9,6 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
-import { useApiPostComment } from "@/hooks/api/comment/useApiPostComment";
 import useImageCompress from "@/hooks/useImageCompress";
 
 const DUMMY_DATA = {
@@ -23,8 +24,7 @@ export const CommentFormPage = () => {
   const [openCrop, setOpenCrop] = useState(false);
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
-
-  const { mutate } = useApiPostComment();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setRequired(nickname.length > 0 && image.length > 0);
@@ -49,29 +49,15 @@ export const CommentFormPage = () => {
     }
   };
 
-  async function getBlobFromUrl(blobUrl: string) {
-    const response = await fetch(blobUrl);
-    const blob = await response.blob();
-    return blob;
-  }
-
-  const createPost = () => {
-    const blob = getBlobFromUrl(image);
+  const saveForm = () => {
     try {
-      void blob.then((res) => {
-        const file = new File([res], "image.jpeg", {
-          type: "image/jpeg",
-        });
-
-        const formData = new FormData();
-        formData.append("nickname", nickname);
-        formData.append("image", file);
-        formData.append("message", `${message}`);
-        mutate(formData);
-      });
+      sessionStorage.setItem("comment_nickname", nickname);
+      sessionStorage.setItem("comment_image", image);
+      sessionStorage.setItem("comment_message", message);
     } catch (err) {
-      console.log(err);
+      return <NotFound />;
     }
+    navigate("/clap/up");
   };
 
   return (
@@ -105,7 +91,7 @@ export const CommentFormPage = () => {
           <ButtonProvider isFull={true}>
             <ButtonProvider.Primary
               disabled={!required}
-              onClick={() => createPost()}
+              onClick={() => saveForm()}
             >
               칭찬 보내기
             </ButtonProvider.Primary>

@@ -23,7 +23,11 @@ export const useApiPostComment = () => {
 
   return useMutation({
     mutationFn: (formData: FormData) => postComment(formData),
-    onSuccess: () => naviagate("/clap/up"),
+    onSuccess: () => {
+      sessionStorage.removeItem("comment_nickname");
+      sessionStorage.removeItem("comment_image");
+      sessionStorage.removeItem("comment_message");
+    },
     onError: () => naviagate("/error"),
   });
 };

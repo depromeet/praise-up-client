@@ -2,12 +2,14 @@ import { MouseEvent, useEffect, useState, TouchEvent } from "react";
 
 import { CommentDoneView } from "./comment-done";
 
+import { NotFound } from "@/app/error/404";
 import Marbles from "@/assets/imgs/marbles.svg?react";
 import { DraggableMarble } from "@/components/app/add-comment/draggable-marble";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { Arrow } from "@/components/common/arrow";
 import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiPostComment } from "@/hooks/api/comment/useApiPostComment";
 
 const FLY_DURATION = 0.5; // second
 const ARROW_DISAPPEAR_DIST = 100; // the distance arrow disappears when marble moves
@@ -21,11 +23,43 @@ export const CommentUpPage = () => {
   const [isReached, setIsReached] = useState<boolean>(false);
   const [arrowShow, setArrowShow] = useState<boolean>(true);
   const [move, setMove] = useState<boolean>(false);
+  const { mutate } = useApiPostComment();
+
+  async function getBlobFromUrl(blobUrl: string) {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return blob;
+  }
+
+  const createPost = () => {
+    try {
+      const nickname = sessionStorage.getItem("comment_nickname");
+      const image = sessionStorage.getItem("comment_image");
+      const message = sessionStorage.getItem("comment_message");
+
+      const blob = getBlobFromUrl(image as string);
+
+      void blob.then((res) => {
+        const file = new File([res], "image.jpeg", {
+          type: "image/jpeg",
+        });
+
+        const formData = new FormData();
+        formData.append("nickname", nickname as string);
+        formData.append("image", file);
+        formData.append("message", `${message}`);
+        mutate(formData);
+      });
+    } catch (error) {
+      return <NotFound />;
+    }
+  };
 
   useEffect(() => {
     if (isReached) {
       setArrowShow(false);
       void done();
+      createPost();
     } else {
       setArrowShow(true);
     }
