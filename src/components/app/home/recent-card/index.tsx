@@ -55,6 +55,7 @@ export const RecentCard = ({
         <TimerBadge openDatetime={openDatetime ?? new Date()} />
       </div>
       <LinkAndGoButton
+        // 추후 id 연동
         id={id ?? "5"}
         openDatetime={openDatetime ?? new Date()}
         backgroundUrl={BACKGROUNDS[idx]}
