@@ -75,7 +75,6 @@ export const MyPage = () => {
       noXPadding
       appbar={
         <Appbar
-          isPadding
           left={
             <button onClick={() => nav(-1)}>
               <ChevronLeftEdgeSVG />

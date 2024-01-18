@@ -7,7 +7,7 @@ import { CountBadge } from "@/components/app/home/count-badge";
 interface RecentCardProps {
   id: string;
   keyword: string;
-  count: string;
+  count: number;
   openDatetime: string;
 }
 

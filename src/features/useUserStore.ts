@@ -11,7 +11,7 @@ const useUserStore = create(
     (set) => ({
       isLogin: false,
       setIsLogin: (isLogin) => {
-        set((state) => ({ isLogin: isLogin }));
+        set({ isLogin: isLogin });
       },
     }),
     {

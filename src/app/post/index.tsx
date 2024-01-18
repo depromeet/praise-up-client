@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useRef } from "react";
+import { Fragment, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Back from "@/assets/icons/back.svg?react";

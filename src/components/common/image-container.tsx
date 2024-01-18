@@ -1,4 +1,4 @@
-import { ImageProps } from "./post-image";
+import { ImageProps } from "./image-input";
 
 export const ImageContainer = ({ src, onChange }: ImageProps) => {
   return (

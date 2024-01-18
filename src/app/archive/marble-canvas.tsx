@@ -20,11 +20,10 @@ import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewe
 import { FABButton } from "@/components/app/archive/fab-button";
 import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
-import { ASSET_WIDTH, HEIGHT, WALL_OPTIONS, WIDTH } from "@/constants/archive";
+import { ASSET_WIDTH, HEIGHT, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView, TMarble } from "@/types/archive";
 import { createMarbleObject } from "@/utils/createMarbleObject";
-import { getIsMobile } from "@/utils/getIsMobile";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
@@ -48,8 +47,6 @@ export const MarbleCanvas = ({
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const isMobile = getIsMobile();
-
   // 에러 발생으로 임시 수정
   const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
     isStatic: true,

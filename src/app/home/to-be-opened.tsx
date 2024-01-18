@@ -8,7 +8,7 @@ import tempData from "@/data/main-temp-data.json";
 interface InputDataType {
   id: string;
   keyword: string;
-  count: string;
+  count: number;
 }
 
 interface DataType extends InputDataType {
@@ -18,21 +18,23 @@ interface DataType extends InputDataType {
 export const ToBeOpened = () => {
   /* 예제 시간 */
   const [data, setData] = useState<Array<DataType>>([]);
-  const date1 = new Date();
-  const date2 = new Date();
+
   const isEmpty = data.length === 0;
 
-  // test data: before & after date
-  const testDate = [
-    new Date(date1.setDate(date2.getDate() + 1)).toISOString(),
-    new Date(date2.setDate(date1.getDate() - 1)).toISOString(),
-  ];
-
   useEffect(() => {
+    // test data: before & after date
+    const date1 = new Date();
+    const date2 = new Date();
+
+    const testDate = [
+      new Date(date1.setDate(date2.getDate() + 1)).toISOString(),
+      new Date(date2.setDate(date1.getDate() - 1)).toISOString(),
+    ];
+
     setData(
-      tempData.data.map((data: InputDataType, i: number) => {
+      tempData.data.map((data, i) => {
         return { ...data, openDatetime: testDate[i] }; // 날짜만 테스트용으로 생성하여 따로 삽입
-      }) as Array<DataType>,
+      }),
     );
   }, []);
 
