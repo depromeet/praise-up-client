@@ -1,8 +1,13 @@
+import clsx from "clsx";
 import { motion } from "framer-motion";
 
 import Icon from "@/assets/icons/arrow.svg?react";
 
-export const Arrow = () => {
+type Props = {
+  className?: string;
+};
+
+export const Arrow = ({ className }: Props) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -13,7 +18,7 @@ export const Arrow = () => {
         ease: "easeInOut",
       }}
     >
-      <Icon width={38} height={34} className="mb-9" />
+      <Icon width={38} height={34} className={clsx(className, "mb-9")} />
     </motion.div>
   );
 };

@@ -1,27 +1,61 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import Marble from "@/assets/icons/marble.svg";
-import { ArchiveTitle } from "@/components/app/archive/archive-title";
 import { FABButton } from "@/components/app/archive/fab-button";
 import { MarbleGridItem } from "@/components/app/archive/marble-grid-item";
+import { Appbar } from "@/components/common/appbar";
+import { Header } from "@/components/common/header";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
-import { TMarble } from "@/types/archive";
+import { TArchiveView, TMarble } from "@/types/archive";
 
 type Props = {
   marbleList: TMarble[];
+  isViewedIdList: number[];
+  onChangeView: (view: TArchiveView) => void;
+  onChangeSelectedMarbleId: (id: number) => void;
 };
 
-export const MarbleGrid = ({ marbleList }: Props) => {
+export const MarbleGrid = ({
+  marbleList,
+  isViewedIdList,
+  onChangeView,
+  onChangeSelectedMarbleId,
+}: Props) => {
   // TODO: Add body Scroll
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [isFilteredViewed, setIsFilteredViewed] = useState<boolean>(false);
+  const [isNotViewedMarbleList, setIsNotViewedMarbleList] =
+    useState<TMarble[]>();
+
+  useEffect(() => {
+    if (!isViewedIdList.length) {
+      setIsNotViewedMarbleList(marbleList);
+      return;
+    }
+
+    const isViewedList = marbleList.filter(
+      (marble) =>
+        isViewedIdList.findIndex((id) => id === marble.commentId) === -1,
+    );
+    setIsNotViewedMarbleList(isViewedList);
+  }, [marbleList, isViewedIdList]);
 
   if (!marbleList.length) return null;
   return (
-    <DefaultLayout appbar={<div>appBar</div>}>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => onChangeView("preview-card")}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
       <div className="mb-[60px] flex flex-col gap-9">
-        <ArchiveTitle archiveMarbleNum={marbleList.length} />
+        <Header text="보고싶은 칭찬 구슬을 눌러\n칭찬을 확인해보세요!" />
 
         <div>
           <div className="flex items-center justify-end gap-[6px]">
@@ -32,12 +66,36 @@ export const MarbleGrid = ({ marbleList }: Props) => {
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
-            {marbleList?.map((marble) => <MarbleGridItem key={marble.id} />)}
+            {isFilteredViewed ? (
+              <>
+                {isNotViewedMarbleList?.map((marble) => (
+                  <MarbleGridItem
+                    marble={marble}
+                    onClick={() => onChangeSelectedMarbleId(marble.commentId)}
+                    key={marble.commentId}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {marbleList?.map((marble) => (
+                  <MarbleGridItem
+                    marble={marble}
+                    onClick={() => onChangeSelectedMarbleId(marble.commentId)}
+                    key={marble.commentId}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      <FABButton icon={Marble} text="구슬뷰" scrollRef={scrollRef} />
+      <FABButton
+        icon={Marble}
+        text="구슬뷰"
+        onClick={() => onChangeView("marble-canvas")}
+      />
     </DefaultLayout>
   );
 };

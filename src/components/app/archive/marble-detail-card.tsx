@@ -2,9 +2,26 @@ import { useContext } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
+import { useApiMarbleComments } from "@/hooks/api/archive/useApiMarbleComments";
+import { TMarble } from "@/types/archive";
 
-export const MarbleDetailCard = () => {
+type Props = {
+  marble: TMarble;
+  onClickClose: () => void;
+  onUpdateMarbleList: () => void;
+  onChangeSelectedMarbleId: (id: number) => void;
+};
+
+export const MarbleDetailCard = ({
+  marble,
+  onClickClose,
+  onUpdateMarbleList,
+  onChangeSelectedMarbleId,
+}: Props) => {
+  const { mutate: deleteComment } = useApiMarbleComments();
+
   const { confirm } = useContext(ConfirmContext);
+  const { nickname, content, imageUrl, commentId } = marble;
 
   const onClickMenu = async () => {
     const result = await confirm(
@@ -20,14 +37,35 @@ export const MarbleDetailCard = () => {
       },
     );
 
-    // TODO: delete action
     // TODO: Error handling
+    if (!result) return;
+    onDeleteComment();
+  };
+
+  const onDeleteComment = () => {
+    deleteComment(commentId, {
+      onSuccess: () => {
+        onChangeSelectedMarbleId(-1);
+        onUpdateMarbleList();
+        onClickClose();
+      },
+      onError: () => {
+        alert("에러가 발생했습니다.");
+      },
+    });
   };
 
   // TODO: Add image save button
   return (
     <div className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary">
-      <div className="relative box-border w-full rounded-xl bg-black after:block after:pb-[calc(100%)]">
+      <div
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        className="relative box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+      >
         <button
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={onClickMenu}
@@ -36,14 +74,15 @@ export const MarbleDetailCard = () => {
           <Overflow />
         </button>
       </div>
-      <p>
-        오늘도 요리한 당신 정말 대단하다
-        <br />
-        앞으로도 그렇게 열심히 요리길만 걷기를
-      </p>
+      <p
+        className="whitespace-pre-wrap"
+        dangerouslySetInnerHTML={{
+          __html: content.replace(/\\n/g, "<br/>"),
+        }}
+      />
       <p className="flex items-center justify-start gap-1 font-semibold">
         <span className="text-teritary">from.</span>
-        <span>태롱이</span>
+        <span>{nickname}</span>
       </p>
     </div>
   );
