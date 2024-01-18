@@ -10,6 +10,7 @@ import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
 
 const FLY_DURATION = 0.5; // second
+const ARROW_DISAPPEAR_DIST = 100; // the distance arrow disappears when marble moves
 const DONE_ANIMATION = {
   transition: "all 0.5s ease-in-out 0s",
   duration: 200,
@@ -20,15 +21,10 @@ export const CommentUpPage = () => {
   const [isReached, setIsReached] = useState<boolean>(false);
   const [arrowShow, setArrowShow] = useState<boolean>(true);
   const [move, setMove] = useState<boolean>(false);
-  const ARROW_POS_Y = useRef<number>(0);
-
-  useEffect(() => {
-    const arrow = document.getElementById("arrow-div");
-    ARROW_POS_Y.current = arrow?.getBoundingClientRect().top as number;
-  }, []);
 
   useEffect(() => {
     if (isReached) {
+      setArrowShow(false);
       void done();
     } else {
       setArrowShow(true);
@@ -36,16 +32,20 @@ export const CommentUpPage = () => {
   }, [isReached]);
 
   // desktop mouse event
-  const onMouseDown = (e: MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement;
-
-    const onMouseMove = () => {
-      if (ARROW_POS_Y.current >= target.getBoundingClientRect().top)
+  const onMouseDown = (mouseDownEvent: MouseEvent<HTMLElement>) => {
+    const onMouseMove = (mouseMoveEvent: MouseEvent<HTMLElement>) => {
+      if (
+        mouseDownEvent.screenY - mouseMoveEvent.screenY >=
+        ARROW_DISAPPEAR_DIST
+      )
         setArrowShow(false);
     };
 
-    const onMouseUp = () => {
-      if (ARROW_POS_Y.current > target.getBoundingClientRect().top || isReached)
+    const onMouseUp = (mouseUpEvent: MouseEvent<HTMLElement>) => {
+      if (
+        mouseDownEvent.screenY - mouseUpEvent.screenY >= ARROW_DISAPPEAR_DIST ||
+        isReached
+      )
         setArrowShow(false);
       else setArrowShow(true);
 
@@ -57,16 +57,21 @@ export const CommentUpPage = () => {
   };
 
   // mobile touch event
-  const onTouchStart = (_: TouchEvent) => {
+  const onTouchStart = (startT: TouchEvent) => {
+    const startTarget = startT.changedTouches[0];
     const onTouchMove = (t: TouchEvent) => {
       const target = t.changedTouches[0];
-      if (ARROW_POS_Y.current >= target.clientY - 80) setArrowShow(false);
+      if (startTarget.clientY - target.clientY >= ARROW_DISAPPEAR_DIST)
+        setArrowShow(false);
     };
 
     const onTouchEnd = (t: TouchEvent) => {
       const target = t.changedTouches[0];
 
-      if (isReached || ARROW_POS_Y.current > target.clientY - 80)
+      if (
+        startTarget.clientY - target.clientY >= ARROW_DISAPPEAR_DIST ||
+        isReached
+      )
         setArrowShow(false);
       else setArrowShow(true);
 
@@ -103,11 +108,7 @@ export const CommentUpPage = () => {
               onMouseDown={onMouseDown}
               onTouchStart={onTouchStart}
             >
-              {arrowShow && (
-                <div id="arrow-div">
-                  <Arrow />
-                </div>
-              )}
+              {arrowShow && <Arrow />}
               <DraggableMarble
                 isReached={isReached}
                 setIsReached={setIsReached}
