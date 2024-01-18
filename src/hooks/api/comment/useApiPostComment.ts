@@ -7,10 +7,10 @@ export const useApiPostComment = () => {
   const naviagate = useNavigate();
 
   const postComment = async (formData: FormData) => {
-    const POST_ID = 6; // url에서 가져온 postId
-    // 없는 PostId라면 에러 핸들링.
+    const postId = sessionStorage.getItem("comment_id") as string;
+
     const res = await api.post(
-      `/praise-up/api/v1/posts/${POST_ID}/comments`,
+      `/praise-up/api/v1/posts/${postId}/comments`,
       formData,
       {
         headers: {

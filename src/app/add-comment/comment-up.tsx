@@ -33,11 +33,11 @@ export const CommentUpPage = () => {
 
   const createPost = () => {
     try {
-      const nickname = sessionStorage.getItem("comment_nickname");
-      const image = sessionStorage.getItem("comment_image");
-      const message = sessionStorage.getItem("comment_message");
+      const nickname = sessionStorage.getItem("comment_nickname") as string;
+      const image = sessionStorage.getItem("comment_image") as string;
+      const message = sessionStorage.getItem("comment_message") as string;
 
-      const blob = getBlobFromUrl(image as string);
+      const blob = getBlobFromUrl(image);
 
       void blob.then((res) => {
         const file = new File([res], "image.jpeg", {
@@ -45,7 +45,7 @@ export const CommentUpPage = () => {
         });
 
         const formData = new FormData();
-        formData.append("nickname", nickname as string);
+        formData.append("nickname", nickname);
         formData.append("image", file);
         formData.append("message", `${message}`);
         mutate(formData);
