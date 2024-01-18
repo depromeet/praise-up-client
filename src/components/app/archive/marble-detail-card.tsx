@@ -9,14 +9,12 @@ type Props = {
   marble: TMarble;
   onClickClose: () => void;
   onUpdateMarbleList: () => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleDetailCard = ({
   marble,
   onClickClose,
   onUpdateMarbleList,
-  onChangeSelectedMarbleId,
 }: Props) => {
   const { mutate: deleteComment } = useApiMarbleComments();
 
@@ -45,7 +43,6 @@ export const MarbleDetailCard = ({
   const onDeleteComment = () => {
     deleteComment(commentId, {
       onSuccess: () => {
-        onChangeSelectedMarbleId(-1);
         onUpdateMarbleList();
         onClickClose();
       },

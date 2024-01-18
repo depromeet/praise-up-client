@@ -304,7 +304,7 @@ export const MarbleCanvas = ({
     );
 
     onChangeSelectedMarbleId(-1);
-  }, [engine, isModalOpen, marbleBodyList]);
+  }, [engine, isModalOpen]);
 
   // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
   useEffect(() => {

@@ -20,7 +20,6 @@ interface Props {
   marbleList: TMarble[];
   onUpdateMarbleList: () => void;
   onUpdateViewIdxList: (activeIdx: number) => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 }
 
 export const MarbleModal = ({
@@ -30,7 +29,6 @@ export const MarbleModal = ({
   marbleList,
   onUpdateMarbleList,
   onUpdateViewIdxList,
-  onChangeSelectedMarbleId,
 }: Props) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
@@ -99,7 +97,6 @@ export const MarbleModal = ({
                     marble={marble}
                     onClickClose={onClickClose}
                     onUpdateMarbleList={onUpdateMarbleList}
-                    onChangeSelectedMarbleId={onChangeSelectedMarbleId}
                   />
                 </SwiperSlide>
               ))}
