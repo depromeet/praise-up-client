@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ReactNode } from "react";
 
 import { LogoSVG } from "@/assets/icons/logo";
@@ -12,19 +13,30 @@ type LeftAndContent =
       content?: never;
     };
 
+type appbarProps = {
+  isPadding?: boolean;
+};
+
 export const Appbar = ({
   left,
   right,
   content,
+  isPadding,
 }: {
   right?: ReactNode;
-} & LeftAndContent) => {
+} & LeftAndContent &
+  appbarProps) => {
   // if left is not defined, render logo
   const _left = left ? left : <LogoSVG />;
   const _content = left ? content : null;
 
   return (
-    <div className="flex h-64px w-full items-center justify-between">
+    <div
+      className={clsx(
+        "flex h-64px w-full items-center justify-between",
+        isPadding && "px-20px py-10px",
+      )}
+    >
       <div className="flex-1">
         <span className="grid place-content-start">{_left}</span>
       </div>
