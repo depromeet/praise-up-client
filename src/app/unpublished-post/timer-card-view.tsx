@@ -2,7 +2,7 @@ import { ClockSVG } from "@/assets/clock";
 import { useTimer } from "@/hooks/useTimer";
 
 interface TimerCardProps {
-  openDate?: string;
+  openDate: string;
 }
 
 export const TimerCardView = ({ openDate }: TimerCardProps) => {
