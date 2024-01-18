@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { ShareSVG } from "@/assets/icons/share";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { toast } from "@/helpers/toast";
+import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
   id: string;
-  openDatetime: string;
+  openDatetime: Date;
   backgroundUrl: string;
 }
 
@@ -19,7 +20,7 @@ export const LinkAndGoButton = ({
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
   const [isReveal, setIsReveal] = useState<boolean>(
-    new Date(openDatetime).getTime() - Date.now() > 0,
+    openDatetime?.getTime() - Date.now() > 0,
   );
 
   const { diff } = useTimer(openDatetime);
@@ -29,7 +30,7 @@ export const LinkAndGoButton = ({
   }, [diff]);
 
   const handleShare = () => {
-    // TODO: 클립보드에 링크 복사하기
+    void UseCurrentLinkCopy(+id);
     toast("링크가 복사되었어요");
   };
 
@@ -57,7 +58,7 @@ export const LinkAndGoButton = ({
       ) : (
         <ButtonProvider.Primary
           className="flex items-center justify-center"
-          onClick={() => navigate(`/seal/${123}`, { state: { backgroundUrl } })}
+          onClick={() => navigate(`seal/${id}`, { state: { backgroundUrl } })}
         >
           칭찬구슬 보러가기
         </ButtonProvider.Primary>

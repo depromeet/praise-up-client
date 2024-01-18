@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useInterval } from "./useInterval";
 
@@ -8,16 +8,19 @@ interface TimeLeftType {
   sec: number;
 }
 
-export function useTimer(openDatetime: string) {
+export function useTimer(openDatetime: Date) {
   const [delay] = useState<number | null>(1000);
-  const [diff, setDiff] = useState(
-    Math.floor((+new Date(openDatetime) - +new Date()) / 1000),
-  );
+  const [diff, setDiff] = useState(0);
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
     hour: 0,
     min: 0,
     sec: 0,
   });
+
+  useEffect(() => {
+    if (!openDatetime) return;
+    setDiff(Math.floor((+openDatetime - +new Date()) / 1000));
+  }, [openDatetime]);
 
   useInterval(
     () => {

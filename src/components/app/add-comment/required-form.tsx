@@ -5,15 +5,15 @@ import { ImageInput } from "@/components/common/image-input";
 import { Input } from "@/components/common/input";
 
 interface FormProps {
-  text: string;
-  setText: Dispatch<SetStateAction<string>>;
+  nickname: string;
+  setNickname: Dispatch<SetStateAction<string>>;
   image: string;
   changeImage: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const RequiredForm = ({
-  text,
-  setText,
+  nickname,
+  setNickname,
   image,
   changeImage,
 }: FormProps) => {
@@ -24,9 +24,9 @@ export const RequiredForm = ({
         <Input
           placeholder="닉네임을 설정해주세요"
           limit={4}
-          value={text}
+          value={nickname}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setText(e.target.value)
+            setNickname(e.target.value)
           }
         />
       </div>

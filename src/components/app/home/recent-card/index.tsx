@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
@@ -5,10 +7,11 @@ import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
 
 interface RecentCardProps {
-  id: string;
+  id?: string;
   keyword: string;
-  count: number;
-  openDatetime: string;
+  commentCount: number;
+  postCreatedDate: string;
+  openDatetime?: string;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -18,10 +21,18 @@ const DARK_BACKGROUNDS = [2, 4, 10, 11];
 export const RecentCard = ({
   id,
   keyword,
-  count,
-  openDatetime,
+  commentCount,
+  postCreatedDate,
 }: RecentCardProps) => {
   const idx = Math.floor(Math.random() * 11);
+  const [openDatetime, setOpenDatetime] = useState<Date>();
+
+  useEffect(() => {
+    const [year, month, day] = postCreatedDate.split("-");
+    const openDatetime = new Date(+year, +month - 1, +day + 1, 24);
+
+    setOpenDatetime(openDatetime);
+  }, [postCreatedDate]);
 
   return (
     <div className="flex w-full flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -39,13 +50,14 @@ export const RecentCard = ({
           >
             {keyword}
           </h2>
-          <CountBadge count={count} />
+          <CountBadge count={commentCount} />
         </div>
-        <TimerBadge openDatetime={openDatetime} />
+        <TimerBadge openDatetime={openDatetime ?? new Date()} />
       </div>
       <LinkAndGoButton
-        id={id}
-        openDatetime={openDatetime}
+        // 추후 id 연동
+        id={id ?? "5"}
+        openDatetime={openDatetime ?? new Date()}
         backgroundUrl={BACKGROUNDS[idx]}
       />
     </div>

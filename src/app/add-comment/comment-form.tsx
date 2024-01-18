@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { NotFound } from "@/app/error/404";
+import CloseSVG from "@/assets/icons/close.svg?react";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { MessageForm } from "@/components/app/add-comment/message-form";
 import { RequiredForm } from "@/components/app/add-comment/required-form";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
@@ -17,18 +20,17 @@ const DUMMY_DATA = {
 };
 
 export const CommentFormPage = () => {
-  const navigate = useNavigate();
-
-  const [text, setText] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setRequired(text.length > 0 && image.length > 0);
-  }, [text, image]);
+    setRequired(nickname.length > 0 && image.length > 0);
+  }, [nickname, image]);
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,8 +51,29 @@ export const CommentFormPage = () => {
     }
   };
 
+  const saveForm = () => {
+    try {
+      sessionStorage.setItem("comment_nickname", nickname);
+      sessionStorage.setItem("comment_image", image);
+      sessionStorage.setItem("comment_message", message);
+    } catch (err) {
+      return <NotFound />;
+    }
+    navigate("/clap/up");
+  };
+
   return (
-    <DefaultLayout>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => navigate(-1)}>
+              <CloseSVG />
+            </button>
+          }
+        />
+      }
+    >
       {openCrop ? (
         <ImageCropper
           src={image}
@@ -66,8 +89,8 @@ export const CommentFormPage = () => {
 
             <div className="flex w-full flex-col gap-7">
               <RequiredForm
-                text={text}
-                setText={setText}
+                nickname={nickname}
+                setNickname={setNickname}
                 image={image}
                 changeImage={changeImage}
               />
@@ -80,7 +103,7 @@ export const CommentFormPage = () => {
           <ButtonProvider isFull={true}>
             <ButtonProvider.Primary
               disabled={!required}
-              onClick={() => navigate("/clap/up")}
+              onClick={() => saveForm()}
             >
               칭찬 보내기
             </ButtonProvider.Primary>
