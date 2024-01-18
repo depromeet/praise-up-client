@@ -6,6 +6,7 @@ import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Archive } from "@/app/archive";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
+import { MyPage } from "@/app/mypage";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
@@ -77,6 +78,13 @@ const router = createBrowserRouter([
       {
         path: "/archive",
         element: <Archive />,
+      },
+      {
+        path: "/mypage",
+        element: <MyPage />,
+      },
+      {
+        path: "/mypage/claps",
       },
     ],
   },

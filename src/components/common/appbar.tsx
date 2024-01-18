@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ReactNode } from "react";
 
 import { LogoSVG } from "@/assets/icons/logo";
@@ -24,7 +25,11 @@ export const Appbar = ({
   const _content = left ? content : null;
 
   return (
-    <div className="flex h-64px w-full items-center justify-between">
+    <div
+      className={clsx(
+        "flex h-64px w-full items-center justify-between px-20px py-10px",
+      )}
+    >
       <div className="flex-1">
         <span className="grid place-content-start">{_left}</span>
       </div>

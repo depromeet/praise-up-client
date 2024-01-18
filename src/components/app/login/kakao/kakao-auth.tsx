@@ -7,6 +7,7 @@ import useUserStore from "@/features/useUserStore";
 
 type responseDataProps = {
   userId: number;
+  isSigned: boolean;
 };
 
 export const KakaoAuth = () => {
@@ -25,8 +26,12 @@ export const KakaoAuth = () => {
         Cookies.set("k-u-id", `${(res.data as responseDataProps).userId}`, {
           expires: 0.5,
         });
+        if ((res.data as responseDataProps).isSigned) {
+          navigate("/signup");
+        } else {
+          navigate("/main");
+        }
         setIsLogin(true);
-        navigate("/signup");
       })
       .catch((err) => {
         // TODO: 에러 발생 페이지로 이동

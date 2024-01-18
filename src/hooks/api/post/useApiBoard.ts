@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { api } from "@/api";
 
-export const useApiBoard = () => {
+export const useApiBoard = (keywordId: number) => {
   const naviagate = useNavigate();
 
   const postBoard = async (formData: FormData) => {
@@ -24,7 +24,7 @@ export const useApiBoard = () => {
   return useMutation({
     mutationFn: (formData: FormData) => postBoard(formData),
     onSuccess: () => {
-      naviagate("/post/done");
+      naviagate("/post/done", { state: { keywordId: keywordId } });
     },
     onError: () => {
       naviagate("/error");
