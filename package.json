@@ -18,6 +18,7 @@
     "browser-image-compression": "^2.0.2",
     "clsx": "^2.0.0",
     "framer-motion": "^10.17.9",
+    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "matter-js": "^0.19.0",
     "react": "^18.2.0",
@@ -27,7 +28,8 @@
     "react-error-boundary": "^4.0.12",
     "react-router-dom": "^6.19.0",
     "swiper": "^11.0.5",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.3",
@@ -39,6 +41,7 @@
     "@storybook/react-vite": "^7.5.3",
     "@storybook/testing-library": "^0.2.2",
     "@types/body-scroll-lock": "^3.1.2",
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.202",
     "@types/matter-js": "^0.19.5",
     "@types/react": "^18.2.37",
