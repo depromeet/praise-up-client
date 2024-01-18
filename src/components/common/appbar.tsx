@@ -13,19 +13,13 @@ type LeftAndContent =
       content?: never;
     };
 
-type appbarProps = {
-  isPadding?: boolean;
-};
-
 export const Appbar = ({
   left,
   right,
   content,
-  isPadding,
 }: {
   right?: ReactNode;
-} & LeftAndContent &
-  appbarProps) => {
+} & LeftAndContent) => {
   // if left is not defined, render logo
   const _left = left ? left : <LogoSVG />;
   const _content = left ? content : null;
@@ -33,8 +27,7 @@ export const Appbar = ({
   return (
     <div
       className={clsx(
-        "flex h-64px w-full items-center justify-between",
-        isPadding && "px-20px py-10px",
+        "flex h-64px w-full items-center justify-between px-20px py-10px",
       )}
     >
       <div className="flex-1">

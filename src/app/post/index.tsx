@@ -12,9 +12,11 @@ import { ImageInput } from "@/components/common/image-input";
 import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
+import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
+import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
-type postProps = {
+export type postProps = {
   keyword?: string;
   keywordId?: number;
 };
@@ -28,7 +30,8 @@ export const Post = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
-  const { mutate } = useApiBoard();
+  const { mutate } = useApiBoard(state.keywordId as number);
+  const [render, modal] = useModal();
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -39,6 +42,28 @@ export const Post = () => {
   } else {
     navigate("/error");
   }
+
+  const handleModal = async () => {
+    await modal(
+      <ConfirmModal
+        title="키워드 선택으로 돌아갈까요?"
+        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
+        buttons={[
+          <SubButton
+            key="unpublished-post-cancel"
+            label="계속 작성"
+            value="cancel"
+          />,
+          <MainButton
+            key="unpublished-post-delete"
+            label="삭제 종료"
+            value="confirm"
+            onClick={() => navigate("/post/keyword")}
+          />,
+        ]}
+      />,
+    );
+  };
 
   async function getBlobFromUrl(blobUrl: string) {
     const response = await fetch(blobUrl);
@@ -100,52 +125,64 @@ export const Post = () => {
   };
 
   return (
-    <DefaultLayout appbar={false}>
-      <Appbar
-        left={
-          <Back
-            className="cursor-pointer"
-            onClick={() => navigate("/post/keyword")}
+    <Fragment>
+      {render()}
+      <DefaultLayout
+        appbar={
+          <Appbar
+            left={
+              <Back
+                className="cursor-pointer"
+                onClick={() => {
+                  if (image.length || text.length) {
+                    void handleModal();
+                  } else {
+                    navigate("/post/keyword");
+                  }
+                }}
+              />
+            }
           />
         }
-      />
-      {openCrop ? (
-        <ImageCropper
-          src={image}
-          openCrop={setOpenCrop}
-          scaleImage={setImage}
-        />
-      ) : (
-        <Fragment>
-          <ArticleWrapper>
-            <Header
-              text={`오늘 칭찬받을 {${keywordData.current.keyword}}\\n 순간을 공유해주세요`}
-            />
-            {image.length > 0 ? (
-              <ImageContainer src={image} onChange={changeImage} />
-            ) : (
-              <ImageInput onChange={changeImage} />
+      >
+        {openCrop ? (
+          <ImageCropper
+            src={image}
+            openCrop={setOpenCrop}
+            scaleImage={setImage}
+          />
+        ) : (
+          <Fragment>
+            <ArticleWrapper>
+              <Header
+                text={`오늘 칭찬받을 {${keywordData.current.keyword}}\\n 순간을 공유해주세요`}
+              />
+              {image.length > 0 ? (
+                <ImageContainer src={image} onChange={changeImage} />
+              ) : (
+                <ImageInput onChange={changeImage} />
+              )}
+            </ArticleWrapper>
+            {image.length > 0 && (
+              <Textarea
+                limit={40}
+                placeholder="칭찬받을 순간에 대한 경험을 공유해주세요 (선택)"
+                onChange={changeText}
+                value={text}
+                currentLength={text.length}
+              />
             )}
-          </ArticleWrapper>
-          {image.length > 0 && (
-            <Textarea
-              limit={40}
-              placeholder="칭찬받을 순간에 대한 경험을 공유해주세요 (선택)"
-              onChange={changeText}
-              value={text}
-              currentLength={text.length}
-            />
-          )}
-          <ButtonProvider isFull={true}>
-            <ButtonProvider.Primary
-              disabled={!(image.length > 0)}
-              onClick={createPost}
-            >
-              게시물 업로드 하기
-            </ButtonProvider.Primary>
-          </ButtonProvider>
-        </Fragment>
-      )}
-    </DefaultLayout>
+            <ButtonProvider isFull={true}>
+              <ButtonProvider.Primary
+                disabled={!(image.length > 0)}
+                onClick={createPost}
+              >
+                게시물 업로드 하기
+              </ButtonProvider.Primary>
+            </ButtonProvider>
+          </Fragment>
+        )}
+      </DefaultLayout>
+    </Fragment>
   );
 };
