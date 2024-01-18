@@ -1,6 +1,6 @@
 import { EmptyCard } from "@/components/app/home/empty-card";
 import { PastCard } from "@/components/app/home/past-card";
-import { ContentDataType } from "@/hooks/api/main/useApiGetPosts";
+import { ContentDataType } from "@/hooks/api/main/useApiGetReadPosts";
 
 interface ArchiveDataType extends ContentDataType {
   imgUrl?: string; // 추후 연동 예정

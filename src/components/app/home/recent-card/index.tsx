@@ -28,11 +28,12 @@ export const RecentCard = ({
   const [openDatetime, setOpenDatetime] = useState<Date>();
 
   useEffect(() => {
-    const [year, month, day] = date.split(".");
+    if (!date) return;
+    const [year, month, day] = date.split("-");
     const openDatetime = new Date(2000 + +year, +month - 1, +day + 1, 24);
 
     setOpenDatetime(openDatetime);
-  }, []);
+  }, [date]);
 
   return (
     <div className="flex w-full flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -52,11 +53,11 @@ export const RecentCard = ({
           </h2>
           <CountBadge count={commentCount} />
         </div>
-        <TimerBadge openDatetime={openDatetime} />
+        <TimerBadge openDatetime={openDatetime ?? new Date()} />
       </div>
       <LinkAndGoButton
         id={id ?? "5"}
-        openDatetime={openDatetime}
+        openDatetime={openDatetime ?? new Date()}
         backgroundUrl={BACKGROUNDS[idx]}
       />
     </div>

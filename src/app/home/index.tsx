@@ -9,14 +9,12 @@ import { HomeLayout } from "@/components/layout/home-layout";
 import {
   ContentDataType,
   GetPostType,
-  useApiGetPosts,
-} from "@/hooks/api/main/useApiGetPosts";
+  useApiGetReadPosts,
+} from "@/hooks/api/main/useApiGetReadPosts";
 
 export const Home = () => {
   const scrollAreaRef = useRef(null);
-  const { data, hasNextPage, fetchNextPage } = useApiGetPosts({
-    visible: true,
-  });
+  const { data, hasNextPage, fetchNextPage } = useApiGetReadPosts();
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -29,7 +27,7 @@ export const Home = () => {
     }, 500);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [data]);
+  }, [data, fetchNextPage, hasNextPage]);
 
   return (
     <HomeLayout>

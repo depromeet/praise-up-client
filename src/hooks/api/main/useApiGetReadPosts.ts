@@ -40,17 +40,8 @@ export interface GetPostType {
 }
 const PAGE_SIZE = 4; // temp page size
 
-// unread post
-const getUnreadPost = ({ pageParam }: { pageParam: number }) => {
-  const USER_ID = Cookies.get("k-u-id");
-  return api
-    .get(
-      `/praise-up/api/v1/posts?userId=${USER_ID}&visible=false&page=${pageParam}&size=2`,
-    ) // unread post
-    .then((res) => res.data as GetPostType);
-};
 // archive post
-const getArchivePost = ({ pageParam }: { pageParam: number }) => {
+const getReadPosts = async ({ pageParam }: { pageParam: number }) => {
   const USER_ID = Cookies.get("k-u-id");
 
   return api
@@ -60,25 +51,13 @@ const getArchivePost = ({ pageParam }: { pageParam: number }) => {
     .then((res) => res.data as GetPostType);
 };
 
-export const useApiGetPosts = ({ visible = false }: { visible?: boolean }) => {
-  const unreadQuery = useInfiniteQuery({
-    queryKey: ["unread-post"],
-    queryFn: ({ pageParam }) => getUnreadPost({ pageParam }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage: GetPostType) => {
-      if (lastPage.last) return undefined;
-      return lastPage.number + 1;
-    },
-  });
-
-  const archiveQuery = useInfiniteQuery({
+export const useApiGetReadPosts = () =>
+  useInfiniteQuery({
     queryKey: ["archive-post"],
-    queryFn: ({ pageParam }) => getArchivePost({ pageParam }),
+    queryFn: ({ pageParam }) => getReadPosts({ pageParam }),
     initialPageParam: 0,
     getNextPageParam: (lastPage: GetPostType) => {
       if (lastPage.last) return undefined;
       return lastPage.number + 1;
     },
   });
-  return visible ? archiveQuery : unreadQuery;
-};
