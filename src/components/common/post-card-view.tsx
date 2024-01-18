@@ -62,7 +62,7 @@ export const PostCardView = ({
       const timer = setTimeout(() => toggleTransStyle(), 3000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isPublic]);
 
   return (
     <PostCardViewContext.Provider

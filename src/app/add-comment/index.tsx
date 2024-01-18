@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { UserSVG } from "@/assets/icons/user";
 import Marbles from "@/assets/imgs/marbles.svg?react";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
@@ -18,7 +20,7 @@ export const CommentMainPage = () => {
   }, []);
 
   return (
-    <DefaultLayout>
+    <DefaultLayout appbar={<Appbar right={<UserSVG />} />}>
       {/* post area */}
       <section className="flex flex-col justify-between gap-9">
         <h2 className="text-h2">

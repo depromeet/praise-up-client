@@ -1,7 +1,9 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { TimerCardView } from "./timer-card-view";
 
+import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
@@ -40,6 +42,7 @@ export const UnpublishedPostPage = () => {
   const {
     state: { backgroundUrl },
   } = useLocation() as { state: { backgroundUrl: string } };
+  const navigate = useNavigate();
 
   const handleShare = () => {
     if (!id) return;
@@ -48,7 +51,17 @@ export const UnpublishedPostPage = () => {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => navigate(-1)}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
       <div className="flex flex-col gap-9">
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
         <div className="flex flex-col gap-3">

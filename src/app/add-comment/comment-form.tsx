@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
+import CloseSVG from "@/assets/icons/close.svg?react";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
 import { MessageForm } from "@/components/app/add-comment/message-form";
 import { RequiredForm } from "@/components/app/add-comment/required-form";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
@@ -61,7 +63,17 @@ export const CommentFormPage = () => {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => navigate(-1)}>
+              <CloseSVG />
+            </button>
+          }
+        />
+      }
+    >
       {openCrop ? (
         <ImageCropper
           src={image}
