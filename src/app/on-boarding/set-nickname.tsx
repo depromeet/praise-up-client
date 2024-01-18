@@ -5,9 +5,11 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { Input } from "@/components/common/input";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiUserProfile } from "@/hooks/api/signup/useApiUserName";
 
 export const SetNickName = () => {
   const [name, setName] = useState("");
+  const { mutate } = useApiUserProfile();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -31,7 +33,10 @@ export const SetNickName = () => {
         </div>
       </ArticleWrapper>
       <ButtonProvider>
-        <ButtonProvider.Primary disabled={!(name.length > 0)}>
+        <ButtonProvider.Primary
+          disabled={!(name.length > 0)}
+          onClick={() => mutate(name)}
+        >
           확인
         </ButtonProvider.Primary>
       </ButtonProvider>

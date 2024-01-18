@@ -1,9 +1,9 @@
+import { useState } from "react";
+
 import { Carousel } from "@/components/app/on-boarding/clap/carousel";
 import { Background } from "@/components/app/post/keyword/background";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
-
-import { useState } from "react";
 
 export const OnBoardingClap = () => {
   const [angle, setAngle] = useState(0);

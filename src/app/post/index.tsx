@@ -1,7 +1,9 @@
 import { Fragment, useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import Back from "@/assets/icons/back.svg?react";
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageContainer } from "@/components/common/image-container";
@@ -9,10 +11,12 @@ import { ImageCropper } from "@/components/common/image-cropper";
 import { ImageInput } from "@/components/common/image-input";
 import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiBoard } from "@/hooks/api/post/useApiBoard";
 import useImageCompress from "@/hooks/useImageCompress";
 
 type postProps = {
   keyword?: string;
+  keywordId?: number;
 };
 
 export const Post = () => {
@@ -20,13 +24,18 @@ export const Post = () => {
   const [image, setImage] = useState<string>("");
   const [text, setText] = useState("");
   const [openCrop, setOpenCrop] = useState(false);
-  const keyword = useRef("");
+  const keywordData = useRef<postProps>({});
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
+  const { mutate } = useApiBoard();
 
-  if (state.keyword) {
-    keyword.current = state.keyword;
+  if (state.keyword && state.keywordId) {
+    const keywordInfo = {
+      keyword: state.keyword,
+      keywordId: state.keywordId,
+    };
+    keywordData.current = keywordInfo;
   } else {
     navigate("/error");
   }
@@ -73,21 +82,33 @@ export const Post = () => {
   // TODO: 백엔드 API 싱크 맞춘 후, 진행
   const createPost = () => {
     const blob = getBlobFromUrl(image);
-    blob
-      .then((res) => {
+    try {
+      void blob.then((res) => {
         const file = new File([res], "image.jpeg", {
           type: "image/jpeg",
         });
-        console.log(file);
-      })
-      .catch((err) => {
-        console.log(err);
+
+        const formData = new FormData();
+        formData.append("content", text);
+        formData.append("image", file);
+        formData.append("keywordId", `${keywordData.current.keywordId}`);
+        mutate(formData);
       });
-    navigate("/post/done");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout appbar={false}>
+      <Appbar
+        left={
+          <Back
+            className="cursor-pointer"
+            onClick={() => navigate("/post/keyword")}
+          />
+        }
+      />
       {openCrop ? (
         <ImageCropper
           src={image}
@@ -98,7 +119,7 @@ export const Post = () => {
         <Fragment>
           <ArticleWrapper>
             <Header
-              text={`오늘 칭찬받을 {${keyword.current}}\\n 순간을 공유해주세요`}
+              text={`오늘 칭찬받을 {${keywordData.current.keyword}}\\n 순간을 공유해주세요`}
             />
             {image.length > 0 ? (
               <ImageContainer src={image} onChange={changeImage} />
