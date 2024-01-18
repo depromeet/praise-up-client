@@ -6,7 +6,6 @@ import { useApiGetUnreadPosts } from "@/hooks/api/main/useApiGetUnreadPosts";
 
 export const ToBeOpened = () => {
   const { data } = useApiGetUnreadPosts();
-  console.log(data);
 
   return (
     <div className="mb-4 flex flex-col gap-5">

@@ -11,7 +11,6 @@ interface TimeLeftType {
 export function useTimer(openDatetime: Date) {
   const [delay] = useState<number | null>(1000);
   const [diff, setDiff] = useState(0);
-  console.log(+openDatetime - +new Date());
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
     hour: 0,
     min: 0,

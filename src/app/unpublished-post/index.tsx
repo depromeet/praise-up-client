@@ -10,6 +10,7 @@ import {
   GetOnePostType,
   useApiGetOnePost,
 } from "@/hooks/api/unpublished-post/useApiGetOnePost";
+import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 
 interface DataType extends GetOnePostType {
   id: string;
@@ -41,7 +42,8 @@ export const UnpublishedPostPage = () => {
   } = useLocation() as { state: { backgroundUrl: string } };
 
   const handleShare = () => {
-    // TODO: 클립보드에 링크 복사하기
+    if (!id) return;
+    void UseCurrentLinkCopy(+id);
     toast("링크가 복사되었어요");
   };
 

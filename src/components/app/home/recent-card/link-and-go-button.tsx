@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ShareSVG } from "@/assets/icons/share";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { toast } from "@/helpers/toast";
+import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
@@ -29,7 +30,7 @@ export const LinkAndGoButton = ({
   }, [diff]);
 
   const handleShare = () => {
-    // TODO: 클립보드에 링크 복사하기
+    void UseCurrentLinkCopy(+id);
     toast("링크가 복사되었어요");
   };
 
