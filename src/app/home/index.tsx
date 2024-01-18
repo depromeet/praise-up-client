@@ -14,7 +14,7 @@ import {
 
 export const Home = () => {
   const scrollAreaRef = useRef(null);
-  const { data, hasNextPage, fetchNextPage } = useGetPost({});
+  const { data, hasNextPage, fetchNextPage } = useGetPost({ visible: true });
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -38,8 +38,8 @@ export const Home = () => {
           archive={
             (data?.pages.reduce(
               (contents: ContentDataType[], currPage: GetPostType) => [
-                ...contents,
-                ...currPage.content,
+                ...(contents ?? []),
+                ...(currPage.content ?? []),
               ],
               [],
             ) as ContentDataType[]) ?? []

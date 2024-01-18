@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 import { api } from "@/api";
 
@@ -6,6 +7,7 @@ export interface ContentDataType {
   date: string;
   keyword: string;
   commentCount: number;
+  postCreatedDate: string;
 }
 
 export interface GetPostType {
@@ -39,18 +41,26 @@ export interface GetPostType {
 const PAGE_SIZE = 4; // temp page size
 
 // unread post
-const getUnreadPost = ({ pageParam }: { pageParam: number }) =>
-  api
-    .get(`posts?page=${pageParam}&size=2`) // unread post
+const getUnreadPost = ({ pageParam }: { pageParam: number }) => {
+  const USER_ID = Cookies.get("k-u-id");
+  return api
+    .get(
+      `/praise-up/api/v1/posts?userId=${USER_ID}&visible=false&page=${pageParam}&size=2`,
+    ) // unread post
     .then((res) => res.data as GetPostType);
-
+};
 // archive post
-const getArchivePost = ({ pageParam }: { pageParam: number }) =>
-  api
-    .get(`/posts?page=${pageParam}&size=${PAGE_SIZE}`) // read post (archive)
-    .then((res) => res.data as GetPostType);
+const getArchivePost = ({ pageParam }: { pageParam: number }) => {
+  const USER_ID = Cookies.get("k-u-id");
 
-export const useGetPost = ({ unread = false }: { unread?: boolean }) => {
+  return api
+    .get(
+      `/praise-up/api/v1/posts?userId=${USER_ID}&visible=true&page=${pageParam}&size=${PAGE_SIZE}`,
+    ) // read post (archive)
+    .then((res) => res.data as GetPostType);
+};
+
+export const useGetPost = ({ visible = false }: { visible?: boolean }) => {
   const unreadQuery = useInfiniteQuery({
     queryKey: ["unread-post"],
     queryFn: ({ pageParam }) => getUnreadPost({ pageParam }),
@@ -70,5 +80,5 @@ export const useGetPost = ({ unread = false }: { unread?: boolean }) => {
       return lastPage.number + 1;
     },
   });
-  return unread ? unreadQuery : archiveQuery;
+  return visible ? archiveQuery : unreadQuery;
 };
