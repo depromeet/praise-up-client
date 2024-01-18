@@ -1,0 +1,26 @@
+.main-swiper {
+  .swiper {
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    cursor: grab;
+  }
+
+  .swiper:active {
+    cursor: grabbing;
+  }
+
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -16px;
+    position: relative;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: rgba(211, 214, 218, 1);
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: rgba(131, 139, 152, 1);
+  }
+}

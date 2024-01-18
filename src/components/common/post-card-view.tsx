@@ -1,7 +1,15 @@
 import clsx from "clsx";
-import { ReactNode, createContext, useEffect, useReducer, useRef } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
-import { KebabSVG } from "@/assets/kebab";
+import { Menu } from "@/components/app/unpublished-post/menu";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
@@ -23,7 +31,8 @@ export interface PostCardContextProps {
   imageUrl: string;
   content: string;
   isPublic: boolean;
-  toggleShowMenu: (showMenu?: boolean) => void;
+  isReadyCard: boolean;
+  setShowMenu: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostCardViewContext = createContext<
@@ -40,7 +49,7 @@ export const PostCardView = ({
   isPublic = false, // 외부에 공개되는 게시글인지
   children,
 }: PostCardViewProps) => {
-  const [showMenu, toggleShowMenu] = useReducer((prev) => !prev, false);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const [transStyle, toggleTransStyle] = useReducer(
     (prev: string) =>
       prev.includes("rotateY(180deg)") ? "none" : "rotateY(180deg)",
@@ -64,8 +73,9 @@ export const PostCardView = ({
         showMenu,
         imageUrl,
         content,
-        toggleShowMenu,
+        setShowMenu,
         isPublic,
+        isReadyCard,
       }}
     >
       <div
@@ -88,8 +98,9 @@ const Title = () => {
     username,
     keyword,
     showMenu,
-    toggleShowMenu,
+    setShowMenu,
     isPublic,
+    isReadyCard,
   }: PostCardContextProps = usePostCardView();
 
   return (
@@ -102,22 +113,12 @@ const Title = () => {
         </div>
       </div>
 
-      {!isPublic && (
-        <div className="h-fit cursor-pointer" onClick={() => toggleShowMenu()}>
-          <KebabSVG />
-        </div>
-      )}
-
-      {showMenu && (
-        <div
-          onClick={() => {
-            console.log("삭제하기 클릭");
-          }}
-          className="fixed right-9 top-[240px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
-        >
-          <span className="text-b3-compact">삭제하기</span>
-        </div>
-      )}
+      <Menu
+        isPublic={isPublic}
+        isReadyCard={isReadyCard}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+      />
     </div>
   );
 };
@@ -153,6 +154,7 @@ const Preview = ({ imageUrl }: { imageUrl: string }) => {
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     />
   );

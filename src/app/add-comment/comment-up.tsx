@@ -1,55 +1,130 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { MouseEvent, useEffect, useState, TouchEvent, useRef } from "react";
 
-import BgCirclesSVG from "@/assets/imgs/marbles.svg?react";
+import { CommentDoneView } from "./comment-done";
+
+import Marbles from "@/assets/imgs/marbles.svg?react";
 import { DraggableMarble } from "@/components/app/add-comment/draggable-marble";
 import { LayeredBackground } from "@/components/app/add-comment/layered-background";
-import { AnimatedArrow } from "@/components/common/animated-arrow";
+import { Arrow } from "@/components/common/arrow";
 import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
 
-const FLY_DURATION = 1; // second
+const FLY_DURATION = 0.5; // second
+const ARROW_DISAPPEAR_DIST = 100; // the distance arrow disappears when marble moves
+const DONE_ANIMATION = {
+  transition: "all 0.5s ease-in-out 0s",
+  duration: 200,
+  transform: "translateX(-100%)",
+};
 
 export const CommentUpPage = () => {
   const [isReached, setIsReached] = useState<boolean>(false);
+  const [arrowShow, setArrowShow] = useState<boolean>(true);
+  const [move, setMove] = useState<boolean>(false);
 
-  const navigate = useNavigate();
-
-  // navigate after animation (duration: FLY_DURATION)
   useEffect(() => {
     if (isReached) {
-      void handleMove();
+      setArrowShow(false);
+      void done();
+    } else {
+      setArrowShow(true);
     }
   }, [isReached]);
 
-  const handleMove = async () => {
+  // desktop mouse event
+  const onMouseDown = (mouseDownEvent: MouseEvent<HTMLElement>) => {
+    const onMouseMove = (mouseMoveEvent: MouseEvent<HTMLElement>) => {
+      if (
+        mouseDownEvent.screenY - mouseMoveEvent.screenY >=
+        ARROW_DISAPPEAR_DIST
+      )
+        setArrowShow(false);
+    };
+
+    const onMouseUp = (mouseUpEvent: MouseEvent<HTMLElement>) => {
+      if (
+        mouseDownEvent.screenY - mouseUpEvent.screenY >= ARROW_DISAPPEAR_DIST ||
+        isReached
+      )
+        setArrowShow(false);
+      else setArrowShow(true);
+
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp, { once: true });
+  };
+
+  // mobile touch event
+  const onTouchStart = (startT: TouchEvent) => {
+    const startTarget = startT.changedTouches[0];
+    const onTouchMove = (t: TouchEvent) => {
+      const target = t.changedTouches[0];
+      if (startTarget.clientY - target.clientY >= ARROW_DISAPPEAR_DIST)
+        setArrowShow(false);
+    };
+
+    const onTouchEnd = (t: TouchEvent) => {
+      const target = t.changedTouches[0];
+
+      if (
+        startTarget.clientY - target.clientY >= ARROW_DISAPPEAR_DIST ||
+        isReached
+      )
+        setArrowShow(false);
+      else setArrowShow(true);
+
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onTouchEnd, { once: true });
+  };
+
+  const done = async () => {
     await new Promise(() =>
       setTimeout(() => {
-        navigate("/clap/done");
+        setMove(true);
       }, FLY_DURATION * 1000),
     );
   };
 
   return (
-    <DefaultLayout>
-      <LayeredBackground>
-        <BgCirclesSVG className="absolute left-0 top-0 rotate-180 -scale-x-100" />
-        <div className="mt-[32px] flex h-full w-full flex-col items-center justify-center gap-[46px]">
-          <div className="flex flex-col items-center justify-center gap-[50px]">
-            <AnimatedArrow />
-            <DraggableMarble
-              isReached={isReached}
-              setIsReached={setIsReached}
-              flyDuration={FLY_DURATION}
-              nickname="쥐렁이"
-            />
+    <>
+      <DefaultLayout className="overflow-hidden">
+        <LayeredBackground>
+          {/* backgroun area */}
+          <div className="absolute left-0 top-0 w-full ">
+            <Marbles className=" -z-10 w-full rotate-180" />
+            <div
+              className={`absolute left-0 top-0 z-10 h-full w-full bg-[linear-gradient(180deg,_#ffffff60_15.62%,_#ffffff00_81.25%)] `}
+            ></div>
           </div>
-          <Header
-            className="text-center"
-            text={`{구슬을 위로 밀어서}\\n{칭찬 구슬을 전달하세요!}`}
-          />
-        </div>
-      </LayeredBackground>
-    </DefaultLayout>
+
+          <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
+            <div
+              className="relative mx-auto flex h-full w-fit flex-col items-center justify-end gap-[50px]"
+              onMouseDown={onMouseDown}
+              onTouchStart={onTouchStart}
+            >
+              {arrowShow && <Arrow />}
+              <DraggableMarble
+                isReached={isReached}
+                setIsReached={setIsReached}
+                flyDuration={FLY_DURATION}
+                nickname="쥐렁이"
+              />
+            </div>
+            <Header
+              className="select-none text-center"
+              text={`{구슬을 위로 밀어서}\\n{칭찬 구슬을 전달하세요!}`}
+            />
+          </section>
+        </LayeredBackground>
+
+        <CommentDoneView transition={move ? DONE_ANIMATION : null} />
+      </DefaultLayout>
+    </>
   );
 };

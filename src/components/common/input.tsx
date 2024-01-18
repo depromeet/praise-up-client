@@ -20,7 +20,7 @@ export const Input = ({ limit, value, onChange, ...props }: TextInputProps) => {
         }}
         {...props}
       />
-      <span className="text-num-b3 tabular-nums">
+      <span className="text-num-b3 tabular-nums text-gray-600">
         {value.length ?? 0}/{limit}
       </span>
     </div>

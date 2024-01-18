@@ -1,39 +1,32 @@
 import _ from "lodash";
-import { useState, useEffect, useCallback, RefObject } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface IUseWindowScrollYProps {
   point?: number;
-  scrollRef: RefObject<HTMLDivElement>;
 }
 
-export const useWindowScrollY = ({
-  point = 0,
-  scrollRef,
-}: IUseWindowScrollYProps) => {
+export const useWindowScrollY = ({ point = 0 }: IUseWindowScrollYProps) => {
   const [isDown, setIsDown] = useState(false);
   const [scrollY, setScrollY] = useState(window.scrollY);
   const [isOverflow, setIsOverflow] = useState(false);
 
   const onScroll = useCallback(() => {
-    const currentScrollY = scrollRef.current?.scrollTop || 0;
+    const currentScrollY = window.scrollY;
 
     setIsOverflow(() => point < currentScrollY);
     setScrollY((prevScrollY) => {
       setIsDown(() => prevScrollY <= currentScrollY);
       return currentScrollY;
     });
-  }, [setScrollY, setIsDown, setIsOverflow, point, scrollRef]);
+  }, [setScrollY, setIsDown, setIsOverflow, point]);
 
   useEffect(() => {
-    scrollRef.current?.addEventListener("scroll", _.debounce(onScroll, 50));
+    window.addEventListener("scroll", _.debounce(onScroll, 50));
 
     return () => {
-      scrollRef.current?.removeEventListener(
-        "scroll",
-        _.debounce(onScroll, 50),
-      );
+      window.removeEventListener("scroll", _.debounce(onScroll, 50));
     };
-  }, [onScroll, scrollRef]);
+  }, [onScroll]);
 
   return { isDown, isOverflow, scrollY };
 };

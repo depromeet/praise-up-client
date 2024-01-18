@@ -47,7 +47,9 @@ export const LinkAndGoButton = ({
           </button>
           <ButtonProvider.Primary
             className="flex items-center justify-center "
-            onClick={() => navigate(`seal/${id}`, { state: { backgroundUrl } })}
+            onClick={() =>
+              navigate(`/seal/${id}`, { state: { backgroundUrl } })
+            }
           >
             게시물 보기
           </ButtonProvider.Primary>
