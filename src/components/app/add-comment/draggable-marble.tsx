@@ -46,11 +46,21 @@ export const DraggableMarble = ({
         setPosY(0);
       else setIsReached(true);
 
-      document.removeEventListener("mousemove", mouseMoveHandler);
+      document.removeEventListener(
+        "mousemove",
+        mouseMoveHandler as unknown as EventListenerOrEventListenerObject,
+      );
     };
 
-    document.addEventListener("mousemove", mouseMoveHandler);
-    document.addEventListener("mouseup", mouseUpHandler, { once: true });
+    document.addEventListener(
+      "mousemove",
+      mouseMoveHandler as unknown as EventListenerOrEventListenerObject,
+    );
+    document.addEventListener(
+      "mouseup",
+      mouseUpHandler as unknown as EventListenerOrEventListenerObject,
+      { once: true },
+    );
   };
 
   const onTouchStart = (touchStartEvent: TouchEvent) => {
@@ -71,11 +81,21 @@ export const DraggableMarble = ({
         setTouchedY(0);
       else setIsReached(true);
 
-      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener(
+        "touchmove",
+        onTouchMove as unknown as EventListenerOrEventListenerObject,
+      );
     };
 
-    document.addEventListener("touchmove", onTouchMove);
-    document.addEventListener("touchend", onTouchEnd, { once: true });
+    document.addEventListener(
+      "touchmove",
+      onTouchMove as unknown as EventListenerOrEventListenerObject,
+    );
+    document.addEventListener(
+      "touchend",
+      onTouchEnd as unknown as EventListenerOrEventListenerObject,
+      { once: true },
+    );
   };
 
   return (

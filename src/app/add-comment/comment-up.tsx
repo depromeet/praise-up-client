@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState, TouchEvent, useRef } from "react";
+import { MouseEvent, useEffect, useState, TouchEvent } from "react";
 
 import { CommentDoneView } from "./comment-done";
 
@@ -49,11 +49,21 @@ export const CommentUpPage = () => {
         setArrowShow(false);
       else setArrowShow(true);
 
-      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener(
+        "mousemove",
+        onMouseMove as unknown as EventListenerOrEventListenerObject,
+      );
     };
 
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp, { once: true });
+    window.addEventListener(
+      "mousemove",
+      onMouseMove as unknown as EventListenerOrEventListenerObject,
+    );
+    window.addEventListener(
+      "mouseup",
+      onMouseUp as unknown as EventListenerOrEventListenerObject,
+      { once: true },
+    );
   };
 
   // mobile touch event
@@ -75,11 +85,21 @@ export const CommentUpPage = () => {
         setArrowShow(false);
       else setArrowShow(true);
 
-      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener(
+        "touchmove",
+        onTouchMove as unknown as EventListenerOrEventListenerObject,
+      );
     };
 
-    window.addEventListener("touchmove", onTouchMove);
-    window.addEventListener("touchend", onTouchEnd, { once: true });
+    window.addEventListener(
+      "touchmove",
+      onTouchMove as unknown as EventListenerOrEventListenerObject,
+    );
+    window.addEventListener(
+      "touchend",
+      onTouchEnd as unknown as EventListenerOrEventListenerObject,
+      { once: true },
+    );
   };
 
   const done = async () => {
