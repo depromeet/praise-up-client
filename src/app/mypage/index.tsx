@@ -8,11 +8,10 @@ import { Appbar } from "@/components/common/appbar";
 import { DefaultLayout } from "@/components/layout/default";
 
 const User = ({ name }: { name: string }) => {
-  // TODO: add link to
   return (
     <div className="flex justify-between">
       <span className="text-h2">{name}</span>
-      <Link to={""}>
+      <Link to="/mypage/edit">
         <EditSvg />
       </Link>
     </div>
