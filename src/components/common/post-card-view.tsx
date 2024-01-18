@@ -16,7 +16,7 @@ interface PostCardViewProps {
   id?: string;
   username?: string;
   keyword: string;
-  imageUrl?: string; // TODO: required props
+  imageUrl: string; // TODO: required props
   content: string;
   isReadyCard?: boolean;
   isPublic?: boolean;
