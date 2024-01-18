@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import ErrorImg from "@/assets/images/404.svg?react";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
+import useUserStore from "@/features/useUserStore";
 
 export const NotFound = () => {
   const navigate = useNavigate();
+  const { isLogin } = useUserStore();
 
   return (
     <DefaultLayout>
@@ -19,7 +21,7 @@ export const NotFound = () => {
       <ButtonProvider>
         {/* TODO: 카카오 로그인 연동 후, 로그인이 되지 않은 상태일 경우에는 다른 메세지 제공 */}
         <ButtonProvider.Primary onClick={() => navigate("/")}>
-          메인 홈으로 돌아가기
+          {isLogin ? "메인 홈으로 돌아가기" : "처음으로 돌아가기"}
         </ButtonProvider.Primary>
       </ButtonProvider>
     </DefaultLayout>
