@@ -1,9 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" },
-    {
-      "source": "/praise-up/api/:path*",
-      "destination": "https://api.praise-up.app/:path*"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
