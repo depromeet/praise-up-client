@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { api } from "@/api";
 
 export interface ContentDataType {
+  postId: number;
   date: string;
   keyword: string;
   commentCount: number;
