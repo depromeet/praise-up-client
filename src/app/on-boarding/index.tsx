@@ -23,7 +23,11 @@ export const OnBoarding = () => {
             text="praise up에 오신 것을\n환영해요"
             className="!text-h3 text-center"
           />
-          <FirstImg width={193} height={161} />
+          <FirstImg
+            width={193}
+            height={161}
+            className="absolute left-1/2 top-1/2 -z-10 w-full -translate-x-1/2 -translate-y-1/2"
+          />
         </ArticleWrapper>
         <ButtonProvider isOnBoarding={true} className="!bg-transparent">
           <ButtonProvider.Primary
@@ -47,7 +51,11 @@ export const OnBoarding = () => {
             text="칭찬 게시물을 작성하고\n칭찬 구슬을 모아보세요"
             className="!text-h3 text-center"
           />
-          <TwiceImg width={360} height={401} />
+          <TwiceImg
+            width={360}
+            height={401}
+            className="absolute left-1/2 top-1/2 -z-10 w-full -translate-x-1/2 -translate-y-1/2"
+          />
         </ArticleWrapper>
         <ButtonProvider className="!bg-transparent">
           <ButtonProvider.Primary
@@ -71,7 +79,11 @@ export const OnBoarding = () => {
             text="다음 날 자정에 게시물에 달린\n 칭찬 구슬을 확인하세요"
             className="!text-h3 text-center"
           />
-          <ThirdImg width={327} height={280} />
+          <ThirdImg
+            width={327}
+            height={280}
+            className="absolute left-1/2 top-1/2 -z-10 w-full -translate-x-1/2 -translate-y-1/2"
+          />
         </ArticleWrapper>
         <ButtonProvider className="!bg-transparent">
           <ButtonProvider.Primary
@@ -95,7 +107,11 @@ export const OnBoarding = () => {
             text="첫 번째 칭찬 게시물을\n작성하러 가볼까요?"
             className="!text-h3 text-center"
           />
-          <FourthImg width={320} height={324} />
+          <FourthImg
+            width={320}
+            height={324}
+            className="absolute left-1/2 top-1/2 -z-10 w-full -translate-x-1/2 -translate-y-1/2"
+          />
         </ArticleWrapper>
         <ButtonProvider className="!bg-transparent">
           <ButtonProvider.Primary
@@ -110,7 +126,7 @@ export const OnBoarding = () => {
   };
 
   return (
-    <DefaultLayout className="overflow-x-hidden">
+    <DefaultLayout className="overflow-hidden">
       <Background angle={angle} />
       {chapter === 0 && <FirstOnBoarding />}
       {chapter === 1 && <TwiceOnBoarding />}
