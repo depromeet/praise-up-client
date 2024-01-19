@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
+import { NotFound } from "@/app/error/404";
 import { UserSVG } from "@/assets/icons/user";
 import Marbles from "@/assets/imgs/marbles.svg?react";
 import { Appbar } from "@/components/common/appbar";
@@ -9,15 +10,24 @@ import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetOnePost } from "@/hooks/api/unpublished-post/useApiGetOnePost";
 
+interface PostIdState {
+  state: {
+    postId: string;
+  };
+}
+
 export const CommentMainPage = () => {
   const navigate = useNavigate();
-  // TODO: 실제 postId를 받아오기
-  const postId = "6";
+  const location = useLocation() as PostIdState;
+  const postId = location.state.postId;
+
   const { data } = useApiGetOnePost(postId);
 
   useEffect(() => {
     sessionStorage.setItem("comment_id", postId);
-  }, []);
+  }, [postId]);
+
+  if (!postId) return <NotFound />;
 
   return (
     <DefaultLayout appbar={<Appbar right={<UserSVG />} />}>

@@ -70,7 +70,7 @@ export const Carousel = ({ setAngle }: carouselProps) => {
             backgroundRepeat: "no-repeat",
             backgroundOrigin: "content-box",
           }}
-          className="z-0 px-[46px] h-full w-full"
+          className="z-0 h-full w-full px-[46px]"
         >
           <Header
             text="이미지로 칭찬 메세지를 남기고\n칭찬 구슬을 보내보세요!"
