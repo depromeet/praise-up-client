@@ -12,7 +12,7 @@
   ],
   "headers": [
     {
-      "source": "praise-up/api/(.*)",
+      "source": "/praise-up/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
