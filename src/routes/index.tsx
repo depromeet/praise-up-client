@@ -24,10 +24,6 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
         path: "/",
         element: <OnBoarding />,
       },
@@ -59,21 +55,22 @@ const router = createBrowserRouter([
         path: "seal/:id",
         element: <UnpublishedPostPage />,
       },
+
       {
-        path: "clap",
+        path: "/:path",
+        element: <OnBoardingClap />,
+      },
+      {
+        path: "/clap",
         element: <CommentMainPage />,
       },
       {
-        path: "clap/write",
+        path: "/clap/write",
         element: <CommentFormPage />,
       },
       {
-        path: "clap/up",
+        path: "/clap/up",
         element: <CommentUpPage />,
-      },
-      {
-        path: "clap/onboarding",
-        element: <OnBoardingClap />,
       },
       {
         path: "/archive",
@@ -85,6 +82,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage/claps",
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
