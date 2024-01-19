@@ -34,9 +34,9 @@ export const RecentCard = ({
   }, [postCreatedDate]);
 
   return (
-    <div className="rounded-4 flex w-full flex-col items-center gap-4 bg-white p-4">
+    <div className="flex w-full flex-col items-center gap-4 rounded-4 bg-white p-4">
       <div
-        className="rounded-3 flex aspect-square w-full flex-col justify-between bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+        className="flex aspect-square w-full flex-col justify-between rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
         style={{
           backgroundImage: `url(${BACKGROUNDS[idx]})`,
         }}
