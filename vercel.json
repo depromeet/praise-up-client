@@ -2,11 +2,11 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" },
     {
-      "source": "/api/:path*",
+      "source": "/praise-up/api/:path*",
       "destination": "https://api.praise-up.app/:path*"
     },
     {
-      "source": "/api/:path*",
+      "source": "/praise-up/api/:path*",
       "destination": "https://api.praise-up.app/:path*/"
     }
   ]
