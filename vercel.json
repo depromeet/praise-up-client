@@ -1,9 +1,9 @@
 {
-  "routes": [
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" },
     {
-      "source": "/praise-up/api/(.*)",
-      "destination": "https://api.praise-up.app/praise-up/api/$1"
+      "source": "/praise-up/api/:path*",
+      "destination": "https://api.praise-up.app/:path*"
     }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  ]
 }
