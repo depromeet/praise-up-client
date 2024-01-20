@@ -48,7 +48,7 @@ const getReadPosts = async ({ pageParam }: { pageParam: number }) => {
 
   return api
     .get(
-      `/praise-up/api/v1/posts?userId=${USER_ID}&visible=true&page=${pageParam}&size=${PAGE_SIZE}`,
+      `/praise-up/api/v1/posts?userId=${USER_ID}&isRead=true&page=${pageParam}&size=${PAGE_SIZE}`,
     ) // read post (archive)
     .then((res) => res.data as GetPostType);
 };

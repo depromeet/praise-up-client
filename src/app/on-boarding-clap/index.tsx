@@ -6,12 +6,16 @@ import { Carousel } from "@/components/app/on-boarding/clap/carousel";
 import { Background } from "@/components/app/post/keyword/background";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
 import { useDecodeURI } from "@/hooks/useDecodeURI";
 
 export const OnBoardingClap = () => {
   const [angle, setAngle] = useState(0);
   const navigate = useNavigate();
   const postId = useDecodeURI("postId");
+  const {
+    data: { userNickname },
+  } = useApiGetOnePost(postId);
 
   if (!postId) return <NotFound />;
 
@@ -23,7 +27,7 @@ export const OnBoardingClap = () => {
       className="overflow-x-hidden"
     >
       <Background angle={angle} />
-      <Carousel setAngle={setAngle} />
+      <Carousel setAngle={setAngle} userNickname={userNickname} />
       <ButtonProvider className="z-10 !bg-transparent px-5">
         <ButtonProvider.Primary
           onClick={() => navigate("/clap", { state: { postId } })}

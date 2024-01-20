@@ -9,7 +9,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
-import { useApiGetOnePost } from "@/hooks/api/unpublished-post/useApiGetOnePost";
+import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 
 export const UnpublishedPostPage = () => {
