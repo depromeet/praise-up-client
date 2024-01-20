@@ -1,7 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { postProps } from ".";
-
 import Close from "@/assets/icons/close.svg?react";
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
 import { DoneContainer } from "@/components/app/post/done/DoneContainer";
