@@ -1,15 +1,9 @@
 import { EmptyCard } from "@/components/app/home/empty-card";
 import { PastCard } from "@/components/app/home/past-card";
-
-interface ArchiveDataType {
-  imgUrl: string;
-  count: number;
-  date: Date;
-  keyword: string;
-}
+import { ContentDataType } from "@/hooks/api/main/useApiGetReadPosts";
 
 interface ToMyArchiveProps {
-  archive: ArchiveDataType[]; // temp data type
+  archive: ContentDataType[];
 }
 
 export const ToMyArchive = ({ archive }: ToMyArchiveProps) => {
@@ -23,8 +17,8 @@ export const ToMyArchive = ({ archive }: ToMyArchiveProps) => {
         />
       ) : (
         <div className="grid grid-cols-2 gap-2">
-          {[...archive].reverse().map((d, i) => (
-            <PastCard key={i} {...d} />
+          {archive.map((post, idx) => (
+            <PastCard key={idx} {...post} />
           ))}
         </div>
       )}

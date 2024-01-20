@@ -6,6 +6,7 @@ import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Archive } from "@/app/archive";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
+import { MyPage } from "@/app/mypage";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
@@ -22,10 +23,6 @@ const router = createBrowserRouter([
     element: <GlobalLayout />,
     errorElement: <NotFound />,
     children: [
-      {
-        path: "*",
-        element: <NotFound />,
-      },
       {
         path: "/",
         element: <OnBoarding />,
@@ -58,25 +55,37 @@ const router = createBrowserRouter([
         path: "seal/:id",
         element: <UnpublishedPostPage />,
       },
+
       {
-        path: "clap",
+        path: "/:path",
+        element: <OnBoardingClap />,
+      },
+      {
+        path: "/clap",
         element: <CommentMainPage />,
       },
       {
-        path: "clap/write",
+        path: "/clap/write",
         element: <CommentFormPage />,
       },
       {
-        path: "clap/up",
+        path: "/clap/up",
         element: <CommentUpPage />,
-      },
-      {
-        path: "clap/onboarding",
-        element: <OnBoardingClap />,
       },
       {
         path: "/archive",
         element: <Archive />,
+      },
+      {
+        path: "/mypage",
+        element: <MyPage />,
+      },
+      {
+        path: "/mypage/claps",
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

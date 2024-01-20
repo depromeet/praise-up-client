@@ -1,7 +1,7 @@
 import { MarbleSVG } from "@/assets/icons/marble";
 
 interface CountBadgeProps {
-  count: string;
+  count: number;
 }
 
 export const CountBadge = ({ count }: CountBadgeProps) => {

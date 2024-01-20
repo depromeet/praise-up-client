@@ -2,12 +2,13 @@ import { ClockSVG } from "@/assets/clock";
 import { useTimer } from "@/hooks/useTimer";
 
 interface TimerCardProps {
-  openDate: string;
+  openDateTime: Date;
 }
 
-export const TimerCardView = ({ openDate }: TimerCardProps) => {
-  const { timeLeft } = useTimer(openDate);
+export const TimerCardView = ({ openDateTime }: TimerCardProps) => {
+  const { timeLeft, diff } = useTimer(openDateTime);
 
+  console.log(openDateTime, diff, timeLeft);
   return (
     <div className="flex items-center gap-2 rounded-3 bg-blue-400 px-4 py-2 text-secondary">
       <div className="flex items-center gap-0.5">

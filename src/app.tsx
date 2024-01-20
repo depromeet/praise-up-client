@@ -2,7 +2,6 @@ import "@/style/tailwindcss.css";
 import "@/style/global.css";
 
 import { AnimatePresence } from "framer-motion";
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 

@@ -1,6 +1,6 @@
 import { useTimer } from "@/hooks/useTimer";
 
-export const TimerBadge = ({ openDatetime }: { openDatetime: string }) => {
+export const TimerBadge = ({ openDatetime }: { openDatetime: Date }) => {
   const { diff, timeLeft } = useTimer(openDatetime);
 
   return (
