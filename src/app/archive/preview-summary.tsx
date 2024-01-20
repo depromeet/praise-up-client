@@ -16,7 +16,7 @@ type Props = {
 
 export const PreviewSummary = ({ marbleNum, onChangeView }: Props) => {
   UseScrollToTop();
-  const { isOverflow } = useWindowScrollY({ point: 40 });
+  const { isOverflow } = useWindowScrollY({ point: 39 });
 
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
