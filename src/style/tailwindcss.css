@@ -176,6 +176,10 @@
     background-image: url("@/assets/images/marble-detail-bg.jpg");
   }
 
+  .bg-archive-marble-empty-case {
+    background-image: url("@/assets/images/marble-empty-case.jpg");
+  }
+
   @keyframes fadeInUp {
     0% {
       opacity: 0;
