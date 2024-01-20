@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { CommentMainPage } from "@/app/add-comment";
-import { CommentFormPage } from "@/app/add-comment/comment-form";
-import { CommentUpPage } from "@/app/add-comment/comment-up";
 import { Archive } from "@/app/archive";
+import { CommentMainPage } from "@/app/comment";
+import { CommentFormPage } from "@/app/comment/comment-form";
+import { CommentUpPage } from "@/app/comment/comment-up";
+import { UnpublishedPostPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
@@ -13,7 +14,6 @@ import { OnBoardingClap } from "@/app/on-boarding-clap";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
 import { KeyWord } from "@/app/post/keyword";
-import { UnpublishedPostPage } from "@/app/unpublished-post";
 import { KakaoAuth } from "@/components/app/login/kakao/kakao-auth";
 import { GlobalLayout } from "@/components/layout";
 

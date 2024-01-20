@@ -26,7 +26,7 @@ export function useTimer(openDatetime: Date) {
     () => {
       setDiff((diff) => diff - 1);
       setTimeLeft({
-        hour: Math.floor((diff / (60 * 60)) % 24),
+        hour: Math.floor((diff / (60 * 60)) % 48),
         min: Math.floor((diff / 60) % 60),
         sec: Math.floor(diff % 60),
       });

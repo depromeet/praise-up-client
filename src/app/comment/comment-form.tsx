@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
-import { LayeredBackground } from "@/components/app/add-comment/layered-background";
-import { MessageForm } from "@/components/app/add-comment/message-form";
-import { RequiredForm } from "@/components/app/add-comment/required-form";
+import { LayeredBackground } from "@/components/app/comment/layered-background";
+import { MessageForm } from "@/components/app/comment/message-form";
+import { RequiredForm } from "@/components/app/comment/required-form";
 import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";

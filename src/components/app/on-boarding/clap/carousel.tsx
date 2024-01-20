@@ -11,9 +11,10 @@ import "@/style/swiper/on-boarding.scss";
 
 type carouselProps = {
   setAngle: React.Dispatch<React.SetStateAction<number>>;
+  userNickname: string;
 };
 
-export const Carousel = ({ setAngle }: carouselProps) => {
+export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
   return (
     <Swiper
       slidesPerView={1}
@@ -38,7 +39,7 @@ export const Carousel = ({ setAngle }: carouselProps) => {
           className="z-0 h-full w-full"
         >
           <Header
-            text="지영님의 게시물에\n칭찬 구슬을 남기러 오셨군요!"
+            text={`${userNickname}님의 게시물에\\n칭찬 구슬을 남기러 오셨군요!`}
             className="!text-h3 z-10 mt-20 text-center"
           />
         </ArticleWrapper>
