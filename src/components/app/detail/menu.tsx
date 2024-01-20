@@ -6,7 +6,7 @@ import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
 import { useModal } from "@/hooks/modal/useModal";
 
 interface MenuProps {
-  postId?: number;
+  postId: number;
   isPublic: boolean;
   isReadyCard: boolean;
   showMenu: boolean;

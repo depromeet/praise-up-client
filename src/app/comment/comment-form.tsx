@@ -6,11 +6,13 @@ import CloseSVG from "@/assets/icons/close.svg?react";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { MessageForm } from "@/components/app/comment/message-form";
 import { RequiredForm } from "@/components/app/comment/required-form";
-import { Appbar } from "@/components/common/appbar";
+import { BluredAppbar } from "@/components/common/blured-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
+import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
+import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 const DUMMY_DATA = {
@@ -27,10 +29,37 @@ export const CommentFormPage = () => {
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
+  const [render, modal] = useModal();
 
   useEffect(() => {
     setRequired(nickname.length > 0 && image.length > 0);
   }, [nickname, image]);
+
+  const handleModal = async () => {
+    const result = await modal(
+      <ConfirmModal
+        title="칭찬 반응 작성을 그만둘까요?"
+        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
+        buttons={[
+          <SubButton
+            key="unpublished-post-cancel"
+            label="계속 작성"
+            value="cancel"
+          />,
+          <MainButton
+            key="unpublished-post-delete"
+            label="작성 종료"
+            value="confirm"
+          />,
+        ]}
+      />,
+    );
+    if (result === "cancel") return;
+    sessionStorage.removeItem("nickname");
+    sessionStorage.removeItem("content");
+    sessionStorage.removeItem("imageUrl");
+    navigate(-1);
+  };
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,12 +94,9 @@ export const CommentFormPage = () => {
   return (
     <DefaultLayout
       appbar={
-        <Appbar
-          left={
-            <button onClick={() => navigate(-1)}>
-              <CloseSVG />
-            </button>
-          }
+        <BluredAppbar
+          left={<CloseSVG onClick={handleModal} />}
+          title="칭찬 반응 남기기"
         />
       }
     >
@@ -110,6 +136,7 @@ export const CommentFormPage = () => {
           </ButtonProvider>
         </>
       )}
+      {render()}
     </DefaultLayout>
   );
 };
