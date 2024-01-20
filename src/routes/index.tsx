@@ -4,7 +4,7 @@ import { Archive } from "@/app/archive";
 import { CommentMainPage } from "@/app/comment";
 import { CommentFormPage } from "@/app/comment/comment-form";
 import { CommentUpPage } from "@/app/comment/comment-up";
-import { UnpublishedPostPage } from "@/app/detail";
+import { DetailPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
@@ -52,8 +52,8 @@ const router = createBrowserRouter([
         element: <KeyWord />,
       },
       {
-        path: "seal/:id",
-        element: <UnpublishedPostPage />,
+        path: "seal/:postId",
+        element: <DetailPage />,
       },
 
       {

@@ -45,7 +45,7 @@ export const CommentUpPage = () => {
     try {
       const nickname = sessionStorage.getItem("comment_nickname") as string;
       const image = sessionStorage.getItem("comment_image") as string;
-      const content = sessionStorage.getItem("comment_message") as string;
+      const content = sessionStorage.getItem("comment_content") as string;
 
       const blob = getBlobFromUrl(image);
 
@@ -189,7 +189,7 @@ export const CommentUpPage = () => {
                 isReached={isReached}
                 setIsReached={setIsReached}
                 flyDuration={FLY_DURATION}
-                nickname="쥐렁이"
+                nickname={sessionStorage.getItem("nickname") ?? ""}
               />
             </div>
             <Header
