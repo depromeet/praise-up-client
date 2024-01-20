@@ -61,9 +61,9 @@ export const CommentFormPage = () => {
       />,
     );
     if (result === "cancel") return;
-    sessionStorage.removeItem("nickname");
-    sessionStorage.removeItem("content");
-    sessionStorage.removeItem("imageUrl");
+    sessionStorage.removeItem("comment_nickname");
+    sessionStorage.removeItem("comment_content");
+    sessionStorage.removeItem("comment_imageUrl");
     navigate(-1);
   };
 
