@@ -13,7 +13,7 @@ import { Menu } from "@/components/app/unpublished-post/menu";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
-  id?: string;
+  postId: string;
   userNickname: string;
   keyword: string;
   imageUrl: string; // TODO: required props
@@ -25,7 +25,7 @@ interface PostCardViewProps {
 }
 
 export interface PostCardContextProps {
-  id?: string;
+  postId: string;
   userNickname: string;
   keyword: string;
   showMenu: boolean;
@@ -42,7 +42,7 @@ export const PostCardViewContext = createContext<
 >(undefined);
 
 export const PostCardView = ({
-  id,
+  postId,
   userNickname,
   keyword,
   imageUrl,
@@ -70,7 +70,7 @@ export const PostCardView = ({
   return (
     <PostCardViewContext.Provider
       value={{
-        id,
+        postId,
         userNickname,
         keyword,
         showMenu,

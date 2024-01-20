@@ -7,6 +7,7 @@ export interface ContentDataType {
   postId: number;
   date: string;
   keyword: string;
+  imageUrl: string;
   commentCount: number;
   postCreatedDate: string;
 }
