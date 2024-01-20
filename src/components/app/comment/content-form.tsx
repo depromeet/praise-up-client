@@ -3,20 +3,21 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { InformationSVG } from "@/assets/icons/information";
 import { Textarea } from "@/components/common/textarea";
 
-interface MessageFormProps {
-  message: string;
-  setMessage: Dispatch<SetStateAction<string>>;
+interface ContentFormProps {
+  content: string;
+  setContent: Dispatch<SetStateAction<string>>;
 }
-export const MessageForm = ({ message, setMessage }: MessageFormProps) => {
+export const ContentForm = ({ content, setContent }: ContentFormProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
         <h4 className="text-h4 text-primary">칭찬 메시지</h4>
         <Textarea
           limit={40}
-          currentLength={message.length}
+          value={content}
+          currentLength={content.length}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setMessage(e.target.value)
+            setContent(e.target.value)
           }
         />
       </div>
