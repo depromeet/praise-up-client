@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 import { MenuIconSVG } from "@/assets/icons/menu-icon";
+import { useApiDeletePost } from "@/hooks/api/detail/useApiDeletePost";
 import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
 import { useModal } from "@/hooks/modal/useModal";
 
 interface MenuProps {
+  postId?: number;
   isPublic: boolean;
   isReadyCard: boolean;
   showMenu: boolean;
@@ -12,6 +14,7 @@ interface MenuProps {
 }
 
 export const Menu = ({
+  postId,
   isPublic,
   isReadyCard,
   showMenu,
@@ -22,6 +25,8 @@ export const Menu = ({
 
   const deleteMenuRef = useRef<HTMLButtonElement>(null);
   const menuIconRef = useRef<HTMLDivElement>(null);
+
+  const mutation = useApiDeletePost();
 
   // 메뉴 외부 영역 클릭시 메뉴 닫는 로직
   const handleClickOutside = (e: MouseEvent) => {
@@ -42,7 +47,7 @@ export const Menu = ({
   }, [showMenu]);
 
   const handleModal = async () => {
-    await modal(
+    const result = await modal(
       <ConfirmModal
         title="칭찬게시물을 삭제할까요?"
         description="게시물과 쌓인 반응이 모두 삭제돼요"
@@ -60,7 +65,8 @@ export const Menu = ({
         ]}
       />,
     );
-    // TODO: 추후 삭제 api 호출
+    if (result === "cancel") return;
+    mutation.mutate(postId);
   };
 
   return (
