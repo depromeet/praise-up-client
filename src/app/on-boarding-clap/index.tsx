@@ -6,7 +6,7 @@ import { Carousel } from "@/components/app/on-boarding/clap/carousel";
 import { Background } from "@/components/app/post/keyword/background";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
-import { useApiGetOnePost } from "@/hooks/api/unpublished-post/useApiGetOnePost";
+import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
 import { useDecodeURI } from "@/hooks/useDecodeURI";
 
 export const OnBoardingClap = () => {

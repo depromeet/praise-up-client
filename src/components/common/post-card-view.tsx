@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { Menu } from "@/components/app/unpublished-post/menu";
+import { Menu } from "@/components/app/detail/menu";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {

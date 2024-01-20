@@ -8,7 +8,7 @@ import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
-import { useApiGetOnePost } from "@/hooks/api/unpublished-post/useApiGetOnePost";
+import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
 
 interface PostIdState {
   state: {
