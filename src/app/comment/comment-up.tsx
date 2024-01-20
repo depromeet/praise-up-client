@@ -45,7 +45,7 @@ export const CommentUpPage = () => {
     try {
       const nickname = sessionStorage.getItem("comment_nickname") as string;
       const image = sessionStorage.getItem("comment_image") as string;
-      const message = sessionStorage.getItem("comment_message") as string;
+      const content = sessionStorage.getItem("comment_message") as string;
 
       const blob = getBlobFromUrl(image);
 
@@ -57,7 +57,7 @@ export const CommentUpPage = () => {
         const formData = new FormData();
         formData.append("nickname", nickname);
         formData.append("image", file);
-        formData.append("message", `${message}`);
+        formData.append("content", `${content}`);
         mutate(formData);
       });
     } catch (error) {
@@ -172,7 +172,7 @@ export const CommentUpPage = () => {
         <LayeredBackground>
           {/* backgroun area */}
           <div className="absolute left-0 top-0 w-full ">
-            <Marbles className=" -z-10 w-full rotate-180" />
+            <Marbles className="-z-10 w-full  rotate-180" />
             <div
               className={`absolute left-0 top-0 z-10 h-full w-full bg-[linear-gradient(180deg,_#ffffff60_15.62%,_#ffffff00_81.25%)] `}
             ></div>
