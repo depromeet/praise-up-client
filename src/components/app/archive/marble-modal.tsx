@@ -20,7 +20,6 @@ interface Props {
   marbleList: TMarble[];
   onUpdateMarbleList: () => void;
   onUpdateViewIdxList: (activeIdx: number) => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 }
 
 export const MarbleModal = ({
@@ -30,7 +29,6 @@ export const MarbleModal = ({
   marbleList,
   onUpdateMarbleList,
   onUpdateViewIdxList,
-  onChangeSelectedMarbleId,
 }: Props) => {
   const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
   const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
@@ -78,11 +76,11 @@ export const MarbleModal = ({
 
   return (
     <>
-      <dialog className="fixed left-0 top-0 z-40 block h-full w-full max-w-[480px] bg-transparent text-black ">
-        <div className="relative box-border flex h-16 w-full items-center justify-center bg-[#EFF1F4]/[55%] px-[16px]">
+      <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
+        <div className="relative box-border flex h-16 w-full items-center justify-center bg-[#EFF1F4] px-[16px]">
           <button
             onClick={onClickClose}
-            className="absolute left-4 h-44px w-44px cursor-pointer bg-[#F6F7F9]"
+            className="absolute left-4 h-44px w-44px cursor-pointer"
           >
             <Close />
           </button>
@@ -90,24 +88,29 @@ export const MarbleModal = ({
             marbleList.length
           }`}</p>
         </div>
-        {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
-          <Swiper {...swiperOptions}>
-            {marbleList.map((marble) => (
-              <SwiperSlide key={marble.commentId} className="cursor-pointer">
-                <MarbleDetailCard
-                  marble={marble}
-                  onClickClose={onClickClose}
-                  onUpdateMarbleList={onUpdateMarbleList}
-                  onChangeSelectedMarbleId={onChangeSelectedMarbleId}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+        <div className="mt-[52.5px]">
+          {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
+            <Swiper {...swiperOptions}>
+              {marbleList.map((marble) => (
+                <SwiperSlide key={marble.commentId} className="cursor-pointer">
+                  <MarbleDetailCard
+                    marble={marble}
+                    onClickClose={onClickClose}
+                    onUpdateMarbleList={onUpdateMarbleList}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
       </dialog>
       <div
         onClick={onClickClose}
-        className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] bg-[#EFF1F4]/[55%] backdrop-blur-[20px]"
+        className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] backdrop-blur-[10px]"
+        style={{
+          background:
+            "linear-gradient(180deg, #EFF1F4 17.19%, rgba(239, 241, 244, 0.40) 101.15%)",
+        }}
       />
     </>
   );

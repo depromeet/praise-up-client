@@ -9,14 +9,12 @@ type Props = {
   marble: TMarble;
   onClickClose: () => void;
   onUpdateMarbleList: () => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleDetailCard = ({
   marble,
   onClickClose,
   onUpdateMarbleList,
-  onChangeSelectedMarbleId,
 }: Props) => {
   const { mutate: deleteComment } = useApiMarbleComments();
 
@@ -45,7 +43,6 @@ export const MarbleDetailCard = ({
   const onDeleteComment = () => {
     deleteComment(commentId, {
       onSuccess: () => {
-        onChangeSelectedMarbleId(-1);
         onUpdateMarbleList();
         onClickClose();
       },
@@ -57,7 +54,12 @@ export const MarbleDetailCard = ({
 
   // TODO: Add image save button
   return (
-    <div className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary">
+    <div
+      className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+      style={{
+        boxShadow: "0px 0px 20px 0px rgba(36, 43, 55, 0.10)",
+      }}
+    >
       <div
         style={{
           backgroundImage: `url(${imageUrl})`,

@@ -20,7 +20,7 @@ import marbleIsViewedTexture_2 from "@/assets/images/marble_02/marble-02-isViewe
 import { FABButton } from "@/components/app/archive/fab-button";
 import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
-import { ASSET_WIDTH, HEIGHT, WIDTH } from "@/constants/archive";
+import { ASSET_WIDTH, WALL_OPTIONS, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView, TMarble } from "@/types/archive";
 import { createMarbleObject } from "@/utils/createMarbleObject";
@@ -45,6 +45,7 @@ export const MarbleCanvas = ({
 }: Props) => {
   const [engine, setEngine] = useState<Engine>();
   const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
+  const [canvasHeight, setCanvasHeight] = useState<number>(0);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // 에러 발생으로 임시 수정
@@ -54,17 +55,23 @@ export const MarbleCanvas = ({
       fillStyle: "white",
     },
   });
-  const floor = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, ASSET_WIDTH.wall, {
-    isStatic: true,
-    render: {
-      fillStyle: "white",
+  const floor = Bodies.rectangle(
+    WIDTH / 2,
+    canvasHeight,
+    WIDTH,
+    ASSET_WIDTH.wall,
+    {
+      isStatic: true,
+      render: {
+        fillStyle: "white",
+      },
     },
-  });
+  );
   const right = Bodies.rectangle(
     WIDTH,
-    HEIGHT / 2 - 300,
+    canvasHeight / 2 - 300,
     ASSET_WIDTH.wall,
-    HEIGHT + 600,
+    canvasHeight + 600,
     {
       isStatic: true,
       render: {
@@ -74,9 +81,9 @@ export const MarbleCanvas = ({
   );
   const left = Bodies.rectangle(
     0,
-    HEIGHT / 2 - 300,
+    canvasHeight / 2 - 300,
     ASSET_WIDTH.wall,
-    HEIGHT + 600,
+    canvasHeight + 600,
     {
       isStatic: true,
       render: {
@@ -106,19 +113,20 @@ export const MarbleCanvas = ({
       });
     });
 
+    setCanvasHeight(getCanvasHeight(marbleList.length, WIDTH));
     setMarbleBodyList(marbles);
   }, [marbleList]);
 
   // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
-    if (!engine || !marbleList.length) return;
+    if (!engine || !marbleList.length || !canvasHeight) return;
 
     const render = Render.create({
       engine,
       canvas: canvasRef.current!,
       options: {
         width: WIDTH,
-        height: HEIGHT,
+        height: canvasHeight,
         background: "white",
         wireframes: false,
       },
@@ -293,7 +301,7 @@ export const MarbleCanvas = ({
     );
 
     onChangeSelectedMarbleId(-1);
-  }, [engine, isModalOpen, marbleBodyList]);
+  }, [engine, isModalOpen]);
 
   // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
   useEffect(() => {
@@ -313,6 +321,20 @@ export const MarbleCanvas = ({
       }
     });
   }, [engine, isViewedIdList]);
+
+  const getCanvasHeight = (marbleNum: number, width: number) => {
+    if (!window.visualViewport) return 0;
+
+    // margin = text top + textHeight + 최소 구슬 마진
+    const margin = 80 + 48 + 112;
+    const curHeight = window.visualViewport.height;
+    const minHeight =
+      Math.ceil(marbleNum / ((width - 40) / (ASSET_WIDTH.marble * 2))) *
+      ASSET_WIDTH.marble *
+      2;
+
+    return minHeight > curHeight - margin ? margin + minHeight : curHeight;
+  };
 
   return (
     <div className="relative mx-auto w-full max-w-[480px]">
@@ -336,7 +358,7 @@ export const MarbleCanvas = ({
         />
       </div>
 
-      <canvas className="absolute top-[-64px]" ref={canvasRef} />
+      <canvas className="absolute top-0" ref={canvasRef} />
 
       <FABButton
         icon={Bars}
