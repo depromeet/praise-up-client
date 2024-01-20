@@ -13,7 +13,7 @@ import { Menu } from "@/components/app/detail/menu";
 import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
-  postId?: string;
+  postId: number;
   userNickname: string;
   keyword: string;
   imageUrl: string; // TODO: required props
@@ -25,7 +25,7 @@ interface PostCardViewProps {
 }
 
 export interface PostCardContextProps {
-  postId?: string;
+  postId: number;
   userNickname: string;
   keyword: string;
   showMenu: boolean;
@@ -99,6 +99,7 @@ export const PostCardView = ({
 
 const Title = () => {
   const {
+    postId,
     userNickname,
     keyword,
     showMenu,
@@ -118,6 +119,7 @@ const Title = () => {
       </div>
 
       <Menu
+        postId={postId}
         isPublic={isPublic}
         isReadyCard={isReadyCard}
         showMenu={showMenu}

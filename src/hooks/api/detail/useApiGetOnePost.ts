@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 
 export interface GetOnePostType {
+  postId: number;
   userNickname: string;
   content: string;
   imageUrl: string;
@@ -22,6 +23,7 @@ export const useApiGetOnePost = (postId?: string) => {
     queryKey: ["post"],
     queryFn: () => getOnePost(postId),
     initialData: {
+      postId: -1,
       userNickname: "",
       content: "",
       imageUrl: "",

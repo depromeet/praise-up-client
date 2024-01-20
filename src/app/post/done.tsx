@@ -12,14 +12,19 @@ import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 
+type postProps = {
+  postId: number;
+};
+
 export const Done = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
+  console.log(state.postId);
 
   const handleShare = () => {
     // TODO: 클립보드에 링크 복사하기
-    void UseCurrentLinkCopy(state.keywordId as number);
+    void UseCurrentLinkCopy(state.postId);
     toast("링크가 복사되었어요");
   };
 
