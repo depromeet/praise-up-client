@@ -16,7 +16,7 @@ type Props = {
 
 export const PreviewCard = ({ cardData, onChangeView }: Props) => {
   UseScrollToTop();
-  const { isOverflow } = useWindowScrollY({ point: 20 });
+  const { isOverflow } = useWindowScrollY({ point: 40 });
 
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
