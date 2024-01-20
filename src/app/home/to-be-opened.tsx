@@ -18,7 +18,7 @@ export const ToBeOpened = () => {
       ) : (
         <CardSwiper>
           {(data as ContentDataType[])?.map((content, idx) => (
-            <RecentCard key={idx} {...content} id={"5"} />
+            <RecentCard key={idx} {...content} />
           ))}
         </CardSwiper>
       )}
