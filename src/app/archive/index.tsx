@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { MarbleCanvas } from "./marble-canvas";
 import { MarbleGrid } from "./marble-grid";
@@ -9,15 +10,20 @@ import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import { useApiMarbleCard } from "@/hooks/api/archive/useApiMarbleCard";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
-import { TArchiveView, TMarble } from "@/types/archive";
+import { TArchiveView, TMarble, TRouteState } from "@/types/archive";
 
 export const Archive = () => {
+  const { state } = useLocation() as TRouteState;
+
   // NOTE: Server Data
-  const { data: cardData } = useApiMarbleCard(5);
-  const { data: marbleData, refetch: refetchMarble } = useApiMarbleList(1, {
-    page: 0,
-    size: 24,
-  });
+  const { data: cardData } = useApiMarbleCard(state.postId);
+  const { data: marbleData, refetch: refetchMarble } = useApiMarbleList(
+    state.postId,
+    {
+      page: 0,
+      size: 50,
+    },
+  );
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
@@ -29,10 +35,6 @@ export const Archive = () => {
 
   // NOTE: Marble detail Open state
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(cardData);
-  }, [cardData]);
 
   useEffect(() => {
     if (!marbleData?.pages.length) return;

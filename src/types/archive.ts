@@ -1,3 +1,9 @@
+export type TRouteState = {
+  state: {
+    postId: number;
+  };
+};
+
 export type TMarbleCard = {
   content: string;
   imageUrl: string;
