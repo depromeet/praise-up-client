@@ -7,15 +7,16 @@ import { Appbar } from "@/components/common/appbar";
 import { Arrow } from "@/components/common/arrow";
 import { UseScrollToTop } from "@/hooks/useScrollToTop";
 import { useWindowScrollY } from "@/hooks/useWindowScrollY";
-import { TArchiveView } from "@/types/archive";
+import { TArchiveView, TMarbleCard } from "@/types/archive";
 
 type Props = {
+  cardData: TMarbleCard;
   onChangeView: (view: TArchiveView) => void;
 };
 
-export const PreviewCard = ({ onChangeView }: Props) => {
+export const PreviewCard = ({ cardData, onChangeView }: Props) => {
   UseScrollToTop();
-  const { isOverflow } = useWindowScrollY({ point: 10 });
+  const { isOverflow } = useWindowScrollY({ point: 20 });
 
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
@@ -73,7 +74,7 @@ export const PreviewCard = ({ onChangeView }: Props) => {
           isScrolled && "animate-fadeOutUp",
         )}
       >
-        <MarbleCard />
+        <MarbleCard cardData={cardData} />
       </div>
 
       <div className="fixed bottom-0 h-184px w-full max-w-[480px]">

@@ -26,7 +26,7 @@ export const useApiMarbleList = (
     queryKey: [CACHE_KEY, postId, marblePayload.page],
     queryFn: ({ pageParam = marblePayload }) =>
       fetchMarbleList(pageParam as TMarbleListPayload),
-    initialPageParam: { page: 0, size: 24 },
+    initialPageParam: { page: 0, size: 50 },
     getNextPageParam: (lastPage) => {
       lastPage.pageable.pageNumber < lastPage.totalPages
         ? {

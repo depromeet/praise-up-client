@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { MarbleCanvas } from "./marble-canvas";
 import { MarbleGrid } from "./marble-grid";
@@ -7,12 +8,22 @@ import { PreviewSummary } from "./preview-summary";
 
 import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
+import { useApiMarbleCard } from "@/hooks/api/archive/useApiMarbleCard";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
-import { TArchiveView, TMarble } from "@/types/archive";
+import { TArchiveView, TMarble, TRouteState } from "@/types/archive";
 
 export const Archive = () => {
+  const { state } = useLocation() as TRouteState;
+
   // NOTE: Server Data
-  const { data, refetch } = useApiMarbleList(1, { page: 0, size: 24 });
+  const { data: cardData } = useApiMarbleCard(state.postId);
+  const { data: marbleData, refetch: refetchMarble } = useApiMarbleList(
+    state.postId,
+    {
+      page: 0,
+      size: 50,
+    },
+  );
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
@@ -26,10 +37,10 @@ export const Archive = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!data?.pages.length) return;
+    if (!marbleData?.pages.length) return;
 
-    setMarbleList(data?.pages.flatMap((page) => page.content));
-  }, [data]);
+    setMarbleList(marbleData?.pages.flatMap((page) => page.content));
+  }, [marbleData]);
 
   useEffect(() => {
     onChangeModalState(selectedMarbleId !== -1);
@@ -48,7 +59,7 @@ export const Archive = () => {
   };
 
   const onUpdateMarbleList = async () => {
-    await refetch();
+    await refetchMarble();
   };
 
   const onUpdateViewIdxList = (activeIdx: number) => {
@@ -73,11 +84,12 @@ export const Archive = () => {
           onUpdateMarbleList={onUpdateMarbleList}
           onChangeOpenState={onChangeModalState}
           onUpdateViewIdxList={onUpdateViewIdxList}
-          onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
 
-      {view === "preview-card" && <PreviewCard onChangeView={onChangeView} />}
+      {view === "preview-card" && cardData && (
+        <PreviewCard cardData={cardData} onChangeView={onChangeView} />
+      )}
       {view === "preview-summary" && (
         <PreviewSummary
           marbleNum={marbleList.length}
