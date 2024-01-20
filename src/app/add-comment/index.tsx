@@ -33,9 +33,7 @@ export const CommentMainPage = () => {
     <DefaultLayout appbar={<Appbar right={<UserSVG />} />}>
       {/* post area */}
       <section className="flex flex-col justify-between gap-9">
-        <h2 className="text-h2">
-          {"대장" /* TODO: change `data.username` */}님의 칭찬게시물
-        </h2>
+        <h2 className="text-h2">{data.userNickname}님의 칭찬게시물</h2>
         <PostCardView {...{ ...data, isPublic: true }}>
           <PostCardView.Title />
           <PostCardView.Image />

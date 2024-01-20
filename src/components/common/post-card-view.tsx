@@ -14,22 +14,24 @@ import { usePostCardView } from "@/hooks/usePostCard";
 
 interface PostCardViewProps {
   id?: string;
-  username?: string;
+  userNickname: string;
   keyword: string;
   imageUrl: string; // TODO: required props
   content: string;
   isReadyCard?: boolean;
   isPublic?: boolean;
+  postCreatedDate: string;
   children: ReactNode;
 }
 
 export interface PostCardContextProps {
   id?: string;
-  username?: string;
+  userNickname: string;
   keyword: string;
   showMenu: boolean;
   imageUrl: string;
   content: string;
+  postCreatedDate: string;
   isPublic: boolean;
   isReadyCard: boolean;
   setShowMenu: Dispatch<React.SetStateAction<boolean>>;
@@ -41,10 +43,11 @@ export const PostCardViewContext = createContext<
 
 export const PostCardView = ({
   id,
-  username = "대장",
-  keyword = "",
+  userNickname,
+  keyword,
   imageUrl,
   content,
+  postCreatedDate,
   isReadyCard = false, // flip 전 일러스트(Preview)인지
   isPublic = false, // 외부에 공개되는 게시글인지
   children,
@@ -68,12 +71,13 @@ export const PostCardView = ({
     <PostCardViewContext.Provider
       value={{
         id,
-        username,
+        userNickname,
         keyword,
         showMenu,
         imageUrl,
         content,
         setShowMenu,
+        postCreatedDate,
         isPublic,
         isReadyCard,
       }}
@@ -95,7 +99,7 @@ export const PostCardView = ({
 
 const Title = () => {
   const {
-    username,
+    userNickname,
     keyword,
     showMenu,
     setShowMenu,
@@ -106,7 +110,7 @@ const Title = () => {
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-col gap-0.5">
-        <span className="text-b1">{username}님이 칭찬 받을</span>
+        <span className="text-b1">{userNickname}님이 칭찬 받을</span>
         <div className="flex gap-1">
           <span className="text-h3">{keyword}</span>
           <span className="text-b1">순간</span>
@@ -124,7 +128,11 @@ const Title = () => {
 };
 
 const Image = () => {
-  const { content, imageUrl }: { content: string; imageUrl: string } =
+  const {
+    content,
+    imageUrl,
+    postCreatedDate,
+  }: { content: string; imageUrl: string; postCreatedDate: string } =
     usePostCardView();
   const contentRef = useRef<HTMLParagraphElement>(null);
 
@@ -142,7 +150,9 @@ const Image = () => {
       >
         {content}
       </p>
-      <span className="text-num-b3 text-oncolor">23.12.16</span>
+      <span className="text-num-b3 text-oncolor">
+        {postCreatedDate.replace(/-/g, ".")}
+      </span>
     </div>
   );
 };

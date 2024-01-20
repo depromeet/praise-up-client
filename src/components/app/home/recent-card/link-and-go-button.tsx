@@ -39,7 +39,7 @@ export const LinkAndGoButton = ({
       {isReveal ? (
         <>
           <button
-            className="rounded-2 aspect-square bg-gray-300 p-[15px]"
+            className="aspect-square rounded-2 bg-gray-300 p-[15px]"
             onMouseDown={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onClick={() => handleShare()}
@@ -59,7 +59,7 @@ export const LinkAndGoButton = ({
         <ButtonProvider.Primary
           className="flex items-center justify-center"
           onClick={() =>
-            navigate(`seal/${postId}`, { state: { backgroundUrl } })
+            navigate(`/seal/${postId}`, { state: { backgroundUrl } })
           }
         >
           칭찬구슬 보러가기
