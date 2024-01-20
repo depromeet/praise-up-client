@@ -1,3 +1,13 @@
+export type TMarbleCard = {
+  content: string;
+  imageUrl: string;
+  isRead: boolean;
+  keyword: string;
+  postCreatedDate: string;
+  userNickname: string;
+  visible: boolean;
+};
+
 export type TMarbleObject = {
   id: number;
   textContent: string;

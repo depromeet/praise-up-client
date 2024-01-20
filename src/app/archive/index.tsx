@@ -7,12 +7,17 @@ import { PreviewSummary } from "./preview-summary";
 
 import { MarbleModal } from "@/components/app/archive/marble-modal";
 import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
+import { useApiMarbleCard } from "@/hooks/api/archive/useApiMarbleCard";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
 import { TArchiveView, TMarble } from "@/types/archive";
 
 export const Archive = () => {
   // NOTE: Server Data
-  const { data, refetch } = useApiMarbleList(1, { page: 0, size: 24 });
+  const { data: cardData } = useApiMarbleCard(5);
+  const { data: marbleData, refetch: refetchMarble } = useApiMarbleList(1, {
+    page: 0,
+    size: 24,
+  });
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
@@ -26,10 +31,14 @@ export const Archive = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!data?.pages.length) return;
+    console.log(cardData);
+  }, [cardData]);
 
-    setMarbleList(data?.pages.flatMap((page) => page.content));
-  }, [data]);
+  useEffect(() => {
+    if (!marbleData?.pages.length) return;
+
+    setMarbleList(marbleData?.pages.flatMap((page) => page.content));
+  }, [marbleData]);
 
   useEffect(() => {
     onChangeModalState(selectedMarbleId !== -1);
@@ -48,7 +57,7 @@ export const Archive = () => {
   };
 
   const onUpdateMarbleList = async () => {
-    await refetch();
+    await refetchMarble();
   };
 
   const onUpdateViewIdxList = (activeIdx: number) => {
@@ -76,7 +85,9 @@ export const Archive = () => {
         />
       )}
 
-      {view === "preview-card" && <PreviewCard onChangeView={onChangeView} />}
+      {view === "preview-card" && cardData && (
+        <PreviewCard cardData={cardData} onChangeView={onChangeView} />
+      )}
       {view === "preview-summary" && (
         <PreviewSummary
           marbleNum={marbleList.length}
