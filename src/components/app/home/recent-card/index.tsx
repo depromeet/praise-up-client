@@ -7,11 +7,10 @@ import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
 
 interface RecentCardProps {
-  id?: string;
+  postId: number;
   keyword: string;
   commentCount: number;
   postCreatedDate: string;
-  openDatetime?: string;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -19,7 +18,7 @@ const BACKGROUNDS = [...Object.values(BackgroundSVG).sort()];
 const DARK_BACKGROUNDS = [2, 4, 10, 11];
 
 export const RecentCard = ({
-  id,
+  postId,
   keyword,
   commentCount,
   postCreatedDate,
@@ -55,8 +54,7 @@ export const RecentCard = ({
         <TimerBadge openDatetime={openDatetime ?? new Date()} />
       </div>
       <LinkAndGoButton
-        // 추후 id 연동
-        id={id ?? "5"}
+        postId={postId}
         openDatetime={openDatetime ?? new Date()}
         backgroundUrl={BACKGROUNDS[idx]}
       />

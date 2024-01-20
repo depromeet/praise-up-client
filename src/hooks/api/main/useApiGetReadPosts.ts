@@ -4,8 +4,10 @@ import Cookies from "js-cookie";
 import { api } from "@/api";
 
 export interface ContentDataType {
+  postId: number;
   date: string;
   keyword: string;
+  imageUrl: string;
   commentCount: number;
   postCreatedDate: string;
 }

@@ -8,19 +8,19 @@ import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 import { useTimer } from "@/hooks/useTimer";
 
 interface LinkAndGoButtonProps {
-  id: string;
+  postId: number;
   openDatetime: Date;
   backgroundUrl: string;
 }
 
 export const LinkAndGoButton = ({
-  id,
+  postId,
   openDatetime,
   backgroundUrl,
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
   const [isReveal, setIsReveal] = useState<boolean>(
-    openDatetime?.getTime() - Date.now() > 0,
+    openDatetime.getTime() - Date.now() > 0,
   );
 
   const { diff } = useTimer(openDatetime);
@@ -30,7 +30,7 @@ export const LinkAndGoButton = ({
   }, [diff]);
 
   const handleShare = () => {
-    void UseCurrentLinkCopy(+id);
+    UseCurrentLinkCopy(postId);
     toast("링크가 복사되었어요");
   };
 
@@ -39,7 +39,7 @@ export const LinkAndGoButton = ({
       {isReveal ? (
         <>
           <button
-            className="aspect-square rounded-2 bg-gray-300 p-[15px]"
+            className="rounded-2 aspect-square bg-gray-300 p-[15px]"
             onMouseDown={(e) => e.stopPropagation()}
             onMouseUp={(e) => e.stopPropagation()}
             onClick={() => handleShare()}
@@ -49,7 +49,7 @@ export const LinkAndGoButton = ({
           <ButtonProvider.Primary
             className="flex items-center justify-center "
             onClick={() =>
-              navigate(`/seal/${id}`, { state: { backgroundUrl } })
+              navigate(`/seal/${postId}`, { state: { backgroundUrl } })
             }
           >
             게시물 보기
@@ -58,7 +58,9 @@ export const LinkAndGoButton = ({
       ) : (
         <ButtonProvider.Primary
           className="flex items-center justify-center"
-          onClick={() => navigate(`seal/${id}`, { state: { backgroundUrl } })}
+          onClick={() =>
+            navigate(`seal/${postId}`, { state: { backgroundUrl } })
+          }
         >
           칭찬구슬 보러가기
         </ButtonProvider.Primary>
