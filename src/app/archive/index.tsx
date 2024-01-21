@@ -79,6 +79,7 @@ export const Archive = () => {
   }, [selectedMarbleId]);
 
   // NOTE: [DElETE] Delete marble on Canvas
+  // TODO: 삭제된 후 marbleBodyList update
   const onDeleteMarbleBody = (id: number) => {
     if (!engine) return;
 
@@ -151,6 +152,7 @@ export const Archive = () => {
           selectedMarbleId={selectedMarbleId}
           marbleList={marbleList}
           onCloseModal={onCloseModal}
+          onDeleteMarbleBody={onDeleteMarbleBody}
           onUpdateMarbleList={onUpdateMarbleList}
           onUpdateViewIdxList={onUpdateViewIdxList}
         />
