@@ -44,7 +44,9 @@ export const CommentMainPage = () => {
         <ButtonProvider.Primary onClick={() => navigate("/clap/write")}>
           칭찬 남기기
         </ButtonProvider.Primary>
-        <ButtonProvider.White>나도 칭찬 받기</ButtonProvider.White>
+        <ButtonProvider.White onClick={() => navigate("/")}>
+          나도 칭찬 받기
+        </ButtonProvider.White>
       </ButtonProvider>
 
       {/* background 영역 */}
