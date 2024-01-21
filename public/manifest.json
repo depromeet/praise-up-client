@@ -1,19 +1,19 @@
 {
-  "name": "PP",
-  "short_name": "PP",
+  "name": "PRAISE UP",
+  "short_name": "PRAISE UP",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/logo_64.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "/logo_192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "/logo_512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -21,7 +21,7 @@
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#262626",
-  "theme_color": "#f2f2f2",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "scope": "."
 }
