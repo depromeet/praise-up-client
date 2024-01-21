@@ -1,4 +1,4 @@
-import { Body, Engine } from "matter-js";
+import { Body, Composite, Engine } from "matter-js";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -77,6 +77,43 @@ export const Archive = () => {
   useEffect(() => {
     onChangeModalState(selectedMarbleId !== -1);
   }, [selectedMarbleId]);
+
+  // NOTE: [DElETE] Delete marble on Canvas
+  const onDeleteMarbleBody = (id: number) => {
+    if (!engine) return;
+
+    const deleteMarble = engine.world.bodies.find(
+      ({ id, label }) => id === selectedMarbleId && label === "marble",
+    );
+    if (!deleteMarble) return;
+    Composite.remove(engine.world, deleteMarble);
+  };
+
+  // NOTE: [MODAL CLOSE] Add marble on Canvas
+  const onModalClose = (id: number) => {
+    if (!engine) return;
+
+    const lastSelectedMarble = engine.world.bodies.find(
+      ({ id, label }) => id === selectedMarbleId && label === "marble",
+    );
+    if (!lastSelectedMarble) return;
+
+    Composite.remove(engine.world, lastSelectedMarble);
+    Composite.add(
+      engine.world,
+      createMarbleObject({
+        id: lastSelectedMarble.id,
+        textContent: lastSelectedMarble.render.text?.content || "",
+        isViewed: true,
+      }),
+    );
+    setSelectedMarbleId(-1);
+  };
+
+  // NOTE: [MODAL OPEN] Set selectedMarbleId (set Modal initial index)
+  const onModalOpen = (id: number) => {
+    setSelectedMarbleId(id);
+  };
 
   const onChangeView = (view: TArchiveView) => {
     setView(view);
