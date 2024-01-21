@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // eslint-disable-next-line import/default
-import Matter, { Body, IEvent } from "matter-js";
+import Matter, { Body, Engine, IEvent } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
@@ -17,7 +17,7 @@ import { createMarbleObject } from "@/utils/createMarbleObject";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
-  marbleList: TMarble[];
+  engine: Engine;
   marbleBodyList: Body[];
   selectedMarbleId: number;
   isViewedIdList: number[];
@@ -27,7 +27,7 @@ type Props = {
 };
 
 export const MarbleCanvas = ({
-  marbleList,
+  engine,
   marbleBodyList,
   selectedMarbleId,
   isViewedIdList,
@@ -48,19 +48,8 @@ export const MarbleCanvas = ({
     Composite,
   } = Matter;
 
-  const [engine, setEngine] = useState<Matter.Engine>();
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const createdEngine = Engine.create({
-      timing: {
-        timeScale: 0.8,
-      },
-    });
-    setEngine(createdEngine);
-  }, []);
 
   // NOTE ===== Create Marble Body Object
   useEffect(() => {
@@ -275,7 +264,7 @@ export const MarbleCanvas = ({
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleBodyList, engine]);
+  }, [marbleBodyList, engine, canvasHeight]);
 
   // NOTE ===== Modal openState에 따라 selectedMarble hide / render
   useEffect(() => {

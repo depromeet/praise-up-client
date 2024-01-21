@@ -1,4 +1,4 @@
-import { Body } from "matter-js";
+import { Body, Engine } from "matter-js";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -29,15 +29,27 @@ export const Archive = () => {
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
-  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
   const [isViewedIdList, setIsViewedIdList] = useState<number[]>([]);
   const [selectedMarbleId, setSelectedMarbleId] = useState<number>(-1);
+
+  // NOTE: Marble Canvas state
+  const [engine, setEngine] = useState<Matter.Engine>();
+  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
 
   // NOTE: Canvas, Grid View value
   const [view, setView] = useState<TArchiveView>("preview-card");
 
   // NOTE: Marble detail Open state
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const createdEngine = Engine.create({
+      timing: {
+        timeScale: 0.8,
+      },
+    });
+    setEngine(createdEngine);
+  }, []);
 
   useEffect(() => {
     if (!marbleData?.pages.length) return;
@@ -116,9 +128,9 @@ export const Archive = () => {
           onChangeView={onChangeView}
         />
       )}
-      {view === "marble-canvas" && (
+      {view === "marble-canvas" && engine && (
         <MarbleCanvas
-          marbleList={marbleList}
+          engine={engine}
           marbleBodyList={marbleBodyList}
           selectedMarbleId={selectedMarbleId}
           isViewedIdList={isViewedIdList}
