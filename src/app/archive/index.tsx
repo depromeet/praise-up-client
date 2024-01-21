@@ -1,3 +1,4 @@
+import { Body } from "matter-js";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -11,6 +12,7 @@ import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import { useApiMarbleCard } from "@/hooks/api/archive/useApiMarbleCard";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
 import { TArchiveView, TMarble, TRouteState } from "@/types/archive";
+import { createMarbleObject } from "@/utils/createMarbleObject";
 
 export const Archive = () => {
   const { state } = useLocation() as TRouteState;
@@ -27,6 +29,7 @@ export const Archive = () => {
 
   // NOTE: Marble List state
   const [marbleList, setMarbleList] = useState<TMarble[]>([]);
+  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
   const [isViewedIdList, setIsViewedIdList] = useState<number[]>([]);
   const [selectedMarbleId, setSelectedMarbleId] = useState<number>(-1);
 
@@ -41,6 +44,23 @@ export const Archive = () => {
 
     setMarbleList(marbleData?.pages.flatMap((page) => page.content));
   }, [marbleData]);
+
+  useEffect(() => {
+    if (!marbleList.length || !!marbleBodyList.length) return;
+
+    const marbles = marbleList.map((marbleData) => {
+      const { commentId, nickname } = marbleData;
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
+
+      return createMarbleObject({
+        id: commentId,
+        textContent: nickname,
+        isViewed,
+      });
+    });
+    setMarbleBodyList(marbles);
+  }, [marbleList]);
 
   useEffect(() => {
     onChangeModalState(selectedMarbleId !== -1);
@@ -99,6 +119,7 @@ export const Archive = () => {
       {view === "marble-canvas" && (
         <MarbleCanvas
           marbleList={marbleList}
+          marbleBodyList={marbleBodyList}
           selectedMarbleId={selectedMarbleId}
           isViewedIdList={isViewedIdList}
           isModalOpen={isModalOpen}

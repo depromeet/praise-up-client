@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // eslint-disable-next-line import/default
-import Matter, { IEvent } from "matter-js";
+import Matter, { Body, IEvent } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
@@ -18,6 +18,7 @@ import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
   marbleList: TMarble[];
+  marbleBodyList: Body[];
   selectedMarbleId: number;
   isViewedIdList: number[];
   isModalOpen: boolean;
@@ -27,6 +28,7 @@ type Props = {
 
 export const MarbleCanvas = ({
   marbleList,
+  marbleBodyList,
   selectedMarbleId,
   isViewedIdList,
   isModalOpen,
@@ -47,7 +49,6 @@ export const MarbleCanvas = ({
   } = Matter;
 
   const [engine, setEngine] = useState<Matter.Engine>();
-  const [marbleBodyList, setMarbleBodyList] = useState<Matter.Body[]>([]);
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,23 +64,10 @@ export const MarbleCanvas = ({
 
   // NOTE ===== Create Marble Body Object
   useEffect(() => {
-    if (!marbleList.length) return;
+    if (!marbleBodyList.length) return;
 
-    const marbles = marbleList.map((marbleData) => {
-      const { commentId, nickname } = marbleData;
-      const isViewed =
-        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
-
-      return createMarbleObject({
-        id: commentId,
-        textContent: nickname,
-        isViewed,
-      });
-    });
-
-    setCanvasHeight(getCanvasHeight(marbleList.length, WIDTH));
-    setMarbleBodyList(marbles);
-  }, [marbleList]);
+    setCanvasHeight(getCanvasHeight(marbleBodyList.length, WIDTH));
+  }, [marbleBodyList]);
 
   // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
