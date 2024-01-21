@@ -53,7 +53,9 @@ export const MarbleCanvas = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const createdEngine = Engine.create();
+    const createdEngine = Engine.create({
+      enableSleeping: true,
+    });
     setEngine(createdEngine);
   }, []);
 
