@@ -16,7 +16,7 @@ type Props = {
 
 export const PreviewCard = ({ cardData, onChangeView }: Props) => {
   UseScrollToTop();
-  const { isOverflow } = useWindowScrollY({ point: 39 });
+  const { isOverflow } = useWindowScrollY({ point: 80 });
 
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
@@ -45,7 +45,7 @@ export const PreviewCard = ({ cardData, onChangeView }: Props) => {
       {/* scroll을 위한 영역 */}
       <div
         style={{
-          height: "calc(100vh + 40px)",
+          height: "calc(100vh + 100px)",
         }}
       />
 

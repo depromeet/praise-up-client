@@ -54,7 +54,9 @@ export const MarbleCanvas = ({
 
   useEffect(() => {
     const createdEngine = Engine.create({
-      enableSleeping: true,
+      timing: {
+        timeScale: 0.8,
+      },
     });
     setEngine(createdEngine);
   }, []);
@@ -186,45 +188,51 @@ export const MarbleCanvas = ({
     // NOTE: Setup functions
     const setupWallsObject = () => {
       // 에러 발생으로 임시 수정
-      const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
-        isStatic: true,
-        render: {
-          fillStyle: "black",
-        },
-      });
-      const floor = Bodies.rectangle(
+      const top = Bodies.rectangle(
         WIDTH / 2,
-        canvasHeight,
-        WIDTH,
+        -300,
+        WIDTH + 60,
         ASSET_WIDTH.wall,
         {
           isStatic: true,
           render: {
-            fillStyle: "black",
+            fillStyle: "white",
+          },
+        },
+      );
+      const floor = Bodies.rectangle(
+        WIDTH / 2,
+        canvasHeight + ASSET_WIDTH.wall - 30,
+        WIDTH + 60,
+        ASSET_WIDTH.wall,
+        {
+          isStatic: true,
+          render: {
+            fillStyle: "white",
           },
         },
       );
       const right = Bodies.rectangle(
-        WIDTH,
+        WIDTH + 20,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
-        canvasHeight + 600,
+        canvasHeight * 2,
         {
           isStatic: true,
           render: {
-            fillStyle: "black",
+            fillStyle: "white",
           },
         },
       );
       const left = Bodies.rectangle(
-        0,
+        -20,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
-        canvasHeight + 600,
+        canvasHeight * 2,
         {
           isStatic: true,
           render: {
-            fillStyle: "black",
+            fillStyle: "white",
           },
         },
       );
