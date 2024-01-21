@@ -1,5 +1,5 @@
 export const ASSET_WIDTH = {
-  wall: 20,
+  wall: 50,
   marble: 50,
 };
 
