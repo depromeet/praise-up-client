@@ -6,7 +6,7 @@ import CloseSVG from "@/assets/icons/close.svg?react";
 import { ContentForm } from "@/components/app/comment/content-form";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
-import { BluredAppbar } from "@/components/common/blured-appbar";
+import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
@@ -100,10 +100,12 @@ export const CommentFormPage = () => {
   return (
     <DefaultLayout
       appbar={
-        <BluredAppbar
-          left={<CloseSVG onClick={handleModal} />}
-          title="칭찬 반응 남기기"
-        />
+        !openCrop && (
+          <BlurredAppbar
+            left={<CloseSVG onClick={handleModal} />}
+            title="칭찬 반응 남기기"
+          />
+        )
       }
     >
       {openCrop ? (
