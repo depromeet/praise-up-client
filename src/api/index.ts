@@ -7,7 +7,7 @@ import axios, {
 } from "axios";
 
 // API 서버 연결 설정 필요
-const DEVELOPMENT_API_URL = "http://101.101.211.46:8080";
+const DEVELOPMENT_API_URL = "https://api.praise-up.app";
 const PRODUCTION_API_URL = "https://api.praise-up.app";
 
 const baseApi = axios.create({
