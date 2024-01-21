@@ -71,7 +71,7 @@ export const Selector = ({
     disableBodyScroll(document.body);
     const viewPortWidth = window.visualViewport.width;
     swiperRef.current.style!.width =
-      viewPortWidth >= 480 ? `${480 + 30}px` : `${viewPortWidth + 30}px`;
+      viewPortWidth >= 480 ? `${480 + 35}px` : `${viewPortWidth + 35}px`;
     return () => enableBodyScroll(document.body);
   }, []);
 

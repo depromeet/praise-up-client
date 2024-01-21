@@ -28,4 +28,12 @@
   .swiper-pagination-bullet-active {
     background-color: rgba(131, 139, 152, 1);
   }
+
+  .swiper-slide-active > div {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
