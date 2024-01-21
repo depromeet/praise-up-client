@@ -12,8 +12,7 @@ import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TArchiveView, TMarble } from "@/types/archive";
-import { createMarbleObject } from "@/utils/createMarbleObject";
+import { TArchiveView } from "@/types/archive";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
@@ -21,9 +20,8 @@ type Props = {
   marbleBodyList: Body[];
   selectedMarbleId: number;
   isViewedIdList: number[];
-  isModalOpen: boolean;
+  onOpenModal: (id: number) => void;
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
@@ -31,9 +29,8 @@ export const MarbleCanvas = ({
   marbleBodyList,
   selectedMarbleId,
   isViewedIdList,
-  isModalOpen,
+  onOpenModal,
   onChangeView,
-  onChangeSelectedMarbleId,
 }: Props) => {
   const {
     World,
@@ -135,7 +132,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleId(selectedBody.id);
+        onOpenModal(selectedBody.id);
       }
     };
 
@@ -157,7 +154,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = mouseConstraint.body;
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleId(selectedBody.id);
+        onOpenModal(selectedBody.id);
       }
     };
 
@@ -264,35 +261,6 @@ export const MarbleCanvas = ({
       Engine.clear(engine);
     };
   }, [marbleBodyList, engine, canvasHeight]);
-
-  // NOTE ===== Modal openState에 따라 selectedMarble hide / render
-  useEffect(() => {
-    if (!engine || selectedMarbleId === -1) return;
-
-    const selectedMarble = engine.world.bodies.find(
-      ({ id, label }) => id === selectedMarbleId && label === "marble",
-    );
-    if (!selectedMarble) return;
-
-    if (isModalOpen) {
-      selectedMarble.render.opacity = 0;
-      Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 50 });
-      return;
-    }
-
-    Composite.remove(engine.world, selectedMarble);
-    Composite.add(
-      engine.world,
-      createMarbleObject({
-        id: selectedMarble.id,
-        textContent: selectedMarble.render.text?.content || "",
-        isViewed: true,
-      }),
-    );
-
-    onChangeSelectedMarbleId(-1);
-  }, [engine, isModalOpen]);
 
   // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
   useEffect(() => {

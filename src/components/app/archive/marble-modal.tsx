@@ -15,7 +15,7 @@ import { TMarble } from "@/types/archive";
 
 interface Props {
   isOpen: boolean;
-  onChangeOpenState: (isOpen: boolean) => void;
+  onCloseModal: (id: number) => void;
   selectedMarbleId: number;
   marbleList: TMarble[];
   onUpdateMarbleList: () => void;
@@ -24,7 +24,7 @@ interface Props {
 
 export const MarbleModal = ({
   isOpen,
-  onChangeOpenState,
+  onCloseModal,
   selectedMarbleId,
   marbleList,
   onUpdateMarbleList,
@@ -69,7 +69,8 @@ export const MarbleModal = ({
   }, [isOpen]);
 
   const onClickClose = () => {
-    onChangeOpenState(false);
+    const activeMarbleId = marbleList[activeMarbleIdx].commentId;
+    onCloseModal(activeMarbleId);
   };
 
   if (!isOpen) return null;

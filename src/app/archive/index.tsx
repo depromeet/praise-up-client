@@ -90,11 +90,11 @@ export const Archive = () => {
   };
 
   // NOTE: [MODAL CLOSE] Add marble on Canvas
-  const onModalClose = (id: number) => {
+  const onCloseModal = (lastMarbleId: number) => {
     if (!engine) return;
 
     const lastSelectedMarble = engine.world.bodies.find(
-      ({ id, label }) => id === selectedMarbleId && label === "marble",
+      ({ id, label }) => id === lastMarbleId && label === "marble",
     );
     if (!lastSelectedMarble) return;
 
@@ -111,7 +111,7 @@ export const Archive = () => {
   };
 
   // NOTE: [MODAL OPEN] Set selectedMarbleId (set Modal initial index)
-  const onModalOpen = (id: number) => {
+  const onOpenModal = (id: number) => {
     setSelectedMarbleId(id);
   };
 
@@ -150,8 +150,8 @@ export const Archive = () => {
           isOpen={isModalOpen}
           selectedMarbleId={selectedMarbleId}
           marbleList={marbleList}
+          onCloseModal={onCloseModal}
           onUpdateMarbleList={onUpdateMarbleList}
-          onChangeOpenState={onChangeModalState}
           onUpdateViewIdxList={onUpdateViewIdxList}
         />
       )}
@@ -171,9 +171,8 @@ export const Archive = () => {
           marbleBodyList={marbleBodyList}
           selectedMarbleId={selectedMarbleId}
           isViewedIdList={isViewedIdList}
-          isModalOpen={isModalOpen}
+          onOpenModal={onOpenModal}
           onChangeView={onChangeView}
-          onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
       {view === "marble-grid" && (
