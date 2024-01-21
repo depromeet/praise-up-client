@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
+import { ContentForm } from "@/components/app/comment/content-form";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
-import { MessageForm } from "@/components/app/comment/message-form";
 import { RequiredForm } from "@/components/app/comment/required-form";
-import { Appbar } from "@/components/common/appbar";
+import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
+import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
+import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 const DUMMY_DATA = {
@@ -22,15 +24,48 @@ const DUMMY_DATA = {
 export const CommentFormPage = () => {
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
+  const [render, modal] = useModal();
+
+  useEffect(() => {
+    setNickname(sessionStorage.getItem("comment_nickname") ?? "");
+    setImage(sessionStorage.getItem("comment_image") ?? "");
+    setContent(sessionStorage.getItem("comment_content") ?? "");
+  }, []);
 
   useEffect(() => {
     setRequired(nickname.length > 0 && image.length > 0);
   }, [nickname, image]);
+
+  const handleModal = async () => {
+    const result = await modal(
+      <ConfirmModal
+        title="칭찬 반응 작성을 그만둘까요?"
+        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
+        buttons={[
+          <SubButton
+            key="unpublished-post-cancel"
+            label="계속 작성"
+            value="cancel"
+          />,
+          <MainButton
+            key="unpublished-post-delete"
+            label="작성 종료"
+            value="confirm"
+          />,
+        ]}
+      />,
+    );
+    if (result === "cancel") return;
+    sessionStorage.removeItem("comment_nickname");
+    sessionStorage.removeItem("comment_content");
+    sessionStorage.removeItem("comment_imageUrl");
+    navigate(-1);
+  };
 
   /** 이미지 변경 이벤트 */
   const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +90,7 @@ export const CommentFormPage = () => {
     try {
       sessionStorage.setItem("comment_nickname", nickname);
       sessionStorage.setItem("comment_image", image);
-      sessionStorage.setItem("comment_message", message);
+      sessionStorage.setItem("comment_content", content);
     } catch (err) {
       return <NotFound />;
     }
@@ -65,13 +100,12 @@ export const CommentFormPage = () => {
   return (
     <DefaultLayout
       appbar={
-        <Appbar
-          left={
-            <button onClick={() => navigate(-1)}>
-              <CloseSVG />
-            </button>
-          }
-        />
+        !openCrop && (
+          <BlurredAppbar
+            left={<CloseSVG onClick={handleModal} />}
+            title="칭찬 반응 남기기"
+          />
+        )
       }
     >
       {openCrop ? (
@@ -95,7 +129,7 @@ export const CommentFormPage = () => {
                 changeImage={changeImage}
               />
               {required && (
-                <MessageForm message={message} setMessage={setMessage} />
+                <ContentForm content={content} setContent={setContent} />
               )}
             </div>
           </LayeredBackground>
@@ -110,6 +144,7 @@ export const CommentFormPage = () => {
           </ButtonProvider>
         </>
       )}
+      {render()}
     </DefaultLayout>
   );
 };

@@ -30,7 +30,7 @@ export const Post = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
-  const { mutate } = useApiBoard(state.keywordId as number);
+  const { mutate } = useApiBoard();
   const [render, modal] = useModal();
 
   if (state.keyword && state.keywordId) {
