@@ -37,7 +37,6 @@ export const MarbleCanvas = ({
 }: Props) => {
   const {
     World,
-    Engine,
     Bodies,
     Events,
     Mouse,
@@ -62,7 +61,7 @@ export const MarbleCanvas = ({
   useEffect(() => {
     if (!engine || !marbleBodyList.length || !canvasHeight) return;
 
-    const render = Render.create({
+    const canvasRender = Render.create({
       engine,
       canvas: canvasRef.current!,
       options: {
@@ -216,7 +215,7 @@ export const MarbleCanvas = ({
       Composite.add(world, [top, floor, right, left]);
     };
 
-    const mouse = Mouse.create(render.canvas);
+    const mouse = Mouse.create(canvasRender.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
@@ -245,22 +244,22 @@ export const MarbleCanvas = ({
       setupWallsObject();
       setupMouseConstraint();
 
-      Render.run(render);
+      Render.run(canvasRender);
 
       for (const marble of marbleBodyList) {
         await renderMarbleObject(marble);
       }
     };
 
-    const runner = Runner.run(engine);
+    const canvasRunner = Runner.run(engine);
     void renderEvent();
 
     // NOTE: Initialize of Canvas
     return () => {
       removeCustomEvent();
 
-      Runner.stop(runner);
-      Render.stop(render);
+      Runner.stop(canvasRunner);
+      Render.stop(canvasRender);
       World.clear(world, false);
       Engine.clear(engine);
     };
