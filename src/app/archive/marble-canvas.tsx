@@ -1,16 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import {
-  World,
-  Engine,
-  Bodies,
-  Events,
-  Mouse,
-  MouseConstraint,
-  Runner,
-  Body,
-  IEvent,
-  Query,
-} from "matter-js";
+// eslint-disable-next-line import/default
+import Matter, { IEvent } from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
@@ -43,54 +33,24 @@ export const MarbleCanvas = ({
   onChangeView,
   onChangeSelectedMarbleId,
 }: Props) => {
-  const [engine, setEngine] = useState<Engine>();
-  const [marbleBodyList, setMarbleBodyList] = useState<Body[]>([]);
+  const {
+    World,
+    Engine,
+    Bodies,
+    Events,
+    Mouse,
+    MouseConstraint,
+    Runner,
+    Body,
+    Query,
+    Composite,
+  } = Matter;
+
+  const [engine, setEngine] = useState<Matter.Engine>();
+  const [marbleBodyList, setMarbleBodyList] = useState<Matter.Body[]>([]);
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // 에러 발생으로 임시 수정
-  const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
-    isStatic: true,
-    render: {
-      fillStyle: "white",
-    },
-  });
-  const floor = Bodies.rectangle(
-    WIDTH / 2,
-    canvasHeight,
-    WIDTH,
-    ASSET_WIDTH.wall,
-    {
-      isStatic: true,
-      render: {
-        fillStyle: "white",
-      },
-    },
-  );
-  const right = Bodies.rectangle(
-    WIDTH,
-    canvasHeight / 2 - 300,
-    ASSET_WIDTH.wall,
-    canvasHeight + 600,
-    {
-      isStatic: true,
-      render: {
-        fillStyle: "white",
-      },
-    },
-  );
-  const left = Bodies.rectangle(
-    0,
-    canvasHeight / 2 - 300,
-    ASSET_WIDTH.wall,
-    canvasHeight + 600,
-    {
-      isStatic: true,
-      render: {
-        fillStyle: "white",
-      },
-    },
-  );
 
   useEffect(() => {
     const createdEngine = Engine.create();
@@ -119,7 +79,7 @@ export const MarbleCanvas = ({
 
   // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
-    if (!engine || !marbleList.length || !canvasHeight) return;
+    if (!engine || !marbleBodyList.length || !canvasHeight) return;
 
     const render = Render.create({
       engine,
@@ -131,16 +91,7 @@ export const MarbleCanvas = ({
         wireframes: false,
       },
     });
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse,
-      constraint: {
-        stiffness: 0,
-        render: {
-          visible: false,
-        },
-      },
-    });
+
     const { world } = engine;
     let isScrolling = false;
 
@@ -198,7 +149,7 @@ export const MarbleCanvas = ({
     };
 
     // Event Handler
-    const onMouseUp = (e: IEvent<MouseConstraint>) => {
+    const onMouseUp = (e: IEvent<Matter.MouseConstraint>) => {
       const { x, y } = e.mouse.mouseupPosition;
       const bodiesUnderMouse = Query.point(engine.world.bodies, { x, y });
 
@@ -232,19 +183,73 @@ export const MarbleCanvas = ({
 
     // NOTE: Setup functions
     const setupWallsObject = () => {
-      World.add(world, [top, floor, right, left]);
+      // 에러 발생으로 임시 수정
+      const top = Bodies.rectangle(WIDTH / 2, -300, WIDTH, ASSET_WIDTH.wall, {
+        isStatic: true,
+        render: {
+          fillStyle: "black",
+        },
+      });
+      const floor = Bodies.rectangle(
+        WIDTH / 2,
+        canvasHeight,
+        WIDTH,
+        ASSET_WIDTH.wall,
+        {
+          isStatic: true,
+          render: {
+            fillStyle: "black",
+          },
+        },
+      );
+      const right = Bodies.rectangle(
+        WIDTH,
+        canvasHeight / 2 - 300,
+        ASSET_WIDTH.wall,
+        canvasHeight + 600,
+        {
+          isStatic: true,
+          render: {
+            fillStyle: "black",
+          },
+        },
+      );
+      const left = Bodies.rectangle(
+        0,
+        canvasHeight / 2 - 300,
+        ASSET_WIDTH.wall,
+        canvasHeight + 600,
+        {
+          isStatic: true,
+          render: {
+            fillStyle: "black",
+          },
+        },
+      );
+      Composite.add(world, [top, floor, right, left]);
     };
+
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse,
+      constraint: {
+        stiffness: 0,
+        render: {
+          visible: false,
+        },
+      },
+    });
 
     const setupMouseConstraint = () => {
       removeDefaultEvent();
       addCustomEvent();
 
-      World.add(world, mouseConstraint);
+      Composite.add(world, mouseConstraint);
     };
 
     // NOTE: Rendering functions
-    const renderMarbleObject = async (marble: Body) => {
-      World.add(world, marble);
+    const renderMarbleObject = async (marble: Matter.Body) => {
+      Composite.add(world, marble);
 
       await setWaitTime(100);
     };
@@ -272,14 +277,14 @@ export const MarbleCanvas = ({
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleList, engine]);
+  }, [marbleBodyList, engine]);
 
   // NOTE ===== Modal openState에 따라 selectedMarble hide / render
   useEffect(() => {
     if (!engine || selectedMarbleId === -1) return;
 
     const selectedMarble = engine.world.bodies.find(
-      ({ id }) => id === selectedMarbleId,
+      ({ id, label }) => id === selectedMarbleId && label === "marble",
     );
     if (!selectedMarble) return;
 
@@ -290,8 +295,8 @@ export const MarbleCanvas = ({
       return;
     }
 
-    World.remove(engine.world, selectedMarble);
-    World.add(
+    Composite.remove(engine.world, selectedMarble);
+    Composite.add(
       engine.world,
       createMarbleObject({
         id: selectedMarble.id,
@@ -305,7 +310,7 @@ export const MarbleCanvas = ({
 
   // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
   useEffect(() => {
-    if (!engine) return;
+    if (!engine || !isViewedIdList.length) return;
 
     const worldMarbleList = engine.world.bodies.filter(
       ({ label }) => label === "marble",

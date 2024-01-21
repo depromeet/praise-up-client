@@ -1,4 +1,5 @@
-import { Bodies } from "matter-js";
+// eslint-disable-next-line import/default
+import Matter from "matter-js";
 
 import marbleTexture from "@/assets/images/marble_01/marble-01-2x.webp";
 import marbleIsViewedTexture from "@/assets/images/marble_01/marble-01-isViewed-2x.webp";
@@ -12,6 +13,8 @@ export const createMarbleObject = ({
   textContent,
   isViewed = false,
 }: TMarbleObject) => {
+  const { Bodies } = Matter;
+
   const isFirstType = id % 2 === 0;
   const isNotViewedTexture = isFirstType ? marbleTexture : marbleTexture_2;
   const isViewedTexture = isFirstType
