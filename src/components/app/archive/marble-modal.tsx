@@ -4,7 +4,9 @@ import "@/style/swiper/archive-init.scss";
 // custom pagination style
 import "@/style/swiper/archive-pagination.scss";
 
-import { useEffect, useState } from "react";
+import saveAs from "file-saver";
+import html2canvas from "html2canvas";
+import { useEffect, useRef, useState } from "react";
 import SwiperCore from "swiper";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -34,6 +36,8 @@ export const MarbleModal = ({
   onUpdateMarbleList,
   onUpdateViewIdxList,
 }: Props) => {
+  const divRef = useRef<HTMLDivElement>(null);
+
   const [swiper, setSwiper] = useState<SwiperCore>();
   const [swiperMarbleList, setSwiperMarbleList] =
     useState<TMarble[]>(marbleList);
@@ -78,6 +82,21 @@ export const MarbleModal = ({
 
     // API
     onUpdateMarbleList();
+  };
+
+  const onClickDownloadImage = async () => {
+    // if (!divRef.current) return;
+    // try {
+    //   const div = divRef.current;
+    //   const canvas = await html2canvas(div, { scale: 2 });
+    //   canvas.toBlob((blob) => {
+    //     if (blob !== null) {
+    //       saveAs(blob, "result.png");
+    //     }
+    //   });
+    // } catch (error) {
+    //   console.error("이미지 저장에 실패했어요!");
+    // }
   };
 
   if (!isOpen || !swiperMarbleList || activeMarbleId === -1) return null;
