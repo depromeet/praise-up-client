@@ -69,7 +69,6 @@ export const Archive = () => {
   }, [selectedMarbleId]);
 
   // NOTE: [DElETE] Delete marble on Canvas
-  // TODO: 삭제된 후 marbleBodyList update
   const onDeleteMarbleBody = (deleteId: number) => {
     if (!engine) return;
 
@@ -82,7 +81,9 @@ export const Archive = () => {
 
   // NOTE: [MODAL CLOSE] Add marble on Canvas
   const onCloseModal = (lastMarbleId: number) => {
-    if (!engine) return;
+    setSelectedMarbleId(-1);
+
+    if (view !== "marble-canvas" || !engine) return;
 
     const lastSelectedMarble = engine.world.bodies.find(
       ({ id, label }) => id === lastMarbleId && label === "marble",
@@ -98,7 +99,6 @@ export const Archive = () => {
         isViewed: true,
       }),
     );
-    setSelectedMarbleId(-1);
   };
 
   // NOTE: [MODAL OPEN] Set selectedMarbleId (set Modal initial index)
