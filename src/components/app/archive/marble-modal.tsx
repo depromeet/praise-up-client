@@ -71,7 +71,6 @@ export const MarbleModal = ({
     );
 
     onDeleteMarbleBody(activeMarbleId);
-
     setSwiperMarbleList(nextMarbleList);
     setActiveMarbleId(nextMarbleList[swiper.realIndex].commentId);
 

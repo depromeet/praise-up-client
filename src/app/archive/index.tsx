@@ -80,11 +80,11 @@ export const Archive = () => {
 
   // NOTE: [DElETE] Delete marble on Canvas
   // TODO: 삭제된 후 marbleBodyList update
-  const onDeleteMarbleBody = (id: number) => {
+  const onDeleteMarbleBody = (deleteId: number) => {
     if (!engine) return;
 
     const deleteMarble = engine.world.bodies.find(
-      ({ id, label }) => id === selectedMarbleId && label === "marble",
+      ({ id, label }) => id === deleteId && label === "marble",
     );
     if (!deleteMarble) return;
     Composite.remove(engine.world, deleteMarble);
