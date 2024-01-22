@@ -4,7 +4,7 @@ import "@/style/swiper/archive-init.scss";
 // custom pagination style
 import "@/style/swiper/archive-pagination.scss";
 
-import saveAs from "file-saver";
+import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { useEffect, useRef, useState } from "react";
 import SwiperCore from "swiper";
@@ -36,7 +36,7 @@ export const MarbleModal = ({
   onUpdateMarbleList,
   onUpdateViewIdxList,
 }: Props) => {
-  const divRef = useRef<HTMLDivElement>(null);
+  const currentSlideRef = useRef<HTMLDivElement>(null);
 
   const [swiper, setSwiper] = useState<SwiperCore>();
   const [swiperMarbleList, setSwiperMarbleList] =
@@ -85,18 +85,25 @@ export const MarbleModal = ({
   };
 
   const onClickDownloadImage = async () => {
-    // if (!divRef.current) return;
-    // try {
-    //   const div = divRef.current;
-    //   const canvas = await html2canvas(div, { scale: 2 });
-    //   canvas.toBlob((blob) => {
-    //     if (blob !== null) {
-    //       saveAs(blob, "result.png");
-    //     }
-    //   });
-    // } catch (error) {
-    //   console.error("이미지 저장에 실패했어요!");
-    // }
+    if (!currentSlideRef.current || !swiper) return;
+
+    try {
+      const canvas = await html2canvas(currentSlideRef.current, {
+        useCORS: true,
+        scale: 2,
+      });
+      const fileName = `${
+        swiperMarbleList[swiper.realIndex].nickname
+      }의 구슬.png`;
+
+      canvas.toBlob((blob) => {
+        if (blob !== null) {
+          saveAs(blob, fileName);
+        }
+      });
+    } catch (error) {
+      console.error("이미지 저장에 실패했어요!");
+    }
   };
 
   if (!isOpen || !swiperMarbleList || activeMarbleId === -1) return null;
@@ -133,11 +140,12 @@ export const MarbleModal = ({
               dynamicBullets: true,
             }}
           >
-            {swiperMarbleList.map((marble) => (
+            {swiperMarbleList.map((marble, idx) => (
               <SwiperSlide key={marble.commentId} className="cursor-pointer">
                 <MarbleDetailCard
                   marble={marble}
                   onDeleteMarble={onDeleteMarble}
+                  ref={idx === swiper?.realIndex ? currentSlideRef : undefined}
                 />
               </SwiperSlide>
             ))}
@@ -147,7 +155,7 @@ export const MarbleModal = ({
 
       <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[480px] translate-x-[-50%] px-5">
         <ButtonProvider className="!bg-transparent">
-          <ButtonProvider.White>
+          <ButtonProvider.White onClick={onClickDownloadImage}>
             <div className="flex items-center gap-2">
               <p>이미지 저장하기</p>
               <div className="flex h-5 w-5 items-center justify-center">
