@@ -89,9 +89,11 @@ export const MarbleModal = ({
           >
             <Close />
           </button>
-          {/* <p className="font-medium text-gray-800">{`${activeMarbleIdx + 1} / ${
-            marbleList.length
-          }`}</p> */}
+          {swiper && (
+            <p className="font-medium text-gray-800">{`${
+              swiper.realIndex + 1
+            } / ${swiperMarbleList.length}`}</p>
+          )}
         </div>
         <div className="mt-[52.5px]">
           <Swiper
