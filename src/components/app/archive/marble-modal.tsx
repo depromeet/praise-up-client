@@ -10,7 +10,9 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Close from "@/assets/icons/close.svg?react";
+import Download from "@/assets/icons/download.svg?react";
 import { MarbleDetailCard } from "@/components/app/archive/marble-detail-card";
+import { ButtonProvider } from "@/components/common/button-provider";
 import { TMarble } from "@/types/archive";
 
 interface Props {
@@ -123,6 +125,20 @@ export const MarbleModal = ({
           </Swiper>
         </div>
       </dialog>
+
+      <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[480px] translate-x-[-50%] px-5">
+        <ButtonProvider className="!bg-transparent">
+          <ButtonProvider.White>
+            <div className="flex items-center gap-2">
+              <p>이미지 저장하기</p>
+              <div className="flex h-5 w-5 items-center justify-center">
+                <Download />
+              </div>
+            </div>
+          </ButtonProvider.White>
+        </ButtonProvider>
+      </div>
+
       <div
         onClick={onClickClose}
         className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] backdrop-blur-[10px]"
