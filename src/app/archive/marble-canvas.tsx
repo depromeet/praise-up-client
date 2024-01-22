@@ -1,6 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // eslint-disable-next-line import/default
-import Matter, { Body, Engine, IEvent } from "matter-js";
+import {
+  Body,
+  Engine,
+  IEvent,
+  World,
+  Bodies,
+  Events,
+  Mouse,
+  MouseConstraint,
+  Runner,
+  Query,
+  Composite,
+} from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
@@ -18,7 +30,6 @@ import { setWaitTime } from "@/utils/setWaitTime";
 type Props = {
   engine: Engine;
   marbleBodyList: Body[];
-  selectedMarbleId: number;
   isViewedIdList: number[];
   onOpenModal: (id: number) => void;
   onChangeView: (view: TArchiveView) => void;
@@ -27,23 +38,10 @@ type Props = {
 export const MarbleCanvas = ({
   engine,
   marbleBodyList,
-  selectedMarbleId,
   isViewedIdList,
   onOpenModal,
   onChangeView,
 }: Props) => {
-  const {
-    World,
-    Bodies,
-    Events,
-    Mouse,
-    MouseConstraint,
-    Runner,
-    Body,
-    Query,
-    Composite,
-  } = Matter;
-
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -163,7 +161,7 @@ export const MarbleCanvas = ({
       // 에러 발생으로 임시 수정
       const top = Bodies.rectangle(
         WIDTH / 2,
-        -300,
+        -400,
         WIDTH + 60,
         ASSET_WIDTH.wall,
         {
@@ -175,7 +173,7 @@ export const MarbleCanvas = ({
       );
       const floor = Bodies.rectangle(
         WIDTH / 2,
-        canvasHeight + ASSET_WIDTH.wall - 30,
+        canvasHeight + ASSET_WIDTH.wall - 70,
         WIDTH + 60,
         ASSET_WIDTH.wall,
         {
@@ -186,7 +184,7 @@ export const MarbleCanvas = ({
         },
       );
       const right = Bodies.rectangle(
-        WIDTH + 20,
+        WIDTH + 35,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
         canvasHeight * 2,
@@ -198,7 +196,7 @@ export const MarbleCanvas = ({
         },
       );
       const left = Bodies.rectangle(
-        -20,
+        -35,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
         canvasHeight * 2,

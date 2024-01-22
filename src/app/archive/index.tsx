@@ -60,17 +60,7 @@ export const Archive = () => {
   useEffect(() => {
     if (!marbleList.length || !!marbleBodyList.length) return;
 
-    const marbles = marbleList.map((marbleData) => {
-      const { commentId, nickname } = marbleData;
-      const isViewed =
-        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
-
-      return createMarbleObject({
-        id: commentId,
-        textContent: nickname,
-        isViewed,
-      });
-    });
+    const marbles = updateMarbleBodyList(marbleList);
     setMarbleBodyList(marbles);
   }, [marbleList]);
 
@@ -118,6 +108,9 @@ export const Archive = () => {
 
   const onChangeView = (view: TArchiveView) => {
     setView(view);
+
+    const marbles = updateMarbleBodyList(marbleList);
+    setMarbleBodyList(marbles);
   };
 
   const onChangeModalState = (isOpen: boolean) => {
@@ -140,6 +133,20 @@ export const Archive = () => {
       ...new Set([...isViewedIdList, activeMarbleId]),
     ];
     setIsViewedIdList(updatedIsViewedIdxList);
+  };
+
+  const updateMarbleBodyList = (marbleList: TMarble[]) => {
+    return marbleList.map((marbleData) => {
+      const { commentId, nickname } = marbleData;
+      const isViewed =
+        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
+
+      return createMarbleObject({
+        id: commentId,
+        textContent: nickname,
+        isViewed,
+      });
+    });
   };
 
   // TODO: Marble 스와이프 후 삭제 시, 삭제된 구슬이 삭제되지 않는 이슈 (모달 진입한 구슬이 삭제)
@@ -171,7 +178,6 @@ export const Archive = () => {
         <MarbleCanvas
           engine={engine}
           marbleBodyList={marbleBodyList}
-          selectedMarbleId={selectedMarbleId}
           isViewedIdList={isViewedIdList}
           onOpenModal={onOpenModal}
           onChangeView={onChangeView}
