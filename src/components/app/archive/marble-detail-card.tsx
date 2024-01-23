@@ -56,14 +56,12 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
         }}
         ref={ref}
       >
-        <div
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="relative box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
-        >
+        <div className="relative">
+          <img
+            src={imageUrl}
+            alt="marble thumbnail"
+            className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+          />
           <button
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={onClickMenu}
