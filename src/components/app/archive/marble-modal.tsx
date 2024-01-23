@@ -15,7 +15,8 @@ import { TMarble } from "@/types/archive";
 
 interface Props {
   isOpen: boolean;
-  onChangeOpenState: (isOpen: boolean) => void;
+  onCloseModal: (id: number) => void;
+  onDeleteMarbleBody: (id: number) => void;
   selectedMarbleId: number;
   marbleList: TMarble[];
   onUpdateMarbleList: () => void;
@@ -24,41 +25,25 @@ interface Props {
 
 export const MarbleModal = ({
   isOpen,
-  onChangeOpenState,
+  onCloseModal,
+  onDeleteMarbleBody,
   selectedMarbleId,
   marbleList,
   onUpdateMarbleList,
   onUpdateViewIdxList,
 }: Props) => {
-  const [swiperOptions, setSwiperOptions] = useState<unknown>(null);
-  const [activeMarbleIdx, setActiveMarbleIdx] = useState<number>(-1);
+  const [swiper, setSwiper] = useState<SwiperCore>();
+  const [swiperMarbleList, setSwiperMarbleList] =
+    useState<TMarble[]>(marbleList);
+  const [activeMarbleId, setActiveMarbleId] =
+    useState<number>(selectedMarbleId);
 
   useEffect(() => {
-    if (!swiperOptions && selectedMarbleId !== -1 && marbleList.length) {
-      setSwiperOptions({
-        className: "init-swiper archive-swiper",
-        slidesPerView: 1,
-        centeredSlides: true,
-        loop: true,
-        initialSlide: marbleList.findIndex(
-          (marble) => marble.commentId === selectedMarbleId,
-        ),
-        modules: [Pagination],
-        onSlideChange: (swiper: SwiperCore) => {
-          const activeMarbleIdx = swiper.realIndex;
-          setActiveMarbleIdx(activeMarbleIdx);
-        },
-        pagination: {
-          type: "bullets",
-          dynamicBullets: true,
-        },
-      });
-    }
-  }, [swiperOptions, selectedMarbleId, marbleList]);
-
-  useEffect(() => {
-    onUpdateViewIdxList(activeMarbleIdx);
-  }, [activeMarbleIdx]);
+    const idx = swiperMarbleList.findIndex(
+      ({ commentId }) => commentId === activeMarbleId,
+    );
+    onUpdateViewIdxList(idx);
+  }, [activeMarbleId, swiperMarbleList]);
 
   useEffect(() => {
     if (isOpen) document.body.classList.add("overflow-hidden");
@@ -68,12 +53,32 @@ export const MarbleModal = ({
     };
   }, [isOpen]);
 
-  const onClickClose = () => {
-    onChangeOpenState(false);
+  const onSlideChange = () => {
+    if (!swiper) return;
+    const activeMarbleId = swiperMarbleList[swiper.realIndex].commentId;
+    setActiveMarbleId(activeMarbleId);
   };
 
-  if (!isOpen) return null;
+  const onClickClose = () => {
+    onCloseModal(activeMarbleId);
+  };
 
+  const onDeleteMarble = () => {
+    if (!swiper) return;
+
+    const nextMarbleList = swiperMarbleList.filter(
+      ({ commentId }) => commentId !== activeMarbleId,
+    );
+
+    onDeleteMarbleBody(activeMarbleId);
+    setSwiperMarbleList(nextMarbleList);
+    setActiveMarbleId(nextMarbleList[swiper.realIndex].commentId);
+
+    // API
+    onUpdateMarbleList();
+  };
+
+  if (!isOpen || !swiperMarbleList || activeMarbleId === -1) return null;
   return (
     <>
       <dialog className="fixed left-0 top-0 z-40 block h-fit w-full max-w-[480px] bg-transparent text-black">
@@ -84,24 +89,38 @@ export const MarbleModal = ({
           >
             <Close />
           </button>
-          <p className="font-medium text-gray-800">{`${activeMarbleIdx + 1} / ${
-            marbleList.length
-          }`}</p>
+          {swiper && (
+            <p className="font-medium text-gray-800">{`${
+              swiper.realIndex + 1
+            } / ${swiperMarbleList.length}`}</p>
+          )}
         </div>
         <div className="mt-[52.5px]">
-          {Boolean(selectedMarbleId !== -1) && !!swiperOptions && (
-            <Swiper {...swiperOptions}>
-              {marbleList.map((marble) => (
-                <SwiperSlide key={marble.commentId} className="cursor-pointer">
-                  <MarbleDetailCard
-                    marble={marble}
-                    onClickClose={onClickClose}
-                    onUpdateMarbleList={onUpdateMarbleList}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
+          <Swiper
+            onSwiper={setSwiper}
+            className="init-swiper archive-swiper"
+            slidesPerView={1}
+            loop={true}
+            centeredSlides={true}
+            initialSlide={swiperMarbleList.findIndex(
+              ({ commentId }) => commentId === activeMarbleId,
+            )}
+            modules={[Pagination]}
+            onSlideChange={onSlideChange}
+            pagination={{
+              type: "bullets",
+              dynamicBullets: true,
+            }}
+          >
+            {swiperMarbleList.map((marble) => (
+              <SwiperSlide key={marble.commentId} className="cursor-pointer">
+                <MarbleDetailCard
+                  marble={marble}
+                  onDeleteMarble={onDeleteMarble}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </dialog>
       <div

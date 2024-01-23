@@ -1,6 +1,18 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // eslint-disable-next-line import/default
-import Matter, { IEvent } from "matter-js";
+import {
+  Body,
+  Engine,
+  IEvent,
+  World,
+  Bodies,
+  Events,
+  Mouse,
+  MouseConstraint,
+  Runner,
+  Query,
+  Composite,
+} from "matter-js";
 import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
@@ -12,80 +24,39 @@ import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, WIDTH } from "@/constants/archive";
 import Render from "@/lib/RenderExtension";
-import { TArchiveView, TMarble } from "@/types/archive";
-import { createMarbleObject } from "@/utils/createMarbleObject";
+import { TArchiveView } from "@/types/archive";
 import { setWaitTime } from "@/utils/setWaitTime";
 
 type Props = {
-  marbleList: TMarble[];
-  selectedMarbleId: number;
+  engine: Engine;
+  marbleBodyList: Body[];
   isViewedIdList: number[];
-  isModalOpen: boolean;
+  onOpenModal: (id: number) => void;
   onChangeView: (view: TArchiveView) => void;
-  onChangeSelectedMarbleId: (id: number) => void;
 };
 
 export const MarbleCanvas = ({
-  marbleList,
-  selectedMarbleId,
+  engine,
+  marbleBodyList,
   isViewedIdList,
-  isModalOpen,
+  onOpenModal,
   onChangeView,
-  onChangeSelectedMarbleId,
 }: Props) => {
-  const {
-    World,
-    Engine,
-    Bodies,
-    Events,
-    Mouse,
-    MouseConstraint,
-    Runner,
-    Body,
-    Query,
-    Composite,
-  } = Matter;
-
-  const [engine, setEngine] = useState<Matter.Engine>();
-  const [marbleBodyList, setMarbleBodyList] = useState<Matter.Body[]>([]);
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const createdEngine = Engine.create({
-      timing: {
-        timeScale: 0.8,
-      },
-    });
-    setEngine(createdEngine);
-  }, []);
 
   // NOTE ===== Create Marble Body Object
   useEffect(() => {
-    if (!marbleList.length) return;
+    if (!marbleBodyList.length) return;
 
-    const marbles = marbleList.map((marbleData) => {
-      const { commentId, nickname } = marbleData;
-      const isViewed =
-        isViewedIdList.findIndex((marbleId) => marbleId === commentId) !== -1;
-
-      return createMarbleObject({
-        id: commentId,
-        textContent: nickname,
-        isViewed,
-      });
-    });
-
-    setCanvasHeight(getCanvasHeight(marbleList.length, WIDTH));
-    setMarbleBodyList(marbles);
-  }, [marbleList]);
+    setCanvasHeight(getCanvasHeight(marbleBodyList.length, WIDTH));
+  }, [marbleBodyList]);
 
   // NOTE ===== Canvas Setting + Rendering Marble Object
   useEffect(() => {
     if (!engine || !marbleBodyList.length || !canvasHeight) return;
 
-    const render = Render.create({
+    const canvasRender = Render.create({
       engine,
       canvas: canvasRef.current!,
       options: {
@@ -159,7 +130,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = bodiesUnderMouse[0];
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleId(selectedBody.id);
+        onOpenModal(selectedBody.id);
       }
     };
 
@@ -181,7 +152,7 @@ export const MarbleCanvas = ({
 
       const selectedBody = mouseConstraint.body;
       if (selectedBody && selectedBody.label === "marble") {
-        onChangeSelectedMarbleId(selectedBody.id);
+        onOpenModal(selectedBody.id);
       }
     };
 
@@ -190,7 +161,7 @@ export const MarbleCanvas = ({
       // 에러 발생으로 임시 수정
       const top = Bodies.rectangle(
         WIDTH / 2,
-        -300,
+        -400,
         WIDTH + 60,
         ASSET_WIDTH.wall,
         {
@@ -202,7 +173,7 @@ export const MarbleCanvas = ({
       );
       const floor = Bodies.rectangle(
         WIDTH / 2,
-        canvasHeight + ASSET_WIDTH.wall - 30,
+        canvasHeight + ASSET_WIDTH.wall - 70,
         WIDTH + 60,
         ASSET_WIDTH.wall,
         {
@@ -213,7 +184,7 @@ export const MarbleCanvas = ({
         },
       );
       const right = Bodies.rectangle(
-        WIDTH + 20,
+        WIDTH + 35,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
         canvasHeight * 2,
@@ -225,7 +196,7 @@ export const MarbleCanvas = ({
         },
       );
       const left = Bodies.rectangle(
-        -20,
+        -35,
         canvasHeight / 2 - 300,
         ASSET_WIDTH.wall,
         canvasHeight * 2,
@@ -239,7 +210,7 @@ export const MarbleCanvas = ({
       Composite.add(world, [top, floor, right, left]);
     };
 
-    const mouse = Mouse.create(render.canvas);
+    const mouse = Mouse.create(canvasRender.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
@@ -268,55 +239,26 @@ export const MarbleCanvas = ({
       setupWallsObject();
       setupMouseConstraint();
 
-      Render.run(render);
+      Render.run(canvasRender);
 
       for (const marble of marbleBodyList) {
         await renderMarbleObject(marble);
       }
     };
 
-    const runner = Runner.run(engine);
+    const canvasRunner = Runner.run(engine);
     void renderEvent();
 
     // NOTE: Initialize of Canvas
     return () => {
       removeCustomEvent();
 
-      Runner.stop(runner);
-      Render.stop(render);
+      Runner.stop(canvasRunner);
+      Render.stop(canvasRender);
       World.clear(world, false);
       Engine.clear(engine);
     };
-  }, [marbleBodyList, engine]);
-
-  // NOTE ===== Modal openState에 따라 selectedMarble hide / render
-  useEffect(() => {
-    if (!engine || selectedMarbleId === -1) return;
-
-    const selectedMarble = engine.world.bodies.find(
-      ({ id, label }) => id === selectedMarbleId && label === "marble",
-    );
-    if (!selectedMarble) return;
-
-    if (isModalOpen) {
-      selectedMarble.render.opacity = 0;
-      Body.setStatic(selectedMarble, true);
-      Body.setPosition(selectedMarble, { x: WIDTH / 2, y: 50 });
-      return;
-    }
-
-    Composite.remove(engine.world, selectedMarble);
-    Composite.add(
-      engine.world,
-      createMarbleObject({
-        id: selectedMarble.id,
-        textContent: selectedMarble.render.text?.content || "",
-        isViewed: true,
-      }),
-    );
-
-    onChangeSelectedMarbleId(-1);
-  }, [engine, isModalOpen]);
+  }, [marbleBodyList, engine, canvasHeight]);
 
   // NOTE ===== isViewedList 업데이트에 따라 marble 색상 변경
   useEffect(() => {
