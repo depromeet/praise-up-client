@@ -7,15 +7,10 @@ import { TMarble } from "@/types/archive";
 
 type Props = {
   marble: TMarble;
-  onClickClose: () => void;
-  onUpdateMarbleList: () => void;
+  onDeleteMarble: () => void;
 };
 
-export const MarbleDetailCard = ({
-  marble,
-  onClickClose,
-  onUpdateMarbleList,
-}: Props) => {
+export const MarbleDetailCard = ({ marble, onDeleteMarble }: Props) => {
   const { mutate: deleteComment } = useApiMarbleComments();
 
   const { confirm } = useContext(ConfirmContext);
@@ -43,8 +38,7 @@ export const MarbleDetailCard = ({
   const onDeleteComment = () => {
     deleteComment(commentId, {
       onSuccess: () => {
-        onUpdateMarbleList();
-        onClickClose();
+        onDeleteMarble();
       },
       onError: () => {
         alert("에러가 발생했습니다.");
