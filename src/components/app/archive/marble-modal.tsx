@@ -90,6 +90,7 @@ export const MarbleModal = ({
     try {
       const canvas = await html2canvas(currentSlideRef.current, {
         useCORS: true,
+        logging: true,
         scale: 2,
       });
       const fileName = `${
