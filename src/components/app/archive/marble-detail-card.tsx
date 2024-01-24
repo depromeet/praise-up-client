@@ -68,7 +68,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           />
           <button
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={() => setIsShowDeleteBtn(true)}
+            onClick={() => setIsShowDeleteBtn(!isShowDeleteBtn)}
             className="absolute right-[16px] top-[14px] h-[24px] w-[24px]"
           >
             <Overflow />
