@@ -27,7 +27,7 @@ const GoToWrite = () => {
         <span className="text-b3-compact text-gray-700">
           게시물은 하루에 한개만 작성할 수 있어요
         </span>
-        <h3 className="text-h3 text-blue-500">오늘의 게시물 작성하기</h3>
+        <h3 className="text-h3 text-active">오늘의 게시물 작성하기</h3>
       </div>
       <ChevronRightEdgeSVG />
     </div>
