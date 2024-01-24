@@ -140,7 +140,7 @@ const Image = () => {
 
   return (
     <div
-      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className="flex aspect-square w-full flex-col justify-end gap-3 rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imageUrl})`,
         backgroundSize: "cover",
@@ -153,7 +153,7 @@ const Image = () => {
         {content}
       </p>
       <span className="text-num-b3 text-oncolor">
-        {postCreatedDate.replace(/-/g, ".")}
+        {postCreatedDate.replace(/-/g, ".").slice(2)}
       </span>
     </div>
   );
@@ -162,7 +162,7 @@ const Image = () => {
 const Preview = ({ imageUrl }: { imageUrl: string }) => {
   return (
     <div
-      className=" flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
+      className="flex aspect-square w-full flex-col justify-end rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: "cover",
