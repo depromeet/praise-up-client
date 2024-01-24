@@ -151,7 +151,7 @@ export const Archive = () => {
 
   if (!marbleList.length) return null;
   return (
-    <ConfirmDialog>
+    <>
       {isModalOpen && Boolean(selectedMarbleId !== -1) && (
         <MarbleModal
           isOpen={isModalOpen}
@@ -190,6 +190,6 @@ export const Archive = () => {
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
-    </ConfirmDialog>
+    </>
   );
 };

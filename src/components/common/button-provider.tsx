@@ -90,7 +90,7 @@ export const ButtonProvider = ({
         }
       })}
       {isOnBoarding && (
-        <div className="text-b3-strong mt-[18px] flex w-full justify-center gap-x-3">
+        <div className="text-b3-strong mt-[10px] flex w-full justify-center gap-x-3">
           <div className="text-teritary">이미 가입했다면?</div>
           <div
             className="cursor-pointer text-active"
