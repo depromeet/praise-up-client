@@ -9,7 +9,7 @@ export const Switch = ({ isOn }: SwtichProps) => {
     <div
       className={clsx(
         "flex w-44px items-center rounded-[40px] p-2px transition-all duration-300",
-        isOn ? "bg-[#23B36B]" : "bg-gray-400",
+        isOn ? "bg-[#338AFF]" : "bg-gray-400",
       )}
     >
       <div
