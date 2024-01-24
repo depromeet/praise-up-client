@@ -1,4 +1,4 @@
-import { forwardRef, useContext } from "react";
+import { forwardRef, useContext, useState } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
@@ -17,7 +17,11 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     const { confirm } = useContext(ConfirmContext);
     const { nickname, content, imageUrl, commentId } = marble;
 
+    const [isShowDeleteBtn, setIsShowDeleteBtn] = useState<boolean>(false);
+
     const onClickMenu = async () => {
+      setIsShowDeleteBtn(false);
+
       const result = await confirm(
         {
           title: "칭찬반응을 삭제할까요?",
@@ -56,21 +60,28 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
         }}
         ref={ref}
       >
-        <div
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="relative box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
-        >
+        <div className="relative">
+          <img
+            src={imageUrl}
+            alt="marble thumbnail"
+            className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+          />
           <button
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onClick={onClickMenu}
+            onClick={() => setIsShowDeleteBtn(true)}
             className="absolute right-[16px] top-[14px] h-[24px] w-[24px]"
           >
             <Overflow />
           </button>
+
+          {isShowDeleteBtn && (
+            <button
+              className="absolute right-[16px] top-[44px] h-fit w-fit rounded-3 bg-white px-4 py-3"
+              onClick={onClickMenu}
+            >
+              삭제하기
+            </button>
+          )}
         </div>
         <p
           className="whitespace-pre-wrap"
