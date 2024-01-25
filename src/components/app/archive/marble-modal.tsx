@@ -124,10 +124,10 @@ export const MarbleModal = ({
             } / ${swiperMarbleList.length}`}</p>
           )}
         </div>
-        <div className="mt-[52.5px]">
+        <div className="mt-[32.5px]">
           <Swiper
             onSwiper={setSwiper}
-            className="init-swiper archive-swiper"
+            className="init-swiper archive-swiper pt-5"
             slidesPerView={1}
             loop={true}
             centeredSlides={true}
