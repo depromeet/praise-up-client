@@ -164,7 +164,10 @@ export const Archive = () => {
       )}
 
       {view === "preview-card" && cardData && (
-        <PreviewCard cardData={cardData} onChangeView={onChangeView} />
+        <PreviewCard
+          cardData={{ ...cardData, postId: state.postId }}
+          onChangeView={onChangeView}
+        />
       )}
       {view === "preview-summary" && (
         <PreviewSummary

@@ -5,6 +5,7 @@ export type TRouteState = {
 };
 
 export type TMarbleCard = {
+  postId: number;
   content: string;
   imageUrl: string;
   isRead: boolean;
