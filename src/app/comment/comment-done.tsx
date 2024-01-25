@@ -22,7 +22,7 @@ export const CommentDoneView = ({
       {transition && <Confetti />}
       <div className="flex flex-1 flex-col justify-center gap-[99px]">
         <div className="absolute left-0 top-0 flex h-[64px] w-full bg-white px-5 py-2.5 ">
-          <button onClick={() => navigate("/")}>
+          <button onClick={() => navigate(-2)}>
             <CloseSVG />
           </button>
         </div>
