@@ -16,8 +16,11 @@ export const FABButton = ({ icon, text, className, ...props }: Props) => {
   return (
     <button
       {...props}
+      style={{
+        boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.06)",
+      }}
       className={clsx(
-        "fixed bottom-[36px] right-[20px] flex w-fit justify-center overflow-hidden rounded-[100px] bg-white p-2.5 shadow",
+        "fixed bottom-[36px] right-[20px] flex w-fit justify-center overflow-hidden rounded-[100px] bg-white p-2.5",
         className,
         !isOverflow && "py-2",
       )}
