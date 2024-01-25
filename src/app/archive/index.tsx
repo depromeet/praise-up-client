@@ -8,7 +8,6 @@ import { PreviewCard } from "./preview-card";
 import { PreviewSummary } from "./preview-summary";
 
 import { MarbleModal } from "@/components/app/archive/marble-modal";
-import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import { useApiMarbleCard } from "@/hooks/api/archive/useApiMarbleCard";
 import { useApiMarbleList } from "@/hooks/api/archive/useApiMarbleList";
 import { TArchiveView, TMarble, TRouteState } from "@/types/archive";
@@ -151,7 +150,7 @@ export const Archive = () => {
 
   if (!marbleList.length) return null;
   return (
-    <ConfirmDialog>
+    <>
       {isModalOpen && Boolean(selectedMarbleId !== -1) && (
         <MarbleModal
           isOpen={isModalOpen}
@@ -190,6 +189,6 @@ export const Archive = () => {
           onChangeSelectedMarbleId={onChangeSelectedMarbleId}
         />
       )}
-    </ConfirmDialog>
+    </>
   );
 };

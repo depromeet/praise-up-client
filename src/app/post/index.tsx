@@ -1,10 +1,11 @@
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Back from "@/assets/icons/back.svg?react";
 import { ArticleWrapper } from "@/components/app/post/common/ArticleWrapper";
 import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
 import { ImageContainer } from "@/components/common/image-container";
 import { ImageCropper } from "@/components/common/image-cropper";
@@ -12,8 +13,6 @@ import { ImageInput } from "@/components/common/image-input";
 import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 export type postProps = {
@@ -22,6 +21,7 @@ export type postProps = {
 };
 
 export const Post = () => {
+  const { confirm } = useContext(ConfirmContext);
   const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
   const [text, setText] = useState("");
@@ -31,7 +31,6 @@ export const Post = () => {
   const location = useLocation();
   const state = location.state as postProps;
   const { mutate } = useApiBoard();
-  const [render, modal] = useModal();
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -44,25 +43,21 @@ export const Post = () => {
   }
 
   const handleModal = async () => {
-    await modal(
-      <ConfirmModal
-        title="키워드 선택으로 돌아갈까요?"
-        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="계속 작성"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="삭제 종료"
-            value="confirm"
-            onClick={() => navigate("/post/keyword")}
-          />,
-        ]}
-      />,
+    const result = await confirm(
+      {
+        title: "키워드 선택으로 돌아갈까요?",
+        description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요.",
+      },
+      {
+        text: "작성 종료",
+      },
+      {
+        text: "계속 작성",
+      },
     );
+
+    if (!result) return;
+    navigate("/post/keyword");
   };
 
   async function getBlobFromUrl(blobUrl: string) {
@@ -126,7 +121,6 @@ export const Post = () => {
 
   return (
     <Fragment>
-      {render()}
       <DefaultLayout
         appbar={
           <Appbar
