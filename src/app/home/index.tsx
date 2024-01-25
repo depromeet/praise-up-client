@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -77,7 +78,6 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
-  const scrollAreaRef = useRef(null);
   const { data: unreadPosts } = useApiGetUnreadPosts();
   const {
     data: archivePosts,
@@ -100,9 +100,13 @@ export const Home = () => {
 
   return (
     <HomeLayout>
-      <div className="flex flex-col gap-12 pb-[60px] pt-4" ref={scrollAreaRef}>
+      <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
-        <ToBeOpened posts={unreadPosts} />
+        <Suspense>
+          <ErrorBoundary fallback={<></>}>
+            <ToBeOpened posts={unreadPosts} />
+          </ErrorBoundary>
+        </Suspense>
         <ToMyArchive
           posts={
             (archivePosts?.pages.reduce(
