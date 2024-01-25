@@ -23,8 +23,16 @@ export const RecentCard = ({
   commentCount,
   postCreatedDate,
 }: RecentCardProps) => {
-  const idx = Math.floor(Math.random() * 11);
+  const illustId = Number(
+    localStorage.getItem(postId + "_illust") ?? Math.floor(Math.random() * 11),
+  );
+
   const [openDatetime, setOpenDatetime] = useState<Date>();
+
+  useEffect(() => {
+    if (!localStorage.getItem(postId + "_illust"))
+      localStorage.setItem(postId + "_illust", illustId.toString());
+  }, []);
 
   useEffect(() => {
     const [year, month, day] = postCreatedDate.split("-");
@@ -38,13 +46,15 @@ export const RecentCard = ({
       <div
         className="flex aspect-square w-full flex-col justify-between rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
         style={{
-          backgroundImage: `url(${BACKGROUNDS[idx]})`,
+          backgroundImage: `url(${BACKGROUNDS[illustId]})`,
         }}
       >
         <div className="flex justify-between">
           <h2
             className={`text-h2 text-gray-700 ${
-              DARK_BACKGROUNDS.includes(idx) ? "text-white" : "text-secondary"
+              DARK_BACKGROUNDS.includes(illustId)
+                ? "text-white"
+                : "text-secondary"
             }`}
           >
             {keyword}
@@ -56,7 +66,7 @@ export const RecentCard = ({
       <LinkAndGoButton
         postId={postId}
         openDatetime={openDatetime ?? new Date()}
-        backgroundUrl={BACKGROUNDS[idx]}
+        backgroundUrl={BACKGROUNDS[illustId]}
       />
     </div>
   );
