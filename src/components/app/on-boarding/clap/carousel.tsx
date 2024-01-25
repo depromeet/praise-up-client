@@ -56,7 +56,7 @@ export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
           className="z-0 h-full w-full"
         >
           <Header
-            text="priase up에 오신 것을\n환영해요"
+            text={`praise up에 기록된 ${userNickname}님의\\n칭찬받을 순간을 확인해보세요.`}
             className="!text-h3 z-10 mt-20 text-center"
           />
         </ArticleWrapper>
