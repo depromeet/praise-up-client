@@ -19,6 +19,7 @@ export const FABButton = ({ icon, text, className, ...props }: Props) => {
       className={clsx(
         "fixed bottom-[36px] right-[20px] flex w-fit justify-center overflow-hidden rounded-[100px] bg-white p-2.5 shadow",
         className,
+        !isOverflow && "py-2",
       )}
     >
       <div
