@@ -127,7 +127,7 @@ export const MarbleModal = ({
         <div className="mt-[32.5px]">
           <Swiper
             onSwiper={setSwiper}
-            className="init-swiper archive-swiper pt-5"
+            className="init-swiper archive-swiper"
             slidesPerView={1}
             loop={true}
             centeredSlides={true}
@@ -139,6 +139,9 @@ export const MarbleModal = ({
             pagination={{
               type: "bullets",
               dynamicBullets: true,
+            }}
+            style={{
+              paddingTop: 20,
             }}
           >
             {swiperMarbleList.map((marble, idx) => (
