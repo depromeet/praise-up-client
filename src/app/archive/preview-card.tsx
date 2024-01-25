@@ -77,7 +77,7 @@ export const PreviewCard = ({ cardData, onChangeView }: Props) => {
         <MarbleCard cardData={cardData} />
       </div>
 
-      <div className="fixed bottom-0 z-10 h-184px w-full max-w-[480px]">
+      <div className="fixed bottom-0 h-184px w-full max-w-[480px]">
         <div className="absolute bottom-0 z-20 flex h-full w-full flex-col items-center justify-center gap-3">
           <div
             className={clsx(
