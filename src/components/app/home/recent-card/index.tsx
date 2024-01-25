@@ -44,7 +44,7 @@ export const RecentCard = ({
         <div className="flex justify-between">
           <h2
             className={`text-h2 text-gray-700 ${
-              DARK_BACKGROUNDS.includes(idx) ? "text-white" : "text-gray-700"
+              DARK_BACKGROUNDS.includes(idx) ? "text-white" : "text-secondary"
             }`}
           >
             {keyword}
