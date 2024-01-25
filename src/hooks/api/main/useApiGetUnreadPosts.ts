@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 import { api } from "@/api";
@@ -16,12 +16,14 @@ export interface ContentDataType {
 const getUnreadPosts = async () => {
   const USER_ID = Cookies.get("k-u-id");
   return api
-    .get(`/praise-up/api/v1/posts?userId=${USER_ID}&isRead=false`) // unread post
-    .then((res) => res.data as ContentDataType[]);
+    .get<ContentDataType[]>(
+      `/praise-up/api/v1/posts?userId=${USER_ID}&isRead=false`,
+    )
+    .then((res) => res.data);
 };
 
 export const useApiGetUnreadPosts = () =>
-  useSuspenseQuery({
+  useQuery({
     queryKey: ["unread-post"],
     queryFn: getUnreadPosts,
   });
