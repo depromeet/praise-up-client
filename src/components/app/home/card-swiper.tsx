@@ -15,11 +15,11 @@ export const CardSwiper = ({ children }: SliderProps) => {
   return (
     <div className="main-swiper">
       <Swiper
+        spaceBetween={8}
         pagination={{
           dynamicBullets: true,
         }}
         modules={[Pagination]}
-        className="h-full w-full"
       >
         {Children.map(children, (child, i) => (
           <SwiperSlide key={i}>{child}</SwiperSlide>
