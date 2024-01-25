@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 import { api } from "@/api";
@@ -23,7 +23,7 @@ const getUnreadPosts = async () => {
 };
 
 export const useApiGetUnreadPosts = () =>
-  useSuspenseQuery({
+  useQuery({
     queryKey: ["unread-post"],
     queryFn: getUnreadPosts,
   });

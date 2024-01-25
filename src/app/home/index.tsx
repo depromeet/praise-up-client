@@ -1,6 +1,5 @@
 import _ from "lodash";
-import { Suspense, useEffect } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -102,11 +101,7 @@ export const Home = () => {
     <HomeLayout>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
         <GoToWrite />
-        <Suspense>
-          <ErrorBoundary fallback={<></>}>
-            <ToBeOpened posts={unreadPosts} />
-          </ErrorBoundary>
-        </Suspense>
+        {unreadPosts ? <ToBeOpened posts={unreadPosts} /> : null}
         <ToMyArchive
           posts={
             (archivePosts?.pages.reduce(
