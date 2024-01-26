@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -84,6 +84,24 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts();
+  const [todayUpload, setTodayUpload] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (unreadPosts.length > 0) {
+      const lastPostDate = new Date(
+        unreadPosts[unreadPosts.length - 1].postCreatedDate,
+      );
+      const today = new Date();
+      if (
+        lastPostDate.getFullYear() === today.getFullYear() &&
+        lastPostDate.getMonth() === today.getMonth() &&
+        lastPostDate.getDate() === today.getDate()
+      )
+        setTodayUpload(false);
+      return;
+    }
+    setTodayUpload(true);
+  }, [unreadPosts]);
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -101,7 +119,7 @@ export const Home = () => {
   return (
     <HomeLayout>
       <div className="flex flex-col gap-12 pb-[60px] pt-4" ref={scrollAreaRef}>
-        <GoToWrite />
+        {todayUpload && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
           posts={
