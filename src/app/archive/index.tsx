@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { MarbleCanvas } from "./marble-canvas";
+import { MarbleEmpty } from "./marble-empty";
 import { MarbleGrid } from "./marble-grid";
 import { PreviewCard } from "./preview-card";
 import { PreviewSummary } from "./preview-summary";
@@ -148,7 +149,6 @@ export const Archive = () => {
     });
   };
 
-  if (!marbleList.length) return null;
   return (
     <>
       {isModalOpen && Boolean(selectedMarbleId !== -1) && (
@@ -170,10 +170,16 @@ export const Archive = () => {
         />
       )}
       {view === "preview-summary" && (
-        <PreviewSummary
-          marbleNum={marbleList.length}
-          onChangeView={onChangeView}
-        />
+        <>
+          {marbleList.length ? (
+            <PreviewSummary
+              marbleNum={marbleList.length}
+              onChangeView={onChangeView}
+            />
+          ) : (
+            <MarbleEmpty onChangeView={onChangeView} />
+          )}
+        </>
       )}
       {view === "marble-canvas" && engine && (
         <MarbleCanvas
