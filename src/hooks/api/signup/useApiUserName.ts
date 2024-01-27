@@ -18,7 +18,7 @@ export const useApiUserProfile = () => {
 
   return useMutation({
     mutationFn: (nickname: string) => changeNickName(nickname),
-    onSuccess: () => naviagate("/main"),
+    onSuccess: () => naviagate("/post/keyword"),
     onError: () => naviagate("/error"),
   });
 };
