@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
@@ -8,11 +8,10 @@ import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
 import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 const DUMMY_DATA = {
@@ -29,7 +28,7 @@ export const CommentFormPage = () => {
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
-  const [render, modal] = useModal();
+  const { confirm } = useContext(ConfirmContext);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -42,25 +41,20 @@ export const CommentFormPage = () => {
   }, [nickname, image]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬 반응 작성을 그만둘까요?"
-        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="계속 작성"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="작성 종료"
-            value="confirm"
-          />,
-        ]}
-      />,
+    const result = await confirm(
+      {
+        title: "칭찬 반응 작성을 그만둘까요?",
+        description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
+      },
+      {
+        text: "작성 종료",
+      },
+      {
+        text: "계속 작성",
+      },
     );
-    if (result === "cancel") return;
+
+    if (!result) return;
     sessionStorage.removeItem("comment_nickname");
     sessionStorage.removeItem("comment_content");
     sessionStorage.removeItem("comment_imageUrl");
@@ -144,7 +138,6 @@ export const CommentFormPage = () => {
           </ButtonProvider>
         </>
       )}
-      {render()}
     </DefaultLayout>
   );
 };
