@@ -5,6 +5,9 @@ import { TimerBadge } from "./timer-badge";
 
 import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
+import { handleIllust } from "@/utils/handleIllust";
+
+type IllustListType = { postId: number; illustId: number }[];
 
 interface RecentCardProps {
   postId: number;
@@ -23,16 +26,9 @@ export const RecentCard = ({
   commentCount,
   postCreatedDate,
 }: RecentCardProps) => {
-  const illustId = Number(
-    localStorage.getItem(postId + "_illust") ?? Math.floor(Math.random() * 11),
-  );
-
   const [openDatetime, setOpenDatetime] = useState<Date>();
 
-  useEffect(() => {
-    if (!localStorage.getItem(postId + "_illust"))
-      localStorage.setItem(postId + "_illust", illustId.toString());
-  }, []);
+  const illustId = handleIllust.get(postId);
 
   useEffect(() => {
     const [year, month, day] = postCreatedDate.split("-");
