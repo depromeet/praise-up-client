@@ -154,7 +154,10 @@ export const Post = () => {
               {image.length > 0 ? (
                 <ImageContainer src={image} onChange={changeImage} />
               ) : (
-                <ImageInput onChange={changeImage} />
+                <ImageInput
+                  onChange={changeImage}
+                  placeholder="칭찬 받을 순간을 올려주세요"
+                />
               )}
             </ArticleWrapper>
             {image.length > 0 && (
