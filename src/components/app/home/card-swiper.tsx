@@ -1,11 +1,10 @@
 import { Children } from "react";
+import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/scss";
 import "swiper/scss/pagination";
 import "@/style/swiper/main.scss";
-
-import { Pagination } from "swiper/modules";
 
 interface SliderProps {
   children: React.ReactNode;

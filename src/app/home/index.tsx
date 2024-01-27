@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -34,7 +34,7 @@ const GoToWrite = () => {
   );
 };
 
-const ToBeOpened = ({ posts }: { posts: ContentDataType[] }) => {
+const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
   return (
     <div className="mb-4 flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>
@@ -77,7 +77,6 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
-  const scrollAreaRef = useRef(null);
   const { data: unreadPosts } = useApiGetUnreadPosts();
   const {
     data: archivePosts,
@@ -87,6 +86,7 @@ export const Home = () => {
   const [todayUpload, setTodayUpload] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!unreadPosts) return;
     if (unreadPosts.length > 0) {
       const lastPostDate = new Date(
         unreadPosts[unreadPosts.length - 1].postCreatedDate,
@@ -118,7 +118,7 @@ export const Home = () => {
 
   return (
     <HomeLayout>
-      <div className="flex flex-col gap-12 pb-[60px] pt-4" ref={scrollAreaRef}>
+      <div className="flex flex-col gap-12 pb-[60px] pt-4">
         {todayUpload && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
