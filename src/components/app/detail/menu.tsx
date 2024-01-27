@@ -4,6 +4,7 @@ import { MenuIconSVG } from "@/assets/icons/menu-icon";
 import { useApiDeletePost } from "@/hooks/api/detail/useApiDeletePost";
 import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
 import { useModal } from "@/hooks/modal/useModal";
+import { handleIllust } from "@/utils/handleIllust";
 
 interface MenuProps {
   postId: number;
@@ -66,6 +67,7 @@ export const Menu = ({
       />,
     );
     if (result === "cancel") return;
+    handleIllust.remove(postId);
     mutation.mutate(postId);
   };
 

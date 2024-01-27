@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
@@ -11,17 +11,13 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
+import { GetOnePostType } from "@/hooks/api/detail/useApiGetOnePost";
 import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
 import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
-const DUMMY_DATA = {
-  id: "1",
-  keyword: "센스있는",
-  username: "지영",
-};
-
 export const CommentFormPage = () => {
+  const data = useLocation().state as GetOnePostType;
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -61,9 +57,6 @@ export const CommentFormPage = () => {
       />,
     );
     if (result === "cancel") return;
-    sessionStorage.removeItem("comment_nickname");
-    sessionStorage.removeItem("comment_content");
-    sessionStorage.removeItem("comment_imageUrl");
     navigate(-1);
   };
 
@@ -118,7 +111,7 @@ export const CommentFormPage = () => {
         <>
           <LayeredBackground>
             <Header
-              text={`{${DUMMY_DATA.keyword}} 순간을 올린\\n {${DUMMY_DATA.username}} 님에게 칭찬 남기기`}
+              text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
             />
 
             <div className="flex w-full flex-col gap-7">

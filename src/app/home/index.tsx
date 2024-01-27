@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -34,7 +34,7 @@ const GoToWrite = () => {
   );
 };
 
-const ToBeOpened = ({ posts }: { posts: ContentDataType[] }) => {
+const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
   return (
     <div className="mb-4 flex flex-col gap-5">
       <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>
@@ -83,6 +83,25 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts();
+  const [todayUpload, setTodayUpload] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!unreadPosts) return;
+    if (unreadPosts.length > 0) {
+      const lastPostDate = new Date(
+        unreadPosts[unreadPosts.length - 1].postCreatedDate,
+      );
+      const today = new Date();
+      if (
+        lastPostDate.getFullYear() === today.getFullYear() &&
+        lastPostDate.getMonth() === today.getMonth() &&
+        lastPostDate.getDate() === today.getDate()
+      )
+        setTodayUpload(false);
+      return;
+    }
+    setTodayUpload(true);
+  }, [unreadPosts]);
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -100,8 +119,8 @@ export const Home = () => {
   return (
     <HomeLayout>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
-        <GoToWrite />
-        {unreadPosts ? <ToBeOpened posts={unreadPosts} /> : null}
+        {todayUpload && <GoToWrite />}
+        <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
           posts={
             (archivePosts?.pages.reduce(
