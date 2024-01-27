@@ -38,6 +38,9 @@ export const CommentMainPage = () => {
 
   useEffect(() => {
     sessionStorage.setItem("comment_id", postId);
+    sessionStorage.removeItem("comment_nickname");
+    sessionStorage.removeItem("comment_content");
+    sessionStorage.removeItem("comment_image");
   }, [postId]);
 
   if (!postId) return <NotFound />;
