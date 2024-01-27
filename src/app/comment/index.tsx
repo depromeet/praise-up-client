@@ -41,7 +41,9 @@ export const CommentMainPage = () => {
       </section>
 
       <ButtonProvider className="!bg-transparent">
-        <ButtonProvider.Primary onClick={() => navigate("/clap/write")}>
+        <ButtonProvider.Primary
+          onClick={() => navigate("/clap/write", { state: data })}
+        >
           칭찬 남기기
         </ButtonProvider.Primary>
         <ButtonProvider.White onClick={() => navigate("/")}>
