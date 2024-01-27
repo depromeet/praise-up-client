@@ -1,10 +1,11 @@
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
+import { LogoSVG } from "@/assets/icons/logo";
 import { UserSVG } from "@/assets/icons/user";
 import Marbles from "@/assets/imgs/marbles.svg?react";
-import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
@@ -15,6 +16,18 @@ interface PostIdState {
     postId: string;
   };
 }
+
+const Appbar = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="flex h-[64px] w-full items-center justify-between px-5 py-2.5">
+      <button onClick={() => navigate("/")}>
+        <LogoSVG />
+      </button>
+      <UserSVG />
+    </div>
+  );
+};
 
 export const CommentMainPage = () => {
   const navigate = useNavigate();
@@ -30,7 +43,7 @@ export const CommentMainPage = () => {
   if (!postId) return <NotFound />;
 
   return (
-    <DefaultLayout appbar={<Appbar right={<UserSVG />} />}>
+    <DefaultLayout appbar={<Appbar />}>
       {/* post area */}
       <section className="flex flex-col justify-between gap-9">
         <h2 className="text-h2">{data.userNickname}님의 칭찬게시물</h2>
