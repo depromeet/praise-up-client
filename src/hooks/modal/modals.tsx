@@ -8,7 +8,7 @@ type ButtonProps = {
 export const MainButton = ({ label, value, ...props }: ButtonProps) => {
   return (
     <button
-      className="px-13 text-b2-strong flex-1 rounded-2 bg-red-500 py-4 text-oncolor"
+      className="px-13 text-b2-strong flex-1 rounded-2 bg-primary py-4 text-oncolor"
       value={value}
       {...props}
     >

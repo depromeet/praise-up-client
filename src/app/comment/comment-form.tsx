@@ -45,12 +45,12 @@ export const CommentFormPage = () => {
         buttons={[
           <SubButton
             key="unpublished-post-cancel"
-            label="계속 작성"
+            label="취소"
             value="cancel"
           />,
           <MainButton
             key="unpublished-post-delete"
-            label="작성 종료"
+            label="삭제"
             value="confirm"
           />,
         ]}
