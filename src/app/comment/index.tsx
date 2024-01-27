@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -20,7 +21,13 @@ const Appbar = () => {
   const navigate = useNavigate();
   return (
     <div className="flex h-[64px] w-full items-center justify-between px-5 py-2.5">
-      <button onClick={() => navigate("/")}>
+      <button
+        onClick={() => {
+          // TODO: 추후에 JWT 토큰으로 변경시 수정이 필요함.
+          const isLogin = Boolean(Cookies.get("k-u-id"));
+          isLogin ? navigate("/main") : navigate("/");
+        }}
+      >
         <LogoSVG />
       </button>
       <UserSVG />
@@ -61,7 +68,13 @@ export const CommentMainPage = () => {
         >
           칭찬 남기기
         </ButtonProvider.Primary>
-        <ButtonProvider.White onClick={() => navigate("/")}>
+        <ButtonProvider.White
+          onClick={() => {
+            // TODO: 추후에 JWT 토큰으로 변경시 수정이 필요함.
+            const isLogin = Boolean(Cookies.get("k-u-id"));
+            isLogin ? navigate("/main") : navigate("/");
+          }}
+        >
           나도 칭찬 받기
         </ButtonProvider.White>
       </ButtonProvider>
