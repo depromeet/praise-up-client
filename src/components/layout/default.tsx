@@ -26,7 +26,7 @@ export const DefaultLayout = ({
       {resetScroll && <UseScrollToTop />}
       <div
         className={clsx(
-          "relative mx-auto flex h-screen max-h-[100dvh] w-screen max-w-[480px] flex-col shadow scrollbar-hide",
+          "relative mx-auto flex min-h-[100dvh] w-screen max-w-[480px] flex-col shadow scrollbar-hide",
           className,
         )}
       >
