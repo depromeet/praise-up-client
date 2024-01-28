@@ -85,17 +85,19 @@ export const Selector = ({
       if (value < -50) {
         unsubscribe();
         void animateContentControls.start({
-          y: -140,
+          y: [-20, -140, -120, -140],
           transition: {
-            duration: 0.3, // 애니메이션이 지속될 시간 (초)
-            ease: "easeOut", // 애니메이션 속도 곡선
+            duration: 0.6,
+            times: [0, 0.6, 0.8, 1],
+            ease: ["backOut"],
           },
         });
         void animateMarbleControls.start({
-          y: -140,
+          y: [-20, -140, -120, -140],
           transition: {
-            duration: 0.3, // 애니메이션이 지속될 시간 (초)
-            ease: "easeOut", // 애니메이션 속도 곡선
+            duration: 0.6,
+            times: [0, 0.6, 0.8, 1],
+            ease: ["backOut"],
           },
         });
         setSnap(true);
