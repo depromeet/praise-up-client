@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
-import MarbleSVG from "@/assets/imgs/marble.svg?react";
+import Marble1SVG from "@/assets/imgs/marble1.svg?react";
+import Marble2SVG from "@/assets/imgs/marble2.svg?react";
 import { ContentForm } from "@/components/app/comment/content-form";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
@@ -27,6 +28,7 @@ export const CommentFormPage = () => {
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
   const [render, modal] = useModal();
+  const [marbleIdx, setMarbleIdx] = useState(Math.floor(Math.random() * 2));
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -116,7 +118,9 @@ export const CommentFormPage = () => {
             <Header
               text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
             />
-            <MarbleSVG className="absolute right-5 top-[70px]" />
+            <div className="absolute right-5 top-[70px]">
+              {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
+            </div>
 
             <div className="flex w-full flex-col gap-7">
               <RequiredForm
