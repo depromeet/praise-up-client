@@ -47,10 +47,10 @@ export const CommentFormPage = () => {
           description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
         },
         {
-          text: "그만두기",
+          text: "삭제",
         },
         {
-          text: "계속 작성",
+          text: "취소",
         },
       );
 
