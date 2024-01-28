@@ -7,8 +7,6 @@ import * as BackgroundSVG from "@/assets/imgs/card-background";
 import { CountBadge } from "@/components/app/home/count-badge";
 import { handleIllust } from "@/utils/handleIllust";
 
-type IllustListType = { postId: number; illustId: number }[];
-
 interface RecentCardProps {
   postId: number;
   keyword: string;
