@@ -26,6 +26,7 @@ type contentProps = {
   text: string;
   isActive?: boolean;
   className?: string;
+  id?: string;
 };
 
 export type keywordProps = {
@@ -115,7 +116,13 @@ export const Selector = ({
     return unsubscribe;
   }, [yTransform, animateMarbleControls, keyword]);
 
-  const Content = ({ text, isActive, className, ...props }: contentProps) => {
+  const Content = ({
+    text,
+    isActive,
+    className,
+    id,
+    ...props
+  }: contentProps) => {
     return (
       <motion.div
         animate={animateContentControls}
@@ -132,7 +139,7 @@ export const Selector = ({
         style={isActive ? { y } : {}}
         {...props}
       >
-        {text}
+        <span id={id}>{text}</span>
       </motion.div>
     );
   };
@@ -158,7 +165,13 @@ export const Selector = ({
               direction={"vertical"}
               style={{ transform: `rotate(${angle}deg)` }}
             />
-            <Content text={currentText} className="absolute" />
+            {snap ? (
+              <Content
+                text={currentText}
+                className="absolute"
+                id="selected_marble_text"
+              />
+            ) : null}
           </div>
         </motion.div>
 
