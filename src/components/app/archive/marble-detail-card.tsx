@@ -41,7 +41,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
       const result = await confirm(
         {
           title: "칭찬반응을 삭제할까요?",
-          description: "삭제된 칭찬반응은 복구할 수 없어요.",
+          description: "삭제된 칭찬반응은 복구할 수 없어요",
         },
         {
           text: "삭제",

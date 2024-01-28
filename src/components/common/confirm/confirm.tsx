@@ -27,7 +27,7 @@ export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
             <button
               {...confirm}
               onClick={confirm.onClick}
-              className={clsx(btnDefaultStyle, "bg-red-500")}
+              className={clsx(btnDefaultStyle, "bg-[#242B37]")}
             >
               <p className="w-full text-white">{confirm.text}</p>
             </button>

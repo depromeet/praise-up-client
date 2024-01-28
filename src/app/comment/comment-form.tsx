@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
@@ -26,7 +26,7 @@ export const CommentFormPage = () => {
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
-  const [render, modal] = useModal();
+  const { confirm } = useContext(ConfirmContext);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -39,25 +39,20 @@ export const CommentFormPage = () => {
   }, [nickname, image]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬 반응 작성을 그만둘까요?"
-        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="취소"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="삭제"
-            value="confirm"
-          />,
-        ]}
-      />,
+    const result = await confirm(
+      {
+        title: "칭찬 반응 작성을 그만둘까요?",
+        description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
+      },
+      {
+        text: "그만두기",
+      },
+      {
+        text: "계속 작성",
+      },
     );
-    if (result === "cancel") return;
+    
+    if (!result) return;
     navigate(-1);
   };
 
