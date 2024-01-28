@@ -88,9 +88,7 @@ export const Home = () => {
   useEffect(() => {
     if (!unreadPosts) return;
     if (unreadPosts.length > 0) {
-      const lastPostDate = new Date(
-        unreadPosts[unreadPosts.length - 1].postCreatedDate,
-      );
+      const lastPostDate = new Date(unreadPosts[0].postCreatedDate);
       const today = new Date();
       console.log(today, unreadPosts, lastPostDate);
       if (
