@@ -173,9 +173,6 @@ export const CommentUpPage = () => {
           {/* backgroun area */}
           <div className="absolute left-0 top-0 w-full ">
             <Marbles className="-z-10 w-full  rotate-180" />
-            <div
-              className={`absolute left-0 top-0 z-10 h-full w-full bg-[linear-gradient(180deg,_#ffffff60_15.62%,_#ffffff00_81.25%)] `}
-            ></div>
           </div>
 
           <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
@@ -189,7 +186,7 @@ export const CommentUpPage = () => {
                 isReached={isReached}
                 setIsReached={setIsReached}
                 flyDuration={FLY_DURATION}
-                nickname={sessionStorage.getItem("nickname") ?? ""}
+                nickname={sessionStorage.getItem("comment_nickname") ?? ""}
               />
             </div>
             <Header

@@ -11,7 +11,7 @@ export const Input = ({ limit, value, onChange, ...props }: TextInputProps) => {
   return (
     <div className=" flex items-center justify-between rounded-3 border border-gray-300 bg-white px-[18px] py-4 caret-[#338AFF] focus-within:border-[#338AFF]">
       <input
-        className="text-b3-compact w-full overflow-hidden text-ellipsis bg-transparent focus:outline-none"
+        className="text-b3-compact w-full overflow-hidden text-ellipsis bg-transparent placeholder:text-gray-600 focus:outline-none"
         type="text"
         value={value}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {

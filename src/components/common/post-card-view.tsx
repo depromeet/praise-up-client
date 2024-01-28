@@ -62,7 +62,7 @@ export const PostCardView = ({
   useEffect(() => {
     // 외부에 공개되는 게시물인 경우 flip 모션 방지
     if (!isPublic) {
-      const timer = setTimeout(() => toggleTransStyle(), 3000);
+      const timer = setTimeout(() => toggleTransStyle(), 1500);
       return () => clearTimeout(timer);
     }
   }, [isPublic]);

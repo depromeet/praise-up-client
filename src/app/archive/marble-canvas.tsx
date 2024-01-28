@@ -125,6 +125,11 @@ export const MarbleCanvas = ({
 
     // Event Handler
     const onMouseUp = (e: IEvent<Matter.MouseConstraint>) => {
+      if (isScrolling) {
+        isScrolling = false;
+        return;
+      }
+
       const { x, y } = e.mouse.mouseupPosition;
       const bodiesUnderMouse = Query.point(engine.world.bodies, { x, y });
 
@@ -145,15 +150,16 @@ export const MarbleCanvas = ({
     const onTouchEnd = (e: Event) => {
       mouseConstraint.mouse.mouseup(e);
 
-      if (isScrolling) {
-        isScrolling = true;
-        return;
-      }
+      // NOTE: mouseUp event 사용으로 주석처리
+      // if (isScrolling) {
+      //   isScrolling = false;
+      //   return;
+      // }
 
-      const selectedBody = mouseConstraint.body;
-      if (selectedBody && selectedBody.label === "marble") {
-        onOpenModal(selectedBody.id);
-      }
+      // const selectedBody = mouseConstraint.body;
+      // if (selectedBody && selectedBody.label === "marble") {
+      //   onOpenModal(selectedBody.id);
+      // }
     };
 
     // NOTE: Setup functions
