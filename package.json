@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run postbuild",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postbuild": "react-snap"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.17.9",
@@ -31,6 +32,7 @@
     "react-error-boundary": "^4.0.12",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.19.0",
+    "react-snap": "^1.23.0",
     "swiper": "^11.0.5",
     "tailwind-scrollbar-hide": "^1.1.7",
     "zustand": "^4.4.7"
@@ -73,5 +75,9 @@
     "vite": "^5.0.0",
     "vite-plugin-svgr": "^4.1.0",
     "vitest": "^0.34.6"
-  }
+  },
+  "reactSnap": {
+    "source": "./dist"
+  },
+  "homepage": "./"
 }
