@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
+import MarbleSVG from "@/assets/imgs/marble.svg?react";
 import { ContentForm } from "@/components/app/comment/content-form";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
@@ -113,6 +114,7 @@ export const CommentFormPage = () => {
             <Header
               text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
             />
+            <MarbleSVG className="absolute right-5 top-[70px]" />
 
             <div className="flex w-full flex-col gap-7">
               <RequiredForm
