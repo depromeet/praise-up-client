@@ -26,6 +26,7 @@ type contentProps = {
   text: string;
   isActive?: boolean;
   className?: string;
+  id?: string;
 };
 
 export type keywordProps = {
@@ -57,7 +58,8 @@ export const Selector = ({
 
   const y: MotionValue<number> = useMotionValue(0);
   const yTransform = useTransform(y, (value: number) => value);
-  const secondElementControls: AnimationControls = useAnimation();
+  const animateContentControls: AnimationControls = useAnimation();
+  const animateMarbleControls: AnimationControls = useAnimation();
   const { data } = useApiLoadKeyword();
 
   useEffect(() => {
@@ -78,8 +80,27 @@ export const Selector = ({
   /** 키워드를 드래그 시에, 구슬도 같이 움직일 수 있도록 동기화 */
   useEffect(() => {
     const unsubscribe = yTransform.onChange((value: number) => {
-      void secondElementControls.start({ y: value });
-      if (value < -90) {
+      void animateMarbleControls.start({
+        y: value,
+      });
+      if (value < -50) {
+        unsubscribe();
+        void animateContentControls.start({
+          y: [-20, -140, -120, -140],
+          transition: {
+            duration: 0.6,
+            times: [0, 0.6, 0.8, 1],
+            ease: ["backOut"],
+          },
+        });
+        void animateMarbleControls.start({
+          y: [-20, -140, -120, -140],
+          transition: {
+            duration: 0.6,
+            times: [0, 0.6, 0.8, 1],
+            ease: ["backOut"],
+          },
+        });
         setSnap(true);
         setCurrentText(keyword[currentIndex.current].keyword);
         return setTimeout(() => {
@@ -93,20 +114,32 @@ export const Selector = ({
       }
     });
     return unsubscribe;
-  }, [yTransform, secondElementControls, keyword]);
+  }, [yTransform, animateMarbleControls, keyword]);
 
-  const Content = ({ text, isActive, className, ...props }: contentProps) => {
+  const Content = ({
+    text,
+    isActive,
+    className,
+    id,
+    ...props
+  }: contentProps) => {
     return (
       <motion.div
+        animate={animateContentControls}
         className={clsx("text-h3 z-20", className)}
-        drag={snap ? false : "y"}
+        drag="y"
         dragControls={controls}
-        dragElastic={0.5}
-        dragConstraints={{ top: -110, bottom: 0 }}
+        dragElastic={{ top: 0.6, bottom: 0 }}
+        dragSnapToOrigin={true}
+        dragTransition={{
+          bounceStiffness: 400,
+          bounceDamping: 100,
+        }}
+        dragConstraints={{ top: -10, bottom: 0 }}
         style={isActive ? { y } : {}}
         {...props}
       >
-        {text}
+        <span id={id}>{text}</span>
       </motion.div>
     );
   };
@@ -120,7 +153,7 @@ export const Selector = ({
         className="relative top-0 z-10 flex h-auto w-[480px] items-center justify-center"
       >
         <motion.div
-          animate={secondElementControls}
+          animate={animateMarbleControls}
           dragElastic={0.5} // 탄력성 설정, 0에서 1 사이의 값
           ref={marbleRef}
         >
@@ -132,7 +165,13 @@ export const Selector = ({
               direction={"vertical"}
               style={{ transform: `rotate(${angle}deg)` }}
             />
-            <Content text={currentText} className="absolute" />
+            {snap ? (
+              <Content
+                text={currentText}
+                className="absolute"
+                id="selected_marble_text"
+              />
+            ) : null}
           </div>
         </motion.div>
 
