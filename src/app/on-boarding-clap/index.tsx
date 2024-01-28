@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
@@ -8,6 +8,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
 import { useDecodeURI } from "@/hooks/useDecodeURI";
+import { setMetaTags } from "@/utils/setMetaTag";
 
 export const OnBoardingClap = () => {
   const [angle, setAngle] = useState(0);
@@ -16,6 +17,15 @@ export const OnBoardingClap = () => {
   const {
     data: { userNickname },
   } = useApiGetOnePost(postId);
+
+  useEffect(() => {
+    setMetaTags({
+      title: `${userNickname}님에게 익명으로 칭찬 남기기`,
+      description: "praise up | 칭찬 기반 sns 서비스",
+    });
+
+    return setMetaTags({});
+  }, []);
 
   if (!postId) return <NotFound />;
 
