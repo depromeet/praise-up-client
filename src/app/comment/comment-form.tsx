@@ -9,12 +9,11 @@ import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
 import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
 import { GetOnePostType } from "@/hooks/api/detail/useApiGetOnePost";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 export const CommentFormPage = () => {
@@ -51,7 +50,7 @@ export const CommentFormPage = () => {
         text: "계속 작성",
       },
     );
-    
+
     if (!result) return;
     navigate(-1);
   };
@@ -122,7 +121,6 @@ export const CommentFormPage = () => {
                 <ContentForm content={content} setContent={setContent} />
               )}
             </div>
-            {render()}
           </LayeredBackground>
 
           <ButtonProvider isFull={true}>
