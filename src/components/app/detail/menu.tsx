@@ -1,9 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 
 import { MenuIconSVG } from "@/assets/icons/menu-icon";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { useApiDeletePost } from "@/hooks/api/detail/useApiDeletePost";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
 
 interface MenuProps {
   postId: number;
@@ -20,7 +19,7 @@ export const Menu = ({
   showMenu,
   setShowMenu,
 }: MenuProps) => {
-  const [render, modal] = useModal();
+  const { confirm } = useContext(ConfirmContext);
   const isUpdated = useRef<boolean>(false);
 
   const deleteMenuRef = useRef<HTMLButtonElement>(null);
@@ -47,25 +46,20 @@ export const Menu = ({
   }, [showMenu]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬게시물을 삭제할까요?"
-        description="게시물과 쌓인 반응이 모두 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="취소"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="삭제"
-            value="confirm"
-          />,
-        ]}
-      />,
+    const result = await confirm(
+      {
+        title: "칭찬게시물을 삭제할까요?",
+        description: "게시물과 쌓인 반응이 모두 삭제돼요",
+      },
+      {
+        text: "삭제",
+      },
+      {
+        text: "취소",
+      },
     );
-    if (result === "cancel") return;
+
+    if (!result) return;
     mutation.mutate(postId);
   };
 
@@ -92,7 +86,6 @@ export const Menu = ({
           <span className="text-b3-compact select-none">삭제하기</span>
         </button>
       )}
-      {render()}
     </>
   );
 };
