@@ -189,7 +189,7 @@ export const CommentUpPage = () => {
                 isReached={isReached}
                 setIsReached={setIsReached}
                 flyDuration={FLY_DURATION}
-                nickname={sessionStorage.getItem("nickname") ?? ""}
+                nickname={sessionStorage.getItem("comment_nickname") ?? ""}
               />
             </div>
             <Header
