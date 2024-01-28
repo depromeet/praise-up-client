@@ -1,18 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
+import MarbleSVG from "@/assets/imgs/marble.svg?react";
 import { ContentForm } from "@/components/app/comment/content-form";
 import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
 import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
-import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
 import { GetOnePostType } from "@/hooks/api/detail/useApiGetOnePost";
+import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
+import { useModal } from "@/hooks/modal/useModal";
 import useImageCompress from "@/hooks/useImageCompress";
 
 export const CommentFormPage = () => {
@@ -24,7 +26,7 @@ export const CommentFormPage = () => {
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
-  const { confirm } = useContext(ConfirmContext);
+  const [render, modal] = useModal();
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -37,23 +39,25 @@ export const CommentFormPage = () => {
   }, [nickname, image]);
 
   const handleModal = async () => {
-    const result = await confirm(
-      {
-        title: "칭찬 반응 작성을 그만둘까요?",
-        description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
-      },
-      {
-        text: "작성 종료",
-      },
-      {
-        text: "계속 작성",
-      },
+    const result = await modal(
+      <ConfirmModal
+        title="칭찬 반응 작성을 그만둘까요?"
+        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
+        buttons={[
+          <SubButton
+            key="unpublished-post-cancel"
+            label="취소"
+            value="cancel"
+          />,
+          <MainButton
+            key="unpublished-post-delete"
+            label="삭제"
+            value="confirm"
+          />,
+        ]}
+      />,
     );
-
-    if (!result) return;
-    sessionStorage.removeItem("comment_nickname");
-    sessionStorage.removeItem("comment_content");
-    sessionStorage.removeItem("comment_imageUrl");
+    if (result === "cancel") return;
     navigate(-1);
   };
 
@@ -110,6 +114,7 @@ export const CommentFormPage = () => {
             <Header
               text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
             />
+            <MarbleSVG className="absolute right-5 top-[70px]" />
 
             <div className="flex w-full flex-col gap-7">
               <RequiredForm
@@ -122,6 +127,7 @@ export const CommentFormPage = () => {
                 <ContentForm content={content} setContent={setContent} />
               )}
             </div>
+            {render()}
           </LayeredBackground>
 
           <ButtonProvider isFull={true}>

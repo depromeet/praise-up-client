@@ -83,24 +83,24 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts();
-  const [todayUpload, setTodayUpload] = useState<boolean>(true);
+  const [todayUpload, setTodayUpload] = useState<boolean>(false);
 
   useEffect(() => {
     if (!unreadPosts) return;
     if (unreadPosts.length > 0) {
-      const lastPostDate = new Date(
-        unreadPosts[unreadPosts.length - 1].postCreatedDate,
-      );
+      const lastPostDate = new Date(unreadPosts[0].postCreatedDate);
       const today = new Date();
+      console.log(today, unreadPosts, lastPostDate);
       if (
         lastPostDate.getFullYear() === today.getFullYear() &&
         lastPostDate.getMonth() === today.getMonth() &&
         lastPostDate.getDate() === today.getDate()
-      )
-        setTodayUpload(false);
-      return;
+      ) {
+        setTodayUpload(true);
+        return;
+      }
     }
-    setTodayUpload(true);
+    setTodayUpload(false);
   }, [unreadPosts]);
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export const Home = () => {
   return (
     <HomeLayout>
       <div className="flex flex-col gap-12 pb-[60px] pt-4">
-        {todayUpload && <GoToWrite />}
+        {!todayUpload && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
           posts={
