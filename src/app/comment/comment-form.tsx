@@ -39,25 +39,27 @@ export const CommentFormPage = () => {
   }, [nickname, image]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬 반응 작성을 그만둘까요?"
-        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="취소"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="삭제"
-            value="confirm"
-          />,
-        ]}
-      />,
-    );
-    if (result === "cancel") return;
+    if (nickname.length !== 0 || image.length !== 0) {
+      const result = await modal(
+        <ConfirmModal
+          title="칭찬 반응 작성을 그만둘까요?"
+          description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
+          buttons={[
+            <SubButton
+              key="unpublished-post-cancel"
+              label="취소"
+              value="cancel"
+            />,
+            <MainButton
+              key="unpublished-post-delete"
+              label="삭제"
+              value="confirm"
+            />,
+          ]}
+        />,
+      );
+      if (result === "cancel") return;
+    }
     navigate(-1);
   };
 
