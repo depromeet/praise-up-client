@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.17.9",
+    "@types/react-helmet": "^6.1.11",
     "axios": "^1.6.2",
     "body-scroll-lock": "4.0.0-beta.0",
     "browser-image-compression": "^2.0.2",
@@ -28,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.4",
     "react-error-boundary": "^4.0.12",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^6.19.0",
     "swiper": "^11.0.5",
     "tailwind-scrollbar-hide": "^1.1.7",
