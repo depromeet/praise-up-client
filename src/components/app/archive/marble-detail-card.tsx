@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useState } from "react";
+import { forwardRef, useContext, useEffect, useState } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
@@ -10,9 +10,25 @@ type Props = {
   onDeleteMarble: () => void;
 };
 
+const urlToBase64 = (url: string) => {
+  return new Promise<string>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve((reader.result ?? "") as string);
+      reader.readAsDataURL(xhr.response as Blob);
+    };
+    xhr.onerror = () => reject(new Error("Error on converting image"));
+    xhr.responseType = "blob";
+    xhr.open("GET", url);
+    xhr.send();
+  });
+};
+
 export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
   ({ marble, onDeleteMarble }, ref) => {
     const { mutate: deleteComment } = useApiMarbleComments();
+    const [src, setSrc] = useState<string>("");
 
     const { confirm } = useContext(ConfirmContext);
     const { nickname, content, imageUrl, commentId } = marble;
@@ -51,6 +67,16 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
       });
     };
 
+    useEffect(() => {
+      void (async () => {
+        try {
+          setSrc(await urlToBase64(imageUrl));
+        } catch (error) {
+          setSrc(imageUrl);
+        }
+      })();
+    }, [imageUrl]);
+
     // TODO: Add image save button
     return (
       <div
@@ -62,7 +88,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
       >
         <div className="relative">
           <img
-            src={imageUrl}
+            src={src}
             alt="marble thumbnail"
             className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
           />

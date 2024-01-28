@@ -6,6 +6,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { toast } from "@/helpers/toast";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 import { useTimer } from "@/hooks/useTimer";
+import { handleIllust } from "@/utils/handleIllust";
 
 interface LinkAndGoButtonProps {
   postId: number;
@@ -58,9 +59,10 @@ export const LinkAndGoButton = ({
       ) : (
         <ButtonProvider.Primary
           className="flex items-center justify-center"
-          onClick={() =>
-            navigate(`/seal/${postId}`, { state: { backgroundUrl } })
-          }
+          onClick={() => {
+            handleIllust.remove(postId);
+            navigate(`/archive`, { state: { postId } });
+          }}
         >
           칭찬구슬 보러가기
         </ButtonProvider.Primary>

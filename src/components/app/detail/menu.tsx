@@ -3,6 +3,9 @@ import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 import { MenuIconSVG } from "@/assets/icons/menu-icon";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { useApiDeletePost } from "@/hooks/api/detail/useApiDeletePost";
+import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
+import { useModal } from "@/hooks/modal/useModal";
+import { handleIllust } from "@/utils/handleIllust";
 
 interface MenuProps {
   postId: number;
@@ -60,6 +63,8 @@ export const Menu = ({
     );
 
     if (!result) return;
+
+    handleIllust.remove(postId);
     mutation.mutate(postId);
   };
 
