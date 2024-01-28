@@ -16,9 +16,9 @@ export const MarbleGridItem = ({ marble, onClick }: Props) => {
         backgroundPosition: "center",
       }}
       onClick={onClick}
-      className="relative box-border w-full rounded-lg after:block after:pb-[calc(100%)]"
+      className="relative box-border w-full rounded-lg border border-gray-200 after:block after:pb-[calc(100%)]"
     >
-      <div className="absolute bottom-[12px] right-[12px] flex h-8 w-fit items-center gap-1 rounded-lg bg-white/70 px-2 py-1.5 backdrop-blur-[20px]">
+      <div className="absolute bottom-[12px] right-[12px] flex h-8 w-fit items-center gap-1 rounded-lg border border-secondary/10 bg-white/70 px-2 py-1.5 backdrop-blur-[20px]">
         <div className="w-4">
           <UserFilled />
         </div>
