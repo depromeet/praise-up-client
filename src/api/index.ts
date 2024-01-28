@@ -6,6 +6,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import globalRouter from "@/hooks/navigate/globalRouter";
+
 const isDev = import.meta.env.MODE === "development";
 
 // API 서버 연결 설정 필요
@@ -33,6 +35,9 @@ const logOnDev = (message: string) => {
 /** API 요청이 실패한 경우 호출되는 함수 */
 const onError = (status: number, message: string) => {
   const error = { status, message };
+  if (import.meta.env.MODE !== "development" && globalRouter.navigate) {
+    globalRouter.navigate("/error");
+  }
   throw error;
 };
 
