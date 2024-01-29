@@ -169,7 +169,7 @@ export const Post = () => {
                 currentLength={text.length}
               />
             )}
-            <ButtonProvider isFull={true}>
+            <ButtonProvider isFull={true} className="!bg-transparent">
               <ButtonProvider.Primary
                 disabled={!(image.length > 0)}
                 onClick={createPost}
