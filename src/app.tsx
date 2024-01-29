@@ -4,6 +4,7 @@ import "@/style/global.css";
 import { AnimatePresence } from "framer-motion";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
+import { HelmetProvider } from "react-helmet-async";
 
 import { NotFound } from "./app/error/404";
 import { ConfirmDialog } from "./components/common/confirm/confirm-dialog";
@@ -21,7 +22,9 @@ if (rootElement?.hasChildNodes()) {
       <ConfirmDialog>
         <ErrorBoundary fallback={<NotFound />}>
           <AnimatePresence>
-            <Routers />
+            <HelmetProvider>
+              <Routers />
+            </HelmetProvider>
           </AnimatePresence>
         </ErrorBoundary>
       </ConfirmDialog>
@@ -33,7 +36,9 @@ if (rootElement?.hasChildNodes()) {
       <ConfirmDialog>
         <ErrorBoundary fallback={<NotFound />}>
           <AnimatePresence>
-            <Routers />
+            <HelmetProvider>
+              <Routers />
+            </HelmetProvider>
           </AnimatePresence>
         </ErrorBoundary>
       </ConfirmDialog>
