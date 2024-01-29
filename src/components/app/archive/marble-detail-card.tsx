@@ -80,7 +80,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     // TODO: Add image save button
     return (
       <div
-        className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+        className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
         style={{
           boxShadow: "0px 0px 20px 0px rgba(36, 43, 55, 0.10)",
         }}
@@ -110,7 +110,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           )}
         </div>
         <p
-          className="h-12 overflow-y-auto whitespace-pre-wrap"
+          className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
           dangerouslySetInnerHTML={{
             __html: content.replace(/\\n/g, "<br/>"),
           }}
