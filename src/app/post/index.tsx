@@ -49,10 +49,10 @@ export const Post = () => {
         description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요.",
       },
       {
-        text: "돌아가기",
+        text: "계속 작성",
       },
       {
-        text: "계속 작성",
+        text: "돌아가기",
       },
     );
 

@@ -25,10 +25,10 @@ export const MarbleCard = ({ cardData }: Props) => {
         description: "게시물과 쌓인 반응이 모두 삭제돼요.",
       },
       {
-        text: "삭제",
+        text: "취소",
       },
       {
-        text: "취소",
+        text: "삭제",
       },
     );
 
