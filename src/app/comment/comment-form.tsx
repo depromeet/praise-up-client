@@ -91,7 +91,8 @@ export const CommentFormPage = () => {
 
   return (
     <DefaultLayout
-      className="overflow-hidden"
+      // 버튼 따라오지 않는 이슈 수정
+      // className="overflow-x-hidden"
       appbar={
         !openCrop && (
           <BlurredAppbar
@@ -130,7 +131,7 @@ export const CommentFormPage = () => {
             )}
           </div>
 
-          <ButtonProvider isFull={true}>
+          <ButtonProvider isFull={true} className="!bg-transparent">
             <ButtonProvider.Primary
               disabled={!required}
               onClick={() => saveForm()}
