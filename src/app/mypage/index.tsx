@@ -12,6 +12,10 @@ import { DefaultLayout } from "@/components/layout/default";
 import { useApiUserInfo } from "@/hooks/api/my-page/useApiUserInfo";
 import { TUserInfo } from "@/types/my-page";
 
+type Temp = {
+  onClick: () => void;
+};
+
 const User = ({ name }: { name: string }) => {
   return (
     <div className="flex justify-between">
@@ -39,10 +43,6 @@ const GatheredMyClap = ({ onClick }: Temp) => {
       </Link> */}
     </div>
   );
-};
-
-type Temp = {
-  onClick: () => void;
 };
 
 const About = ({ onClick }: Temp) => {
