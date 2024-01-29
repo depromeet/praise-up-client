@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +36,10 @@ const GoToWrite = () => {
 };
 
 const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
+  const isMultiple: boolean = Number(posts?.length) > 1;
+
   return (
-    <div className="mb-4 flex flex-col gap-5">
+    <div className={clsx(isMultiple && "mb-4", "flex flex-col gap-5")}>
       <h2 className="text-h2 text-gray-900">공개 예정 칭찬게시물</h2>
       {!posts?.length ? (
         <EmptyCard
@@ -66,7 +69,7 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
           subText={"공개 된 칭찬게시물은 이곳에 자동으로 나열돼요"}
         />
       ) : (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-5">
           {posts.map((post, idx) => (
             <PastCard key={idx} {...post} />
           ))}
@@ -118,7 +121,7 @@ export const Home = () => {
 
   return (
     <HomeLayout>
-      <div className="flex flex-col gap-12 pb-[60px] pt-4">
+      <div className="flex flex-col gap-12 pb-[60px]">
         {!todayUpload && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
