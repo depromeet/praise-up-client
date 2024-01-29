@@ -3,9 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { Appbar } from "@/components/common/appbar";
+import { ButtonProvider } from "@/components/common/button-provider";
 import { Header } from "@/components/common/header";
 import { Input } from "@/components/common/input";
 import { DefaultLayout } from "@/components/layout/default";
+import { toast } from "@/helpers/toast";
+import { useApiChangeName } from "@/hooks/api/my-page/useApiChangeName";
 
 type TLocation = {
   state: {
@@ -16,6 +19,8 @@ type TLocation = {
 export const MyPageEdit = () => {
   const nav = useNavigate();
   const location = useLocation() as TLocation;
+  const { mutate: changeName, isSuccess } = useApiChangeName();
+
   const [nickName, setNickName] = useState<string>("");
 
   useEffect(() => {
@@ -25,9 +30,19 @@ export const MyPageEdit = () => {
     setNickName(state.name || "");
   }, [location]);
 
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    nav(-1);
+    toast("닉네임이 수정되었어요");
+  }, [isSuccess]);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     setNickName(e.currentTarget.value);
+  };
+
+  const onSubmit = () => {
+    changeName(nickName);
   };
 
   return (
@@ -51,6 +66,12 @@ export const MyPageEdit = () => {
           onChange={onChange}
         />
       </div>
+
+      <ButtonProvider>
+        <ButtonProvider.Primary disabled={!nickName.length} onClick={onSubmit}>
+          변경하기
+        </ButtonProvider.Primary>
+      </ButtonProvider>
     </DefaultLayout>
   );
 };
