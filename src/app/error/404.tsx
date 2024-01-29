@@ -22,7 +22,7 @@ export const NotFound = () => {
         </div>
       </article>
       <ButtonProvider>
-        {/* TODO: 카카오 로그인 연동 후, 로그인이 되지 않은 상태일 경우에는 다른 메세지 제공 */}
+        {/* TODO: 카카오 로그인 연동 후, 로그인이 되지 않은 상태일 경우에는 다른 메시지 제공 */}
         <ButtonProvider.Primary
           onClick={() => {
             isLogin ? navigate("/main") : navigate("/");

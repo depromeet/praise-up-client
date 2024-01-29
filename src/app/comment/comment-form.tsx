@@ -112,6 +112,7 @@ export const CommentFormPage = () => {
         <>
           <Header
             text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
+            className="mb-9"
           />
           <div className="absolute right-5 top-[70px]">
             {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
