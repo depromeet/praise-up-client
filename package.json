@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "matter-js": "^0.19.0",
     "react": "^18.2.0",
+    "react-calendar": "^4.8.0",
     "react-canvas-confetti": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.4",
