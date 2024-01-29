@@ -43,7 +43,7 @@ export const RecentCard = ({
           backgroundImage: `url(${BACKGROUNDS[illustId]})`,
         }}
       >
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <h2
             className={`text-h2 text-gray-700 ${
               DARK_BACKGROUNDS.includes(illustId)

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import { ImageContainer } from "@/components/common/image-container";
@@ -30,7 +31,12 @@ export const RequiredForm = ({
           }
         />
       </div>
-      <div className="flex flex-col gap-4">
+      <div
+        className={clsx(
+          (!nickname || !image) && "mb-[60px]",
+          "flex flex-col gap-4",
+        )}
+      >
         <h4 className="text-h4 text-primary">칭찬 반응 이미지</h4>
         {image.length > 0 ? (
           <ImageContainer src={image} onChange={changeImage} />

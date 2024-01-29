@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { NotFound } from "@/app/error/404";
 import { LogoSVG } from "@/assets/icons/logo";
 import { UserSVG } from "@/assets/icons/user";
-import { Background } from "@/components/app/post/keyword/background";
+import Marbles from "@/assets/imgs/marbles.svg?react";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
@@ -80,7 +80,17 @@ export const CommentMainPage = () => {
       </ButtonProvider>
 
       {/* background 영역 */}
-      <Background angle={0} />
+      <div className="absolute bottom-0 left-0 -z-10 m-0 h-auto w-full p-0">
+        <div
+          className="absolute bottom-0 h-full w-full"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(189, 224, 255, 0.50) 50.48%)",
+            backgroundSize: "cover",
+          }}
+        />
+        <Marbles />
+      </div>
     </DefaultLayout>
   );
 };
