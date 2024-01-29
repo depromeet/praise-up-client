@@ -1,4 +1,10 @@
 {
+  "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+  "chrome": {
+    "launchOptions": {
+      "args": ["--no-sandbox"]
+    }
+  },
   "webroot": "./dist",
   "host": "http://localhost",
   "port": 5173,
