@@ -15,7 +15,7 @@ export const ImageInput = ({
       <div className="relative z-0 w-full cursor-pointer rounded-4 border border-gray-300 bg-white pb-[100%]">
         <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center justify-center gap-y-[6px]">
           <Icon width={24} height={24} />
-          <span className="text-b3 whitespace-nowrap text-gray-600">
+          <span className="text-b3-compact whitespace-nowrap text-gray-600">
             {placeholder}
           </span>
         </div>
