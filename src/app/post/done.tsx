@@ -18,7 +18,6 @@ export const Done = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
-  console.log(state.postId);
 
   const handleShare = () => {
     // TODO: 클립보드에 링크 복사하기

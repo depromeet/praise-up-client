@@ -93,7 +93,7 @@ export const Home = () => {
     if (unreadPosts.length > 0) {
       const lastPostDate = new Date(unreadPosts[0].postCreatedDate);
       const today = new Date();
-      console.log(today, unreadPosts, lastPostDate);
+
       if (
         lastPostDate.getFullYear() === today.getFullYear() &&
         lastPostDate.getMonth() === today.getMonth() &&
