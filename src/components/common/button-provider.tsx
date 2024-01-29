@@ -36,6 +36,7 @@ export const ButtonProvider = ({
   };
 
   useEffect(() => {
+    props.isFull = false;
     if (!props.isFull) return;
     const windowViewPortHeight: number = window.innerHeight;
 
