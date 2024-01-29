@@ -77,11 +77,10 @@
     "vitest": "^0.34.6"
   },
   "reactSnap": {
-    "source": "./dist",
-    "include": [
-      "/",
-      "/details"
+    "source": "dist",
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
     ]
-  },
-  "homepage": "./"
+  }
 }
