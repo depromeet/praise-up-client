@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
@@ -6,12 +8,14 @@ import EditSvg from "@/assets/icons/edit.svg?react";
 import ShineCircleSvg from "@/assets/icons/shine-circle.svg?react";
 import { Appbar } from "@/components/common/appbar";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiUserInfo } from "@/hooks/api/my-page/useApiUserInfo";
+import { TUserInfo } from "@/types/my-page";
 
 const User = ({ name }: { name: string }) => {
   return (
     <div className="flex justify-between">
-      <span className="text-h2">{name}</span>
-      <Link to="/mypage/edit">
+      <span className="text-h2">{name}님</span>
+      <Link to="/mypage/edit" state={{ name }}>
         <EditSvg />
       </Link>
     </div>
@@ -67,8 +71,17 @@ const Bottom = () => {
 };
 
 export const MyPage = () => {
+  const { data } = useApiUserInfo(Cookies.get("k-u-id"));
+  const [userInfo, setUserInfo] = useState<TUserInfo>();
   const nav = useNavigate();
 
+  useEffect(() => {
+    if (!data) return;
+
+    setUserInfo(data);
+  }, [data]);
+
+  if (!userInfo) return null;
   return (
     <DefaultLayout
       className="bg-gray-100"
@@ -84,7 +97,7 @@ export const MyPage = () => {
       }
     >
       <div className="flex flex-col px-20px">
-        <User name="쥐렁이님" />
+        <User name={userInfo.nickname} />
         <div className="pb-28px pt-36px">
           <GatheredMyClap />
         </div>

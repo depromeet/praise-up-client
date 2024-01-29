@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { Appbar } from "@/components/common/appbar";
@@ -7,9 +7,23 @@ import { Header } from "@/components/common/header";
 import { Input } from "@/components/common/input";
 import { DefaultLayout } from "@/components/layout/default";
 
+type TLocation = {
+  state: {
+    name: string;
+  };
+};
+
 export const MyPageEdit = () => {
-  const [nickName, setNickName] = useState<string>("");
   const nav = useNavigate();
+  const location = useLocation() as TLocation;
+  const [nickName, setNickName] = useState<string>("");
+
+  useEffect(() => {
+    if (!location) return;
+
+    const { state } = location;
+    setNickName(state.name || "");
+  }, [location]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e);
