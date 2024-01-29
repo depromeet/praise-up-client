@@ -5,8 +5,8 @@ import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
 import Marble1SVG from "@/assets/imgs/marble1.svg?react";
 import Marble2SVG from "@/assets/imgs/marble2.svg?react";
+import { Background } from "@/components/app/comment/background";
 import { ContentForm } from "@/components/app/comment/content-form";
-import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { RequiredForm } from "@/components/app/comment/required-form";
 import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
@@ -91,6 +91,7 @@ export const CommentFormPage = () => {
 
   return (
     <DefaultLayout
+      className="overflow-hidden"
       appbar={
         !openCrop && (
           <BlurredAppbar
@@ -100,6 +101,7 @@ export const CommentFormPage = () => {
         )
       }
     >
+      <Background />
       {openCrop ? (
         <ImageCropper
           src={image}
@@ -108,26 +110,24 @@ export const CommentFormPage = () => {
         />
       ) : (
         <>
-          <LayeredBackground>
-            <Header
-              text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
-            />
-            <div className="absolute right-5 top-[70px]">
-              {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
-            </div>
+          <Header
+            text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
+          />
+          <div className="absolute right-5 top-[70px]">
+            {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
+          </div>
 
-            <div className="flex w-full flex-col gap-7">
-              <RequiredForm
-                nickname={nickname}
-                setNickname={setNickname}
-                image={image}
-                changeImage={changeImage}
-              />
-              {required && (
-                <ContentForm content={content} setContent={setContent} />
-              )}
-            </div>
-          </LayeredBackground>
+          <div className="flex w-full flex-col gap-7">
+            <RequiredForm
+              nickname={nickname}
+              setNickname={setNickname}
+              image={image}
+              changeImage={changeImage}
+            />
+            {required && (
+              <ContentForm content={content} setContent={setContent} />
+            )}
+          </div>
 
           <ButtonProvider isFull={true}>
             <ButtonProvider.Primary

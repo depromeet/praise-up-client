@@ -9,7 +9,7 @@ interface ContentFormProps {
 }
 export const ContentForm = ({ content, setContent }: ContentFormProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="mb-14 flex flex-col gap-4">
       <div className="flex flex-col gap-3">
         <h4 className="text-h4 text-primary">칭찬 메시지</h4>
         <Textarea
