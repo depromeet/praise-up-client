@@ -44,10 +44,10 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           description: "삭제된 칭찬반응은 복구할 수 없어요",
         },
         {
-          text: "삭제",
+          text: "취소",
         },
         {
-          text: "취소",
+          text: "삭제",
         },
       );
 
