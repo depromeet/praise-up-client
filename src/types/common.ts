@@ -14,13 +14,13 @@ export type ButtonType = {
 export type ConfirmType = {
   confirm: (
     message: MessageType,
-    confirm: ButtonType,
     cancel: ButtonType,
+    confirm?: ButtonType,
   ) => Promise<boolean>;
 };
 
 export type ConfirmDialogType = {
   message: MessageType;
-  confirm: ButtonType;
   cancel: ButtonType;
+  confirm?: ButtonType;
 };

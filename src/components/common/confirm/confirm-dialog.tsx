@@ -10,13 +10,13 @@ export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
 
   const confirm = (
     message: MessageType,
-    confirm: ButtonType,
     cancel: ButtonType,
+    confirm?: ButtonType,
   ): Promise<boolean> => {
     return new Promise((resolve) => {
       setState({
         message,
-        confirm: {
+        confirm: confirm && {
           ...confirm,
           onClick: () => {
             setState(undefined);
