@@ -29,14 +29,15 @@ const User = ({ name }: { name: string }) => {
 
 const GatheredMyClap = ({ onClick }: Temp) => {
   return (
-    <div className="flex justify-between rounded-3 bg-white p-20px">
+    <div
+      className="flex justify-between rounded-3 bg-white p-20px"
+      onClick={onClick}
+    >
       <div className="flex items-center gap-2">
         <ShineCircleSvg />
         <span className="text-h4">나의 칭찬 활동 모아보기</span>
       </div>
-      <div onClick={onClick}>
-        <ChevronRightEdgeSVG />
-      </div>
+      <ChevronRightEdgeSVG />
       {/* NOTE: temp */}
       {/* <Link to="/mypage/claps">
         <ChevronRightEdgeSVG />
