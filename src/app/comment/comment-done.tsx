@@ -1,5 +1,4 @@
 import { CSSProperties } from "react";
-// import CommentDoneSVG from "@/assets/imgs/comment_done.svg?react";
 import { useNavigate } from "react-router-dom";
 
 import CloseSVG from "@/assets/icons/close.svg?react";
@@ -20,8 +19,8 @@ export const CommentDoneView = ({
       style={transition ?? {}}
     >
       {transition && <Confetti />}
-      <div className="flex flex-1 flex-col justify-center gap-[99px]">
-        <div className="absolute left-0 top-0 flex h-[64px] w-full bg-white px-5 py-2.5 ">
+      <div className=" mt-[64px] flex flex-1 flex-col justify-start ">
+        <div className="absolute left-0 top-0 flex h-[64px] w-full flex-1 bg-white px-5 py-2.5 ">
           <button onClick={() => navigate(-2)}>
             <CloseSVG />
           </button>
@@ -32,8 +31,7 @@ export const CommentDoneView = ({
             "{칭찬 구슬을 보냈어요!}\\n{칭찬게시물을 남겨 칭찬 구슬을 모아보세요}"
           }
         />
-        <div className="flex items-center justify-center">
-          {/* <CommentDoneSVG className="align-center" /> */}
+        <div className="flex flex-1 items-center justify-center">
           <img src={CommentDonePNG} className="h-[285px] w-[285px]" />
         </div>
       </div>
