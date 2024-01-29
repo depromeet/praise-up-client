@@ -8,6 +8,7 @@ import { DetailPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
+import { MyPageEdit } from "@/app/mypage/mypage-edit";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage/claps",
+      },
+      {
+        path: "/mypage/edit",
+        element: <MyPageEdit />,
       },
       {
         path: "*",

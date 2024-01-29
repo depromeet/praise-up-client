@@ -102,7 +102,10 @@ export const CommentFormPage = () => {
         )
       }
     >
-      <Background />
+      <div className="absolute left-1/2 top-1/2 -z-10 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden blur-[50px]">
+        <Background />
+      </div>
+
       {openCrop ? (
         <ImageCropper
           src={image}
