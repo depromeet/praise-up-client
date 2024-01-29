@@ -110,7 +110,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           )}
         </div>
         <p
-          className="max-h-12 overflow-y-auto whitespace-pre-wrap"
+          className="h-12 overflow-y-auto whitespace-pre-wrap"
           dangerouslySetInnerHTML={{
             __html: content.replace(/\\n/g, "<br/>"),
           }}
