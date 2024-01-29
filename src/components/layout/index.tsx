@@ -12,7 +12,6 @@ export const GlobalLayout = () => {
     <Fragment>
       <Helmet>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://praise-up.app/" />
         <meta property="og:title" content="이미지로 소통하며 칭찬 주고 받기" />
         <meta
           property="og:image"
