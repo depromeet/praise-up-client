@@ -8,7 +8,6 @@ interface TimerCardProps {
 export const TimerCardView = ({ openDateTime }: TimerCardProps) => {
   const { timeLeft, diff } = useTimer(openDateTime);
 
-  console.log(openDateTime, diff, timeLeft);
   return (
     <div className="flex items-center gap-2 rounded-3 bg-[#8AC2FF] px-4 py-2 text-secondary">
       <div className="flex items-center gap-0.5">
