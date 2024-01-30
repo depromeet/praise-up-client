@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { Test } from "@/app/__test__/calendar";
 import { Archive } from "@/app/archive";
 import { CommentMainPage } from "@/app/comment";
 import { CommentFormPage } from "@/app/comment/comment-form";
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/mypage/claps",
+      },
+      {
+        path: "__test__",
+        element: <Test />,
       },
       {
         path: "*",
