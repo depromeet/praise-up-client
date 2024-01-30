@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -9,6 +9,7 @@ import { EmptyCard } from "@/components/app/home/empty-card";
 import { PastCard } from "@/components/app/home/past-card";
 import { RecentCard } from "@/components/app/home/recent-card";
 import { HomeLayout } from "@/components/layout/home-layout";
+import { useApiGetPostState } from "@/hooks/api/main/useApiGetPostState";
 import {
   ContentDataType,
   GetPostType,
@@ -86,25 +87,7 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts();
-  const [todayUpload, setTodayUpload] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!unreadPosts) return;
-    if (unreadPosts.length > 0) {
-      const lastPostDate = new Date(unreadPosts[0].postCreatedDate);
-      const today = new Date();
-      console.log(today, unreadPosts, lastPostDate);
-      if (
-        lastPostDate.getFullYear() === today.getFullYear() &&
-        lastPostDate.getMonth() === today.getMonth() &&
-        lastPostDate.getDate() === today.getDate()
-      ) {
-        setTodayUpload(true);
-        return;
-      }
-    }
-    setTodayUpload(false);
-  }, [unreadPosts]);
+  const { data: isCreatable } = useApiGetPostState();
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -122,7 +105,7 @@ export const Home = () => {
   return (
     <HomeLayout>
       <div className="flex flex-col gap-12 pb-[60px]">
-        {!todayUpload && <GoToWrite />}
+        {isCreatable && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
         <ToMyArchive
           posts={
