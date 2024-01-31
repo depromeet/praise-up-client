@@ -23,7 +23,7 @@ export const useAuthStore = create<Store>((set) => {
       set(() => ({
         auth: {
           userId,
-          isLogin: !!userId,
+          isLogin: Boolean(userId),
         },
       })),
   };
