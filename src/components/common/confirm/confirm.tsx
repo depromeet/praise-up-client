@@ -17,22 +17,22 @@ export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
             <div className="text-sm text-teritary">{message.description}</div>
           </div>
           <div className="flex gap-2.5 self-stretch">
-            {confirm && (
-              <button
-                {...confirm}
-                onClick={confirm.onClick}
-                className={clsx(btnDefaultStyle, "bg-[#242B37]")}
-              >
-                <p className="w-full text-white">{confirm.text}</p>
-              </button>
-            )}
             {cancel && (
               <button
                 {...cancel}
                 onClick={cancel.onClick}
                 className={clsx(btnDefaultStyle, "bg-gray-300")}
               >
-                <p className="w-full text-primary">{cancel.text}</p>
+                <p className="w-fit text-primary">{cancel.text}</p>
+              </button>
+            )}
+            {confirm && (
+              <button
+                {...confirm}
+                onClick={confirm.onClick}
+                className={clsx(btnDefaultStyle, "bg-[#242B37]")}
+              >
+                <p className="w-fit text-white">{confirm.text}</p>
               </button>
             )}
           </div>
