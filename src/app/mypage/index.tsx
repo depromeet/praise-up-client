@@ -70,21 +70,42 @@ const About = ({ onClick }: Temp) => {
 };
 
 const Bottom = ({ onClick }: Temp) => {
+  const nav = useNavigate();
+  const { confirm } = useContext(ConfirmContext);
+
+  const onClickLogout = async () => {
+    const result = await confirm(
+      {
+        title: "로그아웃할까요?",
+        description: "",
+      },
+      {
+        text: "취소",
+      },
+      {
+        text: "로그아웃",
+      },
+    );
+
+    if (!result) return;
+    Cookies.remove("k-u-id");
+    nav("/");
+  };
+
   // TODO: add link to
   return (
     <div className="flex grow flex-col gap-5 bg-white px-20px py-36px">
       {[
-        { to: "", label: "로그아웃" },
-        { to: "", label: "회원탈퇴" },
-      ].map(({ to, label }, idx) => (
-        <Link
-          className="text-b2-compact text-secondary"
+        { onClick: onClickLogout, label: "로그아웃" },
+        { onClick, label: "회원탈퇴" },
+      ].map(({ onClick, label }, idx) => (
+        <button
+          className="text-b2-compact text-start text-secondary"
           key={idx}
-          to={to}
           onClick={onClick}
         >
           {label}
-        </Link>
+        </button>
       ))}
     </div>
   );
