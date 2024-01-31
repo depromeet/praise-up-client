@@ -25,7 +25,7 @@ import { RequireLoginLayout } from "@/components/layout/login-layout";
 
 type RouteChildren = {
   auth: boolean;
-} & Omit<RouteObject, "type">;
+} & RouteObject;
 
 const routeChildren: RouteChildren[] = [
   {
