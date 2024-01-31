@@ -7,7 +7,6 @@ export const useApiUserProfile = (userId: number) => {
   const navigate = useNavigate();
 
   const changeNickName = async (nickname: string) => {
-    if (!userId) return navigate("/error");
     const res = await api.patch(
       `/praise-up/api/v1/user/${userId}/nickname?nickname=${nickname}`,
     );

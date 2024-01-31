@@ -125,12 +125,6 @@ export const MyPage = () => {
   const [userInfo, setUserInfo] = useState<TUserInfo>();
 
   useEffect(() => {
-    if (auth.isLogin) return;
-
-    void redirectIndexPage();
-  }, [auth]);
-
-  useEffect(() => {
     if (!data) return;
 
     setUserInfo(data);
@@ -146,20 +140,6 @@ export const MyPage = () => {
         text: "닫기",
       },
     });
-  };
-
-  const redirectIndexPage = async () => {
-    await confirm({
-      message: {
-        title: "로그인을 해야 이용할 수 있어요.",
-        description: "",
-      },
-      confirm: {
-        text: "로그인하기",
-      },
-    });
-
-    nav("/");
   };
 
   if (!userInfo) return null;
