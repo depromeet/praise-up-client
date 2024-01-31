@@ -72,6 +72,7 @@ const About = ({ onClick }: Temp) => {
 
 const Bottom = ({ onClick }: Temp) => {
   const nav = useNavigate();
+  const { setAuth } = useAuthStore();
   const { confirm } = useContext(ConfirmContext);
 
   const onClickLogout = async () => {
@@ -90,6 +91,7 @@ const Bottom = ({ onClick }: Temp) => {
 
     if (!result) return;
     Cookies.remove("k-u-id");
+    setAuth(0);
     nav("/");
   };
 
@@ -156,6 +158,7 @@ export const MyPage = () => {
         text: "로그인하기",
       },
     });
+
     nav("/");
   };
 
