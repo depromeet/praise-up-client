@@ -14,5 +14,6 @@ export const useApiUserInfo = (id?: string) => {
   return useQuery({
     queryKey: [CACHE_KEY, id],
     queryFn: fetchMarbleCard,
+    enabled: !!id,
   });
 };

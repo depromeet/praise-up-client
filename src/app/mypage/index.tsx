@@ -112,11 +112,20 @@ const Bottom = ({ onClick }: Temp) => {
 };
 
 export const MyPage = () => {
-  const { data } = useApiUserInfo(Cookies.get("k-u-id"));
+  // NOTE: (temp) 로그인 상태 쿠키값 여부로 판단
+  const userId = Cookies.get("k-u-id");
+
+  const { data } = useApiUserInfo(userId);
   const nav = useNavigate();
   const { confirm } = useContext(ConfirmContext);
 
   const [userInfo, setUserInfo] = useState<TUserInfo>();
+
+  useEffect(() => {
+    if (userId) return;
+
+    void redirectIndexPage();
+  }, [userId]);
 
   useEffect(() => {
     if (!data) return;
@@ -134,6 +143,19 @@ export const MyPage = () => {
         text: "닫기",
       },
     );
+  };
+
+  const redirectIndexPage = async () => {
+    await confirm(
+      {
+        title: "로그아웃 되었습니다",
+        description: "다시 로그인 해주세요.",
+      },
+      {
+        text: "닫기",
+      },
+    );
+    nav("/");
   };
 
   if (!userInfo) return null;
