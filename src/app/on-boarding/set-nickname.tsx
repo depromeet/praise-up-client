@@ -6,10 +6,13 @@ import { Header } from "@/components/common/header";
 import { Input } from "@/components/common/input";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiUserProfile } from "@/hooks/api/signup/useApiUserName";
+import { useAuthStore } from "@/store/auth";
 
 export const SetNickName = () => {
+  const { auth } = useAuthStore();
+  const { mutate } = useApiUserProfile(auth.userId);
+
   const [name, setName] = useState("");
-  const { mutate } = useApiUserProfile();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);

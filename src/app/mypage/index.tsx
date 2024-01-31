@@ -10,6 +10,7 @@ import { Appbar } from "@/components/common/appbar";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiUserInfo } from "@/hooks/api/my-page/useApiUserInfo";
+import { useAuthStore } from "@/store/auth";
 import { TUserInfo } from "@/types/my-page";
 
 type Temp = {
@@ -113,19 +114,19 @@ const Bottom = ({ onClick }: Temp) => {
 
 export const MyPage = () => {
   // NOTE: (temp) 로그인 상태 쿠키값 여부로 판단
-  const userId = Cookies.get("k-u-id");
+  const { auth } = useAuthStore();
+  const { data } = useApiUserInfo(auth.userId);
 
-  const { data } = useApiUserInfo(userId);
   const nav = useNavigate();
   const { confirm } = useContext(ConfirmContext);
 
   const [userInfo, setUserInfo] = useState<TUserInfo>();
 
   useEffect(() => {
-    if (userId) return;
+    if (auth.isLogin) return;
 
     void redirectIndexPage();
-  }, [userId]);
+  }, [auth]);
 
   useEffect(() => {
     if (!data) return;

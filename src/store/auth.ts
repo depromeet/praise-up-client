@@ -11,16 +11,20 @@ type Store = {
   setAuth: (userId: number) => void;
 };
 
-export const useAuthStore = create<Store>((set) => ({
-  auth: {
-    userId: Number(Cookies.get("k-u-id")),
-    isLogin: Boolean(Cookies.get("k-u-id")),
-  },
-  setAuth: (userId: number) =>
-    set(() => ({
-      auth: {
-        userId,
-        isLogin: !!userId,
-      },
-    })),
-}));
+export const useAuthStore = create<Store>((set) => {
+  const userId = Number(Cookies.get("k-u-id") || 0);
+
+  return {
+    auth: {
+      userId,
+      isLogin: Boolean(userId),
+    },
+    setAuth: (userId: number) =>
+      set(() => ({
+        auth: {
+          userId,
+          isLogin: !!userId,
+        },
+      })),
+  };
+});
