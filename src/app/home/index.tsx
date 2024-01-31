@@ -81,18 +81,20 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
-  // const { auth } = useAuthStore((state) => state);
+  const { auth } = useAuthStore((state) => state);
 
-  const { data: unreadPosts } = useApiGetUnreadPosts();
+  const { data: unreadPosts } = useApiGetUnreadPosts(auth.userId);
   const {
     data: archivePosts,
     hasNextPage,
     fetchNextPage,
-  } = useApiGetReadPosts();
+  } = useApiGetReadPosts(auth.userId);
+
   const [todayUpload, setTodayUpload] = useState<boolean>(false);
 
   useEffect(() => {
     if (!unreadPosts) return;
+
     if (unreadPosts.length > 0) {
       const lastPostDate = new Date(unreadPosts[0].postCreatedDate);
       const today = new Date();

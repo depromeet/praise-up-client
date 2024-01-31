@@ -1,11 +1,13 @@
 import Cookies from "js-cookie";
 import create from "zustand";
 
+type Auth = {
+  userId: number;
+  isLogin: boolean;
+};
+
 type Store = {
-  auth: {
-    userId: number;
-    isLogin: boolean;
-  };
+  auth: Auth;
   setAuth: (userId: number) => void;
 };
 
@@ -16,7 +18,9 @@ export const useAuthStore = create<Store>((set) => ({
   },
   setAuth: (userId: number) =>
     set(() => ({
-      userId,
-      isLogin: !!userId,
+      auth: {
+        userId,
+        isLogin: !!userId,
+      },
     })),
 }));
