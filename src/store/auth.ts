@@ -11,7 +11,7 @@ type Store = {
   setAuth: (userId: number) => void;
 };
 
-export const useAuthStore = create<Store>((set) => {
+export const useAuthStore = create<Store>()((set) => {
   const userId = Number(Cookies.get("k-u-id") || 0);
 
   return {
