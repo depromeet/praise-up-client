@@ -74,18 +74,18 @@ const Bottom = ({ onClick }: Temp) => {
   const { confirm } = useContext(ConfirmContext);
 
   const onClickLogout = async () => {
-    const result = await confirm(
-      {
+    const result = await confirm({
+      message: {
         title: "로그아웃할까요?",
         description: "",
       },
-      {
-        text: "취소",
-      },
-      {
+      confirm: {
         text: "로그아웃",
       },
-    );
+      cancel: {
+        text: "취소",
+      },
+    });
 
     if (!result) return;
     Cookies.remove("k-u-id");
@@ -134,27 +134,27 @@ export const MyPage = () => {
   }, [data]);
 
   const onClickDevelop = async () => {
-    await confirm(
-      {
+    await confirm({
+      message: {
         title: "아직 개발중이에요...🫣",
         description: "조금만 기다려주세요!",
       },
-      {
+      cancel: {
         text: "닫기",
       },
-    );
+    });
   };
 
   const redirectIndexPage = async () => {
-    await confirm(
-      {
-        title: "로그아웃 되었습니다",
-        description: "다시 로그인 해주세요.",
+    await confirm({
+      message: {
+        title: "로그인을 해야 이용할 수 있어요.",
+        description: "",
       },
-      {
-        text: "닫기",
+      confirm: {
+        text: "로그인하기",
       },
-    );
+    });
     nav("/");
   };
 

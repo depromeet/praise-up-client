@@ -15,6 +15,7 @@ import {
   useApiGetReadPosts,
 } from "@/hooks/api/main/useApiGetReadPosts";
 import { useApiGetUnreadPosts } from "@/hooks/api/main/useApiGetUnreadPosts";
+import { useAuthStore } from "@/store/auth";
 
 const GoToWrite = () => {
   const navigate = useNavigate();
@@ -80,6 +81,8 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
+  // const { auth } = useAuthStore((state) => state);
+
   const { data: unreadPosts } = useApiGetUnreadPosts();
   const {
     data: archivePosts,

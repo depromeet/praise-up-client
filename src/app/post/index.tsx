@@ -43,18 +43,18 @@ export const Post = () => {
   }
 
   const handleModal = async () => {
-    const result = await confirm(
-      {
+    const result = await confirm({
+      message: {
         title: "키워드 선택으로 돌아갈까요?",
         description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요.",
       },
-      {
+      confirm: {
         text: "돌아가기",
       },
-      {
+      cancel: {
         text: "계속 작성",
       },
-    );
+    });
 
     if (!result) return;
     navigate("/post/keyword");

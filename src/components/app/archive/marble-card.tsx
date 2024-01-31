@@ -19,18 +19,18 @@ export const MarbleCard = ({ cardData }: Props) => {
     if (!cardData) return;
     setIsShowDeleteBtn(false);
 
-    const result = await confirm(
-      {
+    const result = await confirm({
+      message: {
         title: "칭찬게시물을 삭제할까요?",
         description: "게시물과 쌓인 반응이 모두 삭제돼요.",
       },
-      {
+      confirm: {
         text: "삭제",
       },
-      {
+      cancel: {
         text: "취소",
       },
-    );
+    });
 
     // TODO: Error handling
     if (!result) return;
