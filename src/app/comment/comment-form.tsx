@@ -6,8 +6,7 @@ import CloseSVG from "@/assets/icons/close.svg?react";
 import Marble1SVG from "@/assets/imgs/marble1.svg?react";
 import Marble2SVG from "@/assets/imgs/marble2.svg?react";
 import { Background } from "@/components/app/comment/background";
-import { ContentForm } from "@/components/app/comment/content-form";
-import { RequiredForm } from "@/components/app/comment/required-form";
+import { FormContainer } from "@/components/app/comment/form-container";
 import { BlurredAppbar } from "@/components/common/blurred-appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
@@ -16,6 +15,7 @@ import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
 import { GetOnePostType } from "@/hooks/api/detail/useApiGetOnePost";
 import useImageCompress from "@/hooks/useImageCompress";
+import { UseScrollToBottom } from "@/hooks/useScrollToBottom";
 
 export const CommentFormPage = () => {
   const data = useLocation().state as GetOnePostType;
@@ -29,6 +29,8 @@ export const CommentFormPage = () => {
   const { confirm } = useContext(ConfirmContext);
   const [marbleIdx] = useState(Math.floor(Math.random() * 2));
 
+  UseScrollToBottom(!openCrop && required, [openCrop, required]);
+
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
     setImage(sessionStorage.getItem("comment_image") ?? "");
@@ -36,8 +38,9 @@ export const CommentFormPage = () => {
   }, []);
 
   useEffect(() => {
-    setRequired(nickname.length > 0 && image.length > 0);
-  }, [nickname, image]);
+    if (!nickname.length) return;
+    setRequired(true);
+  }, [image]);
 
   const handleModal = async () => {
     if (nickname.length !== 0 || image.length !== 0) {
@@ -120,15 +123,16 @@ export const CommentFormPage = () => {
           </div>
 
           <div className="flex w-full flex-col gap-7">
-            <RequiredForm
+            <FormContainer
               nickname={nickname}
               setNickname={setNickname}
               image={image}
               changeImage={changeImage}
+              content={content}
+              setContent={setContent}
+              required={required}
+              setRequired={setRequired}
             />
-            {required && (
-              <ContentForm content={content} setContent={setContent} />
-            )}
           </div>
 
           <ButtonProvider isFull={true} className="!bg-transparent">
