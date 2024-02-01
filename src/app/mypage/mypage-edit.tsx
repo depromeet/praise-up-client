@@ -9,6 +9,7 @@ import { Input } from "@/components/common/input";
 import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
 import { useApiChangeName } from "@/hooks/api/my-page/useApiChangeName";
+import { useAuthStore } from "@/store/auth";
 
 type TLocation = {
   state: {
@@ -19,7 +20,8 @@ type TLocation = {
 export const MyPageEdit = () => {
   const nav = useNavigate();
   const location = useLocation() as TLocation;
-  const { mutate: changeName, isSuccess } = useApiChangeName();
+  const { auth } = useAuthStore();
+  const { mutate: changeName, isSuccess } = useApiChangeName(auth.userId);
 
   const [nickName, setNickName] = useState<string>("");
 

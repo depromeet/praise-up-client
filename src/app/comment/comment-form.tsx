@@ -41,18 +41,18 @@ export const CommentFormPage = () => {
 
   const handleModal = async () => {
     if (nickname.length !== 0 || image.length !== 0) {
-      const result = await confirm(
-        {
+      const result = await confirm({
+        message: {
           title: "칭찬 반응 작성을 그만둘까요?",
           description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
         },
-        {
-          text: "계속 작성",
-        },
-        {
+        confirm: {
           text: "그만두기",
         },
-      );
+        cancel: {
+          text: "계속 작성",
+        },
+      });
 
       if (!result) return;
     }

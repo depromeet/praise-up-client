@@ -38,18 +38,18 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     const onClickMenu = async () => {
       setIsShowDeleteBtn(false);
 
-      const result = await confirm(
-        {
+      const result = await confirm({
+        message: {
           title: "칭찬반응을 삭제할까요?",
           description: "삭제된 칭찬반응은 복구할 수 없어요",
         },
-        {
-          text: "취소",
-        },
-        {
+        confirm: {
           text: "삭제",
         },
-      );
+        cancel: {
+          text: "취소",
+        },
+      });
 
       // TODO: Error handling
       if (!result) return;

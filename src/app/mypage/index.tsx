@@ -10,6 +10,7 @@ import { Appbar } from "@/components/common/appbar";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiUserInfo } from "@/hooks/api/my-page/useApiUserInfo";
+import { useAuthStore } from "@/store/auth";
 import { TUserInfo } from "@/types/my-page";
 
 type Temp = {
@@ -70,28 +71,54 @@ const About = ({ onClick }: Temp) => {
 };
 
 const Bottom = ({ onClick }: Temp) => {
+  const nav = useNavigate();
+  const { setAuth } = useAuthStore();
+  const { confirm } = useContext(ConfirmContext);
+
+  const onClickLogout = async () => {
+    const result = await confirm({
+      message: {
+        title: "로그아웃할까요?",
+        description: "",
+      },
+      confirm: {
+        text: "로그아웃",
+      },
+      cancel: {
+        text: "취소",
+      },
+    });
+
+    if (!result) return;
+    Cookies.remove("k-u-id");
+    setAuth(0);
+    nav("/");
+  };
+
   // TODO: add link to
   return (
     <div className="flex grow flex-col gap-5 bg-white px-20px py-36px">
       {[
-        { to: "", label: "로그아웃" },
-        { to: "", label: "회원탈퇴" },
-      ].map(({ to, label }, idx) => (
-        <Link
-          className="text-b2-compact text-secondary"
+        { onClick: onClickLogout, label: "로그아웃" },
+        { onClick, label: "회원탈퇴" },
+      ].map(({ onClick, label }, idx) => (
+        <button
+          className="text-b2-compact text-start text-secondary"
           key={idx}
-          to={to}
           onClick={onClick}
         >
           {label}
-        </Link>
+        </button>
       ))}
     </div>
   );
 };
 
 export const MyPage = () => {
-  const { data } = useApiUserInfo(Cookies.get("k-u-id"));
+  // NOTE: (temp) 로그인 상태 쿠키값 여부로 판단
+  const { auth } = useAuthStore();
+  const { data } = useApiUserInfo(auth.userId);
+
   const nav = useNavigate();
   const { confirm } = useContext(ConfirmContext);
 
@@ -104,15 +131,15 @@ export const MyPage = () => {
   }, [data]);
 
   const onClickDevelop = async () => {
-    await confirm(
-      {
+    await confirm({
+      message: {
         title: "아직 개발중이에요...🫣",
         description: "조금만 기다려주세요!",
       },
-      {
+      cancel: {
         text: "닫기",
       },
-    );
+    });
   };
 
   if (!userInfo) return null;

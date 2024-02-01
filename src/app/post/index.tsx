@@ -14,6 +14,7 @@ import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
 import useImageCompress from "@/hooks/useImageCompress";
+import { useAuthStore } from "@/store/auth";
 
 export type postProps = {
   keyword?: string;
@@ -21,6 +22,7 @@ export type postProps = {
 };
 
 export const Post = () => {
+  const { auth } = useAuthStore();
   const { confirm } = useContext(ConfirmContext);
   const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
@@ -30,7 +32,7 @@ export const Post = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
-  const { mutate } = useApiBoard();
+  const { mutate } = useApiBoard(auth.userId);
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -43,18 +45,18 @@ export const Post = () => {
   }
 
   const handleModal = async () => {
-    const result = await confirm(
-      {
+    const result = await confirm({
+      message: {
         title: "키워드 선택으로 돌아갈까요?",
         description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요.",
       },
-      {
-        text: "계속 작성",
-      },
-      {
+      confirm: {
         text: "돌아가기",
       },
-    );
+      cancel: {
+        text: "계속 작성",
+      },
+    });
 
     if (!result) return;
     navigate("/post/keyword");

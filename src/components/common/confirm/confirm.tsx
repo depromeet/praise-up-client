@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ConfirmDialogType } from "@/types/common";
 
 const btnDefaultStyle =
-  "flex items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
+  "flex basis-0 items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
 
 export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
   return (
@@ -17,27 +17,29 @@ export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
             <div className="text-sm text-teritary">{message.description}</div>
           </div>
           <div className="flex gap-2.5 self-stretch">
-            <button
-              {...cancel}
-              onClick={cancel.onClick}
-              className={clsx(btnDefaultStyle, "bg-gray-300")}
-            >
-              <p className="w-full text-primary">{cancel.text}</p>
-            </button>
+            {cancel && (
+              <button
+                {...cancel}
+                onClick={cancel.onClick}
+                className={clsx(btnDefaultStyle, "bg-gray-300")}
+              >
+                <p className="w-fit text-primary">{cancel.text}</p>
+              </button>
+            )}
             {confirm && (
               <button
                 {...confirm}
                 onClick={confirm.onClick}
                 className={clsx(btnDefaultStyle, "bg-[#242B37]")}
               >
-                <p className="w-full text-white">{confirm.text}</p>
+                <p className="w-fit text-white">{confirm.text}</p>
               </button>
             )}
           </div>
         </div>
       </div>
       <div
-        onClick={cancel.onClick}
+        onClick={cancel?.onClick || confirm?.onClick}
         className="fixed top-0 z-40 h-full w-full bg-black/60"
       />
     </div>
