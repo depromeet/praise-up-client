@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -10,6 +9,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
+import { useAuthStore } from "@/store/auth";
 
 interface PostIdState {
   state: {
@@ -17,14 +17,14 @@ interface PostIdState {
   };
 }
 
-const Appbar = () => {
+const Appbar = ({ isLogin }: { isLogin: boolean }) => {
   const navigate = useNavigate();
+
   return (
     <div className="flex h-[64px] w-full items-center justify-between px-5 py-2.5">
       <button
         onClick={() => {
           // TODO: 추후에 JWT 토큰으로 변경시 수정이 필요함.
-          const isLogin = Boolean(Cookies.get("k-u-id"));
           isLogin ? navigate("/main") : navigate("/");
         }}
       >
@@ -36,6 +36,7 @@ const Appbar = () => {
 };
 
 export const CommentMainPage = () => {
+  const { auth } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation() as PostIdState;
   const postId = location.state.postId;
@@ -52,7 +53,7 @@ export const CommentMainPage = () => {
   if (!postId) return <NotFound />;
 
   return (
-    <DefaultLayout appbar={<Appbar />}>
+    <DefaultLayout appbar={<Appbar isLogin={auth.isLogin} />}>
       {/* post area */}
       <section className="flex flex-col justify-between gap-9">
         <h2 className="text-h2">{data.userNickname}님의 칭찬게시물</h2>
@@ -71,8 +72,7 @@ export const CommentMainPage = () => {
         <ButtonProvider.White
           onClick={() => {
             // TODO: 추후에 JWT 토큰으로 변경시 수정이 필요함.
-            const isLogin = Boolean(Cookies.get("k-u-id"));
-            isLogin ? navigate("/main") : navigate("/");
+            auth.isLogin ? navigate("/main") : navigate("/");
           }}
         >
           나도 칭찬 받기

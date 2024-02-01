@@ -74,7 +74,7 @@ export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
           className="z-0 h-full w-full px-[46px]"
         >
           <Header
-            text="이미지로 칭찬 메세지를 남기고\n칭찬 구슬을 보내보세요!"
+            text="이미지로 칭찬 메시지를 남기고\n칭찬 구슬을 보내보세요!"
             className="!text-h3 z-10 mt-20 text-center"
           />
         </ArticleWrapper>

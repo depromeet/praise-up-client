@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "@/api";
@@ -15,13 +14,12 @@ type TPostBoardResponse = {
   postCreatedDate: string;
 };
 
-export const useApiBoard = () => {
-  const naviagate = useNavigate();
+export const useApiBoard = (userId: number) => {
+  const navigate = useNavigate();
 
   const postBoard = async (formData: FormData) => {
-    const USER_ID = Cookies.get("k-u-id");
     const res = await api.post(
-      `/praise-up/api/v1/posts?userId=${USER_ID}`,
+      `/praise-up/api/v1/posts?userId=${userId}`,
       formData,
       {
         headers: {
@@ -35,10 +33,10 @@ export const useApiBoard = () => {
   return useMutation({
     mutationFn: (formData: FormData) => postBoard(formData),
     onSuccess: (res) => {
-      naviagate("/post/done", { state: { postId: res.postId } });
+      navigate("/post/done", { state: { postId: res.postId } });
     },
     onError: () => {
-      naviagate("/error");
+      navigate("/error");
     },
   });
 };

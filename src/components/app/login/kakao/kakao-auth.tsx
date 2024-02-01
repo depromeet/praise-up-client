@@ -3,7 +3,11 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "@/api";
-import useUserStore from "@/features/useUserStore";
+import { useAuthStore } from "@/store/auth";
+
+type Response = {
+  data: responseDataProps;
+};
 
 type responseDataProps = {
   userId: number;
@@ -12,7 +16,7 @@ type responseDataProps = {
 
 export const KakaoAuth = () => {
   const navigate = useNavigate();
-  const { setIsLogin } = useUserStore();
+  const { setAuth } = useAuthStore();
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
@@ -21,17 +25,20 @@ export const KakaoAuth = () => {
 
     api
       .get(`/praise-up/api/v1/sign-up`, { params })
-      .then((res) => {
+      .then((res: Response) => {
         // TODO: 성공 페이지로 이동
-        Cookies.set("k-u-id", `${(res.data as responseDataProps).userId}`, {
+        const { userId, isSigned } = res.data;
+
+        Cookies.set("k-u-id", userId.toString(), {
           expires: 0.5,
         });
-        if ((res.data as responseDataProps).isSigned) {
+        setAuth(userId);
+
+        if (isSigned) {
           navigate("/signup");
         } else {
           navigate("/main");
         }
-        setIsLogin(true);
       })
       .catch((err) => {
         // TODO: 에러 발생 페이지로 이동

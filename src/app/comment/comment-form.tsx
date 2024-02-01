@@ -41,18 +41,18 @@ export const CommentFormPage = () => {
 
   const handleModal = async () => {
     if (nickname.length !== 0 || image.length !== 0) {
-      const result = await confirm(
-        {
+      const result = await confirm({
+        message: {
           title: "칭찬 반응 작성을 그만둘까요?",
           description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
         },
-        {
+        confirm: {
           text: "그만두기",
         },
-        {
+        cancel: {
           text: "계속 작성",
         },
-      );
+      });
 
       if (!result) return;
     }
@@ -91,7 +91,8 @@ export const CommentFormPage = () => {
 
   return (
     <DefaultLayout
-      className="overflow-hidden"
+      // 버튼 따라오지 않는 이슈 수정
+      // className="overflow-x-hidden"
       appbar={
         !openCrop && (
           <BlurredAppbar
@@ -112,6 +113,7 @@ export const CommentFormPage = () => {
         <>
           <Header
             text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
+            className="mb-9"
           />
           <div className="absolute right-5 top-[70px]">
             {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
@@ -129,7 +131,7 @@ export const CommentFormPage = () => {
             )}
           </div>
 
-          <ButtonProvider isFull={true}>
+          <ButtonProvider isFull={true} className="!bg-transparent">
             <ButtonProvider.Primary
               disabled={!required}
               onClick={() => saveForm()}

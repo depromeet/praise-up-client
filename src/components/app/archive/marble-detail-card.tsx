@@ -38,18 +38,18 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     const onClickMenu = async () => {
       setIsShowDeleteBtn(false);
 
-      const result = await confirm(
-        {
+      const result = await confirm({
+        message: {
           title: "칭찬반응을 삭제할까요?",
           description: "삭제된 칭찬반응은 복구할 수 없어요",
         },
-        {
+        confirm: {
           text: "삭제",
         },
-        {
+        cancel: {
           text: "취소",
         },
-      );
+      });
 
       // TODO: Error handling
       if (!result) return;
@@ -80,7 +80,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     // TODO: Add image save button
     return (
       <div
-        className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+        className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
         style={{
           boxShadow: "0px 0px 20px 0px rgba(36, 43, 55, 0.10)",
         }}
@@ -110,7 +110,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           )}
         </div>
         <p
-          className="whitespace-pre-wrap"
+          className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
           dangerouslySetInnerHTML={{
             __html: content.replace(/\\n/g, "<br/>"),
           }}
