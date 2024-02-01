@@ -34,10 +34,10 @@ export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
       <SwiperSlide>
         <ArticleWrapper className="absolute z-0 flex h-full w-full flex-col justify-center">
           {/* <FirstImg width={352} height={281} className="w-full" /> */}
-          <div className="flex h-[35%] items-center justify-center">
+          <div className="flex h-[30%] items-center justify-center">
             <img
               src={FirstImg}
-              className="h-auto w-full"
+              className="h-[281px] w-[352px]"
               alt="첫번째 캐러셀 이미지"
             />
           </div>
@@ -50,10 +50,10 @@ export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
       <SwiperSlide>
         <ArticleWrapper className="z-0 flex h-full w-full flex-col justify-center">
           {/* <TwiceImg className="w-auto" width={357} height={360} /> */}
-          <div className="flex h-[35%] items-center justify-center">
+          <div className="flex h-[30%] items-center justify-center">
             <img
               src={TwiceImg}
-              className="h-auto w-full px-17px"
+              className="mb-10 h-[360px] w-[357px] px-17px"
               alt="두번째 캐러셀 이미지"
             />
           </div>
@@ -66,10 +66,10 @@ export const Carousel = ({ setAngle, userNickname }: carouselProps) => {
       <SwiperSlide>
         <ArticleWrapper className="z-0 flex h-full w-full flex-col justify-center">
           {/* <ThirdImg width={267} height={306} className="w-auto" /> */}
-          <div className="flex h-[35%] items-center justify-center">
+          <div className="flex h-[30%] items-center justify-center">
             <img
               src={ThirdImg}
-              className="h-auto w-full px-46px"
+              className="h-[306px] w-[267px]"
               alt="세번째 캐러셀 이미지"
             />
           </div>
