@@ -8,7 +8,7 @@ export const DoneContainer = () => {
     <Fragment>
       <Confetti />
       <div className="relative w-full bg-transparent pb-[100%]">
-        <Icon className="absolute h-full w-full" width="327" height="327" />
+        <Icon className="absolute h-full w-full" width="307" height="272" />
       </div>
     </Fragment>
   );
