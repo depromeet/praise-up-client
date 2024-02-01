@@ -51,7 +51,7 @@ export const Done = () => {
         />
         <DoneContainer />
       </ArticleWrapper>
-      <ButtonProvider>
+      <ButtonProvider className="bg-transparent">
         <ButtonProvider.Primary onClick={handleShare} tooltip={toolTipText}>
           링크 공유하고 칭찬 받기
         </ButtonProvider.Primary>
