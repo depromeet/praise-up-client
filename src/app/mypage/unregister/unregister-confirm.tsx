@@ -13,6 +13,7 @@ import { useAuthStore } from "@/store/auth";
 type TLocation = {
   state: {
     text: string;
+    historyStack: number;
   };
 };
 
@@ -40,7 +41,7 @@ export const MyPageUnregisterConfirm = () => {
   }, [location]);
 
   const onClickClose = () => {
-    nav("/mypage");
+    nav(-(location.state.historyStack + 1));
   };
 
   const onSubmit = async () => {
