@@ -29,7 +29,7 @@ export const CommentFormPage = () => {
   const { confirm } = useContext(ConfirmContext);
   const [marbleIdx] = useState(Math.floor(Math.random() * 2));
 
-  UseScrollToBottom(!openCrop && required, [openCrop, required]);
+  UseScrollToBottom(!openCrop && required);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
