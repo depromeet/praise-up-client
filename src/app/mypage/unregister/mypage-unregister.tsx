@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
 import { Appbar } from "@/components/common/appbar";
-import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
 
 type ReasonText = {
