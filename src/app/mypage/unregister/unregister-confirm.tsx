@@ -36,10 +36,6 @@ export const MyPageUnregisterConfirm = () => {
   const { auth, setAuth } = useAuthStore();
   const { mutate: unregister, isSuccess } = useApiUnregister();
 
-  useEffect(() => {
-    console.log(location.state.text);
-  }, [location]);
-
   const onClickClose = () => {
     nav(-(location.state.historyStack + 1));
   };
