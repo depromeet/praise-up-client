@@ -19,4 +19,5 @@ export type ConfirmDialogType = {
   message: MessageType;
   confirm?: ButtonType;
   cancel?: ButtonType;
+  icon?: string;
 };

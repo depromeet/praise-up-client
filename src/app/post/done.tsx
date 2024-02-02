@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Close from "@/assets/icons/close.svg?react";
@@ -18,6 +19,11 @@ export const Done = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as postProps;
+  const [toolTipText, setToolTipText] = useState("");
+
+  setTimeout(() => {
+    setToolTipText("게시글 링크를 공유해 칭찬구슬을 모아보세요");
+  }, 2000);
 
   const handleShare = () => {
     // TODO: 클립보드에 링크 복사하기
@@ -38,15 +44,15 @@ export const Done = () => {
         />
       }
     >
-      <ArticleWrapper>
+      <ArticleWrapper className="gap-y-[72px]">
         <Header
-          text="게시글 작성이 완료되었어요!\n게시글을 공유해 칭찬 구슬을 모아보세요"
+          text="게시글 작성이 완료되었어요!\n칭찬은 5시간 후에 확인할 수 있어요"
           className="!text-h3 text-center"
         />
         <DoneContainer />
       </ArticleWrapper>
-      <ButtonProvider>
-        <ButtonProvider.Primary onClick={handleShare}>
+      <ButtonProvider className="bg-transparent">
+        <ButtonProvider.Primary onClick={handleShare} tooltip={toolTipText}>
           링크 공유하고 칭찬 받기
         </ButtonProvider.Primary>
         <ButtonProvider.White onClick={() => navigate("/main")}>

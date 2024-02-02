@@ -70,7 +70,7 @@ const About = ({ onClick }: Temp) => {
   );
 };
 
-const Bottom = ({ onClick }: Temp) => {
+const Bottom = () => {
   const nav = useNavigate();
   const { setAuth } = useAuthStore();
   const { confirm } = useContext(ConfirmContext);
@@ -95,12 +95,16 @@ const Bottom = ({ onClick }: Temp) => {
     nav("/");
   };
 
+  const onClickUnregister = () => {
+    nav("/mypage/unregister");
+  };
+
   // TODO: add link to
   return (
     <div className="flex grow flex-col gap-5 bg-white px-20px py-36px">
       {[
         { onClick: onClickLogout, label: "로그아웃" },
-        { onClick, label: "회원탈퇴" },
+        { onClick: onClickUnregister, label: "회원탈퇴" },
       ].map(({ onClick, label }, idx) => (
         <button
           className="text-b2-compact text-start text-secondary"
@@ -165,7 +169,7 @@ export const MyPage = () => {
       </div>
       <div className="flex grow flex-col gap-2">
         <About onClick={onClickDevelop} />
-        <Bottom onClick={onClickDevelop} />
+        <Bottom />
       </div>
     </DefaultLayout>
   );

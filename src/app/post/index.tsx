@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Fragment, useState, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -14,6 +15,7 @@ import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
 import useImageCompress from "@/hooks/useImageCompress";
+import { UseScrollToBottom } from "@/hooks/useScrollToBottom";
 import { useAuthStore } from "@/store/auth";
 
 export type postProps = {
@@ -33,6 +35,8 @@ export const Post = () => {
   const location = useLocation();
   const state = location.state as postProps;
   const { mutate } = useApiBoard(auth.userId);
+
+  UseScrollToBottom(!openCrop && image.length > 0);
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -122,47 +126,47 @@ export const Post = () => {
   };
 
   return (
-    <Fragment>
-      <DefaultLayout
-        appbar={
-          <Appbar
-            left={
-              <Back
-                className="cursor-pointer"
-                onClick={() => {
-                  if (image.length || text.length) {
-                    void handleModal();
-                  } else {
-                    navigate("/post/keyword");
-                  }
-                }}
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <Back
+              className="cursor-pointer"
+              onClick={() => {
+                if (image.length || text.length) {
+                  void handleModal();
+                } else {
+                  navigate("/post/keyword");
+                }
+              }}
+            />
+          }
+        />
+      }
+    >
+      {openCrop ? (
+        <ImageCropper
+          src={image}
+          openCrop={setOpenCrop}
+          scaleImage={setImage}
+        />
+      ) : (
+        <Fragment>
+          <ArticleWrapper>
+            <Header
+              text={`오늘 칭찬받을 {${keywordData.current.keyword}}\\n 순간을 공유해주세요`}
+            />
+            {image.length > 0 ? (
+              <ImageContainer src={image} onChange={changeImage} />
+            ) : (
+              <ImageInput
+                onChange={changeImage}
+                placeholder="칭찬 받을 순간을 올려주세요"
               />
-            }
-          />
-        }
-      >
-        {openCrop ? (
-          <ImageCropper
-            src={image}
-            openCrop={setOpenCrop}
-            scaleImage={setImage}
-          />
-        ) : (
-          <Fragment>
-            <ArticleWrapper>
-              <Header
-                text={`오늘 칭찬받을 {${keywordData.current.keyword}}\\n 순간을 공유해주세요`}
-              />
-              {image.length > 0 ? (
-                <ImageContainer src={image} onChange={changeImage} />
-              ) : (
-                <ImageInput
-                  onChange={changeImage}
-                  placeholder="칭찬 받을 순간을 올려주세요"
-                />
-              )}
-            </ArticleWrapper>
-            {image.length > 0 && (
+            )}
+          </ArticleWrapper>
+          {image.length > 0 && (
+            <div className={clsx(!openCrop && image.length > 0 && "mb-[60px]")}>
               <Textarea
                 limit={40}
                 placeholder="칭찬받을 순간에 대한 경험을 공유해주세요 (선택)"
@@ -170,18 +174,18 @@ export const Post = () => {
                 value={text}
                 currentLength={text.length}
               />
-            )}
-            <ButtonProvider isFull={true} className="!bg-transparent">
-              <ButtonProvider.Primary
-                disabled={!(image.length > 0)}
-                onClick={createPost}
-              >
-                게시물 업로드 하기
-              </ButtonProvider.Primary>
-            </ButtonProvider>
-          </Fragment>
-        )}
-      </DefaultLayout>
-    </Fragment>
+            </div>
+          )}
+          <ButtonProvider isFull={true} className="!bg-transparent">
+            <ButtonProvider.Primary
+              disabled={!(image.length > 0)}
+              onClick={createPost}
+            >
+              게시물 업로드 하기
+            </ButtonProvider.Primary>
+          </ButtonProvider>
+        </Fragment>
+      )}
+    </DefaultLayout>
   );
 };
