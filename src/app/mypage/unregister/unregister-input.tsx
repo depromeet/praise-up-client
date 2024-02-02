@@ -9,6 +9,7 @@ import { DefaultLayout } from "@/components/layout/default";
 
 type TLocation = {
   state: {
+    reason: string;
     text: string;
   };
 };
@@ -28,7 +29,7 @@ export const MyPageUnregisterInput = () => {
     console.log(reason);
     nav("/mypage/unregister/confirm", {
       state: {
-        text: `${location.state.text} : ${reason}`,
+        text: `${location.state.reason} : ${reason}`,
       },
     });
   };
@@ -57,7 +58,7 @@ export const MyPageUnregisterInput = () => {
       </div>
 
       <ButtonProvider>
-        <ButtonProvider.Primary disabled={!reason.length} onClick={onSubmit}>
+        <ButtonProvider.Primary onClick={onSubmit}>
           작성 완료
         </ButtonProvider.Primary>
       </ButtonProvider>
