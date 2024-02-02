@@ -10,6 +10,7 @@ import { handleIllust } from "@/utils/handleIllust";
 interface RecentCardProps {
   postId: number;
   keyword: string;
+  visible: boolean;
   commentCount: number;
   postCreatedDate: string;
 }
@@ -21,6 +22,7 @@ const DARK_BACKGROUNDS = [2, 4, 10, 11];
 export const RecentCard = ({
   postId,
   keyword,
+  visible,
   commentCount,
   postCreatedDate,
 }: RecentCardProps) => {
@@ -59,7 +61,7 @@ export const RecentCard = ({
       </div>
       <LinkAndGoButton
         postId={postId}
-        openDatetime={openDatetime ?? new Date()}
+        visible={visible}
         backgroundUrl={BACKGROUNDS[illustId]}
       />
     </div>

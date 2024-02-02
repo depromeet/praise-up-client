@@ -16,6 +16,7 @@ import {
   useApiGetReadPosts,
 } from "@/hooks/api/main/useApiGetReadPosts";
 import { useApiGetUnreadPosts } from "@/hooks/api/main/useApiGetUnreadPosts";
+import Confetti from "@/hooks/useConfetti";
 import { useAuthStore } from "@/store/auth";
 
 const GoToWrite = () => {
@@ -49,9 +50,16 @@ const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
           subText="상단의 버튼을 눌러 게시물을 작성해보세요"
         />
       ) : (
-        <CardSwiper>
-          {posts?.map((content, idx) => <RecentCard key={idx} {...content} />)}
-        </CardSwiper>
+        <div className="relative h-full w-full">
+          <div className="absolute -left-5 -top-5 z-20 h-[110%] w-[120%] -translate-x-5 ">
+            {posts[0].visible && <Confetti />}
+          </div>
+          <CardSwiper>
+            {posts?.map((content, idx) => (
+              <RecentCard key={idx} {...content} />
+            ))}
+          </CardSwiper>
+        </div>
       )}
     </div>
   );

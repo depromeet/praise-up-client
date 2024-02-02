@@ -4,10 +4,11 @@ import { api } from "@/api";
 
 export interface ContentDataType {
   postId: number;
-  date: string;
   keyword: string;
   imageUrl: string;
+  visible: boolean;
   commentCount: number;
+  postCreatedTime: string;
   postCreatedDate: string;
 }
 

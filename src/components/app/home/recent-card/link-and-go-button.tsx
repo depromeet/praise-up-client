@@ -10,25 +10,16 @@ import { handleIllust } from "@/utils/handleIllust";
 
 interface LinkAndGoButtonProps {
   postId: number;
-  openDatetime: Date;
+  visible: boolean;
   backgroundUrl: string;
 }
 
 export const LinkAndGoButton = ({
   postId,
-  openDatetime,
+  visible,
   backgroundUrl,
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
-  const [isReveal, setIsReveal] = useState<boolean>(
-    openDatetime.getTime() - Date.now() > 0,
-  );
-
-  const { diff } = useTimer(openDatetime);
-
-  useEffect(() => {
-    setIsReveal(diff >= 0);
-  }, [diff]);
 
   const handleShare = () => {
     UseCurrentLinkCopy(postId);
@@ -37,7 +28,7 @@ export const LinkAndGoButton = ({
 
   return (
     <div className="flex w-full items-start justify-center gap-2">
-      {isReveal ? (
+      {!visible ? (
         <>
           <button
             className="aspect-square rounded-2 bg-gray-300 p-[15px]"
