@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -9,6 +10,7 @@ import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
 import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
+import Confetti from "@/hooks/useConfetti";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 import { useTimer } from "@/hooks/useTimer";
 
@@ -52,9 +54,15 @@ export const DetailPage = () => {
     >
       <div className="flex flex-col gap-9">
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
-        <div className="flex flex-col gap-3">
-          {!data.visible && <TimerCardView timeLeft={timeLeft} />}
-          <div className="perspective-1000 bg-transparent">
+        {diff <= 0 && <Confetti />}
+        <div
+          className={clsx(
+            diff <= 0 && "animate-[fadeOutUp_1s]",
+            "flex flex-col gap-3",
+          )}
+        >
+          <TimerCardView diff={diff} timeLeft={timeLeft} />
+          <div className="perspective-1000 animate-fadeInUp bg-transparent ">
             <div className="[transform-style: preserve-3d] relative">
               <PostCardView {...{ ...data, postId: +postId }} isReadyCard>
                 <PostCardView.Title />
