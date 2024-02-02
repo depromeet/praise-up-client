@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
-import EditSvg from "@/assets/icons/edit.svg?react";
+import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
 import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
@@ -47,12 +47,12 @@ const ReasonData: ReasonText[] = [
 
 const ReasonItem = ({ landing, text, to }: ReasonText) => {
   return (
-    <div className="flex content-between">
+    <button className="flex justify-between">
       <p>{landing}</p>
       <Link to={to} state={{ text }}>
-        <EditSvg />
+        <ChevronRightEdgeSVG />
       </Link>
-    </div>
+    </button>
   );
 };
 
@@ -71,8 +71,8 @@ export const MyPageUnregister = () => {
         />
       }
     >
-      <Header text="탈퇴하는 이유가 무엇인가요?" />
-      <div>
+      <p className="text-h2">탈퇴하는 이유가 무엇인가요?</p>
+      <div className="flex flex-col gap-7 py-9">
         {ReasonData.map((data, idx) => (
           <ReasonItem {...data} key={idx} />
         ))}
