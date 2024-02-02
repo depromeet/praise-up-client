@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Cookies from "js-cookie";
-import { Fragment, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
@@ -73,42 +73,40 @@ export const MyPageUnregisterConfirm = () => {
   }, [isSuccess]);
 
   return (
-    <Fragment>
-      <DefaultLayout
-        appbar={
-          <Appbar
-            left={
-              <button onClick={() => nav(-1)}>
-                <ChevronLeftEdgeSVG />
-              </button>
-            }
-          />
-        }
-      >
-        <p className="text-h2">탈퇴 전 꼭 확인해 주세요</p>
-        <ul className="flex list-disc flex-col gap-[18px] py-9">
-          {notificationData.map((text, idx) => (
-            <li key={idx} className="ml-6 pl-1">
-              {text}
-            </li>
-          ))}
-        </ul>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button onClick={() => nav(-1)}>
+              <ChevronLeftEdgeSVG />
+            </button>
+          }
+        />
+      }
+    >
+      <p className="text-h2">탈퇴 전 꼭 확인해 주세요</p>
+      <ul className="flex list-disc flex-col gap-[18px] py-9">
+        {notificationData.map((text, idx) => (
+          <li key={idx} className="ml-6 pl-1">
+            {text}
+          </li>
+        ))}
+      </ul>
 
-        <div className="fixed bottom-0 left-1/2 mx-auto flex w-full max-w-[480px] translate-x-[-50%] gap-2.5 self-stretch px-4 pb-9">
-          <button
-            className={clsx(btnDefaultStyle, "bg-gray-300")}
-            onClick={onClickClose}
-          >
-            <p className="w-fit text-primary">닫기</p>
-          </button>
-          <button
-            className={clsx(btnDefaultStyle, "bg-[#242B37]")}
-            onClick={onSubmit}
-          >
-            <p className="w-fit text-white">확인했습니다</p>
-          </button>
-        </div>
-      </DefaultLayout>
-    </Fragment>
+      <div className="fixed bottom-0 left-1/2 mx-auto flex w-full max-w-[480px] translate-x-[-50%] gap-2.5 self-stretch px-4 pb-9">
+        <button
+          className={clsx(btnDefaultStyle, "bg-gray-300")}
+          onClick={onClickClose}
+        >
+          <p className="w-fit text-primary">닫기</p>
+        </button>
+        <button
+          className={clsx(btnDefaultStyle, "bg-[#242B37]")}
+          onClick={onSubmit}
+        >
+          <p className="w-fit text-white">확인했습니다</p>
+        </button>
+      </div>
+    </DefaultLayout>
   );
 };
