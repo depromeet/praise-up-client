@@ -16,7 +16,7 @@ export const Confirm = ({
       <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%]">
         <div className="mx-5 flex flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-6">
           <div className="flex flex-col items-center gap-1">
-            {icon && <img src={icon} />}
+            {icon && <img src={icon} className="h-30px w-30px" />}
             <div className="mt-2 text-lg font-semibold text-primary">
               {message.title}
             </div>
