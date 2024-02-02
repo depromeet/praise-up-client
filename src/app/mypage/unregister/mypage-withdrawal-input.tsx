@@ -4,8 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
-import { Header } from "@/components/common/header";
-import { Input } from "@/components/common/input";
 import { Textarea } from "@/components/common/textarea";
 import { DefaultLayout } from "@/components/layout/default";
 
@@ -26,7 +24,9 @@ export const MyPageUnregisterInput = () => {
   };
 
   const onSubmit = () => {
+    // Temp
     console.log(reason);
+    nav("/mypage/unregister/confirm");
   };
 
   return (
@@ -54,7 +54,7 @@ export const MyPageUnregisterInput = () => {
 
       <ButtonProvider>
         <ButtonProvider.Primary disabled={!reason.length} onClick={onSubmit}>
-          변경하기
+          작성 완료
         </ButtonProvider.Primary>
       </ButtonProvider>
     </DefaultLayout>
