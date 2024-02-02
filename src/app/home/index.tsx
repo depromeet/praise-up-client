@@ -51,9 +51,9 @@ const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
         />
       ) : (
         <div className="relative h-full w-full">
-          <div className="absolute -left-5 -top-5 z-20 h-[110%] w-[120%] -translate-x-5 ">
-            {posts[0].visible && <Confetti />}
-          </div>
+          {posts[0].visible && (
+            <Confetti style={{ width: "150%", height: "110%", top: "52%" }} />
+          )}
           <CardSwiper>
             {posts?.map((content, idx) => (
               <RecentCard key={idx} {...content} />

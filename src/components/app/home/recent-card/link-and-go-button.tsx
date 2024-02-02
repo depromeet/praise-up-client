@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ShareSVG } from "@/assets/icons/share";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { toast } from "@/helpers/toast";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
-import { useTimer } from "@/hooks/useTimer";
 import { handleIllust } from "@/utils/handleIllust";
 
 interface LinkAndGoButtonProps {
