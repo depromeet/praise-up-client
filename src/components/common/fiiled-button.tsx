@@ -9,6 +9,7 @@ export type ButtonProps = {
   isFull?: boolean;
   isFullStyle?: boolean;
   isOnBoarding?: boolean;
+  isGuideExternalBrowser?: boolean;
   tooltip?: string;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
