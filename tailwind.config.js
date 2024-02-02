@@ -70,6 +70,14 @@ export default {
         },
         fadeOut: {
           "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
+        fadeOut: {
+          "0%": {
             opacity: 1,
           },
           "100%": {
@@ -99,6 +107,7 @@ export default {
       },
       animation: {
         fadeInUp: "fadeInUp 1s ease-in-out",
+        fadeIn: "fadeIn 1s ease-in-out",
         fadeOutUp: "fadeOutUp 1s ease-in-out",
         fadeOut: "fadeOut 1s ease-in-out",
       },

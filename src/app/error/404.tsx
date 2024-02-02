@@ -1,16 +1,15 @@
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 import ErrorImg from "@/assets/images/404.svg?react";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { DefaultLayout } from "@/components/layout/default";
-// import useUserStore from "@/features/useUserStore";
+import { useAuthStore } from "@/store/auth";
 
 export const NotFound = () => {
   const navigate = useNavigate();
+
   // TODO: 추후 JWT 토큰 구현 시, 토큰 관련 로직으로 변경
-  // const { isLogin } = useUserStore();
-  const isLogin = Boolean(Cookies.get("k-u-id"));
+  const { auth } = useAuthStore();
 
   return (
     <DefaultLayout>
@@ -22,13 +21,13 @@ export const NotFound = () => {
         </div>
       </article>
       <ButtonProvider>
-        {/* TODO: 카카오 로그인 연동 후, 로그인이 되지 않은 상태일 경우에는 다른 메세지 제공 */}
+        {/* TODO: 카카오 로그인 연동 후, 로그인이 되지 않은 상태일 경우에는 다른 메시지 제공 */}
         <ButtonProvider.Primary
           onClick={() => {
-            isLogin ? navigate("/main") : navigate("/");
+            auth.isLogin ? navigate("/main") : navigate("/");
           }}
         >
-          {isLogin ? "메인 홈으로 돌아가기" : "처음으로 돌아가기"}
+          {auth.isLogin ? "메인 홈으로 돌아가기" : "처음으로 돌아가기"}
         </ButtonProvider.Primary>
       </ButtonProvider>
     </DefaultLayout>

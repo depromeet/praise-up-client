@@ -124,7 +124,7 @@ export const MarbleModal = ({
             } / ${swiperMarbleList.length}`}</p>
           )}
         </div>
-        <div className="mt-[32.5px]">
+        <div>
           <Swiper
             onSwiper={setSwiper}
             className="init-swiper archive-swiper"
@@ -141,7 +141,7 @@ export const MarbleModal = ({
               dynamicBullets: true,
             }}
             style={{
-              paddingTop: 20,
+              paddingTop: 10,
             }}
           >
             {swiperMarbleList.map((marble, idx) => (

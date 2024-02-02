@@ -5,6 +5,12 @@
     opacity: 1;
   }
 
+  .swiper-pagination-bullet,
+  .swiper-pagination-bullet-active {
+    width: 6px;
+    height: 6px;
+  }
+
   .swiper-pagination-bullet {
     margin-top: 30px;
     background-color: rgba(211, 214, 218, 1);

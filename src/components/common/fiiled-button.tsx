@@ -1,5 +1,7 @@
 import clsx from "clsx";
-import { PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from "react";
+
+import { ToolTip } from "./tooltip";
 
 export type ButtonProps = {
   text?: string;
@@ -7,6 +9,7 @@ export type ButtonProps = {
   isFull?: boolean;
   isFullStyle?: boolean;
   isOnBoarding?: boolean;
+  tooltip?: string;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 export const FilledButton = ({
@@ -15,25 +18,30 @@ export const FilledButton = ({
   isFull,
   isFullStyle,
   children,
+  tooltip,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
   return (
-    <button
-      type="button"
-      className={clsx(
-        "flex h-54px w-full items-center justify-center rounded-2 py-16px transition-all duration-300 disabled:bg-gray-400 disabled:text-gray-500",
-        className,
-        {
-          "text-b2-strong bg-[#242B37] text-white": colorSchema === "primary",
-          "text-b3-strong h-40px bg-transparent text-blue-500":
-            colorSchema === "white",
-          "rounded-none": isFull && isFullStyle,
-        },
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </button>
+    <Fragment>
+      {tooltip ? <ToolTip text={tooltip} /> : null}
+      <button
+        type="button"
+        className={clsx(
+          "flex w-full items-center justify-center rounded-2 transition-all duration-300 disabled:bg-gray-400 disabled:text-gray-500",
+          className,
+          {
+            "text-b2-strong bg-[#242B37] text-white py-16px":
+              colorSchema === "primary",
+            "text-b3-strong h-40px bg-transparent text-blue-500 py-10px":
+              colorSchema === "white",
+            "rounded-none": isFull && isFullStyle,
+          },
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </button>
+    </Fragment>
   );
 };

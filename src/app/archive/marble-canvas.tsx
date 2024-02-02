@@ -23,6 +23,7 @@ import { FABButton } from "@/components/app/archive/fab-button";
 import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, WIDTH } from "@/constants/archive";
+import { UseScrollToTop } from "@/hooks/useScrollToTop";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView } from "@/types/archive";
 import { setWaitTime } from "@/utils/setWaitTime";
@@ -42,6 +43,7 @@ export const MarbleCanvas = ({
   onOpenModal,
   onChangeView,
 }: Props) => {
+  UseScrollToTop();
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

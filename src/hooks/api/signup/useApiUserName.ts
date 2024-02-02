@@ -1,24 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "@/api";
 
-export const useApiUserProfile = () => {
-  const naviagate = useNavigate();
+export const useApiUserProfile = (userId: number) => {
+  const navigate = useNavigate();
 
   const changeNickName = async (nickname: string) => {
-    const USER_ID = Cookies.get("k-u-id");
-    if (!USER_ID) return naviagate("/error");
     const res = await api.patch(
-      `/praise-up/api/v1/user/${USER_ID}/nickname?nickname=${nickname}`,
+      `/praise-up/api/v1/user/${userId}/nickname?nickname=${nickname}`,
     );
     return res;
   };
 
   return useMutation({
     mutationFn: (nickname: string) => changeNickName(nickname),
-    onSuccess: () => naviagate("/post/keyword"),
-    onError: () => naviagate("/error"),
+    onSuccess: () => navigate("/post/keyword"),
+    onError: () => navigate("/error"),
   });
 };
