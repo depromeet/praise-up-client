@@ -15,7 +15,7 @@ import { MyPage } from "@/app/mypage";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
 import { MyPageUnregister } from "@/app/mypage/unregister/mypage-unregister";
 import { MyPageUnregisterConfirm } from "@/app/mypage/unregister/mypage-unregister-confirm";
-import { MyPageUnregisterInput } from "@/app/mypage/unregister/mypage-withdrawal-input";
+import { MyPageUnregisterInput } from "@/app/mypage/unregister/mypage-unregister-input";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
