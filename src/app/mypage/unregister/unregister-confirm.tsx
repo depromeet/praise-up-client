@@ -71,7 +71,7 @@ export const MyPageUnregisterConfirm = () => {
     Cookies.remove("k-u-id");
     setAuth(0);
 
-    nav("/mypage/done");
+    nav("/mypage/unregister/done");
   };
 
   return (
