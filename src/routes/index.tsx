@@ -13,6 +13,7 @@ import { DetailPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
+import { CalendarPage } from "@/app/mypage/calendar";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
@@ -99,6 +100,11 @@ const routeChildren: RouteChildren[] = [
     path: "/mypage",
     element: <MyPage />,
     auth: true,
+  },
+  {
+    path: "/__test__",
+    element: <CalendarPage />,
+    auth: false,
   },
   // {
   //   path: "/mypage/claps",
