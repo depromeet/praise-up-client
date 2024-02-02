@@ -26,22 +26,22 @@ const ReasonData: ReasonText[] = [
   {
     landing: "개인정보 노출이 우려돼요",
     text: "개인정보 노출이 우려돼요",
-    to: "/mypage/withdrawal/confirm",
+    to: "/mypage/unregister/confirm",
   },
   {
     landing: "사용 방법이 어려워요",
     text: "어떤 부분에서 어려움을 느끼셨나요?",
-    to: "/mypage/withdrawal/input",
+    to: "/mypage/unregister/input",
   },
   {
     landing: "지속된 오류와 버그가 있어요",
     text: "어떤 오류와 버그를 겪으셨나요?",
-    to: "/mypage/withdrawal/input",
+    to: "/mypage/unregister/input",
   },
   {
     landing: "기타",
     text: "이유를 적어주세요.",
-    to: "/mypage/withdrawal/input",
+    to: "/mypage/unregister/input",
   },
 ];
 
