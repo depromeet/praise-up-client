@@ -1,5 +1,5 @@
 import { ClockSVG } from "@/assets/clock";
-import { TimeLeftType, useTimer } from "@/hooks/useTimer";
+import { TimeLeftType } from "@/hooks/useTimer";
 
 interface TimerCardProps {
   timeLeft: TimeLeftType;
