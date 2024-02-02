@@ -41,7 +41,10 @@ export const OnBoardingClap = () => {
       >
         <Background angle={angle} />
         <Carousel setAngle={setAngle} userNickname={userNickname} />
-        <ButtonProvider className="z-10 !bg-transparent px-40px">
+        <ButtonProvider
+          className="z-10 !bg-transparent px-40px"
+          isGuideExternalBrowser={true}
+        >
           <ButtonProvider.Primary
             onClick={() => navigate("/clap", { state: { postId } })}
           >

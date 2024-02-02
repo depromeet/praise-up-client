@@ -65,9 +65,9 @@ export default {
           "66%": { visibility: "hidden" },
           "100%": { visibility: "hidden" },
         },
-        fadeOut: {
+        fadeIn: {
           "0%": {
-            opacity: 0,
+            opacity: 0.3,
           },
           "100%": {
             opacity: 1,

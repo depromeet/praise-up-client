@@ -5,13 +5,19 @@ import { ConfirmDialogType } from "@/types/common";
 const btnDefaultStyle =
   "flex basis-0 items-center justify-center py-4 font-semibold rounded-lg h-fit grow";
 
-export const Confirm = ({ message, confirm, cancel }: ConfirmDialogType) => {
+export const Confirm = ({
+  message,
+  confirm,
+  cancel,
+  icon,
+}: ConfirmDialogType) => {
   return (
     <div>
       <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%]">
-        <div className="mx-5 flex flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-8">
+        <div className="mx-5 flex flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-6">
           <div className="flex flex-col items-center gap-1">
-            <div className="text-lg font-semibold text-primary">
+            {icon && <img src={icon} className="h-30px w-30px" />}
+            <div className="mt-2 text-lg font-semibold text-primary">
               {message.title}
             </div>
             <div className="text-sm text-teritary">{message.description}</div>
