@@ -14,18 +14,19 @@ import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
 export const DetailPage = () => {
   const { postId } = useParams();
   const { data } = useApiGetOnePost(postId);
-  const [openDateTime, setOpenDateTime] = useState<Date>();
+  const [openTime, setOpenTime] = useState<Date>();
   const {
     state: { backgroundUrl },
   } = useLocation() as { state: { backgroundUrl: string } };
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!data) return;
-    const [year, month, day] = data.postCreatedDate.split("-");
-    const openDateTime = new Date(+year, +month - 1, +day + 1, 24);
+    const [date, time] = data.postCreatedTime.split("T");
+    const [year, month, day] = date.split("-");
+    const [hour, minute, _] = time.split(":");
 
-    setOpenDateTime(openDateTime);
+    const openTime = new Date(+year, +month - 1, +day, +hour, +minute + 30);
+    setOpenTime(openTime);
   }, [data]);
 
   if (!postId) return;
@@ -51,7 +52,7 @@ export const DetailPage = () => {
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
         <div className="flex flex-col gap-3">
           {!data.visible && (
-            <TimerCardView openDateTime={openDateTime ?? new Date()} />
+            <TimerCardView openDateTime={openTime ?? new Date()} />
           )}
           <div className="perspective-1000 bg-transparent">
             <div className="[transform-style: preserve-3d] relative">

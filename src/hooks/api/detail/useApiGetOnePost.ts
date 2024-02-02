@@ -11,6 +11,7 @@ export interface GetOnePostType {
   visible: boolean;
   isRead: boolean;
   postCreatedDate: string;
+  postCreatedTime: string;
 }
 
 const getOnePost = (postId?: string) =>
@@ -30,6 +31,7 @@ export const useApiGetOnePost = (postId?: string) => {
       keyword: "",
       visible: false,
       isRead: false,
+      postCreatedTime: new Date().toString(),
       postCreatedDate: new Date().toString(),
     },
   });
