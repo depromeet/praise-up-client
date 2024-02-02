@@ -1,23 +1,34 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ShareSVG } from "@/assets/icons/share";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { toast } from "@/helpers/toast";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
+import { useTimer } from "@/hooks/useTimer";
 import { handleIllust } from "@/utils/handleIllust";
 
 interface LinkAndGoButtonProps {
   postId: number;
-  visible: boolean;
+  openTime: Date;
   backgroundUrl: string;
 }
 
 export const LinkAndGoButton = ({
   postId,
-  visible,
+  openTime,
   backgroundUrl,
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
+  const [isReveal, setIsReveal] = useState<boolean>(
+    openTime.getTime() - Date.now() > 0,
+  );
+
+  const { diff } = useTimer(openTime);
+
+  useEffect(() => {
+    setIsReveal(diff >= 0);
+  }, [diff]);
 
   const handleShare = () => {
     UseCurrentLinkCopy(postId);
@@ -26,7 +37,7 @@ export const LinkAndGoButton = ({
 
   return (
     <div className="flex w-full items-start justify-center gap-2">
-      {!visible ? (
+      {isReveal ? (
         <>
           <button
             className="aspect-square rounded-2 bg-gray-300 p-[15px]"
