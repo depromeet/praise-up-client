@@ -30,7 +30,7 @@ export const MyPageUnregisterInput = () => {
 
     nav("/mypage/unregister/confirm", {
       state: {
-        text: `${reason} : ${optionalReason}`,
+        text: `${reason} ${optionalReason}`,
         historyStack,
       },
     });
