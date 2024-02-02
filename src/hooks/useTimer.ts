@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useInterval } from "./useInterval";
 
-interface TimeLeftType {
+export interface TimeLeftType {
   hour: number;
   min: number;
   sec: number;
@@ -10,7 +10,7 @@ interface TimeLeftType {
 
 export function useTimer(openDatetime: Date) {
   const [delay] = useState<number | null>(1000);
-  const [diff, setDiff] = useState(0);
+  const [diff, setDiff] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
     hour: 0,
     min: 0,
