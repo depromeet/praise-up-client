@@ -47,12 +47,10 @@ const ReasonData: ReasonText[] = [
 
 const ReasonItem = ({ landing, text, to }: ReasonText) => {
   return (
-    <button className="flex justify-between">
+    <Link to={to} state={{ text }} className="flex justify-between">
       <p>{landing}</p>
-      <Link to={to} state={{ text }}>
-        <ChevronRightEdgeSVG />
-      </Link>
-    </button>
+      <ChevronRightEdgeSVG />
+    </Link>
   );
 };
 
