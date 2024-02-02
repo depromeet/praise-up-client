@@ -40,7 +40,7 @@ export interface GetPostType {
   last: boolean;
   empty: boolean;
 }
-const PAGE_SIZE = 4; // temp page size
+const PAGE_SIZE = 10; // temp page size
 
 export const useApiGetReadPosts = (userId: number) => {
   // archive post
