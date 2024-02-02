@@ -11,6 +11,7 @@ type TLocation = {
   state: {
     reason: string;
     text: string;
+    historyStack: number;
   };
 };
 
@@ -18,18 +19,19 @@ export const MyPageUnregisterInput = () => {
   const nav = useNavigate();
   const location = useLocation() as TLocation;
 
-  const [reason, setReason] = useState<string>("");
+  const [optionalReason, setOptionalReason] = useState<string>("");
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setReason(e.currentTarget.value);
+    setOptionalReason(e.currentTarget.value);
   };
 
   const onSubmit = () => {
-    // Temp
-    console.log(reason);
+    const { reason, historyStack } = location.state;
+
     nav("/mypage/unregister/confirm", {
       state: {
-        text: `${location.state.reason} : ${reason}`,
+        text: `${reason} : ${optionalReason}`,
+        historyStack,
       },
     });
   };
@@ -51,8 +53,8 @@ export const MyPageUnregisterInput = () => {
         <Textarea
           placeholder="서비스의 개선을 위해 구체적인 이유를 공유해주세요 (선택)"
           limit={300}
-          value={reason}
-          currentLength={reason.length}
+          value={optionalReason}
+          currentLength={optionalReason.length}
           onChange={onChange}
         />
       </div>
