@@ -9,7 +9,7 @@ import { DefaultLayout } from "@/components/layout/default";
 type ReasonText = {
   landing: string;
   to: string;
-  text?: string;
+  text: string;
 };
 
 const ReasonData: ReasonText[] = [
