@@ -60,7 +60,7 @@ export const MyPageEdit = () => {
       }
     >
       <div className="flex flex-col gap-9 py-4">
-        <Header text="{사용할 닉네임을 입력해주세요}" />
+        <Header text="닉네임 수정" />
         <Input
           placeholder="닉네임을 설정해주세요"
           limit={4}
