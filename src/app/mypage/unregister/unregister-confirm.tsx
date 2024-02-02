@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import Cookies from "js-cookie";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { Appbar } from "@/components/common/appbar";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { DefaultLayout } from "@/components/layout/default";
+import { useApiUnregister } from "@/hooks/api/my-page/useApiUnregister";
 import { useAuthStore } from "@/store/auth";
 
 type TLocation = {
@@ -31,7 +32,8 @@ export const MyPageUnregisterConfirm = () => {
   const nav = useNavigate();
   const location = useLocation() as TLocation;
   const { confirm } = useContext(ConfirmContext);
-  const { setAuth } = useAuthStore();
+  const { auth, setAuth } = useAuthStore();
+  const { mutate: unregister, isSuccess } = useApiUnregister();
 
   useEffect(() => {
     console.log(location.state.text);
@@ -61,18 +63,17 @@ export const MyPageUnregisterConfirm = () => {
       return;
     }
 
-    unregisterService();
+    unregister({ userId: auth.userId, reason: location.state.text });
   };
 
-  const unregisterService = () => {
-    // TODO: 탈퇴 API 연동
-    console.log("탈퇴");
+  useEffect(() => {
+    if (!isSuccess) return;
 
     Cookies.remove("k-u-id");
     setAuth(0);
 
     nav("/mypage/unregister/done");
-  };
+  }, [isSuccess]);
 
   return (
     <Fragment>
