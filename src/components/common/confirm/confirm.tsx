@@ -20,7 +20,12 @@ export const Confirm = ({
             <div className="mt-2 text-lg font-semibold text-primary">
               {message.title}
             </div>
-            <div className="text-sm text-teritary">{message.description}</div>
+            <div
+              className="text-center text-sm text-teritary"
+              dangerouslySetInnerHTML={{
+                __html: message.description,
+              }}
+            />
           </div>
           <div className="flex gap-2.5 self-stretch">
             {cancel && (

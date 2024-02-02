@@ -26,7 +26,11 @@ export const MyPageUnregisterInput = () => {
   const onSubmit = () => {
     // Temp
     console.log(reason);
-    nav("/mypage/unregister/confirm");
+    nav("/mypage/unregister/confirm", {
+      state: {
+        text: `${location.state.text} : ${reason}`,
+      },
+    });
   };
 
   return (
