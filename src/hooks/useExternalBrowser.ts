@@ -9,8 +9,11 @@ export function UseExternalBrowser() {
   if (agent.indexOf("KAKAO") !== -1) {
     window.open(`kakaotalk://web/openExternal?url=${encodeURIComponent(URL)}`);
   } else if (agent.indexOf("Instagram") !== -1) {
-    // NOTE: 현재는 해당 인스타그램 인앱 탈출 코드가 작동하지 않는 것 같음
-    window.open(`https://www.praise-up.app`, "_system");
+    /**
+     * NOTE: 현재는 해당 인스타그램 인앱 탈출 코드가 작동하지 않는 것 같음
+     * 추후 카카오톡처럼 인스타그램 인앱 방지 분석 후 코드 추가 예정
+     */
+    // window.open(`https://www.praise-up.app`, "_system");
   } else {
     isExternalBrowser = true;
   }
