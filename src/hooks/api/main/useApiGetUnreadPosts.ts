@@ -41,6 +41,8 @@ export const useApiGetUnreadPosts = (userId: number) => {
         return { ...post, openDateTime };
       });
     },
+    staleTime: 10 * 1000,
+    gcTime: 60 * 1000,
     enabled: !!userId,
   });
 };
