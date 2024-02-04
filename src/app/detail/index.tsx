@@ -46,13 +46,8 @@ export const DetailPage = () => {
       <div className="flex flex-col gap-9">
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
         {diff <= 0 && <Confetti />}
-        <div
-          className={clsx(
-            diff <= 0 && "animate-[fadeOutUp_1s]",
-            "flex flex-col gap-3",
-          )}
-        >
-          <TimerCardView diff={diff} timeLeft={timeLeft} />
+        <div className="flex flex-col gap-3">
+          <TimerCardView timeLeft={timeLeft} />
           <div className="perspective-1000 animate-fadeInUp bg-transparent ">
             <div className="[transform-style: preserve-3d] relative">
               <PostCardView {...{ ...data, postId: +postId }} isReadyCard>

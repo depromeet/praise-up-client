@@ -2,13 +2,10 @@ import { ClockSVG } from "@/assets/clock";
 import { TimeLeftType } from "@/hooks/useTimer";
 
 interface TimerCardProps {
-  diff: number;
   timeLeft: TimeLeftType;
 }
 
-export const TimerCardView = ({ diff, timeLeft }: TimerCardProps) => {
-  if (diff < -1) return;
-
+export const TimerCardView = ({ timeLeft }: TimerCardProps) => {
   return (
     <div className="flex animate-fadeIn items-center gap-2 rounded-3 bg-[#8AC2FF] px-4 py-2 text-secondary">
       <div className="flex items-center gap-0.5">
