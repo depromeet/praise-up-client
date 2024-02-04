@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
@@ -17,21 +16,13 @@ import { useTimer } from "@/hooks/useTimer";
 export const DetailPage = () => {
   const { postId } = useParams();
   const { data } = useApiGetOnePost(postId);
-  const [openTime, setOpenTime] = useState<Date>(new Date());
   const {
     state: { backgroundUrl },
   } = useLocation() as { state: { backgroundUrl: string } };
   const navigate = useNavigate();
-  const { timeLeft, diff } = useTimer(openTime);
-
-  useEffect(() => {
-    const [date, time] = data.postCreatedTime.split("T");
-    const [year, month, day] = date.split("-");
-    const [hour, minute, _] = time.split(":");
-
-    const openTime = new Date(+year, +month - 1, +day, +hour, +minute + 30);
-    setOpenTime(openTime);
-  }, [data]);
+  const { timeLeft, diff } = useTimer(data.openDateTime!, [
+    data.postCreatedTime,
+  ]);
 
   if (!postId) return;
 

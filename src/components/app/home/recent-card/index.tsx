@@ -13,6 +13,7 @@ interface RecentCardProps {
   commentCount: number;
   postCreatedDate: string;
   postCreatedTime: string;
+  openDateTime?: Date;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -23,20 +24,9 @@ export const RecentCard = ({
   postId,
   keyword,
   commentCount,
-  postCreatedTime,
+  openDateTime,
 }: RecentCardProps) => {
-  const [openTime, setOpenTime] = useState<Date>();
-
   const illustId = handleIllust.get(postId);
-
-  useEffect(() => {
-    const [date, time] = postCreatedTime.split("T");
-    const [year, month, day] = date.split("-");
-    const [hour, minute, _] = time.split(":");
-
-    const openTime = new Date(+year, +month - 1, +day, +hour, +minute + 30);
-    setOpenTime(openTime);
-  }, [postCreatedTime]);
 
   return (
     <div className="flex w-full flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -58,11 +48,11 @@ export const RecentCard = ({
           </h2>
           <CountBadge count={commentCount} />
         </div>
-        <TimerBadge openDatetime={openTime ?? new Date()} />
+        <TimerBadge openDatetime={openDateTime ?? new Date()} />
       </div>
       <LinkAndGoButton
         postId={postId}
-        openTime={openTime ?? new Date()}
+        openDateTime={openDateTime ?? new Date()}
         backgroundUrl={BACKGROUNDS[illustId]}
       />
     </div>

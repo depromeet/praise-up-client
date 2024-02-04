@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { DehydratedState, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
 
@@ -10,6 +10,7 @@ export interface ContentDataType {
   commentCount: number;
   postCreatedTime: string;
   postCreatedDate: string;
+  openDateTime?: DehydratedState;
 }
 
 export const useApiGetUnreadPosts = (userId: number) => {
@@ -24,6 +25,22 @@ export const useApiGetUnreadPosts = (userId: number) => {
   return useQuery({
     queryKey: ["unread-post"],
     queryFn: getUnreadPosts,
+    select: (posts: ContentDataType[]) => {
+      return posts.map((post) => {
+        const [date, time] = post.postCreatedTime.split("T");
+        const [year, month, day] = date.split("-");
+        const [hour, minute, _] = time.split(":");
+
+        const openDateTime = new Date(
+          +year,
+          +month - 1,
+          +day,
+          +hour,
+          +minute + 30,
+        );
+        return { ...post, openDateTime };
+      });
+    },
     enabled: !!userId,
   });
 };

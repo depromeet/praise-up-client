@@ -8,7 +8,7 @@ export interface TimeLeftType {
   sec: number;
 }
 
-export function useTimer(openDatetime: Date) {
+export function useTimer(openDatetime: Date, deps?: unknown[]) {
   const [delay] = useState<number | null>(1000);
   const [diff, setDiff] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<TimeLeftType>({
@@ -20,7 +20,7 @@ export function useTimer(openDatetime: Date) {
   useEffect(() => {
     if (!openDatetime) return;
     setDiff(Math.floor((+openDatetime - +new Date()) / 1000));
-  }, [openDatetime]);
+  }, deps);
 
   useInterval(
     () => {

@@ -10,6 +10,7 @@ export interface ContentDataType {
   commentCount: number;
   postCreatedDate: string;
   postCreatedTime: string;
+  openDateTime?: Date;
 }
 
 export interface GetPostType {
