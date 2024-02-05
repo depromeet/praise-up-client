@@ -13,6 +13,10 @@ import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
+import { MyPageUnregister } from "@/app/mypage/unregister/unregister";
+import { MyPageUnregisterConfirm } from "@/app/mypage/unregister/unregister-confirm";
+import { MyPageUnregisterDone } from "@/app/mypage/unregister/unregister-done";
+import { MyPageUnregisterInput } from "@/app/mypage/unregister/unregister-input";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
@@ -99,14 +103,30 @@ const routeChildren: RouteChildren[] = [
     element: <MyPage />,
     auth: true,
   },
-  // {
-  //   path: "/mypage/claps",
-  //   auth: true,
-  // },
   {
     path: "/mypage/edit",
     element: <MyPageEdit />,
     auth: true,
+  },
+  {
+    path: "/mypage/unregister",
+    element: <MyPageUnregister />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/input",
+    element: <MyPageUnregisterInput />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/confirm",
+    element: <MyPageUnregisterConfirm />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/done",
+    element: <MyPageUnregisterDone />,
+    auth: false,
   },
   {
     path: "*",
