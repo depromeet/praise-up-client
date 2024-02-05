@@ -27,7 +27,7 @@ export const DetailPage = () => {
     const [year, month, day] = date.split("-");
     const [hour, minute, _] = time.split(":");
 
-    const openTime = new Date(+year, +month - 1, +day, +hour, +minute + 30);
+    const openTime = new Date(+year, +month - 1, +day, +hour + 4, +minute);
     setOpenTime(openTime);
   }, [data]);
 
