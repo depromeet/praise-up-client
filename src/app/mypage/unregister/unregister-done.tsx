@@ -12,7 +12,7 @@ export const MyPageUnregisterDone = () => {
 
   return (
     <DefaultLayout>
-      <Background angle={0} />
+      <Background />
       <ArticleWrapper className="flex flex-col items-center justify-center gap-[140px]">
         <Header
           text="praise up을\n이용해주셔서 감사합니다"
