@@ -171,7 +171,8 @@ export const MarbleModal = ({
       </div>
 
       <div
-        onClick={onClickClose}
+        // NOTE: dim 영역 클릭해도 모달 닫히지 않게 수정
+        // onClick={onClickClose}
         className="fixed left-1/2 z-20 mx-auto h-full w-full max-w-[480px] translate-x-[-50%] backdrop-blur-[10px]"
         style={{
           background:
