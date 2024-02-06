@@ -23,6 +23,7 @@ import { OnBoardingClap } from "@/app/on-boarding-clap";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
 import { KeyWord } from "@/app/post/keyword";
+import { TestPage } from "@/components/app/__test__/page";
 import { KakaoAuth } from "@/components/app/login/kakao/kakao-auth";
 import { GlobalLayout } from "@/components/layout";
 import { RequireLoginLayout } from "@/components/layout/login-layout";
@@ -126,6 +127,11 @@ const routeChildren: RouteChildren[] = [
   {
     path: "/mypage/unregister/done",
     element: <MyPageUnregisterDone />,
+    auth: false,
+  },
+  {
+    path: "/__test__",
+    element: <TestPage />,
     auth: false,
   },
   {
