@@ -34,9 +34,11 @@ export const TestPage = () => (
       />
     </div>
     <Layout.Main>
-      {Array.from({ length: 7 }).map((_, i) => (
-        <Paragraph key={i} />
-      ))}
+      {Array(10)
+        .fill(null)
+        .map((_, i) => (
+          <Paragraph key={i} />
+        ))}
     </Layout.Main>
   </Layout>
 );
