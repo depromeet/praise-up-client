@@ -80,12 +80,23 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
     // TODO: Add image save button
     return (
       <div className="relative">
-        <button
-          onClick={() => setIsShowDeleteBtn(!isShowDeleteBtn)}
-          className="absolute right-[52px] top-[30px] z-20 h-[24px] w-[24px]"
-        >
-          <Overflow />
-        </button>
+        <div className="absolute right-[52px] top-[30px] z-20 flex flex-col items-end gap-[6px]">
+          <button
+            onClick={() => setIsShowDeleteBtn(!isShowDeleteBtn)}
+            className=" h-[24px] w-[24px]"
+          >
+            <Overflow />
+          </button>
+
+          {isShowDeleteBtn && (
+            <button
+              className="h-fit w-fit rounded-3 bg-white px-4 py-3 text-secondary"
+              onClick={onClickMenu}
+            >
+              삭제하기
+            </button>
+          )}
+        </div>
 
         <div
           className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
@@ -100,15 +111,6 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
               alt="marble thumbnail"
               className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
             />
-
-            {isShowDeleteBtn && (
-              <button
-                className="absolute right-[16px] top-[44px] h-fit w-fit rounded-3 bg-white px-4 py-3 text-secondary"
-                onClick={onClickMenu}
-              >
-                삭제하기
-              </button>
-            )}
           </div>
           <p
             className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
