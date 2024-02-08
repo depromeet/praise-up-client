@@ -13,7 +13,7 @@ export const useApiDeletePost = () => {
     mutationFn: deletePost,
     onSuccess: async () => {
       await queryClient.refetchQueries({ queryKey: ["unread-post"] });
-      navigate("/main");
+      navigate(-1);
     },
     onError: (e) => console.log(e),
   });
