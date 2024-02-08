@@ -15,7 +15,7 @@ export const useApiUserProfile = (userId: number) => {
 
   return useMutation({
     mutationFn: (nickname: string) => changeNickName(nickname),
-    onSuccess: () => navigate("/post/keyword"),
+    onSuccess: () => navigate("/post/keyword", { state: "openPostGuide" }),
     onError: () => navigate("/error"),
   });
 };
