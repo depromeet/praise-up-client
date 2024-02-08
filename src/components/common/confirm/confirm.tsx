@@ -14,10 +14,10 @@ export const Confirm = ({
   return (
     <div>
       <div className="fixed left-1/2 top-1/2 z-50 mx-auto box-border h-fit w-full max-w-[480px] translate-x-[-50%] translate-y-[-50%]">
-        <div className="mx-5 flex flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-6">
+        <div className="mx-5 flex animate-[fadeInWithScale_0.4s] flex-col items-center gap-7 rounded-2xl bg-white px-4 pb-4 pt-6">
           <div className="flex flex-col items-center gap-1">
             {icon && <img src={icon} className="h-30px w-30px" />}
-            <div className="mt-2 text-lg font-semibold text-primary">
+            <div className="mt-2 whitespace-pre-line text-center text-lg font-semibold text-primary">
               {message.title}
             </div>
             <div
@@ -51,7 +51,7 @@ export const Confirm = ({
       </div>
       <div
         onClick={cancel?.onClick || confirm?.onClick}
-        className="fixed top-0 z-40 h-full w-full bg-black/60"
+        className="fixed top-0 z-40 h-full w-full animate-[fadeIn_0.3s] bg-black/60"
       />
     </div>
   );
