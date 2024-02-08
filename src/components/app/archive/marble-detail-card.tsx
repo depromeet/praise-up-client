@@ -108,7 +108,6 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           <div className="relative">
             <div className="z-20 h-full w-full bg-gradient-to-b from-black to-black" />
             <div
-              // alt="marble thumbnail"
               className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
               style={{
                 backgroundSize: "cover",
