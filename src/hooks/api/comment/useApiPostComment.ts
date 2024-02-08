@@ -26,7 +26,7 @@ export const useApiPostComment = () => {
     onSuccess: () => {
       sessionStorage.removeItem("comment_nickname");
       sessionStorage.removeItem("comment_image");
-      sessionStorage.removeItem("comment_message");
+      sessionStorage.removeItem("comment_content");
     },
     onError: () => naviagate("/error"),
   });
