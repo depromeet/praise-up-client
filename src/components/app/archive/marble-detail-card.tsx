@@ -90,7 +90,7 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
 
           {isShowDeleteBtn && (
             <button
-              className="h-fit w-fit rounded-3 bg-white px-4 py-3 text-secondary"
+              className="h-fit w-fit rounded-3 border border-gray-300 bg-white px-4 py-3 text-secondary"
               onClick={onClickMenu}
             >
               삭제하기
@@ -106,10 +106,14 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
           ref={ref}
         >
           <div className="relative">
-            <img
-              src={src}
-              alt="marble thumbnail"
+            <div className="z-20 h-full w-full bg-gradient-to-b from-black to-black" />
+            <div
               className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+              style={{
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${src})`,
+              }}
             />
           </div>
           <p
