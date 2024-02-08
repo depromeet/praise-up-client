@@ -98,7 +98,7 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts(auth.userId);
-  const { data: isCreatable } = useApiGetPostState();
+  const { data: isCreatable } = useApiGetPostState(auth.userId);
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {

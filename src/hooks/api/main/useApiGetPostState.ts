@@ -7,9 +7,7 @@ type TPostState = {
   isCreatable: boolean;
 };
 
-export const useApiGetPostState = () => {
-  const userId = Cookies.get("k-u-id");
-
+export const useApiGetPostState = (userId: number) => {
   const getPostState = async () => {
     return await api
       .get(`/praise-up/api/v1/user/${userId}/post-state`)
