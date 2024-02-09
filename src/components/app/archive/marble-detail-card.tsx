@@ -79,46 +79,54 @@ export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
 
     // TODO: Add image save button
     return (
-      <div
-        className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
-        style={{
-          boxShadow: "0px 0px 10px 0px rgba(36, 43, 55, 0.10)",
-        }}
-        ref={ref}
-      >
-        <div className="relative">
-          <img
-            src={src}
-            alt="marble thumbnail"
-            className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
-          />
+      <div className="relative">
+        <div className="absolute right-[52px] top-[30px] z-20 flex flex-col items-end gap-[6px]">
           <button
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={() => setIsShowDeleteBtn(!isShowDeleteBtn)}
-            className="absolute right-[16px] top-[14px] h-[24px] w-[24px]"
+            className=" h-[24px] w-[24px]"
           >
             <Overflow />
           </button>
 
           {isShowDeleteBtn && (
             <button
-              className="absolute right-[16px] top-[44px] h-fit w-fit rounded-3 bg-white px-4 py-3 text-secondary"
+              className="h-fit w-fit rounded-3 border border-gray-300 bg-white px-4 py-3 text-secondary"
               onClick={onClickMenu}
             >
               삭제하기
             </button>
           )}
         </div>
-        <p
-          className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{
-            __html: content.replace(/\\n/g, "<br/>"),
+
+        <div
+          className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+          style={{
+            boxShadow: "0px 0px 10px 0px rgba(36, 43, 55, 0.10)",
           }}
-        />
-        <p className="flex items-center justify-start gap-1 font-semibold">
-          <span className="text-teritary">from.</span>
-          <span>{nickname}</span>
-        </p>
+          ref={ref}
+        >
+          <div className="relative">
+            <div className="z-20 h-full w-full bg-gradient-to-b from-black to-black" />
+            <div
+              className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+              style={{
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${src})`,
+              }}
+            />
+          </div>
+          <p
+            className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{
+              __html: content.replace(/\\n/g, "<br/>"),
+            }}
+          />
+          <p className="flex items-center justify-start gap-1 font-semibold">
+            <span className="text-teritary">from.</span>
+            <span>{nickname}</span>
+          </p>
+        </div>
       </div>
     );
   },

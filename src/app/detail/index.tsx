@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";

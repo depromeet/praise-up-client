@@ -44,8 +44,8 @@ export const useApiGetOnePost = (postId?: string) => {
         +year,
         +month - 1,
         +day,
-        +hour,
-        +minute + 30,
+        +hour + 4,
+        +minute,
       );
       return { ...post, openDateTime };
     },

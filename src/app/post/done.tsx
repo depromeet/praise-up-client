@@ -46,7 +46,7 @@ export const Done = () => {
     >
       <ArticleWrapper className="gap-y-[72px]">
         <Header
-          text="게시글 작성이 완료되었어요!\n칭찬은 30분 후에 확인할 수 있어요"
+          text="게시글 작성이 완료되었어요!\n칭찬은 4시간 후에 확인할 수 있어요"
           className="!text-h3 text-center tabular-nums"
         />
         <DoneContainer />
