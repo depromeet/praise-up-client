@@ -170,9 +170,17 @@
     width: 6px;
     height: 6px;
     margin: 0 3px;
-    background-color: #d3d6da;
     border-radius: 100%;
     box-sizing: border-box;
     vertical-align: middle;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: rgba(211, 214, 218, 1);
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: rgba(131, 139, 152, 1);
   }
 }
