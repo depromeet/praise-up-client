@@ -16,7 +16,7 @@ export const CardSwiper = ({ children }: SliderProps) => {
       <Swiper
         spaceBetween={8}
         pagination={{
-          dynamicBullets: true,
+          dynamicBullets: (children as SliderProps[]).length > 5 ? true : false,
         }}
         modules={[Pagination]}
       >

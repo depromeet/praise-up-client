@@ -138,7 +138,7 @@ export const MarbleModal = ({
             onSlideChange={onSlideChange}
             pagination={{
               type: "bullets",
-              dynamicBullets: true,
+              dynamicBullets: swiperMarbleList.length > 5 ? true : false,
             }}
             style={{
               paddingTop: 10,
