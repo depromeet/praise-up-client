@@ -10,9 +10,9 @@ import globalRouter from "@/hooks/navigate/globalRouter";
 
 const isDev = import.meta.env.MODE === "development";
 
-// API 서버 연결 설정 필요
-const DEVELOPMENT_API_URL = "http://101.101.211.46:8080";
-const PRODUCTION_API_URL = "https://api.praise-up.app";
+/** API 사용 전, ENV 파일을 통해 서버 연동 설정을 해주세요 */
+const DEVELOPMENT_API_URL = import.meta.env.VITE_DEVELOPMENT_API_URL as string;
+const PRODUCTION_API_URL = import.meta.env.VITE_PRODUCTION_API_URL as string;
 
 const baseApi = axios.create({
   baseURL:
