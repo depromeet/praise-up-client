@@ -23,13 +23,14 @@ export const CommentFormPage = () => {
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
+  const [height, setHeight] = useState("");
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
   const { confirm } = useContext(ConfirmContext);
   const [marbleIdx] = useState(Math.floor(Math.random() * 2));
 
-  UseScrollToBottom(!openCrop && required);
+  UseScrollToBottom(!openCrop && required, true);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -132,6 +133,8 @@ export const CommentFormPage = () => {
               setContent={setContent}
               required={required}
               setRequired={setRequired}
+              height={height}
+              setHeight={setHeight}
             />
           </div>
 

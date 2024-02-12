@@ -29,6 +29,7 @@ export const Post = () => {
   const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
   const [text, setText] = useState("");
+  const [height, setHeight] = useState("");
   const [openCrop, setOpenCrop] = useState(false);
   const keywordData = useRef<postProps>({});
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const Post = () => {
   const state = location.state as postProps;
   const { mutate } = useApiBoard(auth.userId);
 
-  UseScrollToBottom(!openCrop && image.length > 0);
+  UseScrollToBottom(!openCrop && image.length > 0, true);
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -173,6 +174,8 @@ export const Post = () => {
                 onChange={changeText}
                 value={text}
                 currentLength={text.length}
+                setHeight={setHeight}
+                height={height}
               />
             </div>
           )}
