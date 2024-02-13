@@ -310,10 +310,6 @@ export const MarbleCanvas = ({
         {/* 스크롤 시 bg-transparent 변경 */}
         <div className="fixed top-0 w-full">
           <Appbar
-            className={clsx(
-              isOverflow ? "bg-white/80 backdrop-blur-[10px]" : "bg-white",
-              "transition-all",
-            )}
             left={
               <button onClick={() => onChangeView("preview-card")}>
                 <ChevronLeftEdgeSVG />
