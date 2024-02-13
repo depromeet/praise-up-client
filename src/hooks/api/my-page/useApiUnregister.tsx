@@ -10,7 +10,7 @@ type UnregisterUserParams = {
 export const useApiUnregister = () => {
   const deleteUser = async ({ userId, reason }: UnregisterUserParams) => {
     const res = await api.delete(
-      `/praise-up/api/v1/user/${userId}/nickname?reason=${reason}`,
+      `/praise-up/api/v1/user/${userId}?reason=${reason}`,
     );
     return res;
   };
