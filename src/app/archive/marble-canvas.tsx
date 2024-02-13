@@ -311,7 +311,7 @@ export const MarbleCanvas = ({
         <div className="fixed top-0 w-full">
           <Appbar
             className={clsx(
-              isOverflow ? "backdrop-blur-md" : "bg-white",
+              isOverflow ? "bg-white/80 backdrop-blur-[10px]" : "bg-white",
               "transition-all",
             )}
             left={

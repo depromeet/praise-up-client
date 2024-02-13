@@ -51,7 +51,7 @@ export const MarbleGrid = ({
       appbar={
         <Appbar
           className={clsx(
-            isOverflow ? "backdrop-blur-md" : "bg-white",
+            isOverflow ? "bg-white/80 backdrop-blur-[10px]" : "bg-white",
             "sticky top-0 z-[1] transition-all",
           )}
           left={
