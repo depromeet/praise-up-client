@@ -132,10 +132,6 @@ export const Post = () => {
     <DefaultLayout
       appbar={
         <Appbar
-          className={clsx(
-            isOverflow ? "backdrop-blur-md" : "bg-white",
-            "sticky top-0 z-[1] transition-all",
-          )}
           left={
             <Back
               className="cursor-pointer"

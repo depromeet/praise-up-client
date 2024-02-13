@@ -60,6 +60,7 @@ export const KeyWord = () => {
       className="overflow-x-hidden"
       appbar={
         <Appbar
+          className="!bg-transparent"
           left={
             <Close
               className="cursor-pointer transition-all duration-300"
