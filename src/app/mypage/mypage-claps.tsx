@@ -8,7 +8,7 @@ import { StatsCard } from "@/components/app/mypage/stats-card";
 import { Appbar } from "@/components/common/appbar";
 import { DefaultLayout } from "@/components/layout/default";
 
-export const CalendarPage = () => {
+export const MyPageClaps = () => {
   const navigate = useNavigate();
   return (
     <DefaultLayout
@@ -20,6 +20,7 @@ export const CalendarPage = () => {
               <ChevronLeftEdgeSVG />
             </button>
           }
+          isGrayAppbar
         />
       }
     >

@@ -12,7 +12,7 @@ import { DetailPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
-import { CalendarPage } from "@/app/mypage/calendar";
+import { MyPageClaps } from "@/app/mypage/mypage-claps";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
 import { MyPageUnregister } from "@/app/mypage/unregister/unregister";
 import { MyPageUnregisterConfirm } from "@/app/mypage/unregister/unregister-confirm";
@@ -107,7 +107,7 @@ const routeChildren: RouteChildren[] = [
   },
   {
     path: "/mypage/claps",
-    element: <CalendarPage />,
+    element: <MyPageClaps />,
     auth: true,
   },
   {

@@ -65,7 +65,7 @@ const Header = () => {
       <div>
         {date.year}
         <span className="text-h3">년 </span>
-        {date.month + 1}
+        {(date.month + 1).toString().padStart(2, "0")}
         <span className="text-h3">월</span>
       </div>
       <button
