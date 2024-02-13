@@ -325,7 +325,6 @@ export const MarbleCanvas = ({
                 {marbleBodyList.length}개의 칭찬구슬
               </div>
             }
-            right={<Fragment />}
           />
         </div>
       </div>

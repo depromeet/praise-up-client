@@ -154,7 +154,6 @@ export const Post = () => {
               칭찬 게시물 작성
             </div>
           }
-          right={<Fragment />}
         />
       }
     >

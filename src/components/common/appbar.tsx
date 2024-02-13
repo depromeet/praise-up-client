@@ -34,11 +34,9 @@ export const Appbar = ({
         <span className="grid place-content-start">{_left}</span>
       </div>
       {_content && <div className="flex-none">{_content}</div>}
-      {right && (
-        <div className="flex-1">
-          <span className="grid place-content-end">{right}</span>
-        </div>
-      )}
+      <div className="flex-1">
+        {right && <span className="grid place-content-end">{right}</span>}
+      </div>
     </div>
   );
 };

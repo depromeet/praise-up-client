@@ -65,7 +65,6 @@ export const MarbleGrid = ({
               {marbleList.length}개의 칭찬구슬
             </div>
           }
-          right={<Fragment />}
         />
       }
     >

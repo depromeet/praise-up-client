@@ -104,7 +104,6 @@ export const CommentFormPage = () => {
             content={
               <div className="font-semibold text-primary">칭찬 반응 남기기</div>
             }
-            right={<Fragment />}
           />
         )
       }
