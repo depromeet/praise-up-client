@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { LogoSVG } from "@/assets/icons/logo";
 
 type LeftAndContent =
-  | { left: ReactNode; content?: string }
+  | { left: ReactNode; content?: string | ReactNode }
   | { left?: undefined; content?: never };
 
 export const Appbar = ({
@@ -30,7 +30,14 @@ export const Appbar = ({
       <div className="flex-1">
         <span className="grid place-content-start">{_left}</span>
       </div>
-      {_content && <div className="flex-none">{_content}</div>}
+      {_content && (
+        <div
+          className="flex-none"
+          dangerouslySetInnerHTML={{
+            __html: _content,
+          }}
+        />
+      )}
       {right && (
         <div className="flex-1">
           <span className="grid place-content-end">{right}</span>
