@@ -12,9 +12,11 @@ export const Appbar = ({
   right,
   content,
   className,
+  isGrayAppbar,
 }: {
   right?: ReactNode;
   className?: string;
+  isGrayAppbar?: boolean;
 } & LeftAndContent) => {
   // if left is not defined, render logo
   const _left = left ? left : <LogoSVG />;
@@ -23,7 +25,8 @@ export const Appbar = ({
   return (
     <div
       className={clsx(
-        "flex h-64px w-full items-center justify-between px-20px py-10px",
+        "sticky top-0 z-20 flex h-64px w-full max-w-[480px] items-center justify-between px-20px py-10px backdrop-blur-[10px]",
+        isGrayAppbar ? "bg-gray-100/80" : "bg-white/80",
         className,
       )}
     >
