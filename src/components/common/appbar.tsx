@@ -4,21 +4,17 @@ import { ReactNode } from "react";
 import { LogoSVG } from "@/assets/icons/logo";
 
 type LeftAndContent =
-  | {
-      left: ReactNode;
-      content?: string;
-    }
-  | {
-      left?: undefined;
-      content?: never;
-    };
+  | { left: ReactNode; content?: string }
+  | { left?: undefined; content?: never };
 
 export const Appbar = ({
   left,
   right,
   content,
+  className,
 }: {
   right?: ReactNode;
+  className?: string;
 } & LeftAndContent) => {
   // if left is not defined, render logo
   const _left = left ? left : <LogoSVG />;
@@ -28,6 +24,7 @@ export const Appbar = ({
     <div
       className={clsx(
         "flex h-64px w-full items-center justify-between px-20px py-10px",
+        className,
       )}
     >
       <div className="flex-1">
