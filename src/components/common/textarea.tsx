@@ -40,7 +40,10 @@ export const Textarea = ({
             }
 
             setHeight && setHeight(event.target.style.height);
-            document.body.scrollIntoView({ behavior: "smooth", block: "end" });
+
+            event.target.scrollIntoView({
+              block: "start",
+            });
             onChange(event);
           }}
           {...props}
