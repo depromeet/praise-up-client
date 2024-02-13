@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
+import { UserSVG } from "@/assets/icons/user";
 import { CardSwiper } from "@/components/app/home/card-swiper";
 import { EmptyCard } from "@/components/app/home/empty-card";
 import { PastCard } from "@/components/app/home/past-card";
 import { RecentCard } from "@/components/app/home/recent-card";
-import { HomeLayout } from "@/components/layout/home-layout";
+import { Appbar } from "@/components/common/appbar";
+import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetPostState } from "@/hooks/api/main/useApiGetPostState";
 import {
   ContentDataType,
@@ -90,6 +92,7 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
+  const nav = useNavigate();
   const { auth } = useAuthStore((state) => state);
 
   const { data: unreadPosts } = useApiGetUnreadPosts(auth.userId);
@@ -114,7 +117,19 @@ export const Home = () => {
   }, [unreadPosts, fetchNextPage, hasNextPage]);
 
   return (
-    <HomeLayout>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          right={
+            <button onClick={() => nav("/mypage")}>
+              <UserSVG />
+            </button>
+          }
+          isGrayAppbar
+        />
+      }
+      className="bg-gray-100"
+    >
       <div className="flex flex-col gap-12 pb-[60px]">
         {isCreatable && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
@@ -130,6 +145,6 @@ export const Home = () => {
           }
         />
       </div>
-    </HomeLayout>
+    </DefaultLayout>
   );
 };

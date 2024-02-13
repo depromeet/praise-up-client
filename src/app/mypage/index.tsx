@@ -158,6 +158,7 @@ export const MyPage = () => {
               <ChevronLeftEdgeSVG />
             </button>
           }
+          isGrayAppbar
         />
       }
     >
