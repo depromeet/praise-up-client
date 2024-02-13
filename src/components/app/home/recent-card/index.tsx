@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 

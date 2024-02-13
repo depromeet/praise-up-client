@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import create from "zustand";
+import { create } from "zustand";
 
 type Auth = {
   userId: number;
