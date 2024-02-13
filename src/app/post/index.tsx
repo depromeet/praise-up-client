@@ -16,6 +16,7 @@ import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
 import useImageCompress from "@/hooks/useImageCompress";
 import { UseScrollToBottom } from "@/hooks/useScrollToBottom";
+import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 import { useAuthStore } from "@/store/auth";
 
 export type postProps = {
@@ -25,6 +26,7 @@ export type postProps = {
 
 export const Post = () => {
   const { auth } = useAuthStore();
+  const { isOverflow } = useWindowScrollY({ point: 1 });
   const { confirm } = useContext(ConfirmContext);
   const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
@@ -130,6 +132,10 @@ export const Post = () => {
     <DefaultLayout
       appbar={
         <Appbar
+          className={clsx(
+            isOverflow ? "backdrop-blur-md" : "bg-white",
+            "sticky top-0 z-[1] transition-all",
+          )}
           left={
             <Back
               className="cursor-pointer"
@@ -142,6 +148,17 @@ export const Post = () => {
               }}
             />
           }
+          content={
+            <div
+              className={clsx(
+                isOverflow ? "opacity-100" : "opacity-0",
+                "font-semibold text-primary transition-all",
+              )}
+            >
+              칭찬 게시물 작성
+            </div>
+          }
+          right={<Fragment />}
         />
       }
     >
