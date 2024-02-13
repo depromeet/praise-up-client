@@ -16,6 +16,7 @@ import { DefaultLayout } from "@/components/layout/default";
 import { useApiBoard } from "@/hooks/api/post/useApiBoard";
 import useImageCompress from "@/hooks/useImageCompress";
 import { UseScrollToBottom } from "@/hooks/useScrollToBottom";
+import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 import { useAuthStore } from "@/store/auth";
 
 export type postProps = {
@@ -25,10 +26,12 @@ export type postProps = {
 
 export const Post = () => {
   const { auth } = useAuthStore();
+  const { isOverflow } = useWindowScrollY({ point: 1 });
   const { confirm } = useContext(ConfirmContext);
   const { compressImage } = useImageCompress();
   const [image, setImage] = useState<string>("");
   const [text, setText] = useState("");
+  const [height, setHeight] = useState("");
   const [openCrop, setOpenCrop] = useState(false);
   const keywordData = useRef<postProps>({});
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ export const Post = () => {
   const state = location.state as postProps;
   const { mutate } = useApiBoard(auth.userId);
 
-  UseScrollToBottom(!openCrop && image.length > 0);
+  UseScrollToBottom(!openCrop && image.length > 0, true);
 
   if (state.keyword && state.keywordId) {
     const keywordInfo = {
@@ -128,20 +131,32 @@ export const Post = () => {
   return (
     <DefaultLayout
       appbar={
-        <Appbar
-          left={
-            <Back
-              className="cursor-pointer"
-              onClick={() => {
-                if (image.length || text.length) {
-                  void handleModal();
-                } else {
-                  navigate("/post/keyword");
-                }
-              }}
-            />
-          }
-        />
+        !openCrop && (
+          <Appbar
+            left={
+              <Back
+                className="cursor-pointer"
+                onClick={() => {
+                  if (image.length || text.length) {
+                    void handleModal();
+                  } else {
+                    navigate("/post/keyword");
+                  }
+                }}
+              />
+            }
+            content={
+              <div
+                className={clsx(
+                  isOverflow ? "opacity-100" : "opacity-0",
+                  "font-semibold text-primary transition-all",
+                )}
+              >
+                칭찬 게시물 작성
+              </div>
+            }
+          />
+        )
       }
     >
       {openCrop ? (
@@ -173,6 +188,8 @@ export const Post = () => {
                 onChange={changeText}
                 value={text}
                 currentLength={text.length}
+                setHeight={setHeight}
+                height={height}
               />
             </div>
           )}

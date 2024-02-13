@@ -7,7 +7,7 @@ import Marble1SVG from "@/assets/imgs/marble1.svg?react";
 import Marble2SVG from "@/assets/imgs/marble2.svg?react";
 import { Background } from "@/components/app/comment/background";
 import { FormContainer } from "@/components/app/comment/form-container";
-import { BlurredAppbar } from "@/components/common/blurred-appbar";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
@@ -23,13 +23,14 @@ export const CommentFormPage = () => {
   const [image, setImage] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
+  const [height, setHeight] = useState("");
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
   const { confirm } = useContext(ConfirmContext);
   const [marbleIdx] = useState(Math.floor(Math.random() * 2));
 
-  UseScrollToBottom(!openCrop && required);
+  UseScrollToBottom(!openCrop && required, true);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -98,9 +99,11 @@ export const CommentFormPage = () => {
       // className="overflow-x-hidden"
       appbar={
         !openCrop && (
-          <BlurredAppbar
+          <Appbar
             left={<CloseSVG onClick={handleModal} />}
-            title="칭찬 반응 남기기"
+            content={
+              <div className="font-semibold text-primary">칭찬 반응 남기기</div>
+            }
           />
         )
       }
@@ -132,6 +135,8 @@ export const CommentFormPage = () => {
               setContent={setContent}
               required={required}
               setRequired={setRequired}
+              height={height}
+              setHeight={setHeight}
             />
           </div>
 

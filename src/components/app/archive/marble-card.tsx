@@ -60,7 +60,7 @@ export const MarbleCard = ({ cardData }: Props) => {
 
         {isShowDeleteBtn && (
           <button
-            className="absolute right-0 top-[30px] z-10 h-fit w-fit rounded-3 bg-white px-4 py-3 text-secondary"
+            className="absolute right-0 top-[30px] z-10 h-fit w-fit rounded-3 border border-gray-300 bg-white px-4 py-3 text-secondary"
             onClick={onClickMenu}
           >
             삭제하기
@@ -74,13 +74,14 @@ export const MarbleCard = ({ cardData }: Props) => {
           "relative box-border w-full rounded-xl",
         )}
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
         <div className="absolute flex h-full w-full flex-col justify-end gap-2 p-18px text-white">
           <p
+            className="h-12 overflow-y-auto whitespace-pre-wrap"
             dangerouslySetInnerHTML={{
               __html: content.replace(/\\n/g, "<br/>"),
             }}

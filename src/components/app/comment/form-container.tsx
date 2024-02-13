@@ -23,6 +23,8 @@ interface ImageFormProps {
 interface ContentFormProps {
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
+  height?: string;
+  setHeight?: Dispatch<SetStateAction<string>>;
 }
 
 interface FormContainerProps {
@@ -34,6 +36,8 @@ interface FormContainerProps {
   setContent: Dispatch<SetStateAction<string>>;
   required: boolean;
   setRequired: Dispatch<SetStateAction<boolean>>;
+  height?: string;
+  setHeight?: Dispatch<SetStateAction<string>>;
 }
 
 const NicknameForm = ({
@@ -76,7 +80,12 @@ const ImageForm = ({ nickname, image, changeImage }: ImageFormProps) => {
   );
 };
 
-const ContentForm = ({ content, setContent }: ContentFormProps) => {
+const ContentForm = ({
+  content,
+  setContent,
+  height,
+  setHeight,
+}: ContentFormProps) => {
   return (
     <div className="mb-14 flex flex-col gap-4">
       <div className="flex flex-col gap-3">
@@ -89,6 +98,8 @@ const ContentForm = ({ content, setContent }: ContentFormProps) => {
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setContent(e.target.value)
           }
+          height={height}
+          setHeight={setHeight}
         />
       </div>
       <div className="flex gap-[4px] ">
@@ -111,6 +122,8 @@ export const FormContainer = ({
   setContent,
   required,
   setRequired,
+  height,
+  setHeight,
 }: FormContainerProps) => {
   return (
     <>
@@ -121,7 +134,14 @@ export const FormContainer = ({
         setRequired={setRequired}
       />
       <ImageForm changeImage={changeImage} nickname={nickname} image={image} />
-      {required && <ContentForm content={content} setContent={setContent} />}
+      {required && (
+        <ContentForm
+          content={content}
+          setContent={setContent}
+          height={height}
+          setHeight={setHeight}
+        />
+      )}
     </>
   );
 };
