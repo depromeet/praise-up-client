@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import Marble from "@/assets/icons/marble.svg";

@@ -14,7 +14,7 @@ import {
   Query,
   Composite,
 } from "matter-js";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Bars from "@/assets/icons/bars.svg";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left.tsx";
