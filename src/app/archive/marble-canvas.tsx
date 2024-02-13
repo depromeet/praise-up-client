@@ -323,7 +323,7 @@ export const MarbleCanvas = ({
               <div
                 className={clsx(
                   isOverflow ? "opacity-100" : "opacity-0",
-                  "transition-all",
+                  "font-semibold text-primary transition-all",
                 )}
               >
                 {marbleBodyList.length}개의 칭찬구슬
