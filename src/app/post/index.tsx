@@ -131,30 +131,32 @@ export const Post = () => {
   return (
     <DefaultLayout
       appbar={
-        <Appbar
-          left={
-            <Back
-              className="cursor-pointer"
-              onClick={() => {
-                if (image.length || text.length) {
-                  void handleModal();
-                } else {
-                  navigate("/post/keyword");
-                }
-              }}
-            />
-          }
-          content={
-            <div
-              className={clsx(
-                isOverflow ? "opacity-100" : "opacity-0",
-                "font-semibold text-primary transition-all",
-              )}
-            >
-              칭찬 게시물 작성
-            </div>
-          }
-        />
+        !openCrop && (
+          <Appbar
+            left={
+              <Back
+                className="cursor-pointer"
+                onClick={() => {
+                  if (image.length || text.length) {
+                    void handleModal();
+                  } else {
+                    navigate("/post/keyword");
+                  }
+                }}
+              />
+            }
+            content={
+              <div
+                className={clsx(
+                  isOverflow ? "opacity-100" : "opacity-0",
+                  "font-semibold text-primary transition-all",
+                )}
+              >
+                칭찬 게시물 작성
+              </div>
+            }
+          />
+        )
       }
     >
       {openCrop ? (
