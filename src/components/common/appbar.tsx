@@ -30,14 +30,7 @@ export const Appbar = ({
       <div className="flex-1">
         <span className="grid place-content-start">{_left}</span>
       </div>
-      {_content && (
-        <div
-          className="flex-none"
-          dangerouslySetInnerHTML={{
-            __html: _content,
-          }}
-        />
-      )}
+      {_content && <div className="flex-none">{_content}</div>}
       {right && (
         <div className="flex-1">
           <span className="grid place-content-end">{right}</span>
