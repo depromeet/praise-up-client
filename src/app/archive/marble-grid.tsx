@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import clsx from "clsx";
+import { Fragment, useEffect, useState } from "react";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import Marble from "@/assets/icons/marble.svg";
@@ -8,6 +9,7 @@ import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { Switch } from "@/components/common/Switch";
 import { DefaultLayout } from "@/components/layout/default";
+import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 import { TArchiveView, TMarble } from "@/types/archive";
 
 type Props = {
@@ -23,6 +25,8 @@ export const MarbleGrid = ({
   onChangeView,
   onChangeSelectedMarbleId,
 }: Props) => {
+  const { isOverflow } = useWindowScrollY({ point: 1 });
+
   // TODO: Add body Scroll
   const [isFilteredViewed, setIsFilteredViewed] = useState<boolean>(false);
   const [isNotViewedMarbleList, setIsNotViewedMarbleList] =
@@ -46,11 +50,26 @@ export const MarbleGrid = ({
     <DefaultLayout
       appbar={
         <Appbar
+          className={clsx(
+            isOverflow ? "backdrop-blur-md" : "bg-white",
+            "sticky top-0 z-[1] transition-all",
+          )}
           left={
             <button onClick={() => onChangeView("preview-card")}>
               <ChevronLeftEdgeSVG />
             </button>
           }
+          content={
+            <div
+              className={clsx(
+                isOverflow ? "opacity-100" : "opacity-0",
+                "font-semibold text-primary transition-all",
+              )}
+            >
+              {marbleList.length}개의 칭찬구슬
+            </div>
+          }
+          right={<Fragment />}
         />
       }
     >
