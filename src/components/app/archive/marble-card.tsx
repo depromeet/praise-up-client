@@ -74,7 +74,7 @@ export const MarbleCard = ({ cardData }: Props) => {
           "relative box-border w-full rounded-xl",
         )}
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

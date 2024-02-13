@@ -142,7 +142,7 @@ const Image = () => {
     <div
       className="flex aspect-square w-full flex-col justify-end gap-3 rounded-3 bg-cover bg-no-repeat p-[18px] opacity-[.88]"
       style={{
-        backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.00) 48.46%, rgba(0, 0, 0, 0.56) 100%), url(${imageUrl})`,
+        backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${imageUrl})`,
         backgroundSize: "cover",
       }}
     >
