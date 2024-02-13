@@ -120,12 +120,12 @@ export const Home = () => {
     <DefaultLayout
       appbar={
         <Appbar
-          className="sticky top-0 z-20 bg-gray-100"
           right={
             <button onClick={() => nav("/mypage")}>
               <UserSVG />
             </button>
           }
+          isGrayAppbar
         />
       }
       className="bg-gray-100"
