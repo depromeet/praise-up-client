@@ -50,10 +50,6 @@ export const MarbleGrid = ({
     <DefaultLayout
       appbar={
         <Appbar
-          className={clsx(
-            isOverflow ? "bg-white/80 backdrop-blur-[10px]" : "bg-white",
-            "sticky top-0 z-[1] transition-all",
-          )}
           left={
             <button onClick={() => onChangeView("preview-card")}>
               <ChevronLeftEdgeSVG />
