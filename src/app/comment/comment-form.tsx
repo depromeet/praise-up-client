@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
@@ -6,7 +6,11 @@ import CloseSVG from "@/assets/icons/close.svg?react";
 import Marble1SVG from "@/assets/imgs/marble1.svg?react";
 import Marble2SVG from "@/assets/imgs/marble2.svg?react";
 import { Background } from "@/components/app/comment/background";
-import { FormContainer } from "@/components/app/comment/form-container";
+import {
+  ContentForm,
+  ImageForm,
+  NicknameForm,
+} from "@/components/app/comment/form-field";
 import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
@@ -64,29 +68,31 @@ export const CommentFormPage = () => {
   };
 
   /** 이미지 변경 이벤트 */
-  const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files[0]) {
-      const compressedImage = compressImage(event.target.files[0]);
-      compressedImage
-        .then((res) => {
-          reader.readAsDataURL(res as Blob);
-          reader.onload = () => {
-            setImage(reader.result as string);
-            setOpenCrop(true);
-          };
-        })
-        .catch((error) => {
-          console.log(error); // eslint rule
-        });
-    }
-  };
+  const changeImage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const reader = new FileReader();
+      if (event.target.files && event.target.files[0]) {
+        const compressedImage = compressImage(event.target.files[0]);
+        compressedImage
+          .then((res) => {
+            reader.readAsDataURL(res as Blob);
+            reader.onload = () => {
+              setImage(reader.result as string);
+              setOpenCrop(true);
+            };
+          })
+          .catch((error) => {
+            console.log(error); // eslint rule
+          });
+      }
+    },
+    [],
+  );
 
   const saveForm = () => {
     try {
       sessionStorage.setItem("comment_nickname", nickname);
       sessionStorage.setItem("comment_image", image);
-      sessionStorage.setItem("comment_content", content);
     } catch (err) {
       return <NotFound />;
     }
@@ -126,18 +132,22 @@ export const CommentFormPage = () => {
           </div>
 
           <div className="flex w-full flex-col gap-7">
-            <FormContainer
-              nickname={nickname}
-              setNickname={setNickname}
-              image={image}
-              changeImage={changeImage}
-              content={content}
-              setContent={setContent}
-              required={required}
-              setRequired={setRequired}
-              height={height}
-              setHeight={setHeight}
-            />
+            <>
+              <NicknameForm
+                nickname={nickname}
+                image={image}
+                setNickname={setNickname}
+                setRequired={setRequired}
+              />
+              <ImageForm
+                changeImage={changeImage}
+                nickname={nickname}
+                image={image}
+              />
+              {required && (
+                <ContentForm height={height} setHeight={setHeight} />
+              )}
+            </>
           </div>
 
           <ButtonProvider isFull={true} className="!bg-transparent">

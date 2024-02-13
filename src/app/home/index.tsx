@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
@@ -42,6 +42,21 @@ const GoToWrite = () => {
 
 const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
   const isMultiple: boolean = Number(posts?.length) > 1;
+  const firstPost = posts?.[0] as ContentDataType;
+  const [confettiShow, setConfettiShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    // 공개 최초에만 팡파레가 뜨도록
+    if (!firstPost || !firstPost.visible) return;
+    const recentConfetti: number = JSON.parse(
+      localStorage.getItem("recentConfetti") ?? "0",
+    ) as number;
+
+    if (!recentConfetti || recentConfetti !== firstPost.postId) {
+      setConfettiShow(true);
+      localStorage.setItem("recentConfetti", JSON.stringify(firstPost.postId));
+    }
+  }, [posts]);
 
   return (
     <div className={clsx(isMultiple && "mb-4", "flex flex-col gap-5")}>
@@ -53,7 +68,7 @@ const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
         />
       ) : (
         <div className="relative h-full w-full">
-          {posts[0].visible && (
+          {confettiShow && (
             <Confetti style={{ width: "150%", height: "110%", top: "52%" }} />
           )}
           <CardSwiper>
@@ -101,7 +116,7 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts(auth.userId);
-  const { data: isCreatable } = useApiGetPostState();
+  const { data: isCreatable } = useApiGetPostState(auth.userId);
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
