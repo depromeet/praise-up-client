@@ -9,7 +9,7 @@ export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<ConfirmDialogType>();
 
   const confirm = (buttonState: ConfirmDialogType): Promise<boolean> => {
-    const { message, confirm, cancel } = buttonState;
+    const { message, confirm, cancel, icon } = buttonState;
     return new Promise((resolve) => {
       setState({
         message,
@@ -27,6 +27,7 @@ export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
             resolve(false);
           },
         },
+        icon,
       });
     });
   };
@@ -34,13 +35,7 @@ export const ConfirmDialog = ({ children }: { children: ReactNode }) => {
   return (
     <ConfirmContext.Provider value={{ confirm }}>
       {children}
-      {state && (
-        <Confirm
-          message={state.message}
-          confirm={state.confirm}
-          cancel={state.cancel}
-        />
-      )}
+      {state && <Confirm {...state} />}
     </ConfirmContext.Provider>
   );
 };

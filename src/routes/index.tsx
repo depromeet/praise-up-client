@@ -4,7 +4,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { Test } from "@/app/__test__/calendar";
 import { Archive } from "@/app/archive";
 import { CommentMainPage } from "@/app/comment";
 import { CommentFormPage } from "@/app/comment/comment-form";
@@ -15,12 +14,17 @@ import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
 import { CalendarPage } from "@/app/mypage/calendar";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
+import { MyPageUnregister } from "@/app/mypage/unregister/unregister";
+import { MyPageUnregisterConfirm } from "@/app/mypage/unregister/unregister-confirm";
+import { MyPageUnregisterDone } from "@/app/mypage/unregister/unregister-done";
+import { MyPageUnregisterInput } from "@/app/mypage/unregister/unregister-input";
 import { OnBoarding } from "@/app/on-boarding";
 import { SetNickName } from "@/app/on-boarding/set-nickname";
 import { OnBoardingClap } from "@/app/on-boarding-clap";
 import { Post } from "@/app/post";
 import { Done } from "@/app/post/done";
 import { KeyWord } from "@/app/post/keyword";
+import { TestPage } from "@/components/app/__test__/page";
 import { KakaoAuth } from "@/components/app/login/kakao/kakao-auth";
 import { GlobalLayout } from "@/components/layout";
 import { RequireLoginLayout } from "@/components/layout/login-layout";
@@ -102,18 +106,39 @@ const routeChildren: RouteChildren[] = [
     auth: true,
   },
   {
-    path: "/__test__",
+    path: "/mypage/claps",
     element: <CalendarPage />,
-    auth: false,
+    auth: true,
   },
-  // {
-  //   path: "/mypage/claps",
-  //   auth: true,
-  // },
   {
     path: "/mypage/edit",
     element: <MyPageEdit />,
     auth: true,
+  },
+  {
+    path: "/mypage/unregister",
+    element: <MyPageUnregister />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/input",
+    element: <MyPageUnregisterInput />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/confirm",
+    element: <MyPageUnregisterConfirm />,
+    auth: true,
+  },
+  {
+    path: "/mypage/unregister/done",
+    element: <MyPageUnregisterDone />,
+    auth: false,
+  },
+  {
+    path: "/__test__",
+    element: <TestPage />,
+    auth: false,
   },
   {
     path: "*",

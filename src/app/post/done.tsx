@@ -23,7 +23,7 @@ export const Done = () => {
 
   setTimeout(() => {
     setToolTipText("게시글 링크를 공유해 칭찬구슬을 모아보세요");
-  }, 2000);
+  }, 500);
 
   const handleShare = () => {
     // TODO: 클립보드에 링크 복사하기
@@ -46,12 +46,12 @@ export const Done = () => {
     >
       <ArticleWrapper className="gap-y-[72px]">
         <Header
-          text="게시글 작성이 완료되었어요!\n칭찬은 5시간 후에 확인할 수 있어요"
-          className="!text-h3 text-center"
+          text="게시글 작성이 완료되었어요!\n칭찬은 4시간 후에 확인할 수 있어요"
+          className="!text-h3 text-center tabular-nums"
         />
         <DoneContainer />
       </ArticleWrapper>
-      <ButtonProvider className="bg-transparent">
+      <ButtonProvider className="!bg-transparent">
         <ButtonProvider.Primary onClick={handleShare} tooltip={toolTipText}>
           링크 공유하고 칭찬 받기
         </ButtonProvider.Primary>

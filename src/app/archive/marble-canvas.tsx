@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // eslint-disable-next-line import/default
+import clsx from "clsx";
 import {
   Body,
   Engine,
@@ -24,6 +25,7 @@ import { Appbar } from "@/components/common/appbar";
 import { Header } from "@/components/common/header";
 import { ASSET_WIDTH, WIDTH } from "@/constants/archive";
 import { UseScrollToTop } from "@/hooks/useScrollToTop";
+import { useWindowScrollY } from "@/hooks/useWindowScrollY";
 import Render from "@/lib/RenderExtension";
 import { TArchiveView } from "@/types/archive";
 import { setWaitTime } from "@/utils/setWaitTime";
@@ -46,6 +48,7 @@ export const MarbleCanvas = ({
   UseScrollToTop();
   const [canvasHeight, setCanvasHeight] = useState<number>(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { isOverflow } = useWindowScrollY({ point: 1 });
 
   // NOTE ===== Create Marble Body Object
   useEffect(() => {
@@ -305,12 +308,22 @@ export const MarbleCanvas = ({
     <div className="relative mx-auto w-full max-w-[480px]">
       <div className="relative z-20">
         {/* 스크롤 시 bg-transparent 변경 */}
-        <div className="fixed top-0 w-full bg-white">
+        <div className="fixed top-0 w-full">
           <Appbar
             left={
               <button onClick={() => onChangeView("preview-card")}>
                 <ChevronLeftEdgeSVG />
               </button>
+            }
+            content={
+              <div
+                className={clsx(
+                  isOverflow ? "opacity-100" : "opacity-0",
+                  "font-semibold text-primary transition-all",
+                )}
+              >
+                {marbleBodyList.length}개의 칭찬구슬
+              </div>
             }
           />
         </div>

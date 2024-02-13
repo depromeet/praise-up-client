@@ -1,14 +1,16 @@
 import clsx from "clsx";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
+import { UserSVG } from "@/assets/icons/user";
 import { CardSwiper } from "@/components/app/home/card-swiper";
 import { EmptyCard } from "@/components/app/home/empty-card";
 import { PastCard } from "@/components/app/home/past-card";
 import { RecentCard } from "@/components/app/home/recent-card";
-import { HomeLayout } from "@/components/layout/home-layout";
+import { Appbar } from "@/components/common/appbar";
+import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetPostState } from "@/hooks/api/main/useApiGetPostState";
 import {
   ContentDataType,
@@ -16,6 +18,7 @@ import {
   useApiGetReadPosts,
 } from "@/hooks/api/main/useApiGetReadPosts";
 import { useApiGetUnreadPosts } from "@/hooks/api/main/useApiGetUnreadPosts";
+import Confetti from "@/hooks/useConfetti";
 import { useAuthStore } from "@/store/auth";
 
 const GoToWrite = () => {
@@ -39,6 +42,21 @@ const GoToWrite = () => {
 
 const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
   const isMultiple: boolean = Number(posts?.length) > 1;
+  const firstPost = posts?.[0] as ContentDataType;
+  const [confettiShow, setConfettiShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    // 공개 최초에만 팡파레가 뜨도록
+    if (!firstPost || !firstPost.visible) return;
+    const recentConfetti: number = JSON.parse(
+      localStorage.getItem("recentConfetti") ?? "0",
+    ) as number;
+
+    if (!recentConfetti || recentConfetti !== firstPost.postId) {
+      setConfettiShow(true);
+      localStorage.setItem("recentConfetti", JSON.stringify(firstPost.postId));
+    }
+  }, [posts]);
 
   return (
     <div className={clsx(isMultiple && "mb-4", "flex flex-col gap-5")}>
@@ -49,9 +67,16 @@ const ToBeOpened = ({ posts }: { posts?: ContentDataType[] }) => {
           subText="상단의 버튼을 눌러 게시물을 작성해보세요"
         />
       ) : (
-        <CardSwiper>
-          {posts?.map((content, idx) => <RecentCard key={idx} {...content} />)}
-        </CardSwiper>
+        <div className="relative h-full w-full">
+          {confettiShow && (
+            <Confetti style={{ width: "150%", height: "110%", top: "52%" }} />
+          )}
+          <CardSwiper>
+            {posts?.map((content, idx) => (
+              <RecentCard key={idx} {...content} />
+            ))}
+          </CardSwiper>
+        </div>
       )}
     </div>
   );
@@ -82,6 +107,7 @@ export const ToMyArchive = ({ posts }: ToMyArchiveProps) => {
 };
 
 export const Home = () => {
+  const nav = useNavigate();
   const { auth } = useAuthStore((state) => state);
 
   const { data: unreadPosts } = useApiGetUnreadPosts(auth.userId);
@@ -90,7 +116,7 @@ export const Home = () => {
     hasNextPage,
     fetchNextPage,
   } = useApiGetReadPosts(auth.userId);
-  const { data: isCreatable } = useApiGetPostState();
+  const { data: isCreatable } = useApiGetPostState(auth.userId);
 
   useEffect(() => {
     const handleScroll = _.throttle(async () => {
@@ -106,7 +132,19 @@ export const Home = () => {
   }, [unreadPosts, fetchNextPage, hasNextPage]);
 
   return (
-    <HomeLayout>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          right={
+            <button onClick={() => nav("/mypage")}>
+              <UserSVG />
+            </button>
+          }
+          isGrayAppbar
+        />
+      }
+      className="bg-gray-100"
+    >
       <div className="flex flex-col gap-12 pb-[60px]">
         {isCreatable && <GoToWrite />}
         <ToBeOpened posts={unreadPosts} />
@@ -122,6 +160,6 @@ export const Home = () => {
           }
         />
       </div>
-    </HomeLayout>
+    </DefaultLayout>
   );
 };

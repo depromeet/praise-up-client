@@ -33,5 +33,6 @@ export const RequireLoginLayout = ({ children }: Props) => {
     nav("/");
   };
 
+  if (!auth.isLogin) return null;
   return <Fragment>{children}</Fragment>;
 };

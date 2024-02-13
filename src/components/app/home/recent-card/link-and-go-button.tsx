@@ -10,21 +10,21 @@ import { handleIllust } from "@/utils/handleIllust";
 
 interface LinkAndGoButtonProps {
   postId: number;
-  openDatetime: Date;
+  openDateTime: Date;
   backgroundUrl: string;
 }
 
 export const LinkAndGoButton = ({
   postId,
-  openDatetime,
+  openDateTime,
   backgroundUrl,
 }: LinkAndGoButtonProps) => {
   const navigate = useNavigate();
   const [isReveal, setIsReveal] = useState<boolean>(
-    openDatetime.getTime() - Date.now() > 0,
+    openDateTime.getTime() - Date.now() > 0,
   );
 
-  const { diff } = useTimer(openDatetime);
+  const { diff } = useTimer(openDateTime);
 
   useEffect(() => {
     setIsReveal(diff >= 0);

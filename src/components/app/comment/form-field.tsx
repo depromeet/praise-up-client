@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, memo, useState } from "react";
 
 import { InformationSVG } from "@/assets/icons/information";
 import { ImageContainer } from "@/components/common/image-container";
@@ -21,27 +21,16 @@ interface ImageFormProps {
 }
 
 interface ContentFormProps {
-  content: string;
-  setContent: Dispatch<SetStateAction<string>>;
+  height?: string;
+  setHeight?: Dispatch<SetStateAction<string>>;
 }
 
-interface FormContainerProps {
-  nickname: string;
-  setNickname: Dispatch<SetStateAction<string>>;
-  image: string;
-  changeImage: (event: ChangeEvent<HTMLInputElement>) => void;
-  content: string;
-  setContent: Dispatch<SetStateAction<string>>;
-  required: boolean;
-  setRequired: Dispatch<SetStateAction<boolean>>;
-}
-
-const NicknameForm = ({
+export const NicknameForm = memo(function NicknameForm({
   nickname,
   image,
   setNickname,
   setRequired,
-}: NicknameFormProps) => {
+}: NicknameFormProps) {
   return (
     <div className="flex flex-col gap-4">
       <h4 className="text-h4 text-primary">닉네임 설정</h4>
@@ -56,9 +45,13 @@ const NicknameForm = ({
       />
     </div>
   );
-};
+});
 
-const ImageForm = ({ nickname, image, changeImage }: ImageFormProps) => {
+export const ImageForm = memo(function ImageForm({
+  nickname,
+  image,
+  changeImage,
+}: ImageFormProps) {
   return (
     <div
       className={clsx(
@@ -74,9 +67,13 @@ const ImageForm = ({ nickname, image, changeImage }: ImageFormProps) => {
       )}
     </div>
   );
-};
+});
 
-const ContentForm = ({ content, setContent }: ContentFormProps) => {
+export const ContentForm = ({ height, setHeight }: ContentFormProps) => {
+  const [content, setContent] = useState<string>(
+    sessionStorage.getItem("comment_content") ?? "",
+  );
+
   return (
     <div className="mb-14 flex flex-col gap-4">
       <div className="flex flex-col gap-3">
@@ -89,6 +86,9 @@ const ContentForm = ({ content, setContent }: ContentFormProps) => {
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setContent(e.target.value)
           }
+          onBlur={() => sessionStorage.setItem("comment_content", content)}
+          height={height}
+          setHeight={setHeight}
         />
       </div>
       <div className="flex gap-[4px] ">
@@ -99,29 +99,5 @@ const ContentForm = ({ content, setContent }: ContentFormProps) => {
         </span>
       </div>
     </div>
-  );
-};
-
-export const FormContainer = ({
-  nickname,
-  setNickname,
-  image,
-  changeImage,
-  content,
-  setContent,
-  required,
-  setRequired,
-}: FormContainerProps) => {
-  return (
-    <>
-      <NicknameForm
-        nickname={nickname}
-        image={image}
-        setNickname={setNickname}
-        setRequired={setRequired}
-      />
-      <ImageForm changeImage={changeImage} nickname={nickname} image={image} />
-      {required && <ContentForm content={content} setContent={setContent} />}
-    </>
   );
 };

@@ -12,12 +12,12 @@ export const handleIllust = {
     let idx = illustList.findIndex((i) => i.postId === postId);
 
     if (idx === -1) {
-      idx = Math.floor(Math.random() * 11);
+      idx = postId % 12;
       illustList.push({ postId, illustId: idx });
       localStorage.setItem("illust", JSON.stringify(illustList));
     }
 
-    return idx;
+    return illustList[idx].illustId;
   },
 
   remove: (postId: number): void => {

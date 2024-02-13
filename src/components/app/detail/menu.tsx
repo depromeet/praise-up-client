@@ -82,7 +82,7 @@ export const Menu = ({
       )}
       {showMenu && (
         <button
-          className="absolute right-4 top-[50px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
+          className="absolute right-4 top-[50px] z-10 flex h-11 items-center rounded-3 border border-gray-300 bg-white px-4 py-3"
           onClick={handleModal}
           ref={deleteMenuRef}
         >

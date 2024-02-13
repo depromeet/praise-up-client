@@ -11,6 +11,8 @@ export interface GetOnePostType {
   visible: boolean;
   isRead: boolean;
   postCreatedDate: string;
+  postCreatedTime: string;
+  openDateTime?: Date;
 }
 
 const getOnePost = (postId?: string) =>
@@ -30,7 +32,22 @@ export const useApiGetOnePost = (postId?: string) => {
       keyword: "",
       visible: false,
       isRead: false,
+      postCreatedTime: new Date().toString(),
       postCreatedDate: new Date().toString(),
+    },
+    select: (post) => {
+      const [date, time] = post.postCreatedTime.split("T");
+      const [year, month, day] = date.split("-");
+      const [hour, minute, _] = time.split(":");
+
+      const openDateTime = new Date(
+        +year,
+        +month - 1,
+        +day,
+        +hour + 4,
+        +minute,
+      );
+      return { ...post, openDateTime };
     },
   });
 };

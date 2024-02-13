@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { LinkAndGoButton } from "./link-and-go-button";
 import { TimerBadge } from "./timer-badge";
 
@@ -12,6 +10,8 @@ interface RecentCardProps {
   keyword: string;
   commentCount: number;
   postCreatedDate: string;
+  postCreatedTime: string;
+  openDateTime?: Date;
 }
 
 // 어두운 배경 이미지의 인덱스 추출 for 상이한 키워드 색상
@@ -22,18 +22,9 @@ export const RecentCard = ({
   postId,
   keyword,
   commentCount,
-  postCreatedDate,
+  openDateTime,
 }: RecentCardProps) => {
-  const [openDatetime, setOpenDatetime] = useState<Date>();
-
   const illustId = handleIllust.get(postId);
-
-  useEffect(() => {
-    const [year, month, day] = postCreatedDate.split("-");
-    const openDatetime = new Date(+year, +month - 1, +day + 1, 24);
-
-    setOpenDatetime(openDatetime);
-  }, [postCreatedDate]);
 
   return (
     <div className="flex w-full flex-col items-center gap-4 rounded-4 bg-white p-4">
@@ -55,11 +46,11 @@ export const RecentCard = ({
           </h2>
           <CountBadge count={commentCount} />
         </div>
-        <TimerBadge openDatetime={openDatetime ?? new Date()} />
+        <TimerBadge openDatetime={openDateTime ?? new Date()} />
       </div>
       <LinkAndGoButton
         postId={postId}
-        openDatetime={openDatetime ?? new Date()}
+        openDateTime={openDateTime ?? new Date()}
         backgroundUrl={BACKGROUNDS[illustId]}
       />
     </div>

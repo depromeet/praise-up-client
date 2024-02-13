@@ -12,6 +12,7 @@ import { CommentDoneView } from "./comment-done";
 
 import { NotFound } from "@/app/error/404";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
+import BackgroundGradient from "@/assets/images/bg_gradient.svg";
 import Marbles from "@/assets/imgs/marbles.svg?react";
 import { Background } from "@/components/app/comment/background";
 import { DraggableMarble } from "@/components/app/comment/draggable-marble";
@@ -172,6 +173,10 @@ export const CommentUpPage = () => {
       <Background />
       <div className="absolute left-0 top-0 w-full ">
         <Marbles className="-z-10 w-full  rotate-180" />
+        <img
+          src={BackgroundGradient}
+          className="absolute left-0 top-0 w-full"
+        />
       </div>
 
       <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
