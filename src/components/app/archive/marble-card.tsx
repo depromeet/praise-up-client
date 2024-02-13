@@ -81,6 +81,7 @@ export const MarbleCard = ({ cardData }: Props) => {
       >
         <div className="absolute flex h-full w-full flex-col justify-end gap-2 p-18px text-white">
           <p
+            className="h-12 overflow-y-auto whitespace-pre-wrap"
             dangerouslySetInnerHTML={{
               __html: content.replace(/\\n/g, "<br/>"),
             }}

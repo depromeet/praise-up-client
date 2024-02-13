@@ -148,7 +148,7 @@ const Image = () => {
     >
       <p
         ref={contentRef}
-        className="text-b2-long whitespace-pre-line text-gray-50"
+        className="text-b2-long h-12 overflow-y-auto whitespace-pre-wrap text-gray-50"
       >
         {content}
       </p>
