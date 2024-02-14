@@ -1,14 +1,12 @@
-# 🔮 Praise Up - 칭찬 SNS 서비스
-
-[👉🏻 Praise Up Service](https://www.praise-up.app/)
-
-
-
 ![MOBILE_5 (1)](https://github.com/depromeet/praise-up-client/assets/19422885/9c4ccbf1-6967-4f34-a01b-8bdfcdcca33b)
 
-### 🤔 오늘 하루 어떤 날을 보냈나요?
+# 🔮 Praise Up 
+
+### 오늘 하루 어떤 날을 보냈나요? 🤔
 칭찬받고자 하는 오늘의 순간을 공유할 수 있어요!<br/>
 Praise up과 함께 칭찬을 주고받아 볼까요?
+
+### [👉🏻 Praise Up Service](https://www.praise-up.app/)
 
 <br/><br/>
 
@@ -37,12 +35,14 @@ Praise up과 함께 칭찬을 주고받아 볼까요?
 <br/><br/>
 
 
-# Tech Stack
+# 🧑‍💻 Tech Stack
 <img width="993" alt="16" src="https://github.com/depromeet/praise-up-client/assets/72294509/aceff35f-f4f6-4e09-b0a8-81019bb68898">
 
-# Service Architecture
+<br/>
+
+# 📦 Service Architecture
 ```
-📦 Praise Up Folder Tree
+🔮 Praise Up Folder Tree
 ├─ .eslintignore
 ├─ .eslintrc.cjs
 ├─ .hintrc
@@ -128,14 +128,14 @@ Praise up과 함께 칭찬을 주고받아 볼까요?
 
 <br/>
 
-# Contacts
+# 📲 Contacts
 - 🤔 [문의사항](mailto:gentlemonster77@likelion.org)
 - ⭐️ [인스타그램](https://www.instagram.com/praiseup_official/)
-- 💌 [피드백](https://docs.google.com/forms/d/e/1FAIpQLSd8CxzR4PJDbBqC3sOzJIQ4aKXBj-ppoz-Qp9q61mKiK1ozlg/viewform?usp=sf_link)
+- 💌 [소중한 피드백](https://docs.google.com/forms/d/e/1FAIpQLSd8CxzR4PJDbBqC3sOzJIQ4aKXBj-ppoz-Qp9q61mKiK1ozlg/viewform?usp=sf_link)
 
 <br/>
 
-# Members
+# 👨‍👩‍👧‍👦 Members
 | [김현우](https://github.com/klmhyeonwoo)  | [이채민](https://github.com/Chaemin-L)  | [이현재](https://github.com/2-NOW)  | [정지영](https://github.com/Jungjjeong)
 | --------------------------------------- | -------------------------------------- | --------------------------------- |--------------------------------------- |
 | <img src="https://avatars.githubusercontent.com/u/19422885?v=4" width="150px" /> | <img src="https://avatars.githubusercontent.com/u/66225688?v=4"  width="150px" /> | <img src="https://avatars.githubusercontent.com/u/71202076?v=4" width="150px" /> |<img src="https://avatars.githubusercontent.com/u/72294509?v=4" width="150px" /> |
