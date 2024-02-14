@@ -40,6 +40,91 @@ Praise up과 함께 칭찬을 주고받아 볼까요?
 # Tech Stack
 <img width="993" alt="16" src="https://github.com/depromeet/praise-up-client/assets/72294509/aceff35f-f4f6-4e09-b0a8-81019bb68898">
 
+# Service Architecture
+```
+📦 Praise Up Folder Tree
+├─ .eslintignore
+├─ .eslintrc.cjs
+├─ .hintrc
+├─ .prettierrc.cjs
+├─ .storybook
+├─ README.md
+├─ build.sh
+├─ hydratable.config.json
+├─ index.html
+├─ package.json
+├─ pnpm-lock.yaml
+├─ postcss.config.cjs
+├─ public
+├─ src
+│  ├─ api
+│  ├─ app.tsx
+│  ├─ app
+│  │  ├─ archive
+│  │  ├─ comment
+│  │  ├─ detail
+│  │  ├─ error
+│  │  ├─ home
+│  │  ├─ mypage
+│  │  ├─ on-boarding-clap
+│  │  ├─ on-boarding
+│  │  └─ post
+│  ├─ assets
+│  ├─ components
+│  │  ├─ app
+│  │  │  ├─ .gitkeep
+│  │  │  ├─ archive
+│  │  │  ├─ comment
+│  │  │  ├─ detail
+│  │  │  ├─ home
+│  │  │  ├─ login
+│  │  │  │  └─ kakao
+│  │  │  ├─ on-boarding
+│  │  │  └─ post
+│  │  ├─ common
+│  │  └─ layout
+│  ├─ constants
+│  ├─ features
+│  ├─ helpers
+│  ├─ hooks
+│  │  ├─ api
+│  │  │  ├─ archive
+│  │  │  ├─ comment
+│  │  │  ├─ detail
+│  │  │  ├─ main
+│  │  │  ├─ my-page
+│  │  │  ├─ post
+│  │  │  └─ signup
+│  │  ├─ modal
+│  │  ├─ navigate
+│  │  ├─ useConfetti.tsx
+│  │  ├─ useCroppedImage.ts
+│  │  ├─ useCurrentLinkCopy.ts
+│  │  ├─ useDecodeURI.ts
+│  │  ├─ useExternalBrowser.ts
+│  │  ├─ useImageCompress.ts
+│  │  ├─ useInterval.ts
+│  │  ├─ usePostCard.ts
+│  │  ├─ useScrollToBottom.ts
+│  │  ├─ useScrollToTop.ts
+│  │  ├─ useTimer.ts
+│  │  └─ useWindowScrollY.ts
+│  ├─ lib
+│  │  ├─ RenderExtension.js
+│  │  ├─ html2canvas.js
+│  │  └─ query-provider.tsx
+│  ├─ routes
+│  ├─ store
+│  ├─ style
+│  ├─ types
+│  ├─ utils
+│  └─ vite-env.d.ts
+├─ tailwind.config.js
+├─ tsconfig.json
+├─ tsconfig.node.json
+├─ vercel.json
+└─ vite.config.ts
+```
 
 <br/>
 
