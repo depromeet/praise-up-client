@@ -10,7 +10,7 @@ Praise up과 함께 칭찬을 주고받아 볼까요?
 
 <br/><br/>
 
-![MOBILE_5 (5)](https://github.com/depromeet/praise-up-client/assets/19422885/eec96c31-9714-4ec0-9dec-ceb314a3c66c)
+![KakaoTalk_Photo_2024-02-15-01-10-30](https://github.com/depromeet/praise-up-client/assets/72294509/ef14be48-7017-43c0-b806-7d4fc2b2bc4f)
 
 1️⃣ 오늘의 키워드를 선택하고 일상을 공유해보세요!
 
