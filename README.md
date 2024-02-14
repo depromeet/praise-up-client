@@ -1,4 +1,4 @@
-# 💙 Praise Up
+# 🔮 Praise Up
 ## 칭찬 SNS 서비스
 
 ![MOBILE_5 (1)](https://github.com/depromeet/praise-up-client/assets/19422885/9c4ccbf1-6967-4f34-a01b-8bdfcdcca33b)
