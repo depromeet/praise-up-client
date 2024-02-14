@@ -69,6 +69,7 @@ export const MarbleCanvas = ({
         height: canvasHeight,
         background: "white",
         wireframes: false,
+        pixelRatio: window.devicePixelRatio,
       },
     });
 
