@@ -25,7 +25,7 @@ export const CommentFormPage = () => {
   const data = useLocation().state as GetOnePostType;
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [_, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const [height, setHeight] = useState("");
   const { compressImage } = useImageCompress();
