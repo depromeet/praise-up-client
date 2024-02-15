@@ -40,6 +40,7 @@ if (rootElement?.hasChildNodes()) {
           <AnimatePresence>
             <HelmetProvider>
               <Routers />
+              <Analytics />
             </HelmetProvider>
           </AnimatePresence>
         </ErrorBoundary>
