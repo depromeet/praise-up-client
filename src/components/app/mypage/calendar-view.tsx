@@ -7,10 +7,13 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
 import { ChevronRightEdgeSVG } from "@/assets/icons/chevron-right-edge";
+import { useApiClapCalendar } from "@/hooks/api/my-page/useApiClapCalendar";
 import { useCalendar } from "@/hooks/useCalendar";
+import { useAuthStore } from "@/store/auth";
 import { dateUtils } from "@/utils/dateUtils";
 
 type TDate = {
@@ -18,13 +21,14 @@ type TDate = {
   month: number;
   date: number;
   day: number;
+  diff: number; // 현재날짜 기준 달 차이, ex) 2024년 2월 기준, 1월 조회시 diff = 1
 };
 
-// temp post type
 type TPost = {
-  id: number;
+  postId: number;
   imageUrl: string;
   postCreatedDate: string;
+  date: string;
 };
 
 type TCalendarContext = {
@@ -37,11 +41,6 @@ type CalendarViewProps = {
   className: string;
   children: ReactNode;
 };
-
-const DUMMY_DATA: TPost[] = [
-  { id: 1, imageUrl: "", postCreatedDate: "2024-02-02" },
-  { id: 2, imageUrl: "", postCreatedDate: "2024-02-10" },
-];
 
 export const CalendarContext = createContext<TCalendarContext | undefined>(
   undefined,
@@ -59,7 +58,14 @@ const Header = () => {
 
   return (
     <div className="text-num-b1-medium flex h-6 w-full justify-center gap-[30px]">
-      <button onClick={() => setDate(dateUtils.parseDate(prev))}>
+      <button
+        onClick={() =>
+          setDate((prevDate) => ({
+            ...dateUtils.parseDate(prev),
+            diff: prevDate.diff + 1,
+          }))
+        }
+      >
         <ChevronLeftEdgeSVG />
       </button>
       <div>
@@ -70,8 +76,13 @@ const Header = () => {
       </div>
       <button
         disabled={isRecent}
-        onClick={() => setDate(dateUtils.parseDate(next))}
-        className=" disabled:opacity-30"
+        onClick={() =>
+          setDate((prevDate) => ({
+            ...dateUtils.parseDate(next),
+            diff: prevDate.diff - 1,
+          }))
+        }
+        className="disabled:opacity-30"
       >
         <ChevronRightEdgeSVG />
       </button>
@@ -79,58 +90,68 @@ const Header = () => {
   );
 };
 
-const Cell = ({ day }: { day: number }) => {
+const Cell = ({ day, post }: { day: number; post: TPost[] }) => {
+  const navigate = useNavigate();
   const isEmpty = day === 0;
-  const isTestDay = day === 7 || day === 10; // test day
+  const hasPost = post.length !== 0;
+
   return (
     <div
       className={clsx(
-        isTestDay && "!text-num-b2-strong text-oncolor",
+        post.length && "!text-num-b2-strong text-oncolor",
         "text-num-b2-compact flex aspect-square w-full items-center justify-center rounded-full bg-cover bg-no-repeat",
       )}
       style={
-        isTestDay
+        hasPost
           ? {
-              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), url(https://pbs.twimg.com/media/EFHWmyXUEAASe0o.jpg), lightgray 50%`,
+              background: `linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), url(${post[0].imageUrl}), lightgray 50%`,
               backgroundSize: "cover",
             }
           : {}
       }
+      onClick={() => {
+        if (hasPost)
+          navigate("/archive", { state: { postId: post[0].postId } });
+      }}
     >
       {isEmpty ? "" : day}
     </div>
   );
 };
 
+const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
+
 const Grid = () => {
   const {
     date: { year, month, day },
+    posts,
   } = useCalendar();
-  const [dateList, setDateList] = useState<number[]>([]);
-  const lastDateNum = new Date(year, month - 1, 0).getDate();
+  const [dateList, setDateList] = useState<number[]>([]); // 달력에 표시될 일자 목록
+  const lastDateNum = new Date(year, month + 1, 0).getDate();
+  console.log(lastDateNum);
 
   useEffect(() => {
-    const emptyDays = day > 0 ? (Array(day - 1).fill(0) as number[]) : [];
-    const days = Array(lastDateNum)
+    const emptyDays = Array(day).fill(0) as number[];
+    const filledDays = Array(lastDateNum)
       .fill(undefined)
       .map((_, i) => i + 1);
-    setDateList([...emptyDays, ...days]);
-  }, [year, month, day, lastDateNum]);
+    setDateList([...emptyDays, ...filledDays]);
+  }, [year, month]);
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-around gap-1.5">
-        <span>일</span>
-        <span>월</span>
-        <span>화</span>
-        <span>수</span>
-        <span>목</span>
-        <span>금</span>
-        <span>토</span>
+        {DAYS.map((day) => (
+          <span key={day}>{day}</span>
+        ))}
       </div>
       <div className="grid grid-cols-7 gap-x-1.5 gap-y-2.5">
-        {dateList.map((i) => (
-          <Cell key={i + Math.random()} day={i} />
+        {dateList.map((date) => (
+          <Cell
+            key={date + Math.random()}
+            day={date}
+            post={posts.filter((p) => +p.date === date)}
+          />
         ))}
       </div>
     </div>
@@ -138,7 +159,18 @@ const Grid = () => {
 };
 
 export const CalendarView = ({ className, children }: CalendarViewProps) => {
-  const [date, setDate] = useState<TDate>(dateUtils.now());
+  const [date, setDate] = useState<TDate>({ ...dateUtils.now(), diff: 0 });
+  const { auth } = useAuthStore();
+  const { data, fetchNextPage } = useApiClapCalendar(auth.userId);
+
+  useEffect(() => {
+    if (!data || data?.pages.length - 1 >= date.diff) return;
+
+    const fetch = async () => {
+      await fetchNextPage();
+    };
+    void fetch();
+  }, [date]);
 
   return (
     <div
@@ -151,7 +183,7 @@ export const CalendarView = ({ className, children }: CalendarViewProps) => {
         value={{
           date,
           setDate,
-          posts: DUMMY_DATA,
+          posts: data?.pages[date.diff] ?? [],
         }}
       >
         {children}
