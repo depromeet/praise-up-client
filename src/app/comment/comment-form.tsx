@@ -25,7 +25,6 @@ export const CommentFormPage = () => {
   const data = useLocation().state as GetOnePostType;
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const [content, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
   const [height, setHeight] = useState("");
   const { compressImage } = useImageCompress();
@@ -39,7 +38,6 @@ export const CommentFormPage = () => {
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
     setImage(sessionStorage.getItem("comment_image") ?? "");
-    setContent(sessionStorage.getItem("comment_content") ?? "");
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import "@/style/tailwindcss.css";
 import "@/style/global.css";
-
 import { AnimatePresence } from "framer-motion";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";

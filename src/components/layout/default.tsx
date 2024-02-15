@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { Fragment, PropsWithChildren, ReactNode } from "react";
 
@@ -40,6 +41,7 @@ export const DefaultLayout = ({
           )}
         >
           {children}
+          <Analytics />
         </div>
       </div>
     </Fragment>
