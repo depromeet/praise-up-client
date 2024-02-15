@@ -13,12 +13,15 @@ const canvasStyles = {
   zIndex: 9999,
 } as React.CSSProperties;
 
+type ConfettiProps = {
+  style?: React.CSSProperties;
+};
 type CreateConfetti = NonNullable<
   Parameters<NonNullable<IProps["refConfetti"]>>[0]
 >;
 
 /** 빵빠레 기본 세팅은 화면 중앙으로 세팅, 임포트를 통해 바로 사용 가능 */
-export default function Confetti() {
+export default function Confetti({ style }: ConfettiProps) {
   const refAnimationInstance = useRef<CreateConfetti>();
 
   useEffect(() => {
@@ -74,7 +77,10 @@ export default function Confetti() {
 
   return (
     <>
-      <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
+      <ReactCanvasConfetti
+        refConfetti={getInstance}
+        style={{ ...canvasStyles, ...style }}
+      />
     </>
   );
 }

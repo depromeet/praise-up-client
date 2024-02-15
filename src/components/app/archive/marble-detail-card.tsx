@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { forwardRef, useContext, useEffect, useState } from "react";
 
 import Overflow from "@/assets/icons/overflow.svg?react";
 import { ConfirmContext } from "@/components/common/confirm/confirm-context";
@@ -7,85 +7,129 @@ import { TMarble } from "@/types/archive";
 
 type Props = {
   marble: TMarble;
-  onClickClose: () => void;
-  onUpdateMarbleList: () => void;
+  onDeleteMarble: () => void;
 };
 
-export const MarbleDetailCard = ({
-  marble,
-  onClickClose,
-  onUpdateMarbleList,
-}: Props) => {
-  const { mutate: deleteComment } = useApiMarbleComments();
+const urlToBase64 = (url: string) => {
+  return new Promise<string>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve((reader.result ?? "") as string);
+      reader.readAsDataURL(xhr.response as Blob);
+    };
+    xhr.onerror = () => reject(new Error("Error on converting image"));
+    xhr.responseType = "blob";
+    xhr.open("GET", url);
+    xhr.send();
+  });
+};
 
-  const { confirm } = useContext(ConfirmContext);
-  const { nickname, content, imageUrl, commentId } = marble;
+export const MarbleDetailCard = forwardRef<HTMLDivElement, Props>(
+  ({ marble, onDeleteMarble }, ref) => {
+    const { mutate: deleteComment } = useApiMarbleComments();
+    const [src, setSrc] = useState<string>("");
 
-  const onClickMenu = async () => {
-    const result = await confirm(
-      {
-        title: "칭찬반응을 삭제할까요?",
-        description: "삭제된 칭찬반응은 복구할 수 없어요.",
-      },
-      {
-        text: "삭제",
-      },
-      {
-        text: "취소",
-      },
-    );
+    const { confirm } = useContext(ConfirmContext);
+    const { nickname, content, imageUrl, commentId } = marble;
 
-    // TODO: Error handling
-    if (!result) return;
-    onDeleteComment();
-  };
+    const [isShowDeleteBtn, setIsShowDeleteBtn] = useState<boolean>(false);
 
-  const onDeleteComment = () => {
-    deleteComment(commentId, {
-      onSuccess: () => {
-        onUpdateMarbleList();
-        onClickClose();
-      },
-      onError: () => {
-        alert("에러가 발생했습니다.");
-      },
-    });
-  };
+    const onClickMenu = async () => {
+      setIsShowDeleteBtn(false);
 
-  // TODO: Add image save button
-  return (
-    <div
-      className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-4 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
-      style={{
-        boxShadow: "0px 0px 20px 0px rgba(36, 43, 55, 0.10)",
-      }}
-    >
-      <div
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="relative box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
-      >
-        <button
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={onClickMenu}
-          className="absolute right-[16px] top-[14px] h-[24px] w-[24px]"
+      const result = await confirm({
+        message: {
+          title: "칭찬반응을 삭제할까요?",
+          description: "삭제된 칭찬반응은 복구할 수 없어요",
+        },
+        confirm: {
+          text: "삭제",
+        },
+        cancel: {
+          text: "취소",
+        },
+      });
+
+      // TODO: Error handling
+      if (!result) return;
+      onDeleteComment();
+    };
+
+    const onDeleteComment = () => {
+      deleteComment(commentId, {
+        onSuccess: () => {
+          onDeleteMarble();
+        },
+        onError: () => {
+          alert("에러가 발생했습니다.");
+        },
+      });
+    };
+
+    useEffect(() => {
+      void (async () => {
+        try {
+          setSrc(await urlToBase64(imageUrl));
+        } catch (error) {
+          setSrc(imageUrl);
+        }
+      })();
+    }, [imageUrl]);
+
+    // TODO: Add image save button
+    return (
+      <div className="relative">
+        <div className="absolute right-[52px] top-[30px] z-20 flex flex-col items-end gap-[6px]">
+          <button
+            onClick={() => setIsShowDeleteBtn(!isShowDeleteBtn)}
+            className=" h-[24px] w-[24px]"
+          >
+            <Overflow />
+          </button>
+
+          {isShowDeleteBtn && (
+            <button
+              className="h-fit w-fit rounded-3 border border-gray-300 bg-white px-4 py-3 text-secondary"
+              onClick={onClickMenu}
+            >
+              삭제하기
+            </button>
+          )}
+        </div>
+
+        <div
+          className="bg-archive-marble-detail mx-[20px] flex flex-col justify-center gap-3 self-stretch rounded-2xl bg-cover px-4 pb-5 pt-4 text-primary"
+          style={{
+            boxShadow: "0px 0px 10px 0px rgba(36, 43, 55, 0.10)",
+          }}
+          ref={ref}
         >
-          <Overflow />
-        </button>
+          <div className="relative">
+            <div className="z-20 h-full w-full bg-gradient-to-b from-black to-black" />
+            <div
+              className="box-border w-full rounded-xl after:block after:pb-[calc(100%)]"
+              style={{
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.00) 24.65%), url(${src})`,
+              }}
+            />
+          </div>
+          <p
+            className="mt-1 h-12 overflow-y-auto whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{
+              __html: content.replace(/\\n/g, "<br/>"),
+            }}
+          />
+          <p className="flex items-center justify-start gap-1 font-semibold">
+            <span className="text-teritary">from.</span>
+            <span>{nickname}</span>
+          </p>
+        </div>
       </div>
-      <p
-        className="whitespace-pre-wrap"
-        dangerouslySetInnerHTML={{
-          __html: content.replace(/\\n/g, "<br/>"),
-        }}
-      />
-      <p className="flex items-center justify-start gap-1 font-semibold">
-        <span className="text-teritary">from.</span>
-        <span>{nickname}</span>
-      </p>
-    </div>
-  );
-};
+    );
+  },
+);
+
+MarbleDetailCard.displayName = "MarbleDetailCard";

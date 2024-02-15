@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "@/api";
@@ -8,9 +8,13 @@ const deletePost = async (postId: number) =>
 
 export const useApiDeletePost = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deletePost,
-    onSuccess: () => navigate("/main"),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({ queryKey: ["unread-post"] });
+      navigate(-1);
+    },
     onError: (e) => console.log(e),
   });
 };

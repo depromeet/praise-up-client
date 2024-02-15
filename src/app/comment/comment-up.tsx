@@ -12,9 +12,10 @@ import { CommentDoneView } from "./comment-done";
 
 import { NotFound } from "@/app/error/404";
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
+import BackgroundGradient from "@/assets/images/bg_gradient.svg";
 import Marbles from "@/assets/imgs/marbles.svg?react";
+import { Background } from "@/components/app/comment/background";
 import { DraggableMarble } from "@/components/app/comment/draggable-marble";
-import { LayeredBackground } from "@/components/app/comment/layered-background";
 import { Arrow } from "@/components/common/arrow";
 import { Header } from "@/components/common/header";
 import { DefaultLayout } from "@/components/layout/default";
@@ -155,52 +156,50 @@ export const CommentUpPage = () => {
   };
 
   return (
-    <>
-      <DefaultLayout
-        className="overflow-hidden"
-        appbar={
-          <div className=" flex h-[64px] w-full px-5 py-2.5">
-            <button
-              className={clsx("z-20", "hidden" && isReached)}
-              onClick={() => navigate(-1)}
-            >
-              <ChevronLeftEdgeSVG />
-            </button>
-          </div>
-        }
-      >
-        <LayeredBackground>
-          {/* backgroun area */}
-          <div className="absolute left-0 top-0 w-full ">
-            <Marbles className="-z-10 w-full  rotate-180" />
-            <div
-              className={`absolute left-0 top-0 z-10 h-full w-full bg-[linear-gradient(180deg,_#ffffff60_15.62%,_#ffffff00_81.25%)] `}
-            ></div>
-          </div>
+    <DefaultLayout
+      className="overflow-hidden"
+      appbar={
+        <div className=" flex h-[64px] w-full px-5 py-2.5">
+          <button
+            className={clsx("z-20", "hidden" && isReached)}
+            onClick={() => navigate(-1)}
+          >
+            <ChevronLeftEdgeSVG />
+          </button>
+        </div>
+      }
+    >
+      {/* backgroun area */}
+      <Background />
+      <div className="absolute left-0 top-0 w-full ">
+        <Marbles className="-z-10 w-full  rotate-180" />
+        <img
+          src={BackgroundGradient}
+          className="absolute left-0 top-0 w-full"
+        />
+      </div>
 
-          <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
-            <div
-              className="relative mx-auto flex h-full w-fit flex-col items-center justify-end gap-[50px]"
-              onMouseDown={onMouseDown}
-              onTouchStart={onTouchStart}
-            >
-              {arrowShow && <Arrow />}
-              <DraggableMarble
-                isReached={isReached}
-                setIsReached={setIsReached}
-                flyDuration={FLY_DURATION}
-                nickname={sessionStorage.getItem("nickname") ?? ""}
-              />
-            </div>
-            <Header
-              className="select-none text-center"
-              text={`{구슬을 위로 밀어서}\\n{칭찬 구슬을 전달하세요!}`}
-            />
-          </section>
-        </LayeredBackground>
+      <section className="absolute  bottom-0 left-0 mb-[70px] flex h-full w-full flex-col gap-[46px]">
+        <div
+          className="relative mx-auto flex h-full w-fit flex-col items-center justify-end gap-[50px]"
+          onMouseDown={onMouseDown}
+          onTouchStart={onTouchStart}
+        >
+          {arrowShow && <Arrow />}
+          <DraggableMarble
+            isReached={isReached}
+            setIsReached={setIsReached}
+            flyDuration={FLY_DURATION}
+            nickname={sessionStorage.getItem("comment_nickname") ?? ""}
+          />
+        </div>
+        <Header
+          className="select-none text-center"
+          text={`{구슬을 위로 밀어서}\\n{칭찬 구슬을 전달하세요!}`}
+        />
+      </section>
 
-        <CommentDoneView transition={move ? DONE_ANIMATION : null} />
-      </DefaultLayout>
-    </>
+      <CommentDoneView transition={move ? DONE_ANIMATION : null} />
+    </DefaultLayout>
   );
 };

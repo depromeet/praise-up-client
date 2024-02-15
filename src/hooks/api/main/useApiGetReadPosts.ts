@@ -1,15 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 
 import { api } from "@/api";
 
 export interface ContentDataType {
   postId: number;
-  date: string;
   keyword: string;
+  visible: boolean;
   imageUrl: string;
   commentCount: number;
   postCreatedDate: string;
+  postCreatedTime: string;
+  openDateTime?: Date;
 }
 
 export interface GetPostType {
@@ -40,21 +41,19 @@ export interface GetPostType {
   last: boolean;
   empty: boolean;
 }
-const PAGE_SIZE = 4; // temp page size
+const PAGE_SIZE = 10; // temp page size
 
-// archive post
-const getReadPosts = async ({ pageParam }: { pageParam: number }) => {
-  const USER_ID = Cookies.get("k-u-id");
+export const useApiGetReadPosts = (userId: number) => {
+  // archive post
+  const getReadPosts = async ({ pageParam }: { pageParam: number }) => {
+    return api
+      .get(
+        `/praise-up/api/v1/posts?userId=${userId}&isRead=true&page=${pageParam}&size=${PAGE_SIZE}`,
+      ) // read post (archive)
+      .then((res) => res.data as GetPostType);
+  };
 
-  return api
-    .get(
-      `/praise-up/api/v1/posts?userId=${USER_ID}&isRead=true&page=${pageParam}&size=${PAGE_SIZE}`,
-    ) // read post (archive)
-    .then((res) => res.data as GetPostType);
-};
-
-export const useApiGetReadPosts = () =>
-  useInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: ["archive-post"],
     queryFn: ({ pageParam }) => getReadPosts({ pageParam }),
     initialPageParam: 0,
@@ -62,4 +61,6 @@ export const useApiGetReadPosts = () =>
       if (lastPage.last) return undefined;
       return lastPage.number + 1;
     },
+    enabled: !!userId,
   });
+};

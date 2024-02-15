@@ -65,6 +65,14 @@ export default {
           "66%": { visibility: "hidden" },
           "100%": { visibility: "hidden" },
         },
+        fadeIn: {
+          "0%": {
+            opacity: 0.3,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
         fadeOut: {
           "0%": {
             opacity: 1,
@@ -93,11 +101,23 @@ export default {
             transform: "translateY(-2rem)",
           },
         },
+        fadeInWithScale: {
+          "0%": {
+            opacity: 0.3,
+            transform: "scale(0.95)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         fadeInUp: "fadeInUp 1s ease-in-out",
+        fadeIn: "fadeIn 1s ease-in-out",
         fadeOutUp: "fadeOutUp 1s ease-in-out",
         fadeOut: "fadeOut 1s ease-in-out",
+        fadeInWithScale: "fadeInWithScale 1s ease-in-out",
       },
     },
   },

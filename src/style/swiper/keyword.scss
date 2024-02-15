@@ -1,6 +1,6 @@
 .keyword-swiper {
   .swiper-slide {
-    transition: 1s all;
+    transition: 0.6s all;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,4 +28,42 @@
   .swiper-pagination-bullet-active {
     background-color: rgba(131, 139, 152, 1);
   }
+
+  .swiper-pagination-bullet,
+  .swiper-pagination-bullet-active {
+    width: 6px;
+    height: 6px;
+  }
+
+  .swiper-slide-active > div {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide-active > div > span {
+    display: inline-flex;
+    padding: 30px 24px;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(255, 255, 255, 0.5) 71.16%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+}
+
+#selected_marble_text {
+  display: inline-flex;
+  padding: 30px 24px;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(255, 255, 255, 0.5) 71.16%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }

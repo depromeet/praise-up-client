@@ -12,15 +12,12 @@ export type ButtonType = {
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
 
 export type ConfirmType = {
-  confirm: (
-    message: MessageType,
-    confirm: ButtonType,
-    cancel: ButtonType,
-  ) => Promise<boolean>;
+  confirm: (buttonState: ConfirmDialogType) => Promise<boolean>;
 };
 
 export type ConfirmDialogType = {
   message: MessageType;
-  confirm: ButtonType;
-  cancel: ButtonType;
+  confirm?: ButtonType;
+  cancel?: ButtonType;
+  icon?: string;
 };

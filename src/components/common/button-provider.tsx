@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Cookies from "js-cookie";
 import {
   PropsWithChildren,
   useEffect,
@@ -11,6 +12,7 @@ import {
 
 import { ButtonProps, FilledButton } from "./fiiled-button";
 
+import { InformationSVG } from "@/assets/icons/information";
 import { handleKakaoLogin } from "@/components/app/login/kakao/kakao-login";
 
 const Primary = (props: ButtonProps) => {
@@ -24,6 +26,7 @@ const White = (props: ButtonProps) => {
 export const ButtonProvider = ({
   children,
   className,
+  isGuideExternalBrowser = false,
   isOnBoarding = false,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
@@ -36,6 +39,7 @@ export const ButtonProvider = ({
   };
 
   useEffect(() => {
+    props.isFull = false;
     if (!props.isFull) return;
     const windowViewPortHeight: number = window.innerHeight;
 
@@ -79,18 +83,28 @@ export const ButtonProvider = ({
   return (
     <div
       className={clsx(
-        "sticky bottom-0 mt-auto flex h-auto w-auto flex-col gap-y-2 bg-white pb-32px pt-12px",
+        "sticky bottom-0 -mx-5 mt-auto flex h-auto w-auto flex-col gap-y-2 border-none bg-white px-20px pb-28px pt-12px",
         isFullStyle && "-mx-[22px] !p-0",
         className,
       )}
     >
+      {isGuideExternalBrowser && Cookies.get("isEnternalBrowser") ? (
+        <div className="mb-[2px] flex w-full items-center justify-center">
+          <div className="flex items-center justify-center gap-[4px]">
+            <InformationSVG />
+            <span className="text-b3-long text-teritary">
+              시스템 브라우저에서의 사용을 권장해요
+            </span>
+          </div>
+        </div>
+      ) : null}
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
           return cloneElement(child, { isFullStyle, ...props });
         }
       })}
       {isOnBoarding && (
-        <div className="text-b3-strong mt-[18px] flex w-full justify-center gap-x-3">
+        <div className="text-b3-strong mt-[10px] flex w-full justify-center gap-x-3">
           <div className="text-teritary">이미 가입했다면?</div>
           <div
             className="cursor-pointer text-active"

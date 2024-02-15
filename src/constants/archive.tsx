@@ -1,15 +1,15 @@
 export const ASSET_WIDTH = {
-  wall: 50,
+  wall: 100,
   marble: 50,
 };
 
-export const WALL_OPTIONS = {
-  id: 0,
-  isStatic: true,
-  render: {
-    fillStyle: "black",
-  },
-};
+// export const WALL_OPTIONS = {
+//   id: 0,
+//   isStatic: true,
+//   render: {
+//     fillStyle: "black",
+//   },
+// };
 
 // TODO: height value calculate (visualViewport)
 export const WIDTH = window.innerWidth > 480 ? 480 : window.innerWidth;

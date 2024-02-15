@@ -16,7 +16,7 @@ type Props = {
 
 export const PreviewCard = ({ cardData, onChangeView }: Props) => {
   UseScrollToTop();
-  const { isOverflow } = useWindowScrollY({ point: 80 });
+  const { isOverflow } = useWindowScrollY({ point: 120 });
 
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
@@ -45,7 +45,7 @@ export const PreviewCard = ({ cardData, onChangeView }: Props) => {
       {/* scroll을 위한 영역 */}
       <div
         style={{
-          height: "calc(100vh + 100px)",
+          height: "calc(100vh + 150px)",
         }}
       />
 
@@ -70,7 +70,7 @@ export const PreviewCard = ({ cardData, onChangeView }: Props) => {
 
       <div
         className={clsx(
-          "fixed top-[138px] w-full max-w-[480px] px-5",
+          "fixed top-[138px] z-20 w-full max-w-[480px] px-5",
           isScrolled && "animate-fadeOutUp",
         )}
       >
@@ -78,7 +78,7 @@ export const PreviewCard = ({ cardData, onChangeView }: Props) => {
       </div>
 
       <div className="fixed bottom-0 h-184px w-full max-w-[480px]">
-        <div className="absolute bottom-0 z-10 flex h-full w-full flex-col items-center justify-center gap-3">
+        <div className="absolute bottom-0 z-20 flex h-full w-full flex-col items-center justify-center gap-3">
           <div
             className={clsx(
               "w-fit text-sm font-semibold text-slate-600",

@@ -25,7 +25,7 @@ const ToastRenderer = () => {
         if (el && !el.open) el.show();
       }}
     >
-      <div className=" fixed bottom-0 left-1/2 mb-[52px] flex -translate-x-1/2 flex-col gap-1">
+      <div className="fixed bottom-0 left-1/2 mb-[52px] flex -translate-x-1/2 flex-col gap-1">
         {Array.from(stack.entries()).map(([id, { content, type }]) => (
           <Toast type={type} key={id}>
             {content}
@@ -46,7 +46,7 @@ const Toast = ({
 } & PropsWithChildren) => {
   const ICON_STYLE = "h-[24px] w-[24px]";
   return (
-    <div className="text-b3-strong flex animate-fadeInUp items-center gap-2 whitespace-nowrap rounded-[100px] bg-gray-800 py-4 pl-4 pr-5 text-oncolor">
+    <div className="text-b3-strong flex animate-[fadeInUp_0.15s] items-center gap-2 whitespace-nowrap rounded-[100px] bg-[#333E4C]/90 py-[13px] pl-[22px] pr-[26px] text-oncolor backdrop-blur-[20px]">
       <div className={ICON_STYLE}>
         {
           {
@@ -67,13 +67,13 @@ type ToastOptions = {
 };
 const defaultOptions = {
   type: "success",
-  delay: 3000,
+  delay: 2000,
 } as const;
 
 export const toast = (content: ReactNode, options?: ToastOptions) => {
   const id = Math.random().toString(36).slice(2);
   const { type, delay } = { ...defaultOptions, ...(options ?? {}) };
-  setState((prev) => new Map([...prev, [id, { content, type }]]));
+  setState(() => new Map([[id, { content, type }]]));
 
   // remove toast after delay
   setTimeout(() => {

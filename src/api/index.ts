@@ -6,9 +6,13 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-// API 서버 연결 설정 필요
-const DEVELOPMENT_API_URL = "https://api.praise-up.app";
-const PRODUCTION_API_URL = "https://api.praise-up.app";
+import globalRouter from "@/hooks/navigate/globalRouter";
+
+const isDev = import.meta.env.MODE === "development";
+
+/** API 사용 전, ENV 파일을 통해 서버 연동 설정을 해주세요 */
+const DEVELOPMENT_API_URL = import.meta.env.VITE_DEVELOPMENT_API_URL as string;
+const PRODUCTION_API_URL = import.meta.env.VITE_PRODUCTION_API_URL as string;
 
 const baseApi = axios.create({
   baseURL:
@@ -31,6 +35,9 @@ const logOnDev = (message: string) => {
 /** API 요청이 실패한 경우 호출되는 함수 */
 const onError = (status: number, message: string) => {
   const error = { status, message };
+  if (import.meta.env.PROD && globalRouter.navigate) {
+    globalRouter.navigate("/error");
+  }
   throw error;
 };
 
@@ -48,9 +55,9 @@ const onRequest = (
 
 /** request 요청 시, 발생하는 에러를 처리하는 함수 */
 const onErrorRequest = (error: AxiosError<AxiosRequestConfig>) => {
-  if (error.config) {
+  if (error?.config) {
     console.log("에러: 요청 실패", error);
-  } else if (error.request) {
+  } else if (error?.request) {
     console.log("에러: 응답 없음", error);
   } else {
     console.log("에러:", error);
@@ -72,8 +79,8 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 const onErrorResponse = (error: AxiosError | Error) => {
   if (axios.isAxiosError(error)) {
     const { message } = error;
-    const { method, url } = error.config as AxiosRequestConfig;
-    const { status, statusText } = error.response as AxiosResponse;
+    const { method, url } = error?.config as AxiosRequestConfig;
+    const { status, statusText } = error?.response as AxiosResponse;
 
     logOnDev(
       `[API ERROR_RESPONSE ${status} | ${statusText} | ${message}] ${method?.toUpperCase()} ${url}`,
@@ -100,15 +107,15 @@ const onErrorResponse = (error: AxiosError | Error) => {
         break;
       }
       default: {
-        onError(status, `기타 에러가 발생했어요 : ${error.message}`);
+        onError(status, `기타 에러가 발생했어요 : ${error?.message}`);
       }
     }
-  } else if (error instanceof Error && error.name === "TimoutError") {
-    logOnDev(`[API TIME_ERROR] ${error.toString()}`);
+  } else if (error instanceof Error && error?.name === "TimoutError") {
+    logOnDev(`[API TIME_ERROR] ${error?.toString()}`);
     onError(0, "요청 시간이 초과되었어요");
   } else {
-    logOnDev(`[API ETC_ERROR] ${error.toString()}`);
-    onError(0, `기타 에러가 발생했어요 : ${error.toString()}`);
+    logOnDev(`[API ETC_ERROR] ${error?.toString()}`);
+    onError(0, `기타 에러가 발생했어요 : ${error?.toString()}`);
   }
 
   return Promise.reject(error);
@@ -116,8 +123,18 @@ const onErrorResponse = (error: AxiosError | Error) => {
 
 /** 인터셉터를 설정 하고, Axios Instance를 반환하는 함수 */
 const setInterceptors = (axiosInstance: AxiosInstance): AxiosInstance => {
-  axiosInstance.interceptors.request.use(onRequest, onErrorRequest);
-  axiosInstance.interceptors.response.use(onResponse, onErrorResponse);
+  // 개발 환경에서만 요청, 응답 로깅
+  const req = (() =>
+    isDev
+      ? { fulfilled: onRequest, rejected: onErrorRequest }
+      : { fulfilled: onRequest })();
+  const res = (() =>
+    isDev
+      ? { fulfilled: onResponse, rejected: onErrorResponse }
+      : { fulfilled: onResponse })();
+
+  axiosInstance.interceptors.request.use(req.fulfilled, req.rejected);
+  axiosInstance.interceptors.response.use(res.fulfilled, res.rejected);
 
   return axiosInstance;
 };

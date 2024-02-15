@@ -1,35 +1,40 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
 import CloseSVG from "@/assets/icons/close.svg?react";
-import { ContentForm } from "@/components/app/comment/content-form";
-import { LayeredBackground } from "@/components/app/comment/layered-background";
-import { RequiredForm } from "@/components/app/comment/required-form";
-import { BlurredAppbar } from "@/components/common/blurred-appbar";
+import Marble1SVG from "@/assets/imgs/marble1.svg?react";
+import Marble2SVG from "@/assets/imgs/marble2.svg?react";
+import { Background } from "@/components/app/comment/background";
+import {
+  ContentForm,
+  ImageForm,
+  NicknameForm,
+} from "@/components/app/comment/form-field";
+import { Appbar } from "@/components/common/appbar";
 import { ButtonProvider } from "@/components/common/button-provider";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { Header } from "@/components/common/header";
 import { ImageCropper } from "@/components/common/image-cropper";
 import { DefaultLayout } from "@/components/layout/default";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
+import { GetOnePostType } from "@/hooks/api/detail/useApiGetOnePost";
 import useImageCompress from "@/hooks/useImageCompress";
-
-const DUMMY_DATA = {
-  id: "1",
-  keyword: "센스있는",
-  username: "지영",
-};
+import { UseScrollToBottom } from "@/hooks/useScrollToBottom";
 
 export const CommentFormPage = () => {
+  const data = useLocation().state as GetOnePostType;
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [_, setContent] = useState<string>("");
   const [openCrop, setOpenCrop] = useState(false);
+  const [height, setHeight] = useState("");
   const { compressImage } = useImageCompress();
   const [required, setRequired] = useState(false);
   const navigate = useNavigate();
-  const [render, modal] = useModal();
+  const { confirm } = useContext(ConfirmContext);
+  const [marbleIdx] = useState(Math.floor(Math.random() * 2));
+
+  UseScrollToBottom(!openCrop && required, true);
 
   useEffect(() => {
     setNickname(sessionStorage.getItem("comment_nickname") ?? "");
@@ -38,59 +43,56 @@ export const CommentFormPage = () => {
   }, []);
 
   useEffect(() => {
-    setRequired(nickname.length > 0 && image.length > 0);
-  }, [nickname, image]);
+    if (!nickname.length) return;
+    setRequired(true);
+  }, [image]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬 반응 작성을 그만둘까요?"
-        description="지금 돌아가면 이미지와 텍스트 내용이 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="계속 작성"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="작성 종료"
-            value="confirm"
-          />,
-        ]}
-      />,
-    );
-    if (result === "cancel") return;
-    sessionStorage.removeItem("comment_nickname");
-    sessionStorage.removeItem("comment_content");
-    sessionStorage.removeItem("comment_imageUrl");
+    if (nickname.length !== 0 || image.length !== 0) {
+      const result = await confirm({
+        message: {
+          title: "칭찬 반응 작성을 그만둘까요?",
+          description: "지금 돌아가면 이미지와 텍스트 내용이 삭제돼요",
+        },
+        confirm: {
+          text: "그만두기",
+        },
+        cancel: {
+          text: "계속 작성",
+        },
+      });
+
+      if (!result) return;
+    }
     navigate(-1);
   };
 
   /** 이미지 변경 이벤트 */
-  const changeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files[0]) {
-      const compressedImage = compressImage(event.target.files[0]);
-      compressedImage
-        .then((res) => {
-          reader.readAsDataURL(res as Blob);
-          reader.onload = () => {
-            setImage(reader.result as string);
-            setOpenCrop(true);
-          };
-        })
-        .catch((error) => {
-          console.log(error); // eslint rule
-        });
-    }
-  };
+  const changeImage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const reader = new FileReader();
+      if (event.target.files && event.target.files[0]) {
+        const compressedImage = compressImage(event.target.files[0]);
+        compressedImage
+          .then((res) => {
+            reader.readAsDataURL(res as Blob);
+            reader.onload = () => {
+              setImage(reader.result as string);
+              setOpenCrop(true);
+            };
+          })
+          .catch((error) => {
+            console.log(error); // eslint rule
+          });
+      }
+    },
+    [],
+  );
 
   const saveForm = () => {
     try {
       sessionStorage.setItem("comment_nickname", nickname);
       sessionStorage.setItem("comment_image", image);
-      sessionStorage.setItem("comment_content", content);
     } catch (err) {
       return <NotFound />;
     }
@@ -99,15 +101,20 @@ export const CommentFormPage = () => {
 
   return (
     <DefaultLayout
+      // 버튼 따라오지 않는 이슈 수정
+      // className="overflow-x-hidden"
       appbar={
         !openCrop && (
-          <BlurredAppbar
+          <Appbar
             left={<CloseSVG onClick={handleModal} />}
-            title="칭찬 반응 남기기"
+            content={
+              <div className="font-semibold text-primary">칭찬 반응 남기기</div>
+            }
           />
         )
       }
     >
+      <Background />
       {openCrop ? (
         <ImageCropper
           src={image}
@@ -116,25 +123,34 @@ export const CommentFormPage = () => {
         />
       ) : (
         <>
-          <LayeredBackground>
-            <Header
-              text={`{${DUMMY_DATA.keyword}} 순간을 올린\\n {${DUMMY_DATA.username}} 님에게 칭찬 남기기`}
-            />
+          <Header
+            text={`{${data.keyword}} 순간을 올린\\n {${data.userNickname}} 님에게 칭찬 남기기`}
+            className="mb-9"
+          />
+          <div className="absolute right-5 top-[70px]">
+            {{ 0: <Marble1SVG />, 1: <Marble2SVG /> }[marbleIdx]}
+          </div>
 
-            <div className="flex w-full flex-col gap-7">
-              <RequiredForm
+          <div className="flex w-full flex-col gap-7">
+            <>
+              <NicknameForm
                 nickname={nickname}
-                setNickname={setNickname}
                 image={image}
+                setNickname={setNickname}
+                setRequired={setRequired}
+              />
+              <ImageForm
                 changeImage={changeImage}
+                nickname={nickname}
+                image={image}
               />
               {required && (
-                <ContentForm content={content} setContent={setContent} />
+                <ContentForm height={height} setHeight={setHeight} />
               )}
-            </div>
-          </LayeredBackground>
+            </>
+          </div>
 
-          <ButtonProvider isFull={true}>
+          <ButtonProvider isFull={true} className="!bg-transparent">
             <ButtonProvider.Primary
               disabled={!required}
               onClick={() => saveForm()}
@@ -144,7 +160,6 @@ export const CommentFormPage = () => {
           </ButtonProvider>
         </>
       )}
-      {render()}
     </DefaultLayout>
   );
 };

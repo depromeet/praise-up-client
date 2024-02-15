@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { NotFound } from "@/app/error/404";
+import { LogoSVG } from "@/assets/icons/logo";
 import { UserSVG } from "@/assets/icons/user";
 import Marbles from "@/assets/imgs/marbles.svg?react";
 import { Appbar } from "@/components/common/appbar";
@@ -9,6 +10,7 @@ import { ButtonProvider } from "@/components/common/button-provider";
 import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
+import { useAuthStore } from "@/store/auth";
 
 interface PostIdState {
   state: {
@@ -17,6 +19,7 @@ interface PostIdState {
 }
 
 export const CommentMainPage = () => {
+  const { auth } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation() as PostIdState;
   const postId = location.state.postId;
@@ -25,12 +28,36 @@ export const CommentMainPage = () => {
 
   useEffect(() => {
     sessionStorage.setItem("comment_id", postId);
+    sessionStorage.removeItem("comment_nickname");
+    sessionStorage.removeItem("comment_content");
+    sessionStorage.removeItem("comment_image");
   }, [postId]);
 
   if (!postId) return <NotFound />;
 
   return (
-    <DefaultLayout appbar={<Appbar right={<UserSVG />} />}>
+    <DefaultLayout
+      appbar={
+        <Appbar
+          left={
+            <button
+              onClick={() => (auth.isLogin ? navigate("/main") : navigate("/"))}
+            >
+              <LogoSVG />
+            </button>
+          }
+          right={
+            <button
+              onClick={() =>
+                auth.isLogin ? navigate("/mypage") : navigate("/")
+              }
+            >
+              <UserSVG />
+            </button>
+          }
+        />
+      }
+    >
       {/* post area */}
       <section className="flex flex-col justify-between gap-9">
         <h2 className="text-h2">{data.userNickname}님의 칭찬게시물</h2>
@@ -41,10 +68,17 @@ export const CommentMainPage = () => {
       </section>
 
       <ButtonProvider className="!bg-transparent">
-        <ButtonProvider.Primary onClick={() => navigate("/clap/write")}>
+        <ButtonProvider.Primary
+          onClick={() => navigate("/clap/write", { state: data })}
+        >
           칭찬 남기기
         </ButtonProvider.Primary>
-        <ButtonProvider.White onClick={() => navigate("/")}>
+        <ButtonProvider.White
+          onClick={() => {
+            // TODO: 추후에 JWT 토큰으로 변경시 수정이 필요함.
+            auth.isLogin ? navigate("/main") : navigate("/");
+          }}
+        >
           나도 칭찬 받기
         </ButtonProvider.White>
       </ButtonProvider>

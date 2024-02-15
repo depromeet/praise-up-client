@@ -1,27 +1,48 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
+import { DehydratedState, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/api";
 
 export interface ContentDataType {
   postId: number;
-  date: string;
   keyword: string;
   imageUrl: string;
+  visible: boolean;
   commentCount: number;
+  postCreatedTime: string;
   postCreatedDate: string;
+  openDateTime?: DehydratedState;
 }
 
-// unread post
-const getUnreadPosts = async () => {
-  const USER_ID = Cookies.get("k-u-id");
-  return api
-    .get(`/praise-up/api/v1/posts?userId=${USER_ID}&isRead=false`) // unread post
-    .then((res) => res.data as ContentDataType[]);
-};
+export const useApiGetUnreadPosts = (userId: number) => {
+  const getUnreadPosts = async () => {
+    return api
+      .get<ContentDataType[]>(
+        `/praise-up/api/v1/posts?userId=${userId}&isRead=false`,
+      )
+      .then((res) => res.data);
+  };
 
-export const useApiGetUnreadPosts = () =>
-  useSuspenseQuery({
+  return useQuery({
     queryKey: ["unread-post"],
     queryFn: getUnreadPosts,
+    select: (posts: ContentDataType[]) => {
+      return posts.map((post) => {
+        const [date, time] = post.postCreatedTime.split("T");
+        const [year, month, day] = date.split("-");
+        const [hour, minute, _] = time.split(":");
+
+        const openDateTime = new Date(
+          +year,
+          +month - 1,
+          +day,
+          +hour + 4,
+          +minute,
+        );
+        return { ...post, openDateTime };
+      });
+    },
+    staleTime: 10 * 1000,
+    gcTime: 60 * 1000,
+    enabled: !!userId,
   });
+};

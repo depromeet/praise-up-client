@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ChevronLeftEdgeSVG } from "@/assets/icons/chevron-left";
@@ -9,24 +8,20 @@ import { PostCardView } from "@/components/common/post-card-view";
 import { DefaultLayout } from "@/components/layout/default";
 import { toast } from "@/helpers/toast";
 import { useApiGetOnePost } from "@/hooks/api/detail/useApiGetOnePost";
+import Confetti from "@/hooks/useConfetti";
 import { UseCurrentLinkCopy } from "@/hooks/useCurrentLinkCopy";
+import { useTimer } from "@/hooks/useTimer";
 
 export const DetailPage = () => {
   const { postId } = useParams();
   const { data } = useApiGetOnePost(postId);
-  const [openDateTime, setOpenDateTime] = useState<Date>();
   const {
     state: { backgroundUrl },
   } = useLocation() as { state: { backgroundUrl: string } };
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!data) return;
-    const [year, month, day] = data.postCreatedDate.split("-");
-    const openDateTime = new Date(+year, +month - 1, +day + 1, 24);
-
-    setOpenDateTime(openDateTime);
-  }, [data]);
+  const { timeLeft, diff } = useTimer(data.openDateTime!, [
+    data.postCreatedTime,
+  ]);
 
   if (!postId) return;
 
@@ -49,11 +44,10 @@ export const DetailPage = () => {
     >
       <div className="flex flex-col gap-9">
         <h2 className="text-h2">공개 예정 칭찬게시물</h2>
+        {diff <= 0 && <Confetti />}
         <div className="flex flex-col gap-3">
-          {!data.visible && (
-            <TimerCardView openDateTime={openDateTime ?? new Date()} />
-          )}
-          <div className="perspective-1000 bg-transparent">
+          <TimerCardView timeLeft={timeLeft} />
+          <div className="perspective-1000 animate-fadeInUp bg-transparent ">
             <div className="[transform-style: preserve-3d] relative">
               <PostCardView {...{ ...data, postId: +postId }} isReadyCard>
                 <PostCardView.Title />
@@ -68,9 +62,17 @@ export const DetailPage = () => {
         </div>
       </div>
       <ButtonProvider>
-        <ButtonProvider.Primary onClick={() => handleShare()}>
-          링크 공유하고 칭찬 받기
-        </ButtonProvider.Primary>
+        {diff < 0 ? (
+          <ButtonProvider.Primary
+            onClick={() => navigate("/archive", { state: { postId } })}
+          >
+            칭찬 구슬 보러가기
+          </ButtonProvider.Primary>
+        ) : (
+          <ButtonProvider.Primary onClick={() => handleShare()}>
+            링크 공유하고 칭찬 받기
+          </ButtonProvider.Primary>
+        )}
       </ButtonProvider>
     </DefaultLayout>
   );

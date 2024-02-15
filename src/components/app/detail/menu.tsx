@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef } from "react";
 
 import { MenuIconSVG } from "@/assets/icons/menu-icon";
+import { ConfirmContext } from "@/components/common/confirm/confirm-context";
 import { useApiDeletePost } from "@/hooks/api/detail/useApiDeletePost";
-import { ConfirmModal, MainButton, SubButton } from "@/hooks/modal/modals";
-import { useModal } from "@/hooks/modal/useModal";
+import { handleIllust } from "@/utils/handleIllust";
 
 interface MenuProps {
   postId: number;
@@ -20,7 +20,7 @@ export const Menu = ({
   showMenu,
   setShowMenu,
 }: MenuProps) => {
-  const [render, modal] = useModal();
+  const { confirm } = useContext(ConfirmContext);
   const isUpdated = useRef<boolean>(false);
 
   const deleteMenuRef = useRef<HTMLButtonElement>(null);
@@ -47,25 +47,22 @@ export const Menu = ({
   }, [showMenu]);
 
   const handleModal = async () => {
-    const result = await modal(
-      <ConfirmModal
-        title="칭찬게시물을 삭제할까요?"
-        description="게시물과 쌓인 반응이 모두 삭제돼요"
-        buttons={[
-          <SubButton
-            key="unpublished-post-cancel"
-            label="취소"
-            value="cancel"
-          />,
-          <MainButton
-            key="unpublished-post-delete"
-            label="삭제"
-            value="confirm"
-          />,
-        ]}
-      />,
-    );
-    if (result === "cancel") return;
+    const result = await confirm({
+      message: {
+        title: "칭찬게시물을 삭제할까요?",
+        description: "게시물과 쌓인 반응이 모두 삭제돼요",
+      },
+      confirm: {
+        text: "삭제",
+      },
+      cancel: {
+        text: "취소",
+      },
+    });
+
+    if (!result) return;
+
+    handleIllust.remove(postId);
     mutation.mutate(postId);
   };
 
@@ -85,14 +82,13 @@ export const Menu = ({
       )}
       {showMenu && (
         <button
-          className="absolute right-4 top-[50px] z-10 flex h-11 items-center rounded-3 bg-white px-4 py-3"
+          className="absolute right-4 top-[50px] z-10 flex h-11 items-center rounded-3 border border-gray-300 bg-white px-4 py-3"
           onClick={handleModal}
           ref={deleteMenuRef}
         >
           <span className="text-b3-compact select-none">삭제하기</span>
         </button>
       )}
-      {render()}
     </>
   );
 };
