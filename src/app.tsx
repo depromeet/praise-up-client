@@ -1,6 +1,7 @@
 import "@/style/tailwindcss.css";
 import "@/style/global.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import { AnimatePresence } from "framer-motion";
 import { hydrateRoot, createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
@@ -24,6 +25,7 @@ if (rootElement?.hasChildNodes()) {
           <AnimatePresence>
             <HelmetProvider>
               <Routers />
+              <Analytics />
             </HelmetProvider>
           </AnimatePresence>
         </ErrorBoundary>
