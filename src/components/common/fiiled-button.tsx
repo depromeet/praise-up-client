@@ -7,6 +7,7 @@ export type ButtonProps = {
   text?: string;
   colorSchema?: string;
   isFull?: boolean;
+  isFullStyle?: boolean;
   isOnBoarding?: boolean;
   isGuideExternalBrowser?: boolean;
   tooltip?: string;
@@ -15,6 +16,7 @@ export type ButtonProps = {
 export const FilledButton = ({
   colorSchema,
   className,
+  // isFullStyle,
   children,
   tooltip,
   ...props
@@ -32,6 +34,7 @@ export const FilledButton = ({
               colorSchema === "primary",
             "text-b3-strong h-40px bg-transparent text-blue-500 py-10px":
               colorSchema === "white",
+            // "rounded-none": isFull && isFullStyle,
           },
           className,
         )}
