@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import {
   PropsWithChildren,
   useEffect,
-  useState,
   Children,
   isValidElement,
   cloneElement,
@@ -30,17 +29,15 @@ export const ButtonProvider = ({
   isOnBoarding = false,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
-  const [isFullStyle, setisFullStyle] = useState(false);
   const initialKeyboardHeight = useRef(0);
   const previousKeyboardHeight = useRef(0);
+  const lastHeightRef = useRef("");
 
   const handleTouchEnd = () => {
     (document.activeElement as HTMLElement).blur();
   };
 
   useEffect(() => {
-    props.isFull = false;
-    if (!props.isFull) return;
     const windowViewPortHeight: number = window.innerHeight;
 
     /** 뷰포트가 리사이징될 때 키보드를 감지하여 스크롤을 이동시켜주는 함수 */
@@ -51,8 +48,44 @@ export const ButtonProvider = ({
       if (!window.visualViewport || !window.document.scrollingElement) return;
 
       if (isOpen) {
+        const focusNode = document.activeElement;
         const scrollHeight = window.document.scrollingElement.scrollHeight;
         const scrollTop = scrollHeight - window.visualViewport.height;
+
+        if (focusNode?.nodeName.toLowerCase() === "textarea") {
+          const observer = new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+              if (
+                mutation.type === "attributes" &&
+                mutation.attributeName === "style"
+              ) {
+                const currentHeight = (focusNode as HTMLElement).style.height;
+                if (lastHeightRef.current !== currentHeight) {
+                  if (
+                    !window.visualViewport ||
+                    !window.document.scrollingElement
+                  )
+                    return;
+                  const scrollHeight =
+                    window.document.scrollingElement.scrollHeight;
+                  const scrollTop = scrollHeight - window.visualViewport.height;
+                  // console.log(`Height 변경됨: ${scrollTop}`);
+                  initialKeyboardHeight.current = scrollTop;
+                  lastHeightRef.current = currentHeight;
+                }
+              }
+            }
+          });
+
+          observer.observe(focusNode, {
+            attributes: true,
+            attributeFilter: ["style"],
+          });
+        }
+
+        if (focusNode?.nodeName.toLowerCase() === "input") {
+          return;
+        }
 
         if (initialKeyboardHeight.current === 0) {
           initialKeyboardHeight.current = scrollTop;
@@ -62,12 +95,11 @@ export const ButtonProvider = ({
           previousKeyboardHeight.current > scrollTop
             ? initialKeyboardHeight.current
             : scrollTop;
+
         window.scrollTo(0, scrollTarget);
 
         previousKeyboardHeight.current = scrollTop;
       }
-
-      setisFullStyle(isOpen);
     };
 
     if (window.visualViewport) {
@@ -84,7 +116,6 @@ export const ButtonProvider = ({
     <div
       className={clsx(
         "sticky bottom-0 -mx-5 mt-auto flex h-auto w-auto flex-col gap-y-2 border-none bg-white px-20px pb-28px pt-12px",
-        isFullStyle && "-mx-[22px] !p-0",
         className,
       )}
     >
@@ -100,7 +131,7 @@ export const ButtonProvider = ({
       ) : null}
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
-          return cloneElement(child, { isFullStyle, ...props });
+          return cloneElement(child, { ...props });
         }
       })}
       {isOnBoarding && (
