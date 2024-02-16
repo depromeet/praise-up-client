@@ -148,7 +148,7 @@ export const CommentFormPage = () => {
             </>
           </div>
 
-          <ButtonProvider isFull={true} className="!bg-transparent">
+          <ButtonProvider isFull={true}>
             <ButtonProvider.Primary
               disabled={!required}
               onClick={() => saveForm()}

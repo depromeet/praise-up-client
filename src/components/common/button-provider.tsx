@@ -7,6 +7,7 @@ import {
   isValidElement,
   cloneElement,
   useRef,
+  useState,
 } from "react";
 
 import { ButtonProps, FilledButton } from "./fiiled-button";
@@ -29,6 +30,7 @@ export const ButtonProvider = ({
   isOnBoarding = false,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
+  const [isFullStyle, setisFullStyle] = useState(false);
   const initialKeyboardHeight = useRef(0);
   const previousKeyboardHeight = useRef(0);
   const lastHeightRef = useRef("");
@@ -38,8 +40,8 @@ export const ButtonProvider = ({
   };
 
   useEffect(() => {
+    if (!props.isFull) return;
     const windowViewPortHeight: number = window.innerHeight;
-
     /** 뷰포트가 리사이징될 때 키보드를 감지하여 스크롤을 이동시켜주는 함수 */
     const handleVisualViewPortResize = () => {
       const visualViewportHeight = Number(window.visualViewport?.height);
@@ -100,6 +102,7 @@ export const ButtonProvider = ({
 
         previousKeyboardHeight.current = scrollTop;
       }
+      setisFullStyle(isOpen);
     };
 
     if (window.visualViewport) {
@@ -116,6 +119,7 @@ export const ButtonProvider = ({
     <div
       className={clsx(
         "sticky bottom-0 -mx-5 mt-auto flex h-auto w-auto flex-col gap-y-2 border-none bg-white px-20px pb-28px pt-12px",
+        // isFullStyle && "pb-12px",
         className,
       )}
     >
@@ -131,7 +135,7 @@ export const ButtonProvider = ({
       ) : null}
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
-          return cloneElement(child, { ...props });
+          return cloneElement(child, { isFullStyle, ...props });
         }
       })}
       {isOnBoarding && (

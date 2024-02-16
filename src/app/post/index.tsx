@@ -193,7 +193,7 @@ export const Post = () => {
               />
             </div>
           )}
-          <ButtonProvider isFull={true} className="!bg-transparent">
+          <ButtonProvider isFull={true}>
             <ButtonProvider.Primary
               disabled={!(image.length > 0)}
               onClick={createPost}
