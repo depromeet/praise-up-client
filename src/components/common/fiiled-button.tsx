@@ -16,7 +16,7 @@ export type ButtonProps = {
 export const FilledButton = ({
   colorSchema,
   className,
-  // isFullStyle,
+  isFullStyle,
   children,
   tooltip,
   ...props
