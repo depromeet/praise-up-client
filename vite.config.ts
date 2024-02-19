@@ -17,16 +17,6 @@ export default defineConfig({
       analytics: [
         {
           id: process.env.VITE_GA_TRACKING_ID,
-          config: {
-            cookie_domain: "auto",
-            cookie_expires: 63072000,
-            cookie_prefix: "none",
-            cookie_update: true,
-            cookie_flags: "",
-            send_page_view: true,
-            allow_google_signals: true,
-            allow_ad_personalization_signals: true,
-          },
         },
       ],
     }),
