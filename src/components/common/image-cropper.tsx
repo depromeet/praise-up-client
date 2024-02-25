@@ -1,7 +1,7 @@
+import clsx from "clsx";
 import { SetStateAction, useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
 import "@/style/cropper.css";
-import clsx from "clsx";
 
 import { getCroppedImg } from "@/hooks/useCroppedImage";
 

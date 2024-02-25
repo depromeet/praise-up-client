@@ -12,6 +12,7 @@ import { DetailPage } from "@/app/detail";
 import { NotFound } from "@/app/error/404";
 import { Home } from "@/app/home";
 import { MyPage } from "@/app/mypage";
+import { MyPageClaps } from "@/app/mypage/mypage-claps";
 import { MyPageEdit } from "@/app/mypage/mypage-edit";
 import { MyPageUnregister } from "@/app/mypage/unregister/unregister";
 import { MyPageUnregisterConfirm } from "@/app/mypage/unregister/unregister-confirm";
@@ -102,6 +103,11 @@ const routeChildren: RouteChildren[] = [
   {
     path: "/mypage",
     element: <MyPage />,
+    auth: true,
+  },
+  {
+    path: "/mypage/claps",
+    element: <MyPageClaps />,
     auth: true,
   },
   {

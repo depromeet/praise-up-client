@@ -15,6 +15,9 @@ export default {
         xs: "480px",
         "3xl": "1920px",
       },
+      fontFamily: {
+        "work-sans": ["Work Sans", "sans-serif"],
+      },
       colors: {
         gray: {
           DEFAULT: "#262C36",
